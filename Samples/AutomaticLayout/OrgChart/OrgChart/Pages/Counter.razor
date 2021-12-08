@@ -1,0 +1,107 @@
+﻿@page "/counter"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Diagram.Internal
+
+<SfDiagramComponent @ref="@Diagram" Height="690px" InteractionController="@InteractionController.ZoomPan" NodeCreating="@NodeCreating" ConnectorCreating="@ConnectorCreating">
+    <DataSourceSettings ID="ID" ParentID="Manager" DataSource="DataSource"></DataSourceSettings>
+    <Layout @bind-Type="@type" @bind-HorizontalSpacing="@HorizontalSpacing" @bind-Orientation="@orientation" @bind-VerticalSpacing="@VerticalSpacing" @bind-HorizontalAlignment="@horizontalAlignment" @bind-VerticalAlignment="@verticalAlignment" GetLayoutInfo="GetLayoutInfo">
+        <LayoutMargin @bind-Top="@top" @bind-Bottom="@bottom" @bind-Right="@right" @bind-Left="@left"></LayoutMargin>
+    </Layout>
+    <SnapSettings Constraints="SnapConstraints.None"></SnapSettings>
+</SfDiagramComponent>
+
+@code
+{
+    SfDiagramComponent Diagram;
+    LayoutOrientation orientation = LayoutOrientation.TopToBottom;
+    LayoutType type = LayoutType.OrganizationalChart;
+    HorizontalAlignment horizontalAlignment = HorizontalAlignment.Auto;
+    VerticalAlignment verticalAlignment = VerticalAlignment.Auto;
+    int HorizontalSpacing = 30;
+    int VerticalSpacing = 30;
+    double top = 50;
+    double bottom = 50;
+    double right = 50;
+    double left = 50;
+    double offset = 20;
+
+
+  
+    // Create a class for the data source recorded as a new type
+    public class EmployeeData
+    {
+        public string ID { get; set; }
+        public string Role { get; set; }
+        public string Color { get; set; }
+        public string Manager { get; set; }
+    }
+
+    //DataSource Items.
+    public List<EmployeeData> DataSource = new List<EmployeeData>()
+    {
+    new EmployeeData(){ID= "parent", Role= "Board", Color = "#71AF17", Manager = "" },
+    new EmployeeData() { ID = "1",Role=  "General manager", Color = "#71AF17", Manager =  "parent" },
+    new EmployeeData() { ID = "11", Role= "Assistant general manager",Color =  "#71AF17", Manager =  "1" },
+    new EmployeeData() { ID = "2", Role= "Human resource manager", Color = "#1859B7", Manager =  "1", },
+    new EmployeeData() { ID = "3", Role= "Trainers", Color = "#2E95D8",  Manager = "2" },
+    new EmployeeData() { ID = "4", Role= "Recruiting team",Color =  "#2E95D8", Manager =  "2" },
+    new EmployeeData() { ID = "5", Role= "Finance asst. manager", Color = "#2E95D8", Manager =  "2" },
+    new EmployeeData() { ID = "6", Role= "Design manager", Color = "#1859B7", Manager =  "1" },
+    new EmployeeData() { ID = "7",Role=  "Design supervisor",Color =  "#2E95D8",  Manager = "6" },
+    new EmployeeData() { ID = "8",Role=  "Development supervisor",Color =  "#2E95D8", Manager =  "6" },
+    new EmployeeData() { ID = "9",Role=  "Drafting supervisor", Color = "#2E95D8",  Manager = "6" },
+    new EmployeeData() { ID = "10",Role=  "Operations manager",Color =  "#1859B7", Manager =  "1" },
+    new EmployeeData() { ID = "11",Role=  "Statistics department",Color =  "#2E95D8",  Manager = "10" },
+    new EmployeeData() { ID = "12",Role=  "Logistics department",Color =  "#2E95D8", Manager =  "10" },
+    new EmployeeData() { ID = "16", Role=  "Logistics department", Color = "#1859B7", Manager =  "1" },
+    new EmployeeData() { ID = "17",Role=  "Overseas sales manager",Color =  "#2E95D8", Manager =  "16" },
+    new EmployeeData() { ID = "18", Role= "Petroleum manager", Color = "#2E95D8",  Manager = "16" },
+    new EmployeeData() { ID = "20",Role=  "Service department manager",Color =  "#2E95D8",  Manager = "16" },
+    new EmployeeData() { ID = "21", Role= "Quality control department", Color = "#2E95D8",  Manager = "16" },
+    };
+
+    private TreeInfo GetLayoutInfo(IDiagramObject obj, TreeInfo options  )
+    {
+        Node node = obj as Node;
+        options.Offset = -50;
+        if ((node.Data as EmployeeData).Role == "General manager")
+        {
+            options.Assistants.Add(options.Children[0]);
+            options.Children.RemoveAt(0);
+        }
+        options.AlignmentType = SubTreeAlignmentType.Balanced;
+        options.Orientation = Orientation.Horizontal;
+        options.Offset = offset;
+        return options;
+    }
+
+    private void NodeCreating(IDiagramObject obj)
+    {
+        Node node = obj as Node;
+        if (node.Data is System.Text.Json.JsonElement)
+        {
+            node.Data = System.Text.Json.JsonSerializer.Deserialize<EmployeeData>(node.Data.ToString());
+        }
+        EmployeeData organizationData = node.Data as EmployeeData;
+        node.Width = 120;
+        node.Height = 50;
+        node.Style.Fill = organizationData.Color;
+        ShapeAnnotation annotation = new ShapeAnnotation()
+        {
+            Content = organizationData.Role,
+            Offset = new DiagramPoint(0.5, 0.5),
+            Style = new TextStyle() { Color = "white" }
+        };
+        node.Annotations = new DiagramObjectCollection<ShapeAnnotation>() { annotation };
+    }
+    // Defines default values for Connector object
+    private void ConnectorCreating(IDiagramObject DiagramObject)
+    {
+        Connector connector = (DiagramObject as Connector);
+        connector.Type = ConnectorSegmentType.Orthogonal;
+        connector.TargetDecorator.Shape = DecoratorShape.None;
+        connector.SourceDecorator.Shape = DecoratorShape.None;
+    }
+
+}

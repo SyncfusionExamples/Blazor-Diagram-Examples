@@ -123,10 +123,19 @@
         letter-spacing: 0.1px;
         color: #7A7A7A;
     }
+
+     #diagram-space {
+        width: 70%;
+        float: left;
+    }
+
+    #properties {
+        width: 25%;
+        float: right;
+    }
 </style>
 @*End:Hidden*@
-<div class="col-lg-9 control-section sb-property-border">
-    <div id="diagram-space" class="content-wrapper">
+ <div id="diagram-space">
         <SfDiagramComponent @ref="@Diagram" Height="690px" NodeCreating="@OnNodeCreating" ConnectorCreating="@OnConnectorCreating" InteractionController="@DiagramInteractions.ZoomPan">
             <ScrollSettings @bind-ScrollLimit="@scrollLimit"></ScrollSettings>
             <DataSourceSettings ID="Id" ParentID="Manager" DataSource="DataSource"></DataSourceSettings>
@@ -154,9 +163,8 @@
             </DiagramTemplates>
         </SfDiagramComponent>
     </div>
-</div>
 @*Hidden:Lines*@
-<div class="col-lg-3 property-section">
+<div id="properties">
     <div class="property-panel-header">
         Properties
     </div>
@@ -182,7 +190,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row row-header" style="padding-top: 10px">
+            <div class="row row-header" style="padding-top: 160px">
                 Subtree Alignment
             </div>
             <div id="pattern">

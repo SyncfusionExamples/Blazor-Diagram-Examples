@@ -2,20 +2,16 @@
 @using Syncfusion.Blazor.Diagram
 @using Syncfusion.Blazor.Diagram.Internal
 
-<SfDiagramComponent @ref="@Diagram" Height="690px" InteractionController="@InteractionController.ZoomPan" NodeCreating="@NodeCreating" ConnectorCreating="@ConnectorCreating">
+<SfDiagramComponent @ref="@Diagram" Height="690px" InteractionController="@DiagramInteractions.ZoomPan" NodeCreating="@NodeCreating" ConnectorCreating="@ConnectorCreating">
     <DataSourceSettings ID="ID" ParentID="Manager" DataSource="DataSource"></DataSourceSettings>
-    <Layout @bind-Type="@type" @bind-Orientation="@orientation" GetLayoutInfo="GetLayoutInfo" >
-       
+    <Layout Type="LayoutType.OrganizationalChart" Orientation="LayoutOrientation.TopToBottom" GetLayoutInfo="GetLayoutInfo" HorizontalSpacing="30" VerticalSpacing="30">
+        <LayoutMargin Top="10" Bottom="10" Right="10" Left="10"></LayoutMargin>
     </Layout>
-    <SnapSettings Constraints="SnapConstraints.None"></SnapSettings>
 </SfDiagramComponent>
 
 @code
 {
     SfDiagramComponent Diagram;
-    LayoutOrientation orientation = LayoutOrientation.TopToBottom;
-    LayoutType type = LayoutType.OrganizationalChart;
-
 
     // Create a model class for the data source
     public class EmployeeData
@@ -31,7 +27,6 @@
     {
     new EmployeeData(){ID= "parent", Role= "Board", Color = "#71AF17", Manager = "" },
     new EmployeeData() { ID = "1",Role=  "General manager", Color = "#71AF17", Manager =  "parent" },
-    new EmployeeData() { ID = "11", Role= "Assistant general manager",Color =  "#71AF17", Manager =  "1" },
     new EmployeeData() { ID = "2", Role= "Human resource manager", Color = "#1859B7", Manager =  "1", },
     new EmployeeData() { ID = "3", Role= "Trainers", Color = "#2E95D8",  Manager = "2" },
     new EmployeeData() { ID = "4", Role= "Recruiting team",Color =  "#2E95D8", Manager =  "2" },
@@ -48,21 +43,15 @@
     new EmployeeData() { ID = "18", Role= "Petroleum manager", Color = "#2E95D8",  Manager = "16" },
     new EmployeeData() { ID = "20",Role=  "Service department manager",Color =  "#2E95D8",  Manager = "16" },
     new EmployeeData() { ID = "21", Role= "Quality control department", Color = "#2E95D8",  Manager = "16" },
-    // ...
-    // .. .
     };
 
     private TreeInfo GetLayoutInfo(IDiagramObject obj, TreeInfo options)
     {
-        Node node = obj as Node;
-        // Adding assistant to the root node
-        if ((node.Data as EmployeeData).Role == "General manager")
+        if (!options.HasSubTree)
         {
-            options.Assistants.Add(options.Children[0]);
-            options.Children.RemoveAt(0);
+            options.AlignmentType = SubTreeAlignmentType.Left;
+            options.Orientation = Orientation.Vertical;
         }
-        options.AlignmentType = SubTreeAlignmentType.Balanced;
-        options.Orientation = Orientation.Horizontal;
         return options;
     }
 

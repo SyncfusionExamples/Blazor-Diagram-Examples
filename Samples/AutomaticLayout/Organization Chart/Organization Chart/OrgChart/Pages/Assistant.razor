@@ -1,14 +1,13 @@
-﻿@page "/counter"
+﻿@page "/Assistant"
 
 @using Syncfusion.Blazor.Diagram
 @using Syncfusion.Blazor.Diagram.Internal
 
-<SfDiagramComponent @ref="@Diagram" Height="690px" InteractionController="@InteractionController.ZoomPan" NodeCreating="@NodeCreating" ConnectorCreating="@ConnectorCreating">
+<SfDiagramComponent @ref="@Diagram" Height="690px" InteractionController="@DiagramInteractions.ZoomPan" NodeCreating="@NodeCreating" ConnectorCreating="@ConnectorCreating">
     <DataSourceSettings ID="ID" ParentID="Manager" DataSource="DataSource"></DataSourceSettings>
-    <Layout @bind-Type="@type" @bind-HorizontalSpacing="@HorizontalSpacing" @bind-Orientation="@orientation" @bind-VerticalSpacing="@VerticalSpacing" @bind-HorizontalAlignment="@horizontalAlignment" @bind-VerticalAlignment="@verticalAlignment" GetLayoutInfo="GetLayoutInfo">
-        <LayoutMargin @bind-Top="@top" @bind-Bottom="@bottom" @bind-Right="@right" @bind-Left="@left"></LayoutMargin>
+    <Layout Type="LayoutType.OrganizationalChart" Orientation="LayoutOrientation.TopToBottom" GetLayoutInfo="GetLayoutInfo" HorizontalSpacing="30" VerticalSpacing="30">
+        <LayoutMargin Top="10" Bottom="10" Right="10" Left="10"></LayoutMargin>
     </Layout>
-    <SnapSettings Constraints="SnapConstraints.None"></SnapSettings>
 </SfDiagramComponent>
 
 @code
@@ -27,7 +26,7 @@
     double offset = 20;
 
 
-  
+
     // Create a class for the data source recorded as a new type
     public class EmployeeData
     {
@@ -42,7 +41,7 @@
     {
     new EmployeeData(){ID= "parent", Role= "Board", Color = "#71AF17", Manager = "" },
     new EmployeeData() { ID = "1",Role=  "General manager", Color = "#71AF17", Manager =  "parent" },
-    new EmployeeData() { ID = "11", Role= "Assistant general manager",Color =  "#71AF17", Manager =  "1" },
+    new EmployeeData() { ID = "11", Role= "Assistant",Color =  "#71AF17", Manager =  "1" },
     new EmployeeData() { ID = "2", Role= "Human resource manager", Color = "#1859B7", Manager =  "1", },
     new EmployeeData() { ID = "3", Role= "Trainers", Color = "#2E95D8",  Manager = "2" },
     new EmployeeData() { ID = "4", Role= "Recruiting team",Color =  "#2E95D8", Manager =  "2" },
@@ -64,15 +63,16 @@
     private TreeInfo GetLayoutInfo(IDiagramObject obj, TreeInfo options  )
     {
         Node node = obj as Node;
-        options.Offset = -50;
         if ((node.Data as EmployeeData).Role == "General manager")
         {
             options.Assistants.Add(options.Children[0]);
             options.Children.RemoveAt(0);
         }
-        options.AlignmentType = SubTreeAlignmentType.Balanced;
-        options.Orientation = Orientation.Horizontal;
-        options.Offset = offset;
+        if (!options.HasSubTree)
+        {
+            options.AlignmentType = SubTreeAlignmentType.Left;
+            options.Orientation = Orientation.Vertical;
+        }
         return options;
     }
 

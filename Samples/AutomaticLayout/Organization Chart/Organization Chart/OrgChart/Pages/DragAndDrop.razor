@@ -1,4 +1,4 @@
-﻿@page "/OrgChartLayout"
+﻿@page "/DragAndDrop"
 
 @using Syncfusion.Blazor.Diagram
 @using Syncfusion.Blazor.Diagram.Internal
@@ -6,31 +6,15 @@
 
 <SfDiagramComponent @ref="diagram" Height="690px" DragDrop="Drop" NodeCreating="NodeCreating" ConnectorCreating="ConnectorCreating">
     <DataSourceSettings DataSource="DataSource" ID="ID" ParentID="Manager"></DataSourceSettings>
-    <Layout @bind-Type="type" @bind-HorizontalSpacing="@HorizontalSpacing" @bind-FixedNode="@FixedNode" @bind-Orientation="@oreintation" @bind-VerticalSpacing="@VerticalSpacing" @bind-HorizontalAlignment="@horizontalAlignment" @bind-VerticalAlignment="@verticalAlignment" GetLayoutInfo="GetLayoutInfo">
-        <LayoutMargin @bind-Top="@top" @bind-Bottom="@bottom" @bind-Right="@right" @bind-Left="@left"></LayoutMargin>
+    <Layout Type="LayoutType.OrganizationalChart" Orientation="LayoutOrientation.TopToBottom" GetLayoutInfo="GetLayoutInfo" HorizontalSpacing="30" VerticalSpacing="30">
+        <LayoutMargin Top="10" Bottom="10" Right="10" Left="10"></LayoutMargin>
     </Layout>
     <SnapSettings Constraints="SnapConstraints.None"></SnapSettings>
-
 </SfDiagramComponent>
 @code {
 
     public SfDiagramComponent diagram;
-    double top = 50;
-    double bottom = 50;
-    double right = 50;
-    double left = 50;
-    LayoutType type = LayoutType.OrganizationalChart;
-    LayoutOrientation oreintation = LayoutOrientation.TopToBottom;
-    HorizontalAlignment horizontalAlignment = HorizontalAlignment.Auto;
-    VerticalAlignment verticalAlignment = VerticalAlignment.Auto;
-    int HorizontalSpacing = 30;
-    int VerticalSpacing = 30;
 
-    Orientation subTreeOrientation = Orientation.Vertical;
-    SubTreeAlignmentType subTreeAlignment = SubTreeAlignmentType.Left;
-    private string FixedNode = null;
-    private int rows = 0;
-    //private Rect bounds = new Rect(200, 200, 500, 500);
     public class EmployeeData
     {
         public string ID { get; set; }
@@ -44,28 +28,18 @@
         DiagramSelectionSettings selector = args.Element as DiagramSelectionSettings;
         if (args.Target != null && args.Element != null && selector.Nodes.Count > 0)
         {
-
-            //string id = selector.Nodes[0].InEdges[0];
-            //Connector conn = diagram.GetObject(id) as Connector;
-            // Source connection has changed for dropped connector
-            //conn.SourceID = (args.Target as Node).ID;
-            //await diagram.DoLayout();
-
             Node targetNode = args.Target as Node;
             EmployeeData targetNodeData = DataSource.Find(data => data.ID == (targetNode.Data as EmployeeData).ID);
             EmployeeData drogNodeData = DataSource.Find(data => data.ID == (selector.Nodes[0].Data as EmployeeData).ID);
             drogNodeData.Manager = targetNodeData.ID;
             diagram.ClearSelection();
             await diagram.RefreshDataSource();
-            
-
         }
     }
     public List<EmployeeData> DataSource = new List<EmployeeData>()
     {
     new EmployeeData()   { ID= "parent", Role= "Board", Color= "#71AF17" },
     new EmployeeData()   { ID= "1", Role= "General Manager", Manager= "parent", ChartType= "right", Color= "#71AF17" },
-    new EmployeeData()   { ID= "11", Role= "Assistant Manager", Manager= "1", Color= "#71AF17" },
     new EmployeeData()   { ID= "2", Role= "Human Resource Manager", Manager= "1", ChartType= "right", Color= "#1859B7" },
     new EmployeeData()   { ID= "3", Role= "Trainers", Manager= "2", Color= "#2E95D8" },
     new EmployeeData()   { ID= "4", Role= "Recruiting Team", Manager= "2", Color= "#2E95D8" },
@@ -85,31 +59,10 @@
     };
     private TreeInfo GetLayoutInfo(IDiagramObject obj, TreeInfo options)
     {
-        if (rows == 0)
+        if (!options.HasSubTree)
         {
-            if (rows == 0 && options.Rows != null)
-                options.Rows = null;
-            Node node = obj as Node;
-
-            if (node.Data != null && (node.Data as EmployeeData).Role == "General Manager")
-            {
-                options.Assistants.Add(options.Children[0]);
-                options.Children.RemoveAt(0);
-            }
-            if (!options.HasSubTree)
-            {
-                options.Orientation = subTreeOrientation;
-                options.AlignmentType = subTreeAlignment;
-            }
-        }
-        else
-        {
-            if (!options.HasSubTree)
-            {
-                options.AlignmentType = SubTreeAlignmentType.Balanced;
-                options.Orientation = Orientation.Horizontal;
-                options.Rows = rows;
-            }
+            options.AlignmentType = SubTreeAlignmentType.Left;
+            options.Orientation = Orientation.Vertical;
         }
         return options;
     }
@@ -126,13 +79,13 @@
         node.Constraints = NodeConstraints.Default | NodeConstraints.AllowDrop;
         node.Style.Fill = hierarchicalData == null ? "red" : hierarchicalData.Color;
         node.Annotations = new DiagramObjectCollection<ShapeAnnotation>()
-    {
-    new ShapeAnnotation()
-    {
-    Content = hierarchicalData == null ?node.ID:hierarchicalData.Role,
-    Style =new TextStyle(){Color = "white"}
-    }
-    };
+        {
+            new ShapeAnnotation()
+            {
+                Content = hierarchicalData == null ?node.ID:hierarchicalData.Role,
+                Style =new TextStyle(){Color = "white"}
+            }
+        };
     }
     private void ConnectorCreating(IDiagramObject DiagramObject)
     {

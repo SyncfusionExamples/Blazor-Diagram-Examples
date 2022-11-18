@@ -198,7 +198,7 @@ width:30px;
 </style>
 
 
-    <SfDiagramComponent @ref="diagram" Width="1000px" @bind-Connectors="connectors" Height="1000px" @bind-Nodes="@nodes"   SelectionSettings="@select" >
+    <SfDiagramComponent @ref="diagram" Width="1000px" NodeCreating="@NodeCreating" ConnectorCreating="@ConnectorCreating" Height="1000px"    SelectionSettings="@select" >
         <DiagramTemplates>
             <UserHandleTemplate >
                 @{
@@ -283,6 +283,10 @@ width:30px;
                     
             </UserHandleTemplate>
         </DiagramTemplates>
+        
+           <Layout FixedNode="1" HorizontalSpacing="@HorizontalSpacing" VerticalSpacing="@VerticalSpacing" Type="LayoutType.MindMap" GetBranch="@getbranch"></Layout>
+        <DataSourceSettings ID="Id" ParentID="ParentId" DataSource="@DataSource">
+            </DataSourceSettings>
 
     </SfDiagramComponent>
 
@@ -291,6 +295,17 @@ width:30px;
     SfSpeedDial? speeddial2;
 #nullable disable
     public string textbox = "";
+     private BranchType getbranch(IDiagramObject obj)
+    {
+        BranchType Branch = ((obj as Node).Data as MindMapDetails).Branch;
+        return Branch;
+    }
+
+     static List<MindMapDetails> MindmapData = new List<MindMapDetails>();
+    int VerticalSpacing = 20;
+    int HorizontalSpacing = 80;
+    int? horizontalValue = 80;
+    int? verticalValue = 20;
     public string CssClass { get; set; }
     private void ValueChangedHandler(String args)
     {
@@ -305,99 +320,69 @@ width:30px;
         diagram.SelectionSettings.Nodes[0].Style.Fill = args.CurrentValue.Hex.ToString();
 
     }
-
-         DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
-    DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
-    DiagramObjectCollection<UserHandle> handle = new DiagramObjectCollection<UserHandle>();
-    DiagramSelectionSettings select = new DiagramSelectionSettings() { };
-    protected override void OnInitialized()
+     private void NodeCreating(IDiagramObject obj)
     {
-       CreateNode("node1", 300, 80, NodeFlowShapes.Terminator, "Place order");
-        CreateNode("node2", 300, 160, NodeFlowShapes.Process, "Start transaction");
-        CreateNode("node3", 300, 240, NodeFlowShapes.Process, "Verification");
-        CreateNode("node4", 300, 330, NodeFlowShapes.Decision, "Credit card valid?");
-        CreateNode("node5", 300, 430, NodeFlowShapes.Decision, "Funds available?");
-        CreateNode("node6", 530, 330, NodeFlowShapes.Process, "Enter payment method");
-        CreateNode("node7", 300, 530, NodeFlowShapes.Process, "Complete transaction");
-        CreateNode("node8", 110, 530, NodeFlowShapes.Data, "Send e-mail");
-        CreateNode("node9", 475, 530, NodeFlowShapes.DirectData, "Customer \n database");
-        CreateNode("node10", 300, 630, NodeFlowShapes.Terminator, "Log transaction");
-        CreateNode("node11", 480, 630, NodeFlowShapes.Process, "Reconcile the entries");     
-        CreateConnector("node1", "node2");
-        CreateConnector("node2", "node3");
-        CreateConnector("node3", "node4");
-        CreateConnector("node4", "node5","Yes");
-        CreateConnector("node4", "node6", "No",false,"port3","port1");
-        CreateConnector("node5", "node6", "No",false,"port3","port4");
-        CreateConnector("node5", "node7", "Yes");
-        CreateConnector("node6", "node2",default(string),false, "port2", "port3");
-        CreateConnector("node7", "node8");
-        CreateConnector("node7", "node9");
-        CreateConnector("node7", "node10");
-        CreateConnector("node10", "node11", default(string), true);
-
-    }
-    private int connectorCount = 0;
-     private void CreateConnector(string sourceId, string targetId, string label = default(string), bool isDashLine = false, string sport = "", string tport = "")
-    {
-        Connector diagramConnector = new Connector()
+        Node node = obj as Node;
+        //node.Constraints = NodeConstraints.Default & ~NodeConstraints.Drag;
+        MindMapDetails hierarchicalData = null;
+        if (node.Data != null)
         {
-            ID = string.Format("connector{0}", ++connectorCount),
-            SourceID = sourceId,
-            TargetID = targetId,
-            SourcePortID = sport,
-            TargetPortID = tport
-        };
-        if (isDashLine)
-        {
-            diagramConnector.Style = new ShapeStyle() { StrokeDashArray = "2,2" };
-        }
-        if (label != default(string))
-        {
-            var annotation = new PathAnnotation()
+            if (node.Data is System.Text.Json.JsonElement)
             {
-                Content = label,
-                Style = new TextStyle() { Fill = "white" }
+                node.Data = System.Text.Json.JsonSerializer.Deserialize<MindMapDetails>(node.Data.ToString());
+            }
+            hierarchicalData = node.Data as MindMapDetails;
+        }
+        node.Height = 50;
+        node.Width = 100;
+        node.Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Ellipse };
+
+        PointPort port21 = new PointPort()
+        {
+            ID = "left",
+            Offset = new DiagramPoint() { X = 0, Y = 0.5 },
+            Height = 10,
+            Width = 10,
+        };
+
+        PointPort port22 = new PointPort()
+        {
+            ID = "right",
+            Offset = new DiagramPoint() { X = 1, Y = 0.5 },
+            Height = 10,
+            Width = 10,
+        };
+
+        if (node.Data != null)
+        {
+            node.Style.Fill = hierarchicalData.Fill;
+            node.Style.StrokeColor = hierarchicalData.Fill;
+            node.Ports = new DiagramObjectCollection<PointPort>()
+            {
+                port21,port22
             };
-            if ((sourceId == "node5" && targetId == "node6") || label == "Yes" || label == "No")
-            {
-                annotation.Height = 10;
-                annotation.Width = 15;
-            }
-            diagramConnector.Annotations = new DiagramObjectCollection<PathAnnotation>() { annotation };
         }
-        diagramConnector.Type = ConnectorSegmentType.Orthogonal;
 
-        connectors.Add(diagramConnector);
-    }
-    // Method is used to create a node for the diagram.
-    private void CreateNode(string id, double x, double y, NodeFlowShapes shape, string label)
-    {
-        Node diagramNode = new Node()
+        string name = "";
+        if (hierarchicalData != null)
         {
-            ID = id,
-            OffsetX = x,
-            OffsetY = y,
-            Width = 145,
-            Ports = CreatePort(),
-            Height = 60,
-            Style = new ShapeStyle { Fill = "#357BD2", StrokeColor = "White" },
+            name = hierarchicalData.Label;
+        }
+        else
+        {
+            name = "New Child";
+        }
 
-            Shape = new FlowShape() { Type = Syncfusion.Blazor.Diagram.NodeShapes.Flow, Shape = shape },
-            Annotations = new DiagramObjectCollection<ShapeAnnotation>
+        node.Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+        {
+            new ShapeAnnotation()
             {
-                new ShapeAnnotation
-                {
-                    Content = label,
-                    Style = new TextStyle()
-                    {
-                        Color="White", Fill = "transparent"
-                    }
-                }
+                Content = name,
+                Style=new TextStyle(){Color="White",FontSize = 12,FontFamily="Segoe UI"},
+                Offset=new DiagramPoint(){X=0.5,Y=0.5}
             }
         };
-             
-        handle = new DiagramObjectCollection<UserHandle>()
+                handle = new DiagramObjectCollection<UserHandle>()
 {
     
             new UserHandle(){Name= "handle2",Size=30, Template=true, Visible= true, BackgroundColor= "yellow",Offset = 0, Side= Direction.Left, Margin= new DiagramThickness(){ Top= 0, Bottom= 0, Left= 0, Right= 20 },
@@ -405,40 +390,78 @@ width:30px;
 
         };
         select.UserHandles = handle;
-        nodes.Add(diagramNode);
+        node.Constraints &= ~NodeConstraints.Rotate;
     }
-    private DiagramObjectCollection<PointPort> CreatePort()
+
+    private void ConnectorCreating(IDiagramObject connector)
     {
-        DiagramObjectCollection<PointPort> defaultsPorts = new DiagramObjectCollection<PointPort>();
-        PointPort port1 = new PointPort()
+        (connector as Connector).Type = ConnectorSegmentType.Bezier;
+        (connector as Connector).Constraints = ConnectorConstraints.Default & ~ConnectorConstraints.Select;
+        (connector as Connector).Style = new ShapeStyle() { StrokeColor = "#4f4f4f", StrokeWidth = 1 };
+        (connector as Connector).TargetDecorator = new DecoratorSettings() { Shape = DecoratorShape.None };
+        (connector as Connector).SourceDecorator.Shape = DecoratorShape.None;
+        Node sourceNode = diagram.GetObject((connector as Connector).SourceID) as Node;
+        Node targetNode = diagram.GetObject((connector as Connector).TargetID) as Node;
+        if (targetNode != null && targetNode.Data != null)
         {
-            ID = "port1",
-            Shape = PortShapes.Circle,
-            Offset = new DiagramPoint() { X = 0, Y = 0.5}
-        };
-        PointPort port2 = new PointPort()
-        {
-            ID = "port2",
-            Shape = PortShapes.Circle,
-            Offset = new DiagramPoint() { X = 0.5, Y = 0 }
-        };
-        PointPort port3 = new PointPort()
-        {
-            ID = "port3",
-            Shape = PortShapes.Circle,
-            Offset = new DiagramPoint() { X = 1, Y = 0.5 }
-        };
-        PointPort port4 = new PointPort()
-        {
-            ID = "port4",
-            Shape = PortShapes.Circle,
-            Offset = new DiagramPoint() { X = 0.5, Y = 1 }
-        };
-        defaultsPorts.Add(port1);
-        defaultsPorts.Add(port2);
-        defaultsPorts.Add(port3);
-        defaultsPorts.Add(port4);
-        return defaultsPorts;
+            MindMapDetails nodeInfo = (targetNode.Data as MindMapDetails);
+            if (nodeInfo.Branch == BranchType.Right || nodeInfo.Branch == BranchType.SubRight)
+            {
+                (connector as Connector).SourcePortID = sourceNode.Ports[0].ID;
+                (connector as Connector).TargetPortID = targetNode.Ports[1].ID;
+            }
+            else if (nodeInfo.Branch == BranchType.Left || nodeInfo.Branch == BranchType.SubLeft)
+            {
+                (connector as Connector).SourcePortID = sourceNode.Ports[1].ID;
+                (connector as Connector).TargetPortID = targetNode.Ports[0].ID;
+            }
+        }
     }
+
+         DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
+    DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+    DiagramObjectCollection<UserHandle> handle = new DiagramObjectCollection<UserHandle>();
+    DiagramSelectionSettings select = new DiagramSelectionSettings() { };
+     public class MindMapDetails
+    {
+        public string Id { get; set; }
+        public string Label { get; set; }
+        public string ParentId { get; set; }
+        public BranchType Branch { get; set; }
+        public string Fill { get; set; }
+    }
+
+    public object DataSource;
+    protected override void OnInitialized()
+    {
+       
+       MindmapData = new List<MindMapDetails>()
+        {
+            new MindMapDetails(){Id="1",Label="Business Planning",ParentId ="",Branch= BranchType.Root, Fill="#034d6d" },
+            new MindMapDetails(){Id="2",Label= "Expectation",ParentId = "1",Branch= BranchType.Left,Fill= "#1b80c6" },
+            new MindMapDetails(){Id="3",Label= "Requirements", ParentId="1",Branch= BranchType.Right,Fill= "#1b80c6" },
+            new MindMapDetails(){Id="4",Label= "Marketing", ParentId="1",Branch= BranchType.Left,Fill= "#1b80c6" },
+            new MindMapDetails(){Id="5",Label= "Budgets",ParentId= "1",Branch= BranchType.Right,Fill= "#1b80c6" },
+            new MindMapDetails(){ Id="6", Label="Situation in Market", ParentId= "1", Branch = BranchType.Left, Fill= "#1b80c6" },
+            new MindMapDetails(){ Id="7", Label="Product Sales", ParentId= "2", Branch = BranchType.SubLeft, Fill= "#3dbfc9" },
+            new MindMapDetails() { Id = "8", Label= "Strategy", ParentId="2", Branch = BranchType.SubLeft, Fill="#3dbfc9" },
+            new MindMapDetails() { Id = "9", Label="Contacts", ParentId="2", Branch = BranchType.SubLeft, Fill="#3dbfc9" },
+            new MindMapDetails() { Id = "10", Label="Customer Groups", ParentId= "4", Branch = BranchType.SubLeft,Fill= "#3dbfc9" },
+            new MindMapDetails() { Id = "11", Label= "Branding", ParentId= "4", Branch = BranchType.SubLeft, Fill= "#3dbfc9" },
+            new MindMapDetails() { Id = "12", Label= "Advertising", ParentId= "4", Branch = BranchType.SubLeft, Fill= "#3dbfc9" },
+            new MindMapDetails() { Id = "13", Label= "Competitors", ParentId= "6", Branch = BranchType.SubLeft, Fill="#3dbfc9" },
+            new MindMapDetails() { Id = "14", Label="Location", ParentId="6", Branch = BranchType.SubLeft, Fill= "#3dbfc9" },
+            new MindMapDetails() { Id = "15", Label= "Director", ParentId= "3", Branch = BranchType.SubRight, Fill="#3dbfc9" },
+            new MindMapDetails() { Id = "16", Label="Accounts Department", ParentId= "3", Branch = BranchType.SubRight, Fill= "#3dbfc9" },
+            new MindMapDetails() { Id = "17", Label="Administration", ParentId= "3", Branch = BranchType.SubRight, Fill="#3dbfc9" },
+            new MindMapDetails() { Id = "18", Label= "Development", ParentId="3", Branch = BranchType.SubRight, Fill= "#3dbfc9" },
+            new MindMapDetails() { Id = "19", Label= "Estimation", ParentId= "5", Branch = BranchType.SubRight, Fill="#3dbfc9" },
+            new MindMapDetails() { Id = "20", Label= "Profit", ParentId= "5", Branch = BranchType.SubRight, Fill= "#3dbfc9" },
+            new MindMapDetails(){ Id="21", Label="Funds", ParentId= "5", Branch = BranchType.SubRight, Fill= "#3dbfc9" }
+        };
+        DataSource = MindmapData;
+
+    }
+
 }
 

@@ -10,7 +10,7 @@ In this example, we used the speeddial component in the userhandle template. We 
 Documentation:  https://blazor.syncfusion.com/documentation/diagram/user-handle
 
 Node With speeddial:
-![image](https://user-images.githubusercontent.com/77827252/202990695-b4bc2972-f6b3-4226-8580-d2067f24657a.png)
+![image](https://user-images.githubusercontent.com/77827252/203252793-c0b61455-ed0d-49f3-8b91-a1774cce0ad2.png)
 
 
 ## Prerequisites

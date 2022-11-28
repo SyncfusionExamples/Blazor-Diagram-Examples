@@ -1,0 +1,188 @@
+﻿@page "/Export"
+
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Diagram
+@using System.Text.Json;
+@using BlazorHTMLToPDF.Data
+@inject ExportService exportService
+@inject Microsoft.JSInterop.IJSRuntime JS
+@using  System.IO;
+
+
+
+ <div id="OrgChartDiagram">
+        <SfDiagramComponent @ref="@Diagram" Height="690px" NodeCreating="@OnNodeCreating" ConnectorCreating="@OnConnectorCreating" InteractionController="@DiagramInteractions.ZoomPan">
+            <ScrollSettings @bind-ScrollLimit="@scrollLimit"></ScrollSettings>
+            <DataSourceSettings ID="Id" ParentID="Manager" DataSource="DataSource"></DataSourceSettings>
+            <Layout @bind-Type="@Type" @bind-HorizontalSpacing="@HorizontalSpacing" @bind-Orientation="@OrientationType" @bind-VerticalSpacing="@VerticalSpacing" @bind-HorizontalAlignment="@HorizontalAlignment" @bind-VerticalAlignment="@VerticalAlignment" GetLayoutInfo="GetLayoutInfo">
+                <LayoutMargin @bind-Top="@Top" @bind-Bottom="@Bottom" @bind-Right="@Right" @bind-Left="@Left"></LayoutMargin>
+            </Layout>
+            <SnapSettings Constraints="SnapConstraints.None"></SnapSettings>
+            <DiagramTemplates>
+                <NodeTemplate>
+                    @{
+                         Node node1 = (context as Node);
+                        string Name = (node1.Data as OrganizationalDetails).Name;
+                        string Role = (node1.Data as OrganizationalDetails).Role;
+                        string Imageurl = (node1.Data as OrganizationalDetails).Imageurl;
+                        <div style=" position: absolute;
+        width: 177px;
+        height: 54px;
+        border: 1px solid black;
+        box-sizing: border-box;
+        border-radius: 5px;" class="e-orgchart-template-div-style">
+                            <div id="image" class="e-orgchart-template-image-style" style="background-image: url(@(@Imageurl));width: 52px;
+        height: 52px;
+        left: 552px;
+        top: 154px;
+        float: left;
+        background-size: 100% 100%;">
+                            </div>
+                            <div style="height:75%;float: right;margin-right: 20px">
+                                <p style=" font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 14px;
+        letter-spacing: 0.1px;
+        color: #363636;
+        margin-top: 8px;
+        height: 8px" class="e-orgchart-template-name-style">@Name</p>
+                                <p style="  font-family: Roboto;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 14px;
+        letter-spacing: 0.1px;
+        color: #7A7A7A;" class="e-orgchart-template-role-style">@Role</p>
+                            </div>
+                        </div>
+                    }
+                </NodeTemplate>
+            </DiagramTemplates>
+        </SfDiagramComponent>
+    </div>
+              
+                  <button @onclick="async () => await export()">Export</button>
+@code
+    {
+    ScrollLimitMode scrollLimit { get; set; } = ScrollLimitMode.Diagram;
+    private Orientation subTreeOrientation = Orientation.Vertical;
+    private SubTreeAlignmentType subTreeAlignment = SubTreeAlignmentType.Right;
+    private int rows = 0;
+     private double offset = 20;
+    public SfDiagramComponent Diagram;
+    public LayoutOrientation OrientationType = LayoutOrientation.TopToBottom;
+    public int? HorizontalValue { get; set; } = 30;
+    public int? VerticalValue { get; set; } = 30;
+    public LayoutType Type = LayoutType.OrganizationalChart;
+    public HorizontalAlignment HorizontalAlignment = HorizontalAlignment.Auto;
+    public VerticalAlignment VerticalAlignment = VerticalAlignment.Auto;
+    public int HorizontalSpacing = 30;
+    public int VerticalSpacing = 30;
+    public double Top = 50;
+    public double Bottom = 50;
+    public double Right = 50;
+    public double Left = 50;
+
+    // Defines default values for Node object
+    private void OnNodeCreating(IDiagramObject obj)
+    {
+        Node node = obj as Node;
+        if (node.Data is System.Text.Json.JsonElement)
+        {
+            node.Data = System.Text.Json.JsonSerializer.Deserialize<OrganizationalDetails>(node.Data.ToString());
+        }
+        OrganizationalDetails organizationData = node.Data as OrganizationalDetails;
+        node.Width = 177;
+        node.Height = 54;
+      
+        node.Shape = new Shape()
+        {
+            Type = Syncfusion.Blazor.Diagram.NodeShapes.HTML,
+        };
+
+    }
+    // Defines default values for Connector object
+    private void OnConnectorCreating(IDiagramObject connector1)
+    {
+        Connector connector = (connector1 as Connector);
+        connector.Type = ConnectorSegmentType.Orthogonal;
+        connector.CornerRadius = 10;
+        connector.Style = new ShapeStyle()
+        {
+            StrokeWidth = 1,
+            StrokeDashArray = "1,1"
+        };
+        connector.TargetDecorator.Shape = DecoratorShape.None;
+        connector.SourceDecorator.Shape = DecoratorShape.None;
+    }
+
+    public class OrganizationalDetails
+    {
+        public string Id { get; set; }
+        public string Role { get; set; }
+        public string Color { get; set; }
+        public string Manager { get; set; }
+        public string ChartType { get; set; }
+        public string Name { get; set; }
+        public string Imageurl { get; set; }
+    }
+    //DataSource Items.
+    public List<OrganizationalDetails> DataSource = new List<OrganizationalDetails>()
+    {
+        new OrganizationalDetails() { Id= "parent", Role= "Witere infos", Color = "#00786E", Manager = "", ChartType = "", Name="Klinik 1", Imageurl="images/diagram/overview/himage1.png" },
+        new OrganizationalDetails() { Id = "2", Role= "Witere infos", Color = "#B4E6B3", Manager =  "parent", ChartType = "right", Name="Bereich 1", Imageurl="images/diagram/overview/himage1.png"},
+        new OrganizationalDetails() { Id = "3", Role= "Witere infos", Color = "#B4E6B3", Manager = "parent", ChartType ="", Name="verwaltung", Imageurl="images/diagram/overview/himage1.png"},
+        new OrganizationalDetails() { Id = "4", Role= "Witere infos", Color =  "#B4E6B3", Manager =  "2",ChartType = "", Name="Station 1", Imageurl="images/diagram/overview/image5.png"},
+        new OrganizationalDetails() { Id = "5", Role= "Witere infos", Color = "#B4E6B3", Manager =  "3", ChartType ="", Name="QM", Imageurl="images/diagram/overview/image22.png"},
+        new OrganizationalDetails() { Id = "6", Role= "Witere infos", Color = "#B4E6B3", Manager =  "4", ChartType ="", Name="Pflege", Imageurl="images/diagram/overview/image31.png"},
+       
+    };
+    private TreeInfo GetLayoutInfo(IDiagramObject obj, TreeInfo options)
+    {
+        if (rows == 0)
+        {
+            if (rows == 0 && options.Rows != null)
+                options.Rows = null;
+            Node node = obj as Node;
+
+            if (!options.HasSubTree)
+            {
+                options.AlignmentType = subTreeAlignment;
+                options.Orientation = subTreeOrientation;
+                options.AlignmentType = subTreeAlignment;
+            }
+        }
+        else
+        {
+            if (!options.HasSubTree)
+            {
+                options.AlignmentType = subTreeAlignment;
+                options.Orientation = subTreeOrientation;
+                options.Offset = offset;
+            }
+        }
+        return options;
+    }
+  
+    private async Task<string> ConvertImage()
+    {
+        ExportService exportService = new ExportService();
+        string diagramContent = await JS.InvokeAsync<string>("getDiagramContent", new object[] { "OrgChartDiagram" }).ConfigureAwait(true);
+        object bounds = await JS.InvokeAsync<object>("getDiagramBounds", new object[] { "OrgChartDiagram" }).ConfigureAwait(true);
+        DiagramRect diagramBounds = JsonSerializer.Deserialize<DiagramRect>(bounds.ToString());
+        string filePath = @"\QtBinariesWindows\";
+        string diagram = exportService.ConvertImage(diagramContent, Convert.ToInt32(diagramBounds.Width), filePath);
+
+        return diagram;
+    }
+    private async Task export()
+    {
+        string diagramImage = await ConvertImage();
+
+        await JS.InvokeAsync<object>("download", new object[] { diagramImage }).ConfigureAwait(true);
+    }
+
+  
+}

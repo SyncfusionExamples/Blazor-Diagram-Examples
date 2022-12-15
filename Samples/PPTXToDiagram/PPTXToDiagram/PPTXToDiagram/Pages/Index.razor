@@ -1,0 +1,19 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using BlazorApp34.Data
+<SfDiagramComponent  Height="700px" Width="800px" Nodes="@nodesCollection" Connectors="@connectorsCollection">
+
+</SfDiagramComponent>
+
+@code{
+    DiagramObjectCollection<Node> nodesCollection = new DiagramObjectCollection<Node>();
+    DiagramObjectCollection<Connector> connectorsCollection = new DiagramObjectCollection<Connector>();
+    protected override void OnInitialized()
+    {
+        PresentationService presentationService = new PresentationService();
+        presentationService.PPTtoDiagram();
+        nodesCollection = presentationService.nodes;
+        connectorsCollection = presentationService.connetors;
+    }
+}

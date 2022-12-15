@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Syncfusion.Blazor.Diagram" Version="20.3.0.60" />
-    <PackageReference Include="Syncfusion.Presentation.Net.Core" Version="20.3.0.60" />
+    <PackageReference Include="Syncfusion.Blazor.Diagram" Version="*" />
+    <PackageReference Include="Syncfusion.Presentation.Net.Core" Version="*" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,167 @@
+﻿@page "/"
+
+
+@using Syncfusion.Blazor.Diagram
+
+<input type="button" value="HorizontalPort" @onclick="@HorizontalPort" />
+<input type="button" value="HorizontalContent" @onclick="@HorizontalContent" />
+<input type="button" value="HorizontalAll" @onclick="@HorizontalAll" />
+<input type="button" value="HorizontalNone" @onclick="@HorizontalNone" />
+<SfDiagramComponent @ref="diagram" Width="1000px" Height="1000px" Nodes="@NodeCollection" Connectors="@connectors">
+</SfDiagramComponent>
+@code
+{
+    DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
+    public SfDiagramComponent diagram;
+    DiagramObjectCollection<Node> NodeCollection;
+    protected override void OnInitialized()
+    {
+        Node node1 = new Node()
+            {
+                ID = "node1",
+                Width = 100,
+                Height = 100,
+                OffsetX = 700,
+                OffsetY = 100,
+                Flip = FlipDirection.Horizontal,
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+            {
+                new ShapeAnnotation
+                {
+                   ID="node1annotation",
+                   Content = "Offset(0,0)",
+                   Offset = new DiagramPoint() { X = 0, Y = 0 }
+                }
+            },
+                Style = new ShapeStyle()
+                {
+                    Fill = "#6495ED",
+                },
+                Shape = new FlowShape()
+                {
+                    Type = NodeShapes.Flow,
+                    Shape = NodeFlowShapes.Card
+                },
+                Ports = new DiagramObjectCollection<PointPort>()
+            {
+                new PointPort()
+                {
+                    ID="ports",
+                    Style = new ShapeStyle(){ Fill = "gray" },
+                    Offset = new DiagramPoint() { X = 0, Y = 0 },
+                    Visibility = PortVisibility.Visible,
+                }
+            }
+            };
+        Node node2 = new Node()
+            {
+                ID = "node2",
+                Width = 100,
+                Height = 100,
+                OffsetX = 900,
+                OffsetY = 100,
+                Flip = FlipDirection.Horizontal,
+                FlipMode = DiagramFlipMode.Port,
+                Style = new ShapeStyle()
+                {
+                    Fill = "#6495ED",
+                },
+                Shape = new FlowShape()
+                {
+                    Type = NodeShapes.Flow,
+                    Shape = NodeFlowShapes.Card
+                },
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+            {
+                new ShapeAnnotation
+                {
+                    Content = "Offset(0,0)",
+                    Offset = new DiagramPoint() { X = 0, Y = 0.5 }
+                }
+            },
+                Ports = new DiagramObjectCollection<PointPort>()
+            {
+               new PointPort()
+               {
+                   Style = new ShapeStyle(){ Fill = "gray" },
+                   Offset = new DiagramPoint() { X = 0, Y = 0 },
+                   Visibility = PortVisibility.Visible
+               }
+            }
+            };
+        NodeCollection = new DiagramObjectCollection<Node>() { node1, node2 };
+    }
+
+    public void HorizontalPort()
+    {
+        if (diagram.SelectionSettings.Nodes.Count > 0)
+        {
+            for (int i = 0; i < diagram.SelectionSettings.Nodes.Count; i++)
+            {
+                diagram.SelectionSettings.Nodes[i].FlipMode = DiagramFlipMode.Port;
+                if (diagram.SelectionSettings.Nodes[i].Flip.HasFlag(FlipDirection.Horizontal))
+                {
+                    diagram.SelectionSettings.Nodes[i].Flip &= ~FlipDirection.Horizontal;
+                }
+                else
+                {
+                    diagram.SelectionSettings.Nodes[i].Flip |= FlipDirection.Horizontal;
+                }
+            }
+        }
+    }
+    public void HorizontalContent()
+    {
+        if (diagram.SelectionSettings.Nodes.Count > 0)
+        {
+            for (int i = 0; i < diagram.SelectionSettings.Nodes.Count; i++)
+            {
+                diagram.SelectionSettings.Nodes[i].FlipMode = DiagramFlipMode.Content;
+                if (diagram.SelectionSettings.Nodes[i].Flip.HasFlag(FlipDirection.Horizontal))
+                {
+                    diagram.SelectionSettings.Nodes[i].Flip &= ~FlipDirection.Horizontal;
+                }
+                else
+                {
+                    diagram.SelectionSettings.Nodes[i].Flip |= FlipDirection.Horizontal;
+                }
+            }
+        }
+    }
+    public void HorizontalAll()
+    {
+        if (diagram.SelectionSettings.Nodes.Count > 0)
+        {
+            for (int i = 0; i < diagram.SelectionSettings.Nodes.Count; i++)
+            {
+                diagram.SelectionSettings.Nodes[i].FlipMode = DiagramFlipMode.All;
+                if (diagram.SelectionSettings.Nodes[i].Flip.HasFlag(FlipDirection.Horizontal))
+                {
+                    diagram.SelectionSettings.Nodes[i].Flip &= ~FlipDirection.Horizontal;
+                }
+                else
+                {
+                    diagram.SelectionSettings.Nodes[i].Flip |= FlipDirection.Horizontal;
+                }
+            }
+        }
+    }
+    public void HorizontalNone()
+    {
+        if (diagram.SelectionSettings.Nodes.Count > 0)
+        {
+            for (int i = 0; i < diagram.SelectionSettings.Nodes.Count; i++)
+            {
+                diagram.SelectionSettings.Nodes[i].FlipMode = DiagramFlipMode.None;
+                if (diagram.SelectionSettings.Nodes[i].Flip.HasFlag(FlipDirection.Horizontal))
+                {
+                    diagram.SelectionSettings.Nodes[i].Flip &= ~FlipDirection.Horizontal;
+                }
+                else
+                {
+                    diagram.SelectionSettings.Nodes[i].Flip |= FlipDirection.Horizontal;
+                }
+            }
+        }
+    }
+}

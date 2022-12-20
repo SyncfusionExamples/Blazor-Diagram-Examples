@@ -1,0 +1,96 @@
+﻿@page "/"
+@using Syncfusion.Blazor.Diagram
+@using System.Collections.ObjectModel
+
+
+<SfDiagramComponent @ref="diagram" Height="600px" Width="90%" @bind-Nodes="nodes"
+                    @bind-Connectors="connectors">
+    <ContextMenuSettings @bind-Show="@show"
+                         ContextMenuOpening="@Openning">
+    </ContextMenuSettings>
+</SfDiagramComponent>
+
+@code {
+    SfDiagramComponent diagram;
+    DiagramObjectCollection<Node> nodes;
+    DiagramObjectCollection<Connector> connectors;
+
+    ContextMenuSettings ContextMenuSettings;
+
+
+    bool show = true;
+
+    protected override void OnInitialized()
+    {
+        nodes = new DiagramObjectCollection<Node>();
+        connectors = new DiagramObjectCollection<Connector>();
+
+        Node node1 = new Node()
+            {
+                ID = "node1",
+                Height = 100,
+                Width = 100,
+                OffsetX = 100,
+                OffsetY = 100,
+                Style = new ShapeStyle()
+                {
+                    Fill = "#6BA5D7",
+                    StrokeColor = "white",
+                    StrokeWidth = 1
+                }
+            };
+        Node node2 = new Node()
+            {
+                ID = "node2",
+                Height = 100,
+                Width = 100,
+                OffsetX = 300,
+                OffsetY = 100,
+                Style = new ShapeStyle()
+                {
+                    Fill = "#6BA5D7",
+                    StrokeColor = "white",
+                    StrokeWidth = 1
+                }
+            };
+        nodes.Add(node1);
+        nodes.Add(node2);
+
+        Connector connector1 = new Connector()
+            {
+                ID = "connector1",
+                SourceID = "node1",
+                TargetID = "node2",
+                Type = ConnectorSegmentType.Straight,
+                Style = new ShapeStyle()
+                {
+                    Fill = "#6BA5D7",
+                    StrokeWidth = 2
+                }
+            };
+        connectors.Add(connector1);
+    }
+
+
+    private void Openning(DiagramMenuOpeningEventArgs args)
+    {
+    }
+}
+
+<style>
+    #target {
+        border: 1px dashed;
+        height: 150px;
+        padding: 10px;
+        position: relative;
+        text-align: justify;
+        color: gray;
+        user-select: none;
+    }
+
+    .shortcut {
+        float: right;
+        font-size: 10px;
+        opacity: 0.5;
+    }
+</style>

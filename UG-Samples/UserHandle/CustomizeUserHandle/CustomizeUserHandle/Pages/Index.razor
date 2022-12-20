@@ -1,0 +1,77 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+
+<SfDiagramComponent @ref="@Diagram" Height="600px"
+                    Nodes="@NodeCollection"
+                    Connectors="@ConnectorCollection"
+                    SelectionSettings="@SelectedModel">
+</SfDiagramComponent>
+
+@code {
+    // Reference to diagram
+    SfDiagramComponent Diagram;
+    //Defines diagram's connector collection
+    DiagramObjectCollection<Connector> ConnectorCollection = new DiagramObjectCollection<Connector>();
+    //Defines diagram's node collection
+    DiagramObjectCollection<Node> NodeCollection = new DiagramObjectCollection<Node>();
+    // Defines diagram's SelectedItems
+    DiagramSelectionSettings SelectedModel = new DiagramSelectionSettings();
+    DiagramObjectCollection<UserHandle> UserHandles = new DiagramObjectCollection<UserHandle>();
+    protected override void OnInitialized()
+    {
+        //Creating the userhandle for cloning the objects
+        UserHandle cloneHandle = new UserHandle()
+            {
+                //Name of the user handle
+                Name = "clone",
+                //Set pathdata for userhandle
+                PathData = "M60.3,18H27.5c-3,0-5.5,2.4-5.5,5.5v38.2h5.5V23.5h32.7V18z M68.5,28.9h-30c-3,0-5.5,2.4-5.5,5.5v38.2c0,3,2.4,5.5,5.5,5.5h30c3,0,5.5-2.4,5.5-5.5V34.4C73.9,31.4,71.5,28.9,68.5,28.9z M68.5,72.5h-30V34.4h30V72.5z",
+                //Set visibility for the user handle
+                Visible = true,
+                //Set the position for the user handle
+                Offset = 0,
+                //Set side based on the given offset
+                Side = Direction.Bottom,
+                //Disable to render this userhandle for connectors
+                //DisableConnectors = true, ------------------------------------------------------------------------------
+                //set margin for the user handle
+                Margin = new DiagramThickness() { Top = 0, Bottom = 0, Left = 0, Right = 0 }
+            };
+
+        //Add user handle to the collection...
+        UserHandles = new DiagramObjectCollection<UserHandle>()
+        {
+            cloneHandle
+        };
+        SelectedModel = new DiagramSelectionSettings()
+            {
+                //Enable userhandle for selected items...
+                Constraints = SelectorConstraints.UserHandle,
+                UserHandles = this.UserHandles
+            };
+
+        NodeCollection = new DiagramObjectCollection<Node>();
+        Node diagramNode = new Node()
+            {
+                ID = "node1",
+                OffsetX = 100,
+                OffsetY = 100,
+                Width = 100,
+                Height = 100,
+                Style = new ShapeStyle() { Fill = "#659be5", StrokeColor = "none" },
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>() { new ShapeAnnotation { Content = "Node" } }
+            };
+
+        NodeCollection.Add(diagramNode);
+
+        ConnectorCollection = new DiagramObjectCollection<Connector>();
+        Connector diagramConnector = new Connector()
+            {
+                SourcePoint = new DiagramPoint() { X = 300, Y = 100 },
+                TargetPoint = new DiagramPoint() { X = 300, Y = 300 }
+            };
+
+        ConnectorCollection.Add(diagramConnector);
+    }
+}

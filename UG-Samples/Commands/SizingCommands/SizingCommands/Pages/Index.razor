@@ -1,0 +1,68 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
+
+<SfButton Content="SameSize" OnClick="@OnSameSize" />
+<SfButton Content="SameWidth" OnClick="@OnSameWidth" />
+<SfButton Content="SameHeight" OnClick="@OnSameHeight" />
+
+<SfDiagramComponent @ref="@diagram" Height="600px" Nodes="@nodes" Connectors="@connectors" />
+
+@code
+{
+    //Reference to diagram
+    SfDiagramComponent diagram;
+    DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+    DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
+
+    protected override void OnInitialized()
+    {
+        Node node1 = new Node()
+            {
+                ID = "node1",
+                Width = 50,
+                Height = 30,
+                OffsetX = 500,
+                OffsetY = 100,
+                Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle },
+                Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "#6495ED" }
+            };
+        nodes.Add(node1);
+        Node node2 = new Node()
+            {
+                ID = "node2",
+                Width = 60,
+                Height = 40,
+                OffsetX = 400,
+                OffsetY = 200,
+                Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle },
+                Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "#6495ED" }
+            };
+        nodes.Add(node2);
+        Node node3 = new Node()
+            {
+                ID = "node3",
+                Width = 70,
+                Height = 50,
+                OffsetX = 500,
+                OffsetY = 300,
+                Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle },
+                Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "#6495ED" }
+            };
+        nodes.Add(node3);
+    }
+
+    private void OnSameSize()
+    {
+        diagram.SetSameSize(SizingMode.Both);
+    }
+    private void OnSameWidth()
+    {
+        diagram.SetSameSize(SizingMode.Width);
+    }
+    private void OnSameHeight()
+    {
+        diagram.SetSameSize(SizingMode.Height);
+    }
+}

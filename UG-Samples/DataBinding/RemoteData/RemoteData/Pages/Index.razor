@@ -1,0 +1,54 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Data
+
+<div style="width:100%">
+    <div style="width:70%">
+        <SfDiagramComponent @ref="Diagram" Width="1000px" Height="500px"
+                            NodeCreating="NodeDefaults"  SetNodeTemplate="SetTemplate">
+            <DataSourceSettings ID="EmployeeID" ParentID="ReportsTo">
+                <SfDataManager Url="https://services.odata.org/V4/Northwind/Northwind.svc/Employees" 
+                               Adaptor="Syncfusion.Blazor.Adaptors.ODataV4Adaptor"/>
+            </DataSourceSettings>
+            <Layout HorizontalSpacing="40" VerticalSpacing="40" Type="LayoutType.HierarchicalTree"/>
+        </SfDiagramComponent>
+    </div>
+</div>
+
+@code
+{
+    SfDiagramComponent Diagram;
+    float x = 100;
+    float y = 100;
+
+    public class Employee
+    {
+        public int? EmployeeID { get; set; }
+        public string FirstName { get; set; }
+        public int? ReportsTo { get; set; }
+    }
+    
+    Query Query = new Query().Select(new List<string>() { "EmployeeID", "ReportsTo", "FirstName" }).Take(9);
+   
+    private void NodeDefaults(IDiagramObject obj)
+    {
+        Node node = obj as Node;
+        node.OffsetX = x;
+        node.OffsetY = y;
+        x += 100;
+        Employee data = System.Text.Json.JsonSerializer.Deserialize<Employee>(node.Data.ToString());
+        node.Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+        {
+            new ShapeAnnotation()
+            {
+                Content = data.FirstName
+            }
+        };
+    }
+  
+    private CommonElement SetTemplate(IDiagramObject node)
+    {
+        return null;
+    }
+}

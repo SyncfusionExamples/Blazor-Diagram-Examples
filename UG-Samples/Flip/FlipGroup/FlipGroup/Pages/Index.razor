@@ -1,0 +1,191 @@
+﻿@page "/"
+
+
+@using Syncfusion.Blazor.Diagram
+<input type="button" value="HorizontalPort" @onclick="@HorizontalPort" />
+<input type="button" value="HorizontalContent" @onclick="@HorizontalContent" />
+<input type="button" value="HorizontalAll" @onclick="@HorizontalAll" />
+<input type="button" value="HorizontalNone" @onclick="@HorizontalNone" />
+<SfDiagramComponent @ref="diagram" Width="1000px" Height="1000px" Nodes="@NodeCollection" Connectors="@connectors">
+    <SnapSettings Constraints="@SnapConstraints.None"></SnapSettings>
+</SfDiagramComponent>
+@code
+{
+    DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
+    public SfDiagramComponent diagram;
+    DiagramObjectCollection<Node> NodeCollection;
+    protected override void OnInitialized()
+    {
+        Node node3 = new Node()
+            {
+                ID = "node3",
+                Width = 100,
+                Height = 60,
+                OffsetX = 500,
+                OffsetY = 300,
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+            {
+                new ShapeAnnotation
+                {
+                    ID="ano3",
+                    Content = "node1",
+                    Offset = new DiagramPoint() { X = 0.5, Y = 0.5 }
+                }
+            },
+                Style = new ShapeStyle()
+                {
+                    Fill = "#6495ED",
+                },
+                Shape = new FlowShape()
+                {
+                    Type = NodeShapes.Flow,
+                    Shape = NodeFlowShapes.Card
+                },
+                Ports = new DiagramObjectCollection<PointPort>()
+            {
+               new PointPort()
+               {   ID="port3",
+                   Style = new ShapeStyle(){ Fill = "gray" },
+                   Offset = new DiagramPoint() { X = 0, Y = 0 },
+                   Width=14,Height=14,
+                   Visibility = PortVisibility.Visible
+               }
+            },
+            };
+        Node node4 = new Node()
+            {
+                ID = "node4",
+                Width = 100,
+                Height = 60,
+                OffsetX = 700,
+                OffsetY = 400,
+                Style = new ShapeStyle()
+                {
+                    Fill = "#6495ED",
+                },
+                Shape = new FlowShape()
+                {
+                    Type = NodeShapes.Flow,
+                    Shape = NodeFlowShapes.Card
+                },
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+            {
+                new ShapeAnnotation
+                {
+                    ID="anno4",
+                    Content = "node2",
+                    Offset = new DiagramPoint() { X = 0.5, Y = 0.5 }
+                }
+            },
+                Ports = new DiagramObjectCollection<PointPort>()
+            {
+               new PointPort()
+               {   ID="port4",
+                   Style = new ShapeStyle(){ Fill = "gray" },
+                   Offset = new DiagramPoint() { X = 0, Y = 0 },
+                   Width=14,Height=14,
+                   Visibility = PortVisibility.Visible
+               }
+            },
+            };
+        NodeCollection = new DiagramObjectCollection<Node>() { node3, node4 };
+        NodeGroup groupNode = new NodeGroup()
+            {
+                ID = "group",
+                Children = new string[] { "node3", "node4" },
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+                {
+                    new ShapeAnnotation
+                    {
+                        ID="anno4",
+                        Content = "GroupNode",
+                        Offset = new DiagramPoint() { X = 0.5, Y = 0.5 }
+                    }
+                },
+                Ports = new DiagramObjectCollection<PointPort>()
+            {
+               new PointPort()
+               {   ID="port4",
+                   Style = new ShapeStyle(){ Fill = "gray" },
+                   Offset = new DiagramPoint() { X = 0, Y = 0},
+                    Width=14,Height=14,
+                   Visibility = PortVisibility.Visible
+               }
+            },
+            };
+        NodeCollection.Add(groupNode);
+    }
+
+    public void HorizontalPort()
+    {
+        if (diagram.SelectionSettings.Nodes.Count > 0)
+        {
+            for (int i = 0; i < diagram.SelectionSettings.Nodes.Count; i++)
+            {
+                diagram.SelectionSettings.Nodes[i].FlipMode = DiagramFlipMode.Port;
+                if (diagram.SelectionSettings.Nodes[i].Flip.HasFlag(FlipDirection.Horizontal))
+                {
+                    diagram.SelectionSettings.Nodes[i].Flip &= ~FlipDirection.Horizontal;
+                }
+                else
+                {
+                    diagram.SelectionSettings.Nodes[i].Flip |= FlipDirection.Horizontal;
+                }
+            }
+        }
+    }
+    public void HorizontalContent()
+    {
+        if (diagram.SelectionSettings.Nodes.Count > 0)
+        {
+            for (int i = 0; i < diagram.SelectionSettings.Nodes.Count; i++)
+            {
+                diagram.SelectionSettings.Nodes[i].FlipMode = DiagramFlipMode.Content;
+                if (diagram.SelectionSettings.Nodes[i].Flip.HasFlag(FlipDirection.Horizontal))
+                {
+                    diagram.SelectionSettings.Nodes[i].Flip &= ~FlipDirection.Horizontal;
+                }
+                else
+                {
+                    diagram.SelectionSettings.Nodes[i].Flip |= FlipDirection.Horizontal;
+                }
+            }
+        }
+    }
+    public void HorizontalAll()
+    {
+        if (diagram.SelectionSettings.Nodes.Count > 0)
+        {
+            for (int i = 0; i < diagram.SelectionSettings.Nodes.Count; i++)
+            {
+                diagram.SelectionSettings.Nodes[i].FlipMode = DiagramFlipMode.All;
+                if (diagram.SelectionSettings.Nodes[i].Flip.HasFlag(FlipDirection.Horizontal))
+                {
+                    diagram.SelectionSettings.Nodes[i].Flip &= ~FlipDirection.Horizontal;
+                }
+                else
+                {
+                    diagram.SelectionSettings.Nodes[i].Flip |= FlipDirection.Horizontal;
+                }
+            }
+        }
+    }
+    public void HorizontalNone()
+    {
+        if (diagram.SelectionSettings.Nodes.Count > 0)
+        {
+            for (int i = 0; i < diagram.SelectionSettings.Nodes.Count; i++)
+            {
+                diagram.SelectionSettings.Nodes[i].FlipMode = DiagramFlipMode.None;
+                if (diagram.SelectionSettings.Nodes[i].Flip.HasFlag(FlipDirection.Horizontal))
+                {
+                    diagram.SelectionSettings.Nodes[i].Flip &= ~FlipDirection.Horizontal;
+                }
+                else
+                {
+                    diagram.SelectionSettings.Nodes[i].Flip |= FlipDirection.Horizontal;
+                }
+            }
+        }
+    }
+}

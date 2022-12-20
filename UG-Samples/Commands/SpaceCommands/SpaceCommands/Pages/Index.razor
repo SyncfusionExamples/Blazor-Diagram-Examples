@@ -1,0 +1,88 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
+
+<SfButton Content="Left" OnClick="@OnDistributeLeft" />
+<SfButton Content="Right" OnClick="@OnDistributeRight" />
+<SfButton Content="Top" OnClick="@OnDistributeTop" />
+<SfButton Content="Bottom" OnClick="@OnDistributeBottom" />
+<SfButton Content="Center" OnClick="@OnDistributeCenter" />
+<SfButton Content="Middle" OnClick="@OnDistributeMiddle" />
+<SfButton Content="BottomToTop" OnClick="@OnDistributeBottomToTop" />
+<SfButton Content="RightToLeft" OnClick="@OnDistributeRightToLeft" />
+<SfDiagramComponent @ref="diagram" Width="1000px" Height="500px" Nodes="@nodes" Connectors="@Connectors" />
+
+@code
+{
+    SfDiagramComponent diagram;
+    DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+    DiagramObjectCollection<Connector> Connectors = new DiagramObjectCollection<Connector>();
+
+    protected override void OnInitialized()
+    {
+        Node node1 = new Node()
+            {
+                ID = "node1",
+                Width = 50,
+                Height = 30,
+                OffsetX = 500,
+                OffsetY = 100,
+                Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle }
+            };
+        nodes.Add(node1);
+        Node node2 = new Node()
+            {
+                ID = "node2",
+                Width = 60,
+                Height = 40,
+                OffsetX = 400,
+                OffsetY = 200,
+                Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle }
+            };
+        nodes.Add(node2);
+        Node node3 = new Node()
+            {
+                ID = "node3",
+                Width = 70,
+                Height = 50,
+                OffsetX = 500,
+                OffsetY = 300,
+                Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle }
+            };
+        nodes.Add(node3);
+    }
+
+    private void OnDistributeLeft()
+    {
+        diagram.SetDistribute(DistributeOptions.Left);
+    }
+    private void OnDistributeRight()
+    {
+        diagram.SetDistribute(DistributeOptions.Right);
+    }
+    private void OnDistributeTop()
+    {
+        diagram.SetDistribute(DistributeOptions.Top);
+    }
+    private void OnDistributeBottom()
+    {
+        diagram.SetDistribute(DistributeOptions.Bottom);
+    }
+    private void OnDistributeMiddle()
+    {
+        diagram.SetDistribute(DistributeOptions.Middle);
+    }
+    private void OnDistributeCenter()
+    {
+        diagram.SetDistribute(DistributeOptions.Center);
+    }
+    private void OnDistributeBottomToTop()
+    {
+        diagram.SetDistribute(DistributeOptions.BottomToTop);
+    }
+    private void OnDistributeRightToLeft()
+    {
+        diagram.SetDistribute(DistributeOptions.RightToLeft);
+    }
+}

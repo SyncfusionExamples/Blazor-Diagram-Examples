@@ -1,0 +1,59 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
+
+<SfButton Content="Group" OnClick="@OnGroup" />
+<SfButton Content="Ungroup" OnClick="@OnUngroup" />
+<SfButton Content="SelectAll" OnClick="@OnSelectAll" />
+
+<SfDiagramComponent @ref="@diagram" Height="600px" Nodes="@nodes" Connectors="@Connectors" />
+
+@code
+{
+    //Reference to diagram
+    SfDiagramComponent diagram;
+    DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+    DiagramObjectCollection<Connector> Connectors = new DiagramObjectCollection<Connector>();
+
+    protected override void OnInitialized()
+    {
+        Node node1 = new Node()
+            {
+                ID = "node1",
+                Width = 50,
+                Height = 30,
+                OffsetX = 500,
+                OffsetY = 100,
+                Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle },
+                Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "#6495ED" }
+            };
+        nodes.Add(node1);
+        Node node2 = new Node()
+            {
+                ID = "node2",
+                Width = 60,
+                Height = 40,
+                OffsetX = 400,
+                OffsetY = 200,
+                Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle },
+                Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "#6495ED" }
+            };
+        nodes.Add(node2);
+    }
+
+    private void OnGroup()
+    {
+        diagram.Group();
+    }
+
+    private void OnUngroup()
+    {
+        diagram.Ungroup();
+    }
+
+    private void OnSelectAll()
+    {
+        diagram.SelectAll();
+    }
+}

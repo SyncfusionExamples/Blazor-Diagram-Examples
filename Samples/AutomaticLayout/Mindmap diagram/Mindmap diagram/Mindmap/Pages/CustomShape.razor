@@ -1,0 +1,165 @@
+﻿@page "/CustomShape"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Diagram.Internal
+
+<SfDiagramComponent @ref="@diagram" Height="690px" InteractionController="@DiagramInteractions.ZoomPan" NodeCreating="@NodeCreating" ConnectorCreating="@ConnectorCreating">
+    <DataSourceSettings ID="Id" ParentID="ParentId" DataSource="DataSource"></DataSourceSettings>
+    <Layout Type="LayoutType.MindMap" HorizontalSpacing="80" VerticalSpacing="30">
+        <LayoutMargin Top="10" Bottom="10" Right="10" Left="10"></LayoutMargin>
+    </Layout>
+</SfDiagramComponent>
+
+@code
+{
+    SfDiagramComponent diagram;
+
+    // Create a model class for the data source
+    public class MindMapDetails
+    {
+        public string Id { get; set; }
+        public string Label { get; set; }
+        public string ParentId { get; set; }
+        public BranchType Branch { get; set; }
+        public string Fill { get; set; }
+    }
+
+    //Defining the dataSource
+    public List<MindMapDetails> DataSource = new List<MindMapDetails>()
+    {
+    new MindMapDetails(){Id="1",Label="Business Planning",ParentId ="",Branch= BranchType.Root, Fill="#E74C3C" },
+            new MindMapDetails(){Id="2",Label= "Expectation",ParentId = "1",Branch= BranchType.Left,Fill= "#F39C12" },
+            new MindMapDetails(){Id="3",Label= "Requirements", ParentId="1",Branch= BranchType.Right,Fill= "#F39C12" },
+            new MindMapDetails(){Id="4",Label= "Marketing", ParentId="1",Branch= BranchType.Left,Fill= "#F39C12" },
+            new MindMapDetails(){Id="5",Label= "Budgets",ParentId= "1",Branch= BranchType.Right,Fill= "#F39C12" },
+            new MindMapDetails(){ Id="6", Label="Situation in Market", ParentId= "1", Branch = BranchType.Left, Fill= "#F39C12" },
+            new MindMapDetails(){ Id="7", Label="Product Sales", ParentId= "2", Branch = BranchType.SubLeft, Fill= "#3dbfc9" },
+            new MindMapDetails() { Id = "8", Label= "Strategy", ParentId="2", Branch = BranchType.SubLeft, Fill="#3dbfc9" },
+            new MindMapDetails() { Id = "9", Label="Contacts", ParentId="2", Branch = BranchType.SubLeft, Fill="#3dbfc9" },
+            new MindMapDetails() { Id = "10", Label="Customer Groups", ParentId= "4", Branch = BranchType.SubLeft,Fill= "#3dbfc9" },
+            new MindMapDetails() { Id = "11", Label= "Branding", ParentId= "4", Branch = BranchType.SubLeft, Fill= "#3dbfc9" },
+            new MindMapDetails() { Id = "12", Label= "Advertising", ParentId= "4", Branch = BranchType.SubLeft, Fill= "#3dbfc9" },
+            new MindMapDetails() { Id = "13", Label= "Competitors", ParentId= "6", Branch = BranchType.SubLeft, Fill="#3dbfc9" },
+            new MindMapDetails() { Id = "14", Label="Location", ParentId="6", Branch = BranchType.SubLeft, Fill= "#3dbfc9" },
+            new MindMapDetails() { Id = "15", Label= "Director", ParentId= "3", Branch = BranchType.SubRight, Fill="#3dbfc9" },
+            new MindMapDetails() { Id = "16", Label="Accounts Department", ParentId= "3", Branch = BranchType.SubRight, Fill= "#3dbfc9" },
+            new MindMapDetails() { Id = "17", Label="Administration", ParentId= "3", Branch = BranchType.SubRight, Fill="#3dbfc9" },
+            new MindMapDetails() { Id = "18", Label= "Development", ParentId="3", Branch = BranchType.SubRight, Fill= "#3dbfc9" },
+            new MindMapDetails() { Id = "19", Label= "Estimation", ParentId= "5", Branch = BranchType.SubRight, Fill="#3dbfc9" },
+            new MindMapDetails() { Id = "20", Label= "Profit", ParentId= "5", Branch = BranchType.SubRight, Fill= "#3dbfc9" },
+            new MindMapDetails(){ Id="21", Label="Funds", ParentId= "5", Branch = BranchType.SubRight, Fill= "#3dbfc9" }
+    };
+
+    private void NodeCreating(IDiagramObject obj)
+    {
+        Node node = obj as Node;
+        //node.Constraints = NodeConstraints.Default & ~NodeConstraints.Drag;
+        MindMapDetails hierarchicalData = null;
+        if (node.Data != null)
+        {
+            if (node.Data is System.Text.Json.JsonElement)
+            {
+                node.Data = System.Text.Json.JsonSerializer.Deserialize<MindMapDetails>(node.Data.ToString());
+            }
+            hierarchicalData = node.Data as MindMapDetails;
+        }
+        node.Height = 50;
+        node.Width = 120;
+        if (hierarchicalData is MindMapDetails && hierarchicalData.Branch == BranchType.Root)
+        {
+            node.Shape = new PathShape() { Type = NodeShapes.Path, Data = "M55.7315 17.239C57.8719 21.76 54.6613 27.788 47.1698 26.0787C46.0997 32.309 33.2572 35.323 28.9764 29.2951C25.7658 35.323 10.7829 33.816 10.7829 26.0787C3.29143 30.802 -0.989391 20.253 2.22121 17.239C-0.989317 14.2249 2.22121 6.68993 10.7829 8.39934C13.9935 -0.845086 25.7658 -0.845086 28.9764 5.18301C32.187 0.661909 45.0294 0.661908 47.1698 8.39934C52.5209 5.18301 60.0123 12.7179 55.7315 17.239Z" };
+        }
+        else if (hierarchicalData is MindMapDetails && (hierarchicalData.Branch == BranchType.Left || hierarchicalData.Branch == BranchType.Right))
+        {
+            node.Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle };
+        }
+        else
+            node.Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Ellipse };
+
+        PointPort port21 = new PointPort()
+            {
+                ID = "left",
+                Offset = new DiagramPoint() { X = 0, Y = 0.5 },
+                Height = 10,
+                Width = 10,
+            };
+
+        PointPort port22 = new PointPort()
+            {
+                ID = "right",
+                Offset = new DiagramPoint() { X = 1, Y = 0.5 },
+                Height = 10,
+                Width = 10,
+            };
+
+        if (node.Data != null)
+        {
+            node.Style.Fill = hierarchicalData.Fill;
+            node.Style.StrokeColor = hierarchicalData.Fill;
+            node.Ports = new DiagramObjectCollection<PointPort>()
+            {
+                port21,port22
+            };
+        }
+
+        string name = "";
+        if (hierarchicalData != null)
+        {
+            name = hierarchicalData.Label;
+        }
+        else
+        {
+            name = "New Child";
+        }
+
+        node.Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+        {
+            new ShapeAnnotation()
+            {
+                Content = name,
+                Style=new TextStyle(){Color="White",FontSize = 12,FontFamily="Segoe UI"},
+                Offset=new DiagramPoint(){X=0.5,Y=0.5}
+            }
+        };
+        node.Constraints &= ~NodeConstraints.Rotate;
+    }
+
+    private void ConnectorCreating(IDiagramObject obj)
+    {
+        Connector connector = obj as Connector;
+        connector.Type = ConnectorSegmentType.Bezier;
+        connector.Constraints = ConnectorConstraints.Default & ~ConnectorConstraints.Select;
+        connector.TargetDecorator = new DecoratorSettings() { Shape = DecoratorShape.None };
+        connector.SourceDecorator.Shape = DecoratorShape.None;
+        Node sourceNode = diagram.GetObject(connector.SourceID) as Node;
+        if (sourceNode != null && sourceNode.Data is MindMapDetails)
+        {
+            MindMapDetails hierarchicalData = sourceNode.Data as MindMapDetails;
+            if (hierarchicalData is MindMapDetails && hierarchicalData.Branch == BranchType.Root)
+            {
+                connector.Style = new ShapeStyle() { StrokeColor = "#8E44AD", StrokeWidth = 5 };
+            }
+            else if (hierarchicalData is MindMapDetails && (hierarchicalData.Branch == BranchType.Left || hierarchicalData.Branch == BranchType.Right))
+            {
+                connector.Style = new ShapeStyle() { StrokeColor = "#3498DB", StrokeWidth = 5 };
+            }
+            else
+                connector.Style = new ShapeStyle() { StrokeColor = "#3dbfc9", StrokeWidth = 5 };
+        }
+        Node targetNode = diagram.GetObject(connector.TargetID) as Node;
+        if (targetNode != null && targetNode.Data != null)
+        {
+            MindMapDetails nodeInfo = (targetNode.Data as MindMapDetails);
+            if (nodeInfo.Branch == BranchType.Right || nodeInfo.Branch == BranchType.SubRight)
+            {
+                connector.SourcePortID = sourceNode.Ports[0].ID;
+                connector.TargetPortID = targetNode.Ports[1].ID;
+            }
+            else if (nodeInfo.Branch == BranchType.Left || nodeInfo.Branch == BranchType.SubLeft)
+            {
+                connector.SourcePortID = sourceNode.Ports[1].ID;
+                connector.TargetPortID = targetNode.Ports[0].ID;
+            }
+        }
+    }
+}

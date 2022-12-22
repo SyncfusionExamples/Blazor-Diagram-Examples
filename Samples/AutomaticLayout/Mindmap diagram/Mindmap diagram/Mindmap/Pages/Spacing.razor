@@ -19,8 +19,22 @@
     }
 
     #properties {
-        width: 25%;
+        width: 27%;
         float: right;
+    }
+
+
+    .sb-property-border {
+        border-right: 1px solid #D7D7D7;
+    }
+     .row {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .row-header {
+        font-size: 13px;
+        font-weight: 600;
     }
     </style>
 
@@ -38,31 +52,31 @@
     <div class="property-panel-header">
         Properties
     </div>
-    <div id="propertypanel" class="e-remove-selection">
-        
-            <div class="row" style="padding-top: 8px">
-                <div style="display: table;height: 30px;" class="textboxstyle">
-                    <div style="display: table-cell; vertical-align: middle">Horizontal Spacing</div>
-                </div>
-                <div class="textboxstyle" style="padding-left:10px">
-                    <SfNumericTextBox TValue="int?" Width="100px" @bind-Value="@horizontalValue" Min="20" Step="2" Format="###.##">
+   
+    <div class="row property-panel-content" style="padding-top: 10px">
+        <div class="row" style="padding-top: 8px">
+            <div style="display: table;height: 30px;" class="textboxstyle">
+                <div style="display: table-cell; vertical-align: middle">Horizontal Spacing</div>
+            </div>
+            <div class="textboxstyle" style="padding-left:10px">
+                <SfNumericTextBox TValue="int?" Width="100px" @bind-Value="@horizontalValue" Min="20" Step="2" Format="###.##">
                         <NumericTextBoxEvents TValue="int?" ValueChange="OnHorizontalSpaceChange"></NumericTextBoxEvents>
                     </SfNumericTextBox>
-                </div>
             </div>
-            <div class="row" style="padding-top: 8px">
-                <div style="display: table;height: 30px;" class="textboxstyle">
-                    <div style="display: table-cell; vertical-align: middle">Vertical Spacing</div>
-                </div>
-                <div class="textboxstyle" style="padding-left:10px">
-                    <SfNumericTextBox TValue="int?" Width="100px" @bind-Value="@verticalValue" Min="20" Step="2" Format="###.##">
+        </div>
+        <div class="row" style="padding-top: 8px">
+            <div style="display: table;height: 30px;" class="textboxstyle">
+                <div style="display: table-cell; vertical-align: middle">Vertical Spacing</div>
+            </div>
+            <div class="textboxstyle" style="padding-left:10px">
+                <SfNumericTextBox TValue="int?" Width="100px" @bind-Value="@verticalValue" Min="20" Step="2" Format="###.##">
                         <NumericTextBoxEvents TValue="int?" ValueChange="OnVerticalSpaceChange"></NumericTextBoxEvents>
                     </SfNumericTextBox>
-                </div>
             </div>
-       
+        </div>
     </div>
 </div>
+
 @*End:Hidden*@
 @code
 {

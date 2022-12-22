@@ -15,7 +15,9 @@ namespace Mindmap
     {
         public static void Main(string[] args)
         {
+            //Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("LicenseKey");
             CreateHostBuilder(args).Build().Run();
+            
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

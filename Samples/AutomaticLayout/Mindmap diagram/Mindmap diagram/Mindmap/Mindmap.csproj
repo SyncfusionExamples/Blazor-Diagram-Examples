@@ -17,6 +17,8 @@
 
   <ItemGroup>
     <PackageReference Include="Syncfusion.Blazor.Diagram" Version="*" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="*" />
+    <PackageReference Include="Syncfusion.Licensing" Version="*" />
   </ItemGroup>
 
 </Project>

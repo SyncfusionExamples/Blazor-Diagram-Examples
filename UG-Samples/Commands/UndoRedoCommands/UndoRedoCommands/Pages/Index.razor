@@ -1,0 +1,24 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+
+<SfDiagramComponent @ref="@diagram" Height="600px">
+</SfDiagramComponent>
+
+@code
+{
+    //Reference to diagram
+    SfDiagramComponent diagram;
+
+    private void Undo()
+    {
+        //Revert the changes
+        diagram.Undo();
+    }
+
+    private void Redo()
+    {
+        //Restore the changes
+        diagram.Redo();
+    }
+}

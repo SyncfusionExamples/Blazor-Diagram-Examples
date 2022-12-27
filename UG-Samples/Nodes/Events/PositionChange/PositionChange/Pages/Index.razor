@@ -1,0 +1,36 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+
+<SfDiagramComponent Height="600px" Nodes="@nodes" PositionChanged="@OnPositionChange" />
+
+@code
+{
+    // To define node collection
+    DiagramObjectCollection<Node> nodes;
+
+    protected override void OnInitialized()
+    {
+        nodes = new DiagramObjectCollection<Node>();
+        // A node is created and stored in nodes collection.
+        Node node = new Node()
+            {
+                // Position of the node
+                OffsetX = 250,
+                OffsetY = 250,
+                // Size of the node
+                Width = 100,
+                Height = 100,
+                Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "white" },
+                Shape = new Shape() { Type = NodeShapes.Basic }
+            };
+        // Add node
+        nodes.Add(node);
+    }
+
+    // Position change event for diagram
+    public void OnPositionChange(PositionChangedEventArgs args)
+    {
+        Console.WriteLine(args.NewValue.Nodes[0].ID);
+    }
+}

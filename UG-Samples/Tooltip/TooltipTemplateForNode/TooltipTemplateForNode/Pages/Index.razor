@@ -1,0 +1,45 @@
+﻿@page "/"
+
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Popups
+<input type="button" value="Node Template" @onclick="TemplateChange" />
+<SfDiagramComponent Width="1000px" Height="500px" Nodes="@nodes" />
+@code
+{
+    //Define diagram's nodes collection
+    DiagramObjectCollection<Node> nodes;
+
+    protected override void OnInitialized()
+    {
+        //Intialize diagram's nodes collection
+        nodes = new DiagramObjectCollection<Node>();
+        Node node = new Node()
+            {
+                ID = "node1",
+                OffsetX = 250,
+                OffsetY = 250,
+                Width = 100,
+                Height = 100,
+                Style = new ShapeStyle()
+                {
+                    Fill = "#6495ED",
+                    StrokeColor = "white"
+                },
+                Tooltip = new DiagramTooltip() { Content = "NodeTooltip", Template = getContent() },
+                Constraints = NodeConstraints.Default | NodeConstraints.Tooltip,
+            };
+        nodes.Add(node);
+    }
+    //Method to getcontent
+    private string getContent()
+    {
+        string content = "<div><p>Product Name : Diagram</p><p>Element: Node</p><p>Content: Node Tooltip <p></p></div>";
+        return content;
+    }
+    //Change the Template at run time.
+    private void TemplateChange()
+    {
+        nodes[0].Tooltip.Template = "<p>TemplateUpdate</p>";
+    }
+}

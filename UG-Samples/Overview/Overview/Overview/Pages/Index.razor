@@ -6,7 +6,7 @@
 
 <div id="overviewdiagram" style="width: 100%;height: 500px;">
     <div style="width:74%;height: 500px; float:left">
-        <SfDiagramComponent @ref="@Diagram" ID="diagram" Width="100%" Height="500px" InteractionController="DiagramInteractions.ZoomPan" ConnectorCreating="@ConnectorCreating" NodeCreating="@NodeCreating">
+        <SfDiagramComponent @ref="@Diagram" ID="element" Width="100%" Height="500px" InteractionController="DiagramInteractions.ZoomPan" ConnectorCreating="@ConnectorCreating" NodeCreating="@NodeCreating">
             <DataSourceSettings ID="Name" ParentID="Category" DataSource="DataSource"> </DataSourceSettings>
             <Layout Type="LayoutType.HierarchicalTree" HorizontalSpacing="30" Orientation="LayoutOrientation.TopToBottom" VerticalSpacing="30" HorizontalAlignment="HorizontalAlignment.Auto" VerticalAlignment="VerticalAlignment.Auto" GetLayoutInfo="GetLayoutInfo">
                 <LayoutMargin Top="50" Bottom="50" Right="50" Left="50"></LayoutMargin>
@@ -14,7 +14,7 @@
         </SfDiagramComponent>
     </div>
     <div style="width:25%;height:200px;float:left; border-color:lightgray;border-style:solid;">
-        <SfDiagramOverviewComponent Height="300" Width="400" SourceID="diagram"></SfDiagramOverviewComponent>
+        <SfDiagramOverviewComponent Height="300" Width="400" SourceID="element"></SfDiagramOverviewComponent>
     </div>
 </div>
 @code {

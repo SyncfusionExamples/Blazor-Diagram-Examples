@@ -1,0 +1,70 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
+@using Microsoft.JSInterop
+@inject IJSRuntime jsRuntime
+<div>
+<SfDiagramComponent Height="700px" @ref="@diagram" @bind-Nodes="@nodes"></SfDiagramComponent>
+<span id='diagramName' style="display:none">UntitledDiagram</span>
+</div>
+  <SfButton OnClick="@SaveDiagram" >Save</SfButton>
+<SfButton OnClick="@LoadDiagram">Load</SfButton>
+@code{
+    SfDiagramComponent diagram;
+    private string fileName;
+    DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+    protected override void OnInitialized()
+    {
+        Node node = new Node()
+            {
+                ID = "node",
+                OffsetX = 200,
+                OffsetY = 200,
+                Width = 100,
+                Height = 200
+            };
+            nodes.Add(node);
+    }
+    private string ExtensionType = ".json";
+    //Method to save the diagram
+    public async Task SaveDiagram()
+    {
+        fileName = await jsRuntime.InvokeAsync<string>("getDiagramFileName", "");
+        await DownloadDiagram(fileName);
+    }
+
+    //Method to download the diagram
+    public async Task DownloadDiagram(string fileName)
+    {
+        string data = diagram.SaveDiagram();
+        await FileUtil.SaveAs(jsRuntime, data, fileName);
+    }
+
+    //Method to load the diagram
+    public async Task LoadDiagram()
+    {
+        diagram.BeginUpdate();
+        ExtensionType = ".json";
+        await FileUtil.Click(jsRuntime);
+        await diagram.EndUpdate();
+    }
+
+    public async static Task SaveAs(IJSRuntime js, string data, string fileName)
+    {
+        await js.InvokeAsync<object>(
+        "saveDiagram",
+        // Specify IFormatProvider
+        Convert.ToString(data), fileName).ConfigureAwait(true);
+        // Specify IFormatProvider
+    }
+
+    public async static Task Click(IJSRuntime js)
+    {
+        await js.InvokeAsync<object>(
+            "click").ConfigureAwait(true);
+    }
+
+    }
+
+   

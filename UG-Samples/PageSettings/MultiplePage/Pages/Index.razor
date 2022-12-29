@@ -1,0 +1,37 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+
+<SfDiagramComponent Height="600px" Nodes="nodes">
+    @*Initialize the page settings with multiple page, page orientation and break lines*@
+    <PageSettings Height="300"
+                  Width="300"
+                  MultiplePage="true"
+                  Orientation="@orientation"
+                  ShowPageBreaks="true">
+    </PageSettings>
+</SfDiagramComponent>
+
+@code
+{
+    //Sets the page orientation as landscape.
+    public PageOrientation orientation = PageOrientation.Landscape;
+    DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+    protected override void OnInitialized()
+    {
+        Node node = new Node()
+            {
+                ID = "node6",
+                Width = 50,
+                Height = 50,
+                OffsetX = 150,
+                OffsetY = 100,
+                Style = new ShapeStyle()
+                {
+                    Fill = "#6495ED",
+                    StrokeColor = "white"
+                }
+            };
+        nodes.Add(node);
+    }
+}

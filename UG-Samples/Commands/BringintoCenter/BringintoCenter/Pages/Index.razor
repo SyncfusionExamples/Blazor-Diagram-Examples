@@ -1,8 +1,9 @@
 ﻿@page "/"
 
 @using Syncfusion.Blazor.Diagram
-<input type="button" value="BringIntoView" @onclick="BringIntoView" />
+<input type="button" value="BringIntoCenter" @onclick="BringIntoCenter" />
 <SfDiagramComponent @ref="diagram" Width="1000px" Height="500px" @bind-Nodes="@nodes">
+    
 </SfDiagramComponent>
 @code
 {
@@ -19,10 +20,10 @@
             new ShapeAnnotation() { Content = "Node1" } } },
         };
     }
-    //Brings the specified bounds into the view port of the diagram
-    private void BringIntoView()
+    //Brings the specified bounds into the center of the view port of the diagram
+    private void BringIntoCenter()
     {
         DiagramRect bound = new DiagramRect(950, 650, 500, 500);
-        diagram.BringIntoView(bound);
+        diagram.BringIntoCenter(bound);
     }
 }

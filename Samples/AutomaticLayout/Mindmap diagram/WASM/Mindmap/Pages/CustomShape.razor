@@ -8,6 +8,7 @@
     <Layout Type="LayoutType.MindMap" HorizontalSpacing="80" VerticalSpacing="30">
         <LayoutMargin Top="10" Bottom="10" Right="10" Left="10"></LayoutMargin>
     </Layout>
+    <SnapSettings Constraints="SnapConstraints.None" />
 </SfDiagramComponent>
 
 @code
@@ -53,16 +54,7 @@
     private void NodeCreating(IDiagramObject obj)
     {
         Node node = obj as Node;
-        //node.Constraints = NodeConstraints.Default & ~NodeConstraints.Drag;
-        MindMapDetails hierarchicalData = null;
-        if (node.Data != null)
-        {
-            if (node.Data is System.Text.Json.JsonElement)
-            {
-                node.Data = System.Text.Json.JsonSerializer.Deserialize<MindMapDetails>(node.Data.ToString());
-            }
-            hierarchicalData = node.Data as MindMapDetails;
-        }
+        MindMapDetails hierarchicalData = node.Data is MindMapDetails ? node.Data as MindMapDetails : null;
         node.Height = 50;
         node.Width = 120;
         if (hierarchicalData is MindMapDetails && hierarchicalData.Branch == BranchType.Root)

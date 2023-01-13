@@ -73,16 +73,7 @@
     private void NodeCreating(IDiagramObject obj)
     {
         Node node = obj as Node;
-        //node.Constraints = NodeConstraints.Default & ~NodeConstraints.Drag;
-        MindMapDetails hierarchicalData = null;
-        if (node.Data != null)
-        {
-            if (node.Data is System.Text.Json.JsonElement)
-            {
-                node.Data = System.Text.Json.JsonSerializer.Deserialize<MindMapDetails>(node.Data.ToString());
-            }
-            hierarchicalData = node.Data as MindMapDetails;
-        }
+        MindMapDetails hierarchicalData = node.Data is MindMapDetails ? node.Data as MindMapDetails : null;
         node.Height = 50;
         node.Width = 120;
         node.Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Ellipse };
@@ -103,7 +94,7 @@
                 Width = 10,
             };
 
-        if (node.Data != null)
+        if (hierarchicalData != null)
         {
             node.Style.Fill = hierarchicalData.Fill;
             node.Style.StrokeColor = hierarchicalData.Fill;
@@ -113,15 +104,7 @@
             };
         }
 
-        string name = "";
-        if (hierarchicalData != null)
-        {
-            name = hierarchicalData.Label;
-        }
-        else
-        {
-            name = "New Child";
-        }
+        string name = hierarchicalData != null ? hierarchicalData.Label : "New Child";
 
         node.Annotations = new DiagramObjectCollection<ShapeAnnotation>()
         {
@@ -135,32 +118,111 @@
         node.Constraints &= ~NodeConstraints.Rotate;
     }
 
-    private void ConnectorCreating(IDiagramObject connector)
+    private void ConnectorCreating(IDiagramObject obj)
     {
-        (connector as Connector).Type = ConnectorSegmentType.Bezier;
-        (connector as Connector).Constraints = ConnectorConstraints.Default & ~ConnectorConstraints.Select;
-        (connector as Connector).Style = new ShapeStyle() { StrokeColor = "#4f4f4f", StrokeWidth = 1 };
-        (connector as Connector).TargetDecorator = new DecoratorSettings() { Shape = DecoratorShape.None };
-        (connector as Connector).SourceDecorator.Shape = DecoratorShape.None;
-        Node sourceNode = diagram.GetObject((connector as Connector).SourceID) as Node;
-        Node targetNode = diagram.GetObject((connector as Connector).TargetID) as Node;
+        Connector connector = obj as Connector;
+        connector.Type = ConnectorSegmentType.Bezier;
+        connector.Constraints = ConnectorConstraints.Default & ~ConnectorConstraints.Select;
+        connector.Style = new ShapeStyle() { StrokeColor = "#4f4f4f", StrokeWidth = 1 };
+        connector.TargetDecorator = new DecoratorSettings() { Shape = DecoratorShape.None };
+        connector.SourceDecorator.Shape = DecoratorShape.None;
+        Node sourceNode = diagram.GetObject(connector.SourceID) as Node;
+        Node targetNode = diagram.GetObject(connector.TargetID) as Node;
         if (targetNode != null && targetNode.Data != null)
         {
             MindMapDetails nodeInfo = (targetNode.Data as MindMapDetails);
             if (nodeInfo.Branch == BranchType.Right || nodeInfo.Branch == BranchType.SubRight)
             {
-                (connector as Connector).SourcePortID = sourceNode.Ports[0].ID;
-                (connector as Connector).TargetPortID = targetNode.Ports[1].ID;
+                connector.SourcePortID = sourceNode.Ports[0].ID;
+                connector.TargetPortID = targetNode.Ports[1].ID;
             }
             else if (nodeInfo.Branch == BranchType.Left || nodeInfo.Branch == BranchType.SubLeft)
             {
-                (connector as Connector).SourcePortID = sourceNode.Ports[1].ID;
-                (connector as Connector).TargetPortID = targetNode.Ports[0].ID;
+                connector.SourcePortID = sourceNode.Ports[1].ID;
+                connector.TargetPortID = targetNode.Ports[0].ID;
             }
         }
     }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        if (firstRender)
+        {
+            UpdateHandle();
+        }
+    }
 
+    private void UpdateHandle()
+    {
+        UserHandle deleteLeftHandle = AddHandle("DeleteRight", "delete", Direction.Right);
+
+        UserHandle addRightHandle = AddHandle("AddLeft", "add", Direction.Left);
+
+        UserHandle addLeftHandle = AddHandle("AddRight", "add", Direction.Right);
+
+        UserHandle deleteRightHandle = AddHandle("DeleteLeft", "delete", Direction.Left);
+
+        handles.Add(deleteLeftHandle);
+        handles.Add(deleteRightHandle);
+        handles.Add(addLeftHandle);
+        handles.Add(addRightHandle);
+
+        selectionSettings.UserHandles = handles;
+    }
+
+    private UserHandle AddHandle(string name, string path, Direction direction)
+    {
+        UserHandle handle = new UserHandle()
+            {
+                Name = name,
+                Visible = true,
+                Offset = 0.5,
+                Side = direction,
+                Margin = new DiagramThickness() { Top = 0, Bottom = 0, Left = 0, Right = 0 }
+            };
+        if (path == "delete")
+        {
+            handle.PathData = "M1.0000023,3 L7.0000024,3 7.0000024,8.75 C7.0000024,9.4399996 6.4400025,10 5.7500024,10 L2.2500024,10 C1.5600024,10 1.0000023,9.4399996 1.0000023,8.75 z M2.0699998,0 L5.9300004,0 6.3420029,0.99999994 8.0000001,0.99999994 8.0000001,2 0,2 0,0.99999994 1.6580048,0.99999994 z";
+        }
+        else
+        {
+            handle.PathData = "M4.0000001,0 L6,0 6,4.0000033 10,4.0000033 10,6.0000033 6,6.0000033 6,10 4.0000001,10 4.0000001,6.0000033 0,6.0000033 0,4.0000033 4.0000001,4.0000033 z";
+        }
+        return handle;
+    }
+
+    private void OnSelectionChanging(SelectionChangingEventArgs args)
+    {
+        if (args.NewValue.Count > 0)
+        {
+            if (args.NewValue[0] is Node && (args.NewValue[0] as Node).Data != null)
+            {
+                BranchType type = ((args.NewValue[0] as Node).Data as MindMapDetails).Branch;
+                if (type == BranchType.Root)
+                {
+                    selectionSettings.UserHandles[0].Visible = false;
+                    selectionSettings.UserHandles[1].Visible = false;
+                    selectionSettings.UserHandles[2].Visible = true;
+                    selectionSettings.UserHandles[3].Visible = true;
+                }
+                else if (type == BranchType.Left || type == BranchType.SubLeft)
+                {
+                    selectionSettings.UserHandles[0].Visible = false;
+                    selectionSettings.UserHandles[1].Visible = true;
+                    selectionSettings.UserHandles[2].Visible = true;
+                    selectionSettings.UserHandles[3].Visible = false;
+                }
+                else if (type == BranchType.Right || type == BranchType.SubRight)
+                {
+                    selectionSettings.UserHandles[0].Visible = true;
+                    selectionSettings.UserHandles[1].Visible = false;
+                    selectionSettings.UserHandles[2].Visible = false;
+                    selectionSettings.UserHandles[3].Visible = true;
+                }
+            }
+        }
+    }
 
     // Method to customize the tool
     public InteractionControllerBase GetCustomTool(DiagramElementAction action, string id)
@@ -249,20 +311,20 @@
                 SourceID = diagram.SelectionSettings.Nodes[0].ID
             };
         await diagram.AddDiagramElements(new DiagramObjectCollection<NodeBase>() { node, connector });
-        Node sourceNode = diagram.GetObject((connector as Connector).SourceID) as Node;
-        Node targetNode = diagram.GetObject((connector as Connector).TargetID) as Node;
+        Node sourceNode = diagram.GetObject(connector.SourceID) as Node;
+        Node targetNode = diagram.GetObject(connector.TargetID) as Node;
         if (targetNode != null && targetNode.Data != null)
         {
             MindMapDetails nodeInfo = (targetNode.Data as MindMapDetails);
             if (nodeInfo.Branch == BranchType.Right || nodeInfo.Branch == BranchType.SubRight)
             {
-                (connector as Connector).SourcePortID = sourceNode.Ports[0].ID;
-                (connector as Connector).TargetPortID = targetNode.Ports[1].ID;
+                connector.SourcePortID = sourceNode.Ports[0].ID;
+                connector.TargetPortID = targetNode.Ports[1].ID;
             }
             else if (nodeInfo.Branch == BranchType.Left || nodeInfo.Branch == BranchType.SubLeft)
             {
-                (connector as Connector).SourcePortID = sourceNode.Ports[1].ID;
-                (connector as Connector).TargetPortID = targetNode.Ports[0].ID;
+                connector.SourcePortID = sourceNode.Ports[1].ID;
+                connector.TargetPortID = targetNode.Ports[0].ID;
             }
         }
         await diagram.DoLayout();
@@ -377,84 +439,4 @@
         }
     }
 
-    private void OnSelectionChanging(SelectionChangingEventArgs args)
-    {
-        if (args.NewValue.Count > 0)
-        {
-            if (args.NewValue[0] is Node && (args.NewValue[0] as Node).Data != null)
-            {
-                BranchType type = ((args.NewValue[0] as Node).Data as MindMapDetails).Branch;
-                if (type == BranchType.Root)
-                {
-                    selectionSettings.UserHandles[0].Visible = false;
-                    selectionSettings.UserHandles[1].Visible = false;
-                    selectionSettings.UserHandles[2].Visible = true;
-                    selectionSettings.UserHandles[3].Visible = true;
-                }
-                else if (type == BranchType.Left || type == BranchType.SubLeft)
-                {
-                    selectionSettings.UserHandles[0].Visible = false;
-                    selectionSettings.UserHandles[1].Visible = true;
-                    selectionSettings.UserHandles[2].Visible = true;
-                    selectionSettings.UserHandles[3].Visible = false;
-                }
-                else if (type == BranchType.Right || type == BranchType.SubRight)
-                {
-                    selectionSettings.UserHandles[0].Visible = true;
-                    selectionSettings.UserHandles[1].Visible = false;
-                    selectionSettings.UserHandles[2].Visible = false;
-                    selectionSettings.UserHandles[3].Visible = true;
-                }
-            }
-        }
-    }
-
-
-    private void UpdateHandle()
-    {
-        UserHandle deleteLeftHandle = AddHandle("DeleteRight", "delete", Direction.Right);
-
-        UserHandle addRightHandle = AddHandle("AddLeft", "add", Direction.Left);
-
-        UserHandle addLeftHandle = AddHandle("AddRight", "add", Direction.Right);
-
-        UserHandle deleteRightHandle = AddHandle("DeleteLeft", "delete", Direction.Left);
-
-        handles.Add(deleteLeftHandle);
-        handles.Add(deleteRightHandle);
-        handles.Add(addLeftHandle);
-        handles.Add(addRightHandle);
-
-        selectionSettings.UserHandles = handles;
-    }
-
-    private UserHandle AddHandle(string name, string path, Direction direction)
-    {
-        UserHandle handle = new UserHandle()
-            {
-                Name = name,
-                Visible = true,
-                Offset = 0.5,
-                Side = direction,
-                Margin = new DiagramThickness() { Top = 0, Bottom = 0, Left = 0, Right = 0 }
-            };
-        if (path == "delete")
-        {
-            handle.PathData = "M1.0000023,3 L7.0000024,3 7.0000024,8.75 C7.0000024,9.4399996 6.4400025,10 5.7500024,10 L2.2500024,10 C1.5600024,10 1.0000023,9.4399996 1.0000023,8.75 z M2.0699998,0 L5.9300004,0 6.3420029,0.99999994 8.0000001,0.99999994 8.0000001,2 0,2 0,0.99999994 1.6580048,0.99999994 z";
-        }
-        else
-        {
-            handle.PathData = "M4.0000001,0 L6,0 6,4.0000033 10,4.0000033 10,6.0000033 6,6.0000033 6,10 4.0000001,10 4.0000001,6.0000033 0,6.0000033 0,4.0000033 4.0000001,4.0000033 z";
-        }
-        return handle;
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await base.OnAfterRenderAsync(firstRender);
-        if (firstRender)
-        {
-            UpdateHandle();
-        }
-    }
 }

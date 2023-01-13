@@ -14,12 +14,12 @@
         
 
     #diagram-space {
-        width: 70%;
+        width: 80%;
         float: left;
     }
 
     #properties {
-        width: 27%;
+        width: 20%;
         float: right;
     }
 
@@ -201,20 +201,20 @@
                 SourceID = diagram.SelectionSettings.Nodes[0].ID
             };
         await diagram.AddDiagramElements(new DiagramObjectCollection<NodeBase>() { node, connector });
-        Node sourceNode = diagram.GetObject((connector as Connector).SourceID) as Node;
-        Node targetNode = diagram.GetObject((connector as Connector).TargetID) as Node;
+        Node sourceNode = diagram.GetObject(connector.SourceID) as Node;
+        Node targetNode = diagram.GetObject(connector.TargetID) as Node;
         if (targetNode != null && targetNode.Data != null)
         {
             MindMapDetails nodeInfo = (targetNode.Data as MindMapDetails);
             if (nodeInfo.Branch == BranchType.Right || nodeInfo.Branch == BranchType.SubRight)
             {
-                (connector as Connector).SourcePortID = sourceNode.Ports[0].ID;
-                (connector as Connector).TargetPortID = targetNode.Ports[1].ID;
+                connector.SourcePortID = sourceNode.Ports[0].ID;
+                connector.TargetPortID = targetNode.Ports[1].ID;
             }
             else if (nodeInfo.Branch == BranchType.Left || nodeInfo.Branch == BranchType.SubLeft)
             {
-                (connector as Connector).SourcePortID = sourceNode.Ports[1].ID;
-                (connector as Connector).TargetPortID = targetNode.Ports[0].ID;
+                connector.SourcePortID = sourceNode.Ports[1].ID;
+                connector.TargetPortID = targetNode.Ports[0].ID;
             }
         }
         await diagram.DoLayout();
@@ -364,16 +364,7 @@
     private void NodeCreating(IDiagramObject obj)
     {
         Node node = obj as Node;
-        //node.Constraints = NodeConstraints.Default & ~NodeConstraints.Drag;
-        MindMapDetails hierarchicalData = null;
-        if (node.Data != null)
-        {
-            if (node.Data is System.Text.Json.JsonElement)
-            {
-                node.Data = System.Text.Json.JsonSerializer.Deserialize<MindMapDetails>(node.Data.ToString());
-            }
-            hierarchicalData = node.Data as MindMapDetails;
-        }
+        MindMapDetails hierarchicalData = node.Data is MindMapDetails ? node.Data as MindMapDetails : null;
         node.Height = 50;
         node.Width = 100;
         node.Shape = new BasicShape() { Type = shapes.Basic, Shape = NodeBasicShapes.Ellipse };
@@ -404,15 +395,7 @@
             };
         }
 
-        string name = "";
-        if (hierarchicalData != null)
-        {
-            name = hierarchicalData.Label;
-        }
-        else
-        {
-            name = "New Child";
-        }
+        string name = hierarchicalData != null ? hierarchicalData.Label : "New Child";
 
         node.Annotations = new DiagramObjectCollection<ShapeAnnotation>()
         {
@@ -426,27 +409,28 @@
         node.Constraints &= ~NodeConstraints.Rotate;
     }
 
-    private void ConnectorCreating(IDiagramObject connector)
+    private void ConnectorCreating(IDiagramObject obj)
     {
-        (connector as Connector).Type = ConnectorSegmentType.Bezier;
-        (connector as Connector).Constraints = ConnectorConstraints.Default & ~ConnectorConstraints.Select;
-        (connector as Connector).Style = new ShapeStyle() { StrokeColor = "#4f4f4f", StrokeWidth = 1 };
-        (connector as Connector).TargetDecorator = new DecoratorSettings() { Shape = DecoratorShape.None };
-        (connector as Connector).SourceDecorator.Shape = DecoratorShape.None;
-        Node sourceNode = diagram.GetObject((connector as Connector).SourceID) as Node;
-        Node targetNode = diagram.GetObject((connector as Connector).TargetID) as Node;
+        Connector connector = obj as Connector;
+        connector.Type = ConnectorSegmentType.Bezier;
+        connector.Constraints = ConnectorConstraints.Default & ~ConnectorConstraints.Select;
+        connector.Style = new ShapeStyle() { StrokeColor = "#4f4f4f", StrokeWidth = 1 };
+        connector.TargetDecorator = new DecoratorSettings() { Shape = DecoratorShape.None };
+        connector.SourceDecorator.Shape = DecoratorShape.None;
+        Node sourceNode = diagram.GetObject(connector.SourceID) as Node;
+        Node targetNode = diagram.GetObject(connector.TargetID) as Node;
         if (targetNode != null && targetNode.Data != null)
         {
             MindMapDetails nodeInfo = (targetNode.Data as MindMapDetails);
             if (nodeInfo.Branch == BranchType.Right || nodeInfo.Branch == BranchType.SubRight)
             {
-                (connector as Connector).SourcePortID = sourceNode.Ports[0].ID;
-                (connector as Connector).TargetPortID = targetNode.Ports[1].ID;
+                connector.SourcePortID = sourceNode.Ports[0].ID;
+                connector.TargetPortID = targetNode.Ports[1].ID;
             }
             else if (nodeInfo.Branch == BranchType.Left || nodeInfo.Branch == BranchType.SubLeft)
             {
-                (connector as Connector).SourcePortID = sourceNode.Ports[1].ID;
-                (connector as Connector).TargetPortID = targetNode.Ports[0].ID;
+                connector.SourcePortID = sourceNode.Ports[1].ID;
+                connector.TargetPortID = targetNode.Ports[0].ID;
             }
         }
     }

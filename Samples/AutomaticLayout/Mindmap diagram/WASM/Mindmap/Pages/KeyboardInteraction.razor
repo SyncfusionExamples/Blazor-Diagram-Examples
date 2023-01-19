@@ -16,11 +16,11 @@
     SfDiagramComponent diagram;
     DiagramSelectionSettings selectionSettings = new DiagramSelectionSettings();
     DiagramObjectCollection<UserHandle> handles = new DiagramObjectCollection<UserHandle>();
-    static List<MindMapDetails> MindmapData = new List<MindMapDetails>();
+    static List<MindMapItem> MindmapData = new List<MindMapItem>();
     DiagramObjectCollection<KeyboardCommand> commands;
 
     // Create a model class for the data source
-    public class MindMapDetails
+    public class MindMapItem
     {
         public string Id { get; set; }
         public string Label { get; set; }
@@ -35,29 +35,29 @@
     protected override void OnInitialized()
     {
         selectionSettings.Constraints &= ~(SelectorConstraints.ResizeAll | SelectorConstraints.Rotate);
-        MindmapData = new List<MindMapDetails>()
+        MindmapData = new List<MindMapItem>()
         {
-            new MindMapDetails(){Id="1",Label="Business Planning",ParentId ="",Branch= BranchType.Root, Fill="#034d6d" },
-            new MindMapDetails(){Id="2",Label= "Expectation",ParentId = "1",Branch= BranchType.Left,Fill= "#1b80c6" },
-            new MindMapDetails(){Id="3",Label= "Requirements", ParentId="1",Branch= BranchType.Right,Fill= "#1b80c6" },
-            new MindMapDetails(){Id="4",Label= "Marketing", ParentId="1",Branch= BranchType.Left,Fill= "#1b80c6" },
-            new MindMapDetails(){Id="5",Label= "Budgets",ParentId= "1",Branch= BranchType.Right,Fill= "#1b80c6" },
-            new MindMapDetails(){ Id="6", Label="Situation in Market", ParentId= "1", Branch = BranchType.Left, Fill= "#1b80c6" },
-            new MindMapDetails(){ Id="7", Label="Product Sales", ParentId= "2", Branch = BranchType.SubLeft, Fill= "#3dbfc9" },
-            new MindMapDetails() { Id = "8", Label= "Strategy", ParentId="2", Branch = BranchType.SubLeft, Fill="#3dbfc9" },
-            new MindMapDetails() { Id = "9", Label="Contacts", ParentId="2", Branch = BranchType.SubLeft, Fill="#3dbfc9" },
-            new MindMapDetails() { Id = "10", Label="Customer Groups", ParentId= "4", Branch = BranchType.SubLeft,Fill= "#3dbfc9" },
-            new MindMapDetails() { Id = "11", Label= "Branding", ParentId= "4", Branch = BranchType.SubLeft, Fill= "#3dbfc9" },
-            new MindMapDetails() { Id = "12", Label= "Advertising", ParentId= "4", Branch = BranchType.SubLeft, Fill= "#3dbfc9" },
-            new MindMapDetails() { Id = "13", Label= "Competitors", ParentId= "6", Branch = BranchType.SubLeft, Fill="#3dbfc9" },
-            new MindMapDetails() { Id = "14", Label="Location", ParentId="6", Branch = BranchType.SubLeft, Fill= "#3dbfc9" },
-            new MindMapDetails() { Id = "15", Label= "Director", ParentId= "3", Branch = BranchType.SubRight, Fill="#3dbfc9" },
-            new MindMapDetails() { Id = "16", Label="Accounts Department", ParentId= "3", Branch = BranchType.SubRight, Fill= "#3dbfc9" },
-            new MindMapDetails() { Id = "17", Label="Administration", ParentId= "3", Branch = BranchType.SubRight, Fill="#3dbfc9" },
-            new MindMapDetails() { Id = "18", Label= "Development", ParentId="3", Branch = BranchType.SubRight, Fill= "#3dbfc9" },
-            new MindMapDetails() { Id = "19", Label= "Estimation", ParentId= "5", Branch = BranchType.SubRight, Fill="#3dbfc9" },
-            new MindMapDetails() { Id = "20", Label= "Profit", ParentId= "5", Branch = BranchType.SubRight, Fill= "#3dbfc9" },
-            new MindMapDetails(){ Id="21", Label="Funds", ParentId= "5", Branch = BranchType.SubRight, Fill= "#3dbfc9" }
+            new MindMapItem(){Id="1",Label="Business Planning",ParentId ="",Branch= BranchType.Root, Fill="#034d6d" },
+            new MindMapItem(){Id="2",Label= "Expectation",ParentId = "1",Branch= BranchType.Left,Fill= "#1b80c6" },
+            new MindMapItem(){Id="3",Label= "Requirements", ParentId="1",Branch= BranchType.Right,Fill= "#1b80c6" },
+            new MindMapItem(){Id="4",Label= "Marketing", ParentId="1",Branch= BranchType.Left,Fill= "#1b80c6" },
+            new MindMapItem(){Id="5",Label= "Budgets",ParentId= "1",Branch= BranchType.Right,Fill= "#1b80c6" },
+            new MindMapItem(){ Id="6", Label="Situation in Market", ParentId= "1", Branch = BranchType.Left, Fill= "#1b80c6" },
+            new MindMapItem(){ Id="7", Label="Product Sales", ParentId= "2", Branch = BranchType.SubLeft, Fill= "#3dbfc9" },
+            new MindMapItem() { Id = "8", Label= "Strategy", ParentId="2", Branch = BranchType.SubLeft, Fill="#3dbfc9" },
+            new MindMapItem() { Id = "9", Label="Contacts", ParentId="2", Branch = BranchType.SubLeft, Fill="#3dbfc9" },
+            new MindMapItem() { Id = "10", Label="Customer Groups", ParentId= "4", Branch = BranchType.SubLeft,Fill= "#3dbfc9" },
+            new MindMapItem() { Id = "11", Label= "Branding", ParentId= "4", Branch = BranchType.SubLeft, Fill= "#3dbfc9" },
+            new MindMapItem() { Id = "12", Label= "Advertising", ParentId= "4", Branch = BranchType.SubLeft, Fill= "#3dbfc9" },
+            new MindMapItem() { Id = "13", Label= "Competitors", ParentId= "6", Branch = BranchType.SubLeft, Fill="#3dbfc9" },
+            new MindMapItem() { Id = "14", Label="Location", ParentId="6", Branch = BranchType.SubLeft, Fill= "#3dbfc9" },
+            new MindMapItem() { Id = "15", Label= "Director", ParentId= "3", Branch = BranchType.SubRight, Fill="#3dbfc9" },
+            new MindMapItem() { Id = "16", Label="Accounts Department", ParentId= "3", Branch = BranchType.SubRight, Fill= "#3dbfc9" },
+            new MindMapItem() { Id = "17", Label="Administration", ParentId= "3", Branch = BranchType.SubRight, Fill="#3dbfc9" },
+            new MindMapItem() { Id = "18", Label= "Development", ParentId="3", Branch = BranchType.SubRight, Fill= "#3dbfc9" },
+            new MindMapItem() { Id = "19", Label= "Estimation", ParentId= "5", Branch = BranchType.SubRight, Fill="#3dbfc9" },
+            new MindMapItem() { Id = "20", Label= "Profit", ParentId= "5", Branch = BranchType.SubRight, Fill= "#3dbfc9" },
+            new MindMapItem(){ Id="21", Label="Funds", ParentId= "5", Branch = BranchType.SubRight, Fill= "#3dbfc9" }
         };
         DataSource = MindmapData;
         commands = new DiagramObjectCollection<KeyboardCommand>()
@@ -73,13 +73,14 @@
     {
         args.CanExecute = true;
     }
+    
     // Method to execute the custom command
     public void ExecuteCommand(CommandKeyArgs obj)
     {
         Node node = (diagram.SelectionSettings.Nodes[0]) as Node;
         if(node != null)
         {
-            BranchType type = (node.Data as MindMapDetails).Branch;
+            BranchType type = (node.Data as MindMapItem).Branch;
             if(type == BranchType.Root)
             {
                 switch (obj.Name)
@@ -107,6 +108,7 @@
             }
         }
     }
+    
     // Method to create custom command.
     private KeyboardCommand CreateCustomCommand(string name, DiagramKeys key, ModifierKeys modifierkey)
     {
@@ -120,7 +122,7 @@
 
     private BranchType getbranch(IDiagramObject obj)
     {
-        BranchType Branch = ((obj as Node).Data as MindMapDetails).Branch;
+        BranchType Branch = ((obj as Node).Data as MindMapItem).Branch;
         return Branch;
     }
 
@@ -134,7 +136,7 @@
 
         int newChildID = diagram.Nodes.Count + 1;
         string newchildColor = "";
-        BranchType type = (diagram.SelectionSettings.Nodes[0].Data as MindMapDetails).Branch;
+        BranchType type = (diagram.SelectionSettings.Nodes[0].Data as MindMapItem).Branch;
         BranchType childType = BranchType.Left;
 
         switch (type.ToString())
@@ -143,8 +145,6 @@
                 childType = BranchType.Left;
                 break;
             case "Left":
-                childType = BranchType.SubLeft;
-                break;
             case "SubLeft":
                 childType = BranchType.SubLeft;
                 break;
@@ -159,14 +159,14 @@
             newchildColor = "#3dbfc9";
         }
 
-        MindMapDetails childNode = new MindMapDetails()
-            {
-                Id = newChildID.ToString(),
-                ParentId = (diagram.SelectionSettings.Nodes[0].Data as MindMapDetails).Id,
-                Fill = newchildColor,
-                Branch = childType,
-                Label = "New Child"
-            };
+        MindMapItem childNode = new MindMapItem()
+        {
+            Id = newChildID.ToString(),
+            ParentId = (diagram.SelectionSettings.Nodes[0].Data as MindMapItem).Id,
+            Fill = newchildColor,
+            Branch = childType,
+            Label = "New Child"
+        };
         diagram.BeginUpdate();
         await UpdatePortConnection(childNode, diagram);
         await diagram.EndUpdate();
@@ -180,7 +180,7 @@
     {
         int newChildID = diagram.Nodes.Count + 1;
         string newchildColor = "";
-        BranchType type = (diagram.SelectionSettings.Nodes[0].Data as MindMapDetails).Branch;
+        BranchType type = (diagram.SelectionSettings.Nodes[0].Data as MindMapItem).Branch;
         BranchType childType = BranchType.Left;
 
         switch (type.ToString())
@@ -189,8 +189,6 @@
                 childType = BranchType.Right;
                 break;
             case "Right":
-                childType = BranchType.SubRight;
-                break;
             case "SubRight":
                 childType = BranchType.SubRight;
                 break;
@@ -205,14 +203,14 @@
             newchildColor = "#3dbfc9";
         }
 
-        MindMapDetails childNode = new MindMapDetails()
-            {
-                Id = newChildID.ToString(),
-                ParentId = (diagram.SelectionSettings.Nodes[0].Data as MindMapDetails).Id,
-                Fill = newchildColor,
-                Branch = childType,
-                Label = "New Child"
-            };
+        MindMapItem childNode = new MindMapItem()
+        {
+            Id = newChildID.ToString(),
+            ParentId = (diagram.SelectionSettings.Nodes[0].Data as MindMapItem).Id,
+            Fill = newchildColor,
+            Branch = childType,
+            Label = "New Child"
+        };
         diagram.BeginUpdate();
         await UpdatePortConnection(childNode, diagram);
         await diagram.EndUpdate();
@@ -227,7 +225,7 @@
         Node deleteObject = (diagram.SelectionSettings.Nodes[0]) as Node;
         if (deleteObject != null)
         {
-            BranchType type = (deleteObject.Data as MindMapDetails).Branch;
+            BranchType type = (deleteObject.Data as MindMapItem).Branch;
             if (type != BranchType.Root)
             {
                 diagram.BeginUpdate();
@@ -241,21 +239,12 @@
     private void NodeCreating(IDiagramObject obj)
     {
         Node node = obj as Node;
-        //node.Constraints = NodeConstraints.Default & ~NodeConstraints.Drag;
-        MindMapDetails hierarchicalData = null;
-        if (node.Data != null)
-        {
-            if (node.Data is System.Text.Json.JsonElement)
-            {
-                node.Data = System.Text.Json.JsonSerializer.Deserialize<MindMapDetails>(node.Data.ToString());
-            }
-            hierarchicalData = node.Data as MindMapDetails;
-        }
+        MindMapItem data = node.Data is MindMapItem ? node.Data as MindMapItem : null;
         node.Height = 50;
         node.Width = 120;
         node.Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Ellipse };
 
-        PointPort port21 = new PointPort()
+        PointPort portLeft = new PointPort()
             {
                 ID = "left",
                 Offset = new DiagramPoint() { X = 0, Y = 0.5 },
@@ -263,7 +252,7 @@
                 Width = 10,
             };
 
-        PointPort port22 = new PointPort()
+        PointPort portRight = new PointPort()
             {
                 ID = "right",
                 Offset = new DiagramPoint() { X = 1, Y = 0.5 },
@@ -273,29 +262,21 @@
 
         if (node.Data != null)
         {
-            node.Style.Fill = hierarchicalData.Fill;
-            node.Style.StrokeColor = hierarchicalData.Fill;
+            node.Style.Fill = data.Fill;
+            node.Style.StrokeColor = data.Fill;
             node.Ports = new DiagramObjectCollection<PointPort>()
             {
-                port21,port22
+                portLeft,portRight
             };
         }
 
-        string name = "";
-        if (hierarchicalData != null)
-        {
-            name = hierarchicalData.Label;
-        }
-        else
-        {
-            name = "New Child";
-        }
+        string content = data != null ? data.Label : "New Child";
 
         node.Annotations = new DiagramObjectCollection<ShapeAnnotation>()
         {
             new ShapeAnnotation()
             {
-                Content = name,
+                Content = content,
                 Style=new TextStyle(){Color="White",FontSize = 12,FontFamily="Segoe UI"},
                 Offset=new DiagramPoint(){X=0.5,Y=0.5}
             }
@@ -303,27 +284,28 @@
         node.Constraints &= ~NodeConstraints.Rotate;
     }
 
-    private void ConnectorCreating(IDiagramObject connector)
+    private void ConnectorCreating(IDiagramObject obj)
     {
-        (connector as Connector).Type = ConnectorSegmentType.Bezier;
-        (connector as Connector).Constraints = ConnectorConstraints.Default & ~ConnectorConstraints.Select;
-        (connector as Connector).Style = new ShapeStyle() { StrokeColor = "#4f4f4f", StrokeWidth = 1 };
-        (connector as Connector).TargetDecorator = new DecoratorSettings() { Shape = DecoratorShape.None };
-        (connector as Connector).SourceDecorator.Shape = DecoratorShape.None;
-        Node sourceNode = diagram.GetObject((connector as Connector).SourceID) as Node;
-        Node targetNode = diagram.GetObject((connector as Connector).TargetID) as Node;
+        Connector connector = obj as Connector;
+        connector.Type = ConnectorSegmentType.Bezier;
+        connector.Constraints = ConnectorConstraints.Default & ~ConnectorConstraints.Select;
+        connector.Style = new ShapeStyle() { StrokeColor = "#4f4f4f", StrokeWidth = 1 };
+        connector.TargetDecorator = new DecoratorSettings() { Shape = DecoratorShape.None };
+        connector.SourceDecorator.Shape = DecoratorShape.None;
+        Node sourceNode = diagram.GetObject(connector.SourceID) as Node;
+        Node targetNode = diagram.GetObject(connector.TargetID) as Node;
         if (targetNode != null && targetNode.Data != null)
         {
-            MindMapDetails nodeInfo = (targetNode.Data as MindMapDetails);
+            MindMapItem nodeInfo = (targetNode.Data as MindMapItem);
             if (nodeInfo.Branch == BranchType.Right || nodeInfo.Branch == BranchType.SubRight)
             {
-                (connector as Connector).SourcePortID = sourceNode.Ports[0].ID;
-                (connector as Connector).TargetPortID = targetNode.Ports[1].ID;
+                connector.SourcePortID = sourceNode.Ports[0].ID;
+                connector.TargetPortID = targetNode.Ports[1].ID;
             }
             else if (nodeInfo.Branch == BranchType.Left || nodeInfo.Branch == BranchType.SubLeft)
             {
-                (connector as Connector).SourcePortID = sourceNode.Ports[1].ID;
-                (connector as Connector).TargetPortID = targetNode.Ports[0].ID;
+                connector.SourcePortID = sourceNode.Ports[1].ID;
+                connector.TargetPortID = targetNode.Ports[0].ID;
             }
         }
     }
@@ -359,7 +341,7 @@
         {
             int newChildID = diagram.Nodes.Count + 1;
             string newchildColor = "";
-            BranchType type = (diagram.SelectionSettings.Nodes[0].Data as MindMapDetails).Branch;
+            BranchType type = (diagram.SelectionSettings.Nodes[0].Data as MindMapItem).Branch;
             BranchType childType = BranchType.Left;
 
             switch (type.ToString())
@@ -368,8 +350,6 @@
                     childType = BranchType.Left;
                     break;
                 case "Left":
-                    childType = BranchType.SubLeft;
-                    break;
                 case "SubLeft":
                     childType = BranchType.SubLeft;
                     break;
@@ -384,14 +364,14 @@
                 newchildColor = "#3dbfc9";
             }
 
-            MindMapDetails childNode = new MindMapDetails()
-                {
-                    Id = newChildID.ToString(),
-                    ParentId = (diagram.SelectionSettings.Nodes[0].Data as MindMapDetails).Id,
-                    Fill = newchildColor,
-                    Branch = childType,
-                    Label = "New Child"
-                };
+            MindMapItem childNode = new MindMapItem()
+            {
+                Id = newChildID.ToString(),
+                ParentId = (diagram.SelectionSettings.Nodes[0].Data as MindMapItem).Id,
+                Fill = newchildColor,
+                Branch = childType,
+                Label = "New Child"
+            };
             diagram.BeginUpdate();
             await UpdatePortConnection(childNode, diagram);
             await diagram.EndUpdate();
@@ -404,7 +384,7 @@
         }
     }
 
-    private static async Task UpdatePortConnection(MindMapDetails childNode, SfDiagramComponent diagram)
+    private static async Task UpdatePortConnection(MindMapItem childNode, SfDiagramComponent diagram)
     {
         Node node = new Node()
             {
@@ -416,20 +396,20 @@
                 SourceID = diagram.SelectionSettings.Nodes[0].ID
             };
         await diagram.AddDiagramElements(new DiagramObjectCollection<NodeBase>() { node, connector });
-        Node sourceNode = diagram.GetObject((connector as Connector).SourceID) as Node;
-        Node targetNode = diagram.GetObject((connector as Connector).TargetID) as Node;
+        Node sourceNode = diagram.GetObject(connector.SourceID) as Node;
+        Node targetNode = diagram.GetObject(connector.TargetID) as Node;
         if (targetNode != null && targetNode.Data != null)
         {
-            MindMapDetails nodeInfo = (targetNode.Data as MindMapDetails);
+            MindMapItem nodeInfo = (targetNode.Data as MindMapItem);
             if (nodeInfo.Branch == BranchType.Right || nodeInfo.Branch == BranchType.SubRight)
             {
-                (connector as Connector).SourcePortID = sourceNode.Ports[0].ID;
-                (connector as Connector).TargetPortID = targetNode.Ports[1].ID;
+                connector.SourcePortID = sourceNode.Ports[0].ID;
+                connector.TargetPortID = targetNode.Ports[1].ID;
             }
             else if (nodeInfo.Branch == BranchType.Left || nodeInfo.Branch == BranchType.SubLeft)
             {
-                (connector as Connector).SourcePortID = sourceNode.Ports[1].ID;
-                (connector as Connector).TargetPortID = targetNode.Ports[0].ID;
+                connector.SourcePortID = sourceNode.Ports[1].ID;
+                connector.TargetPortID = targetNode.Ports[0].ID;
             }
         }
         await diagram.DoLayout();
@@ -447,7 +427,7 @@
         {
             int newChildID = diagram.Nodes.Count + 1;
             string newchildColor = "";
-            BranchType type = (diagram.SelectionSettings.Nodes[0].Data as MindMapDetails).Branch;
+            BranchType type = (diagram.SelectionSettings.Nodes[0].Data as MindMapItem).Branch;
             BranchType childType = BranchType.Left;
 
             switch (type.ToString())
@@ -456,8 +436,6 @@
                     childType = BranchType.Right;
                     break;
                 case "Right":
-                    childType = BranchType.SubRight;
-                    break;
                 case "SubRight":
                     childType = BranchType.SubRight;
                     break;
@@ -472,14 +450,14 @@
                 newchildColor = "#3dbfc9";
             }
 
-            MindMapDetails childNode = new MindMapDetails()
-                {
-                    Id = newChildID.ToString(),
-                    ParentId = (diagram.SelectionSettings.Nodes[0].Data as MindMapDetails).Id,
-                    Fill = newchildColor,
-                    Branch = childType,
-                    Label = "New Child"
-                };
+            MindMapItem childNode = new MindMapItem()
+            {
+                Id = newChildID.ToString(),
+                ParentId = (diagram.SelectionSettings.Nodes[0].Data as MindMapItem).Id,
+                Fill = newchildColor,
+                Branch = childType,
+                Label = "New Child"
+            };
             diagram.BeginUpdate();
             await UpdatePortConnection(childNode, diagram);
             await diagram.EndUpdate();
@@ -533,14 +511,14 @@
                 }
                 else
                 {
-                    MindmapData.Remove(targetnode.Data as MindMapDetails);
+                    MindmapData.Remove(targetnode.Data as MindMapItem);
                 }
             }
-            MindmapData.Remove(node.Data as MindMapDetails);
+            MindmapData.Remove(node.Data as MindMapItem);
         }
         else
         {
-            MindmapData.Remove(node.Data as MindMapDetails);
+            MindmapData.Remove(node.Data as MindMapItem);
         }
     }
     
@@ -550,7 +528,7 @@
         {
             if (args.NewValue[0] is Node && (args.NewValue[0] as Node).Data != null)
             {
-                BranchType type = ((args.NewValue[0] as Node).Data as MindMapDetails).Branch;
+                BranchType type = ((args.NewValue[0] as Node).Data as MindMapItem).Branch;
                 if (type == BranchType.Root)
                 {
                     selectionSettings.UserHandles[0].Visible = false;

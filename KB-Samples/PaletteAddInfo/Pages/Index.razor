@@ -1,0 +1,123 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagrams
+@using System.Collections.ObjectModel
+@using DiagramShapes = Syncfusion.Blazor.Diagrams.Shapes
+
+@using Syncfusion.Blazor.SplitButtons
+
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Buttons
+
+
+
+<div class="control-section">
+    <link href="https://cdn.syncfusion.com/ej2/18.1.52/material.css" rel="stylesheet" />
+    <link href="https://ej2.syncfusion.com/javascript/demos/src/diagram/styles/diagram-common.css" rel="stylesheet">
+
+    <div id="palette-space" class="sb-mobile-palette">
+        <SfSymbolPalette @ref="palette" id="palettes" Width="100%" Height="700px" ExpandMode="Syncfusion.Blazor.Navigations.ExpandMode.Multiple" Palettes="@Palettes">
+
+            <SymbolMargin Left="12" Right="12" Bottom="12" Top="12"></SymbolMargin>
+           
+
+        </SfSymbolPalette>
+    </div>
+
+    <div id="diagram-space" class="sb-mobile-diagram">
+
+        <SfDiagram Width="1000px" Height="@Height" @ref="@diagram" Nodes="nodes">
+            <DiagramEvents OnDrop="@OnDrop" SelectionChanged="@SelectionChange" ></DiagramEvents>
+
+
+        </SfDiagram>
+    </div>
+</div>
+
+@code
+    {
+
+
+    SfDiagram diagram;
+
+    SfSymbolPalette palette;
+
+    NodeData addinfo = null;
+
+    public ObservableCollection<SymbolPalettePalette> Palettes;
+
+    public void SelectionChange(IBlazorSelectionChangeEventArgs args)
+    {
+        if(args.State == EventState.Changed && addinfo != null && args.NewValue.Nodes.Count > 0)
+        {
+            DiagramNode node = diagram.GetNode((args.NewValue.Nodes[0] as DiagramNode).Id);
+            node.AddInfo = addinfo;
+        }
+    }
+
+    public void OnDrop(IBlazorDropEventArgs args)
+    {
+        if (args.Element.Node.AddInfo != null)
+        {
+            if (args.Element.Node.AddInfo != null)
+            {
+                addinfo = Newtonsoft.Json.JsonConvert.DeserializeObject<NodeData>(args.Element.Node.AddInfo.ToString());
+                addinfo.WorkflowStepId = Guid.NewGuid();
+            }
+        }
+    }
+
+    public class NodeData
+    {
+        public Guid WorkflowStepId;
+    }
+
+    public string Height { get; set; } = "700px";
+
+    public ObservableCollection<Object> basicShapes { get; set; } = new ObservableCollection<Object>();
+
+    public ObservableCollection<DiagramConnector> diagramConnectors = new ObservableCollection<DiagramConnector>();
+
+    public ObservableCollection<DiagramNode> nodes = new ObservableCollection<DiagramNode>();
+
+    public Dictionary<string, object> data = new Dictionary<string, object>();
+
+    protected override void OnInitialized()
+    {
+        Palettes = new ObservableCollection<SymbolPalettePalette>();
+
+        nodes = new ObservableCollection<DiagramNode>();
+
+
+        data.Add("Mass", 15);
+        data.Add("Pressure", 50);
+        data.Add("Velocity", 30);
+
+        DiagramNode node1 = new DiagramNode()
+        {
+            Id = "node1",
+            Height = 100,
+            Width = 100,
+            OffsetX = 300,
+            OffsetY = 100
+
+        };
+        nodes.Add(node1);
+
+        basicShapes = new ObservableCollection<Object>()
+        {
+
+                new DiagramNode()
+                {
+                Id = "Rectangle",
+                Shape = new DiagramShape() { Type = Shapes.Basic, BasicShape = Syncfusion.Blazor.Diagrams.BasicShapes.Rectangle },
+                AddInfo = data
+                },
+
+                };
+        Palettes.Add(new SymbolPalettePalette() { Id = "BasicShapes", Expanded = true, Symbols = basicShapes, Title = "Basicshapes" });
+
+    }
+
+
+}

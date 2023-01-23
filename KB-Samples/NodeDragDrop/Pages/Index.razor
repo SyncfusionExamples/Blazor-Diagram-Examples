@@ -1,0 +1,172 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagrams
+@using System.Collections.ObjectModel
+@using DiagramShapes = Syncfusion.Blazor.Diagrams.Shapes
+
+@using Syncfusion.Blazor.SplitButtons
+
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Buttons
+
+
+
+<div class="control-section">
+    <link href="https://cdn.syncfusion.com/ej2/18.1.52/material.css" rel="stylesheet" />
+    <link href="https://ej2.syncfusion.com/javascript/demos/src/diagram/styles/diagram-common.css" rel="stylesheet">
+
+    <div id="palette-space" class="sb-mobile-palette">
+        <SfSymbolPalette @ref="palette" id="palettes" Width="100%" Height="700px" ExpandMode="Syncfusion.Blazor.Navigations.ExpandMode.Multiple" Palettes="@Palettes">
+
+            <SymbolMargin Left="12" Right="12" Bottom="12" Top="12"></SymbolMargin>
+           
+
+        </SfSymbolPalette>
+    </div>
+
+    <div id="diagram-space" class="sb-mobile-diagram">
+
+        <SfDiagram Width="1000px" Height="@Height" @ref="@diagram" Nodes="Nodes" Connectors="Connectors">
+            <DiagramEvents OnDrop="@OnDrop" SelectionChanged="@SelectionChange" ></DiagramEvents>
+
+
+        </SfDiagram>
+    </div>
+</div>
+
+@code
+    {
+
+
+    SfDiagram diagram;
+
+    SfSymbolPalette palette;
+
+    public ObservableCollection<SymbolPalettePalette> Palettes;
+
+    string targetConnectorId = "";
+    string droppedNodeId = "";
+
+    public void SelectionChange(IBlazorSelectionChangeEventArgs args)
+    {
+        if (args.State == EventState.Changed && !string.IsNullOrEmpty(targetConnectorId) && !string.IsNullOrEmpty(droppedNodeId))
+        {
+            DiagramConnector conn = diagram.GetConnector(targetConnectorId);
+            DiagramNode node = diagram.GetNode(droppedNodeId);
+            string oldsourceId = conn.TargetID;
+
+            conn.TargetID = droppedNodeId;
+
+            DiagramConnector connector = new DiagramConnector()
+            {
+                Id = "connector" + diagram.Connectors.Count.ToString(),
+                SourceID = droppedNodeId,
+                Constraints = ConnectorConstraints.Default | ConnectorConstraints.AllowDrop,
+                TargetID = oldsourceId,
+            };
+            diagram.Connectors.Add(connector);
+
+            DiagramNodeAnnotation annotation = new DiagramNodeAnnotation()
+            {
+                Content = "Node" + diagram.Nodes.Count.ToString(),
+            };
+            node.Annotations.Add(annotation);
+
+            targetConnectorId = "";
+            droppedNodeId = "";
+        }
+    }
+
+    public void OnDrop(IBlazorDropEventArgs args)
+    {
+        if(args.Target.Connector != null)
+        {
+            targetConnectorId = args.Target.Connector.Id;
+            droppedNodeId = args.Element.Node.Id;
+        }
+    }
+
+    public class NodeData
+    {
+        public Guid WorkflowStepId;
+    }
+
+    public string Height { get; set; } = "700px";
+
+    public ObservableCollection<Object> basicShapes { get; set; } = new ObservableCollection<Object>();
+
+    public ObservableCollection<DiagramConnector> diagramConnectors = new ObservableCollection<DiagramConnector>();
+
+    public ObservableCollection<DiagramNode> Nodes;
+    public ObservableCollection<DiagramConnector> Connectors;
+    public Dictionary<string, object> data = new Dictionary<string, object>();
+
+    protected override void OnInitialized()
+    {
+        Palettes = new ObservableCollection<SymbolPalettePalette>();
+
+        Nodes = new ObservableCollection<DiagramNode>();
+        Connectors = new ObservableCollection<DiagramConnector>();
+
+        data.Add("Mass", 15);
+        data.Add("Pressure", 50);
+        data.Add("Velocity", 30);
+
+        DiagramNode node1 = new DiagramNode()
+        {
+            Id = "node1",
+            Height = 100,
+            Width = 100,
+            OffsetX = 200,
+            OffsetY = 100,
+            Annotations = new ObservableCollection<DiagramNodeAnnotation>()
+            {
+                new DiagramNodeAnnotation()
+                {
+                    Content = "Node1",
+                }
+            }
+        };
+        Nodes.Add(node1);
+
+        DiagramNode node2 = new DiagramNode()
+        {
+            Id = "node2",
+            Height = 100,
+            Width = 100,
+            OffsetX = 800,
+            OffsetY = 100,
+            Annotations = new ObservableCollection<DiagramNodeAnnotation>()
+            {
+                new DiagramNodeAnnotation()
+                {
+                    Content = "Node2",
+                }
+            }
+        };
+        Nodes.Add(node2);
+
+        DiagramConnector connector = new DiagramConnector()
+        {
+            Id = "connector",
+            SourceID = "node1",
+            TargetID = "node2",
+            Constraints = ConnectorConstraints.Default| ConnectorConstraints.AllowDrop,
+        };
+        Connectors.Add(connector);
+
+        basicShapes = new ObservableCollection<Object>()
+        {
+            new DiagramNode()
+            {
+                Height=100,
+                Width=100,
+                Id = "Rectangle",
+                Shape = new DiagramShape() { Type = Shapes.Basic, BasicShape = Syncfusion.Blazor.Diagrams.BasicShapes.Rectangle },
+            },
+        };
+        Palettes.Add(new SymbolPalettePalette() { Id = "BasicShapes", Expanded = true, Symbols = basicShapes, Title = "Basicshapes" });
+
+    }
+
+}

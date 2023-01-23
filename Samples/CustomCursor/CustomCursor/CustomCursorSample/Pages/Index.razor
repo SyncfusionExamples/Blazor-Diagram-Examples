@@ -1,0 +1,79 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using System.Collections.ObjectModel
+
+
+
+<SfDiagramComponent @ref=diagram Height="600px" GetCustomCursor="@cursor" Nodes="@nodes"  >
+</SfDiagramComponent>
+
+
+@code
+{
+   
+   public string cursor(DiagramElementAction action, bool active, string handle)
+    {
+        string cursors = "";
+           cursors ="url(\"GIF.gif\"), url(\"GIF.cur\"), default";
+        return cursors;
+    } 
+
+
+            private Boolean change = false;
+
+            SfDiagramComponent? diagram;
+
+            DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+
+            protected override void OnInitialized()
+            {
+                Node myNode = new Node()
+                    {
+                        Width = 150,
+                        Height = 50,
+                        OffsetX = 400,
+                        OffsetY = 160,
+                        ID = "node1",
+                        Shape = new BasicShape() { Shape = NodeBasicShapes.Rectangle, Type = NodeShapes.Basic, CornerRadius = 3 },
+                        Annotations = new DiagramObjectCollection<ShapeAnnotation>
+                    {
+                        new ShapeAnnotation {
+                            Content = "test",
+                            Style = new TextStyle { Color = "white", Fill = "transparent", FontSize = 14, Bold = true },
+                            HorizontalAlignment = HorizontalAlignment.Center,
+                            VerticalAlignment = VerticalAlignment.Center,
+                            Constraints = AnnotationConstraints.ReadOnly,
+                            Height = 192,
+                            Width = 48
+                        }
+                    },
+
+                    };
+                Node myNode2 = new Node()
+                    {
+                        Width = 150,
+                        Height = 50,
+                        OffsetX = 800,
+                        OffsetY = 160,
+                        ID = Guid.NewGuid().ToString(),
+                        Style = new ShapeStyle() { Fill = "green" },
+                        Shape = new BasicShape() { Shape = NodeBasicShapes.Rectangle, Type = NodeShapes.Basic, CornerRadius = 3 },
+                        Annotations = new DiagramObjectCollection<ShapeAnnotation>
+                    {
+                        new ShapeAnnotation {
+                            Content = "test",
+                            Style = new TextStyle { Color = "white", Fill = "transparent", FontSize = 14, Bold = true },
+                            HorizontalAlignment = HorizontalAlignment.Center,
+                            VerticalAlignment = VerticalAlignment.Center,
+                            Constraints = AnnotationConstraints.ReadOnly,
+                            Height = 192,
+                            Width = 48
+                        }
+                    },
+
+                    };
+                nodes = new DiagramObjectCollection<Node> { myNode, myNode2 };
+            }
+
+        }

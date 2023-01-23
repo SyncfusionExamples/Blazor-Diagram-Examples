@@ -1,0 +1,156 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagrams
+@using System.Collections.ObjectModel
+@using DiagramShapes = Syncfusion.Blazor.Diagrams.Shapes
+
+@using Syncfusion.Blazor.SplitButtons
+
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Buttons
+
+
+
+<div class="control-section">
+    <link href="https://cdn.syncfusion.com/ej2/18.1.52/material.css" rel="stylesheet" />
+    <link href="https://ej2.syncfusion.com/javascript/demos/src/diagram/styles/diagram-common.css" rel="stylesheet">
+    <input type="button" value="Change" @onclick="@OnChange" />
+    <div id="palette-space" class="sb-mobile-palette">
+        <SfSymbolPalette @ref="palette" id="palettes" Width="100%" Height="700px" ExpandMode="Syncfusion.Blazor.Navigations.ExpandMode.Multiple" SymbolWidth="60" SymbolHeight="60">
+
+            <SymbolMargin Left="12" Right="12" Bottom="12" Top="12"></SymbolMargin>
+
+            <SymbolPalettePalettes>
+                <SymbolPalettePalette Id="flow" Expanded="true" Symbols="@basicShapes" IconCss="e-ddb-icons e-flow" Title="Flow Shapes">
+                </SymbolPalettePalette>
+
+            </SymbolPalettePalettes>
+
+        </SfSymbolPalette>
+    </div>
+
+    <div id="diagram-space" class="sb-mobile-diagram">
+
+        <SfDiagram Width="1000px" Height="@Height" @ref="@diagram" Nodes="nodes">
+            <DiagramEvents OnDrop="@OnDrop" ></DiagramEvents>
+            
+
+        </SfDiagram>
+    </div>
+</div>
+
+@functions
+    {
+
+
+    SfDiagram diagram;
+
+    SfSymbolPalette palette;
+
+    public void OnChange()
+    {
+        diagram.Nodes[0].BeginUpdate();
+        diagram.Nodes[0].Shape = new DiagramShape()
+        {
+            Type = Syncfusion.Blazor.Diagrams.Shapes.Basic,
+            BasicShape = BasicShapes.Rectangle
+        };
+        diagram.Nodes[0].EndUpdate();
+        this.StateHasChanged();
+    }
+
+    public void OnDrop(IBlazorDropEventArgs args)
+    {
+        args.Cancel = true;
+        diagram.Nodes.Add(
+            new DiagramNode()
+            {
+                
+                Width = 100,
+                Height = 100,
+                OffsetX = args.Position.X,
+                OffsetY = args.Position.Y,
+                Shape = new DiagramShape()
+                {
+                    Type = DiagramShapes.Basic,
+                    BasicShape = BasicShapes.Rectangle
+                }
+            });
+    }
+
+
+    public void DragEnter(IBlazorDragEnterEventArgs args)
+    {
+        if(args.Element.Node != null)
+        {
+            diagram.BeginUpdate();
+            args.Element.Node.Shape = new DiagramShape() { Type = DiagramShapes.Basic, BasicShape = BasicShapes.Rectangle };
+            args.Element.Node.Height = 200;
+            args.Element.Node.Width = 200;
+            diagram.EndUpdate();
+            this.StateHasChanged();
+        }
+    }
+
+
+    public string Height { get; set; } = "700px";
+
+    public ObservableCollection<DiagramNode> basicShapes { get; set; } = new ObservableCollection<DiagramNode>();
+
+    public ObservableCollection<DiagramConnector> diagramConnectors = new ObservableCollection<DiagramConnector>();
+
+    public ObservableCollection<DiagramNode> nodes = new ObservableCollection<DiagramNode>();
+
+    protected override void OnInitialized()
+    {
+
+        nodes = new ObservableCollection<DiagramNode>();
+
+        DiagramNode node1 = new DiagramNode()
+        {
+            Id = "node1",
+            Height = 100,
+            Width = 100,
+            OffsetX = 300,
+            OffsetY = 100,
+            Shape = new DiagramShape() { Type = Syncfusion.Blazor.Diagrams.Shapes.Image, Source = "/image.png" }
+        };
+        nodes.Add(node1);
+
+        DiagramNode htmlnode = new DiagramNode()
+        {
+            Id = "html",
+            Height = 100,
+            Width = 100,
+            Shape = new DiagramShape() { Type = Syncfusion.Blazor.Diagrams.Shapes.Image, Source = "/image.png" }
+        };
+        basicShapes.Add(htmlnode);
+
+        DiagramNode htmlnode2 = new DiagramNode()
+        {
+            Id = "html2",
+            Height = 100,
+            Width = 100,
+            
+        };
+        basicShapes.Add(htmlnode2);
+
+        DiagramConnector connector = new DiagramConnector()
+        {
+            Id = "connector1",
+            SourceID = "node1",
+            TargetID = "node2",
+
+        };
+        diagramConnectors.Add(connector);
+        DiagramConnector connector2 = new DiagramConnector()
+        {
+            Id = "connector2",
+            SourceID = "node1",
+            TargetID = "node3"
+        };
+        diagramConnectors.Add(connector2);
+    }
+
+
+}

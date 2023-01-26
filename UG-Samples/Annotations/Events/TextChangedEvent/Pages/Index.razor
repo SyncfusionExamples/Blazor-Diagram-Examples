@@ -2,7 +2,7 @@
 
 @using Syncfusion.Blazor.Diagram
 
-<SfDiagramComponent Height="600px" TextChanged="OnTextChanged" Nodes="@nodes" />
+<SfDiagramComponent Height="600px" TextChanging="@OnLabelTextChanging" TextChanged="OnTextChanged" Nodes="@nodes" />
 
 @code
 {
@@ -14,6 +14,11 @@
     {
         Console.WriteLine("OldValue", args.OldValue);
         Console.WriteLine("NewValue", args.NewValue);
+    }
+    // Triggered when the node and connector's labels change in the diagram.
+    private void OnLabelTextChanging(TextChangeEventArgs args)
+    {
+        args.Cancel = true;
     }
 
     protected override void OnInitialized()

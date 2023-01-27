@@ -1,0 +1,77 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\January\\ReadmeFile\\UG-Samples\\Annotations\\Appearance\\HyperlinktoAnnotation\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\HyperlinktoAnnotation.bundle.scp.css",
+      "PackagePath": "staticwebassets\\HyperlinktoAnnotation.bundle.scp.css"
+    },
+    {
+      "Id": "D:\\January\\ReadmeFile\\UG-Samples\\Annotations\\Appearance\\HyperlinktoAnnotation\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "D:\\January\\ReadmeFile\\UG-Samples\\Annotations\\Appearance\\HyperlinktoAnnotation\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "D:\\January\\ReadmeFile\\UG-Samples\\Annotations\\Appearance\\HyperlinktoAnnotation\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "PackagePath": "staticwebassets\\css\\open-iconic"
+    },
+    {
+      "Id": "D:\\January\\ReadmeFile\\UG-Samples\\Annotations\\Appearance\\HyperlinktoAnnotation\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "PackagePath": "staticwebassets\\css\\open-iconic"
+    },
+    {
+      "Id": "D:\\January\\ReadmeFile\\UG-Samples\\Annotations\\Appearance\\HyperlinktoAnnotation\\wwwroot\\css\\open-iconic\\README.md",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\README.md"
+    },
+    {
+      "Id": "D:\\January\\ReadmeFile\\UG-Samples\\Annotations\\Appearance\\HyperlinktoAnnotation\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css"
+    },
+    {
+      "Id": "D:\\January\\ReadmeFile\\UG-Samples\\Annotations\\Appearance\\HyperlinktoAnnotation\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.eot"
+    },
+    {
+      "Id": "D:\\January\\ReadmeFile\\UG-Samples\\Annotations\\Appearance\\HyperlinktoAnnotation\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.otf"
+    },
+    {
+      "Id": "D:\\January\\ReadmeFile\\UG-Samples\\Annotations\\Appearance\\HyperlinktoAnnotation\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.svg"
+    },
+    {
+      "Id": "D:\\January\\ReadmeFile\\UG-Samples\\Annotations\\Appearance\\HyperlinktoAnnotation\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.ttf"
+    },
+    {
+      "Id": "D:\\January\\ReadmeFile\\UG-Samples\\Annotations\\Appearance\\HyperlinktoAnnotation\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.woff"
+    },
+    {
+      "Id": "D:\\January\\ReadmeFile\\UG-Samples\\Annotations\\Appearance\\HyperlinktoAnnotation\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "D:\\January\\ReadmeFile\\UG-Samples\\Annotations\\Appearance\\HyperlinktoAnnotation\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.HyperlinktoAnnotation.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.build.HyperlinktoAnnotation.props",
+      "PackagePath": "build\\HyperlinktoAnnotation.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.HyperlinktoAnnotation.props",
+      "PackagePath": "buildMultiTargeting\\HyperlinktoAnnotation.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildTransitive.HyperlinktoAnnotation.props",
+      "PackagePath": "buildTransitive\\HyperlinktoAnnotation.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

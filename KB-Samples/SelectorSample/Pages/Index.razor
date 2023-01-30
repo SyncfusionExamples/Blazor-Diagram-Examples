@@ -1,0 +1,44 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+
+<style>
+    .e-diagram-border {
+        stroke: transparent;
+        stroke-dasharray: 1,1
+    }
+
+    .e-diagram-resize-handle {
+        fill: orange;
+        stroke: orange;
+    }
+
+</style>
+
+<SfDiagramComponent @ref="diagram" Width="1000px" Height="1000px" Nodes="NodeCollection">
+    <SnapSettings Constraints="SnapConstraints.None"></SnapSettings>
+</SfDiagramComponent>
+
+@code
+{
+    public SfDiagramComponent diagram;
+    DiagramObjectCollection<Node> NodeCollection;
+    protected override void OnInitialized()
+    {
+        Node node1 = new Node()
+            {
+                ID = "node1",
+                OffsetX = 300,
+                OffsetY = 300,
+                Width = 100,
+                Height = 80,
+                Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Ellipse },
+                Style = new ShapeStyle() { Fill = "CornflowerBlue" }
+            };
+
+        NodeCollection = new DiagramObjectCollection<Node>()
+        {
+            node1
+        };
+    }
+}

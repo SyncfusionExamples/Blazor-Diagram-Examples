@@ -77,9 +77,9 @@
 @*End:Hidden*@
 <div class="col-lg-9 control-section sb-property-border">
     <div class="content-wrapper">
-        <SfDiagramComponent @ref="@Diagram" Height="499px" ConnectorCreating="@ConnectorCreating" NodeCreating="@NodeCreating">
-            <DataSourceSettings ID="Name" ParentID="Category" DataSource="DataSource"> </DataSourceSettings>
-                <Layout @bind-Type="type" @bind-HorizontalSpacing="@HorizontalSpacing" @bind-Orientation="@orientation" @bind-VerticalSpacing="@VerticalSpacing" @bind-HorizontalAlignment="@horizontalAlignment" @bind-VerticalAlignment="@verticalAlignment" GetLayoutInfo="GetLayoutInfo">
+        <SfDiagramComponent @ref="@Diagram" Height="800px" Width="900px" ConnectorCreating="@ConnectorCreating" NodeCreating="@NodeCreating">
+            <DataSourceSettings ID="ID" ParentID="Manager" DataSource="DataSource"> </DataSourceSettings>
+                <Layout @bind-Type="type" @bind-HorizontalSpacing="@HorizontalSpacing" @bind-Orientation="@orientation" @bind-VerticalSpacing="@VerticalSpacing" @bind-HorizontalAlignment="@horizontalAlignment" @bind-VerticalAlignment="@verticalAlignment" >
                     <LayoutMargin @bind-Top="@top" @bind-Bottom="@bottom" @bind-Right="@right" @bind-Left="@left"></LayoutMargin>
                 </Layout>             
 
@@ -100,7 +100,7 @@
     double bottom = 50;
     double right = 50;
     double left = 50;
-    LayoutType type = LayoutType.HierarchicalTree;
+    LayoutType type = LayoutType.OrganizationalChart;
     LayoutOrientation orientation = LayoutOrientation.TopToBottom;
     HorizontalAlignment horizontalAlignment = HorizontalAlignment.Auto;
     VerticalAlignment verticalAlignment = VerticalAlignment.Auto;
@@ -111,9 +111,6 @@
     {
         (connector as Connector).Type = ConnectorSegmentType.Orthogonal;
         (connector as Connector).TargetDecorator.Shape = DecoratorShape.None;
-        (connector as Connector).Style = new ShapeStyle() { StrokeColor = "#6d6d6d" };
-        (connector as Connector).Constraints = 0;
-        (connector as Connector).CornerRadius = 5;
     }
 
     private TreeInfo GetLayoutInfo(IDiagramObject obj, TreeInfo options)
@@ -125,25 +122,20 @@
     private void NodeCreating(IDiagramObject obj)
     {
         Node node = obj as Node;
-        if (node.Data is System.Text.Json.JsonElement)
-        {
-            node.Data = System.Text.Json.JsonSerializer.Deserialize<HierarchicalDetails>(node.Data.ToString());
-        }
-        HierarchicalDetails hierarchicalData = node.Data as HierarchicalDetails;
-        node.Style = new ShapeStyle() { Fill = "#659be5", StrokeColor = "none", StrokeWidth = 2, };
-        node.BackgroundColor = "#659be5";
+        OrganizationalDetails hierarchicalData = node.Data as OrganizationalDetails;
         node.Width = 150;
         node.Height = 50;
+        node.Style.Fill = hierarchicalData.Color;
         node.Annotations = new DiagramObjectCollection<ShapeAnnotation>()
         {
             new ShapeAnnotation()
             {
-                 Content = hierarchicalData.Name,
+                Content = hierarchicalData.Role,
                 Style =new TextStyle(){Color = "white"}
             }
-        };      
+        };
     }
-    public List<HierarchicalDetails> DataSource;
+    public List<OrganizationalDetails> DataSource;
     protected override Task OnInitializedAsync()
     {
 
@@ -156,10 +148,12 @@
         string QueryStr = "SELECT *  FROM dbo.diagram";
         DataSet Data = CreateCommand(QueryStr, ConnectionStr);
 
-        DataSource = Data.Tables[0].AsEnumerable().Select(r => new HierarchicalDetails
+        DataSource = Data.Tables[0].AsEnumerable().Select(r => new OrganizationalDetails
         {
-            Name = r.Field<string>("Name"),
-            Category = r.Field<string>("Category")
+            ID = r.Field<string>("ID"),
+            Manager = r.Field<string>("Manager"),
+            Color=r.Field<string>("Color"),
+            Role = r.Field<string>("Role"),
         }).ToList();  
         return base.OnInitializedAsync();
     }
@@ -189,11 +183,12 @@
             return dt;
         }
     }
-    public class HierarchicalDetails
+    public class OrganizationalDetails
     {
-        public string Name { get; set; }
-        public string FillColor { get; set; }
-        public string Category { get; set; }
+        public string ID{ get; set; }
+        public string Role { get; set; }
+        public string Manager { get; set; }
+        public string Color { get; set; }
 
     }
    

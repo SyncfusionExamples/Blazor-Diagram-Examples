@@ -3,16 +3,20 @@
 
 @using Syncfusion.Blazor.Diagram
 
-<SfDiagramComponent Height="600px">
-    @* Shows both horizontal and vertical gridlines *@
-    <SnapSettings Constraints="@snapConstraints">
-        <HorizontalGridLines LineColor="blue" LineDashArray="2,2" />
-        <VerticalGridLines LineColor="blue" LineDashArray="2,2" />
+<SfDiagramComponent Width="1000px" Height="500px">
+    @* Customizes the appearance of the gridlines *@
+    <SnapSettings GridType="GridType.Dots">
+        <HorizontalGridLines LineColor="Blue" @bind-LineIntervals="@HInterval" 
+                             @bind-DotIntervals="@HDotInterval"></HorizontalGridLines>
+        <VerticalGridLines LineColor="Blue" @bind-LineIntervals="@VInterval" 
+                           @bind-DotIntervals="@VDotInterval"></VerticalGridLines>
     </SnapSettings>
 </SfDiagramComponent>
 
 @code
 {
-    //Define snap constraints
-    SnapConstraints snapConstraints = SnapConstraints.ShowLines;
+    public double[] HDotInterval { get; set; } = new double[] { 3, 20, 1, 20, 1, 20 };
+    public double[] VDotInterval { get; set; } = new double[] { 3, 20, 1, 20, 1, 20, 1, 20, 1, 20 };
+    public double[] HInterval { get; set; } = new double[] { 1.25, 18.75, 0.25, 19.75, 0.25, 19.75, 0.25, 19.75, 0.25, 19.75 };
+    public double[] VInterval { get; set; } = new double[] { 1.25, 18.75, 0.25, 19.75, 0.25, 19.75, 0.25, 19.75, 0.25, 19.75 };
 }

@@ -1,0 +1,18 @@
+#ExportToPDF Sample
+
+This sample demonstrate how to export the diagram as PDF file. Diagram does not have the built-in support to convert the diagram to a PDF file, but you can achieve this by exporting the diagram as base-64 and then converting the exported file to PDF using Syncfusion.PdfExport.PdfDocument. Invoked javascript functions downloadPdf and triggerDownload methods to automatically download the pdf file.
+
+Demo link: 
+
+https://blazor.syncfusion.com/demos/diagramcomponent/export?theme=fluent
+
+## Prerequisites
+
+* Visual Studio 2022
+
+## How to run the project
+
+* Checkout this project to a location in your disk.
+* Open the solution file using the Visual Studio 2022.
+* Restore the NuGet packages by rebuilding the solution.
+* Run the project.

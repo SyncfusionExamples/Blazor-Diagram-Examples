@@ -1,4 +1,4 @@
-# Export the diagram with HTML Nodes
+#Custom Cursor
 
 This sample demonstrate how to set custom cursor based on diagram action. 
 

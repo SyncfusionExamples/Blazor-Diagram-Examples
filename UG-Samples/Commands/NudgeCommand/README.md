@@ -1,6 +1,6 @@
 #Nudge Commands
 
-This sample demonstrate how to execute nudge command. The Nudge commands repositions the selected object by the specified delta in the given direction.
+This sample demonstrates how to execute the nudge command. The Nudge command repositions the selected object by the specified delta in the given direction.
 
 Demo link: 
 https://blazor.syncfusion.com/demos/diagramcomponent/keyboard-interaction?theme=fluent

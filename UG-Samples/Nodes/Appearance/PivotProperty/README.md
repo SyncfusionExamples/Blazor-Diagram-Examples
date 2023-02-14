@@ -1,6 +1,6 @@
 #PivotProperty Sample
 
-This sample how to update pivot property for node.
+This sample shows how to update the pivot property for the node.
 
 
 

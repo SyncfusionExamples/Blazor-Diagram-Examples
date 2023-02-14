@@ -1,6 +1,6 @@
 #Port Offset
 
-This sample demonstrate how to align ports based on offset values. Offset property is used to align ports based on fractions.
+This sample demonstrates how to align ports based on the offset values. The Offset property is used to align ports based on the fractions.
 
 Demo link: 
 https://blazor.syncfusion.com/demos/diagramcomponent/ports?theme=fluent

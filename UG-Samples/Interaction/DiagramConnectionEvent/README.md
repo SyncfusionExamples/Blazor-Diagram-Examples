@@ -1,6 +1,6 @@
 #DiagramConnectionChange event
 
-This sample demonstrate how invoke ConnectionChanging and ConnectionChanged event. The ConnectionChanging event is invoke while creating the connection between the nodes in the diagram. The ConnectionChanged event is invoke the connection has been created between the nodes in the diagram.
+This sample demonstrates how invoke the ConnectionChanging and ConnectionChanged events. The ConnectionChanging event is invoked while creating the connection between the nodes in the diagram. The ConnectionChanged event is invoked when the connection has been created between the nodes in the diagram.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/events?theme=fluent

@@ -1,6 +1,6 @@
 #Port Constraints Sample
 
-This sample demonstrate how to disable creating connections with a port. The Constraints property of the Port allows you to enable or disable the Draw, InConnect, OutConnect and Default.
+This sample demonstrates how to disable creating connections with a port. The Constraints property of the Port allows you to enable or disable the Draw, InConnect, OutConnect, and Default.
 
 
 Demo:

@@ -1,6 +1,6 @@
 #Connector FixedUser Handle Sample
 
-This sample demonstrate how to customize the connector fixed user handle.
+This sample demonstrates how to customize the connector fixed user handle.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/userhandles?theme=fluent

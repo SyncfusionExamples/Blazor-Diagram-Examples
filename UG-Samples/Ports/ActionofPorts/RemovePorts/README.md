@@ -1,6 +1,6 @@
 #Remove Ports
 
-This sample demonstrate how to remove ports at runtime using "RemoveAt" method.
+This sample demonstrates how to remove the ports at runtime using the "RemoveAt" method.
 
 
 

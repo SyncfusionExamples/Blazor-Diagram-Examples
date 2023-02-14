@@ -1,6 +1,6 @@
 #Remove Operation Sample
 
-This sample demonstrate shows remove zoom and pan constraints from the default constraints to disable zoom and panning functionality in the diagram. You can remove or disable values by using the Bitwise ‘&~’ (XOR) operator.
+This sample demonstrates how to remove zoom and pan constraints from the default constraints to disable zoom and panning functionality in the diagram. Remove or disable values by using the Bitwise ‘&~’ (XOR) operator.
 
 
 ## Prerequisites

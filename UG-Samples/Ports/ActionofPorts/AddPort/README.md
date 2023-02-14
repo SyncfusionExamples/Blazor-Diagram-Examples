@@ -1,6 +1,6 @@
 #Add Port at runtime
 
-This sample demonstrate how add port at runtime using "Add" method.
+This sample demonstrates how to add the port at runtime using the "Add" method.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/ports?theme=fluent

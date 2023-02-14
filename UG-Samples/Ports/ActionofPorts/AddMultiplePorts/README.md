@@ -1,6 +1,6 @@
 #Add Multiple Ports at runtime
 
-This sample demonstrate how add mutiple ports at runtime using "Add" method.
+This sample demonstrates how to add multiple ports at runtime using the "Add" method.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/ports?theme=fluent

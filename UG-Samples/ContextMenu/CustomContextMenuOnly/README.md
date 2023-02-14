@@ -1,6 +1,6 @@
 #Custom ContextMenu Only Sample
 
-This sample demonstrate how to show custom context menu items alone. Set the ShowCustomMenuOnly property to true to only display the custom context menu items.
+This sample demonstrates how to show the custom context menu items alone. Set the ShowCustomMenuOnly property to true to only display the custom context menu items.
 
 
 

@@ -1,6 +1,6 @@
 #Image Shape
 
-This sample demonstrate how an image node is created.
+This sample demonstrates how an image node is created.
 
 
 

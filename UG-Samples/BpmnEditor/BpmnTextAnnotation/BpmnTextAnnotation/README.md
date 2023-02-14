@@ -1,6 +1,6 @@
 #TextAnnotation Sample
 
-This sample demonstrate how to create a BPMNShape. The BpmnTextAnnotation is used to connect an annotation element to the BPMN Node.
+This sample demonstrates how to create a BPMNShape. The BpmnTextAnnotation is used to connect an annotation element to the BPMN Node.
 
 TextAnnotation:
 ![image](https://user-images.githubusercontent.com/77827252/215400727-2d0a3796-e223-4982-85a9-d0a19407010e.png)

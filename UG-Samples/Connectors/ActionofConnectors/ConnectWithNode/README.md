@@ -1,6 +1,6 @@
 #Connections with Node
 
-This sample demonstrate how to connect two nodes. The SourceID and TargetID properties allow to define the nodes to be connected.
+This sample demonstrates how to connect two nodes. The SourceID and TargetID properties allows you to define the nodes to be connected.
 
 
 Demo Link:

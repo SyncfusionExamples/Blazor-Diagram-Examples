@@ -1,7 +1,6 @@
 #RefreshDataSource Method
 
-This sample demonstrate how to refresh the data source.
-
+This sample demonstrates how to refresh the data source.
 
 ## Prerequisites
 

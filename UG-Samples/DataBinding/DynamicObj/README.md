@@ -1,7 +1,6 @@
 #Dynamic Object Sample
 
-This sample demonstrate how to bind DynamicObject data with the diagram. The DynamicObject can be bound to Diagram by assigning to the [DataSource] property of the DataSourceSettings.
-
+This sample demonstrates how to bind the DynamicObject data with the diagram. The DynamicObject can be bound to the Diagram by assigning to the [DataSource] property of the DataSourceSettings.
 
 
 ## Prerequisites

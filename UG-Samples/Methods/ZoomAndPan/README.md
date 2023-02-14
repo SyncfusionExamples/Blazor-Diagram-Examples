@@ -1,6 +1,6 @@
 #ZoomPan Method
 
-This sample demonstrate how to zoom and pan the diagram. 
+This sample demonstrates how to zoom and pan the diagram.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/zooming-panning?theme=fluent

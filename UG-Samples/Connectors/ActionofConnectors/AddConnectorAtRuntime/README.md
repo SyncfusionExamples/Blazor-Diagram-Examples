@@ -1,6 +1,6 @@
 #AddConnectors At Runtime
 
-This sample demonstrate how to add connectors at runtime. You can add a connector at runtime by adding connector to the connectors collection in the Diagram component
+This sample demonstrates how to add connectors at runtime. Add a connector at runtime by adding the connector to the connectors collection in the diagram component.
 
 
 Demo Link:

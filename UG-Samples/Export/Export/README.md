@@ -1,6 +1,6 @@
 #Export Sample
 
-This sample demonstrate how to export the diagram. Diagram provides support to export the diagram as an image/svg files. 
+This sample demonstrates how to export the diagram. The diagram provides support to export the diagram as an image or svg files.
 
 Demo link: 
 

@@ -1,6 +1,6 @@
 #Tooltip Sample
 
-This sample demonstrate how to customize the tooltip for connectors. 
+This sample demonstrates how to customize the tooltip for the connectors.
 
 
 

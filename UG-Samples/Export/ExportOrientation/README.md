@@ -1,6 +1,6 @@
 #Export Orientation Sample
 
-This sample demonstrate how update orientation of the exporting diagram. Diagram provides support to switch between Portrait and Landscape orientation while exporting. Orientation can be changed by setting the DiagramExportSettings.Orientation Property. The default value is Landscape.
+This sample demonstrates how update the orientation of the exporting diagram. The diagram provides support to switch between Portrait and Landscape orientation while exporting. The Orientation can be changed by setting the DiagramExportSettings.Orientation Property. The default value is Landscape.
 
 Demo link: 
 

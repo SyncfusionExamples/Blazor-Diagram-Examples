@@ -1,6 +1,6 @@
 #Update Connectors at Runtime
 
-This sample demonstrate how to update connectors at runtime. You can change any connector’s properties at runtime.
+This sample demonstrates how to update the connectors at runtime. Change any connector’s properties at runtime.
 
 
 

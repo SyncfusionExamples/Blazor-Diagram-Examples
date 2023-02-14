@@ -1,6 +1,6 @@
 #Symbol Palette Sample
 
-This sample demonstrate how to change the size of a symbol and how to update the size at runtime. 
+This sample demonstrates how to change the size of a symbol and how to update the size at runtime.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/symbolpalette?theme=fluent

@@ -1,7 +1,6 @@
 #Boundary Constraints Sample
 
-This sample demonstrate  how to limit the interaction done inside a diagram within a page. Boundary constraints defines a boundary for the diagram inside that the interaction should be done. Boundary constraints allows to set Diagram, Infinity and Page behaviour.
-
+This sample demonstrates how to limit the interaction done inside a diagram within a page. The boundary constraints defines a boundary for the diagram inside that the interaction should be done. The boundary constraints allow you to set Diagram, Infinity, and Page behaviour.
 
 Demo:
 https://blazor.syncfusion.com/demos/diagramcomponent/constraints?theme=fluent

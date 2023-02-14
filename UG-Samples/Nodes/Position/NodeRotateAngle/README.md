@@ -1,6 +1,6 @@
 #NodeRotateAngle
 
-This sample demonstrate how to change the RotationAngle value.
+This sample demonstrates how to change the RotationAngle value.
 
 
 ## Prerequisites

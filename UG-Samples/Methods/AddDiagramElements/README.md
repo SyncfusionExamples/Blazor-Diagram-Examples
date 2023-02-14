@@ -1,7 +1,6 @@
 #AddDiagramElements Method
 
-This sample demonstrate how to add diagram elements using "AddDiagramElements".  It Asynchronous method. AddDiagramElements() method is a preferred way to add a collection of items to the diagram to get better performance compared to Add() method.
-
+This sample demonstrates how to add the diagram elements using the "AddDiagramElements." It is an Asynchronous method. The AddDiagramElements() method is a preferred way to add a collection of items to the diagram to get better performance compared to the Add() method.
 
 ## Prerequisites
 

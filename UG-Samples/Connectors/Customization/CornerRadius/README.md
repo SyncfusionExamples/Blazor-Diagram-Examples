@@ -1,6 +1,6 @@
 #Corner Radius Sample
 
-This sample demonstrate how to update corner radius of connector. Corner radius allows to create connectors with rounded corners. The radius of the rounded corner is set with the CornerRadius property.
+This sample demonstrates how to update the corner radius of the connector. The corner radius allows you to create connectors with rounded corners. The radius of the rounded corner is set with the CornerRadius property.
 
 
 Demo link:

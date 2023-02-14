@@ -1,6 +1,6 @@
 #Custom Shape
 
-This sample demonstrate how to change the custom shape for port.
+This sample demonstrates how to change the custom shape for the port.
 
 Demo link: 
 https://blazor.syncfusion.com/demos/diagramcomponent/ports?theme=fluent

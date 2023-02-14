@@ -1,7 +1,6 @@
 #DataProperty Sample
 
-This sample demonstrate how to get data source settings details.Node's data property returns the record of the data source as data. Each record on the data source represents a node in an automatic layout.
-
+This sample demonstrates how to get the data source settings details. The node's data property returns the record of the data source as data. Each record on the data source represents a node in an automatic layout.
 
 ## Prerequisites
 

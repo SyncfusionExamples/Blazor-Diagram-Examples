@@ -1,6 +1,6 @@
 #Drag
 
-This sample demonstrate how to drag the node by using the drag method. The node can be dragged at runtime by using the Drag method
+This sample demonstrates how to drag the node by using the drag method. The node can be dragged at runtime by using the Drag method.
 
 
 ## Prerequisites

@@ -1,6 +1,6 @@
 #CreateNode Sample
 
-This sample demonstrate how to add a node to the diagram. To create a node, define the Node object and add that to the nodes collection of the diagram
+This sample demonstrates how to add a node to the diagram. To create a node, define the Node object and add that to the nodes collection of the diagram.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/nodes?theme=fluent

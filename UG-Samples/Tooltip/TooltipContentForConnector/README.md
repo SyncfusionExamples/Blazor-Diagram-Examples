@@ -1,7 +1,6 @@
 #Tooltip Content Sample
 
-This sample demonstrate how to set the tooltip content for the connectors.
-
+This sample demonstrates how to set the tooltip content for the connectors.
 
 
 ## Prerequisites

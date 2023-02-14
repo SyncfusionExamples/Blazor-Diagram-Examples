@@ -1,6 +1,6 @@
 #Bring Into View Sample
 
-This sample demonstrate how to brings a specified rectangular region into the viewport of the diagram.
+This sample demonstrates how to bring the specified rectangular region into the viewport of the diagram.
 
 
 Demo link:

@@ -1,6 +1,6 @@
 #UnGroup sample
 
-This sample demonstrate how to ungroup at runtime. UnGroup method is used to ungroup the group nodes in diagram. 
+This sample demonstrates how to ungroup at runtime. The UnGroup method is used to ungroup the group nodes in the diagram.
 
 ## Prerequisites
 

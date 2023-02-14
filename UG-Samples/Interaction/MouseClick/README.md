@@ -1,6 +1,6 @@
 #Click event sample
 
-This sample demonstrate how invoke click event in sample. The click event is invoke while click on the diagram.
+This sample demonstrates how invoke the click event in a sample. The click event is invoked while clicking on the diagram.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/events?theme=fluent

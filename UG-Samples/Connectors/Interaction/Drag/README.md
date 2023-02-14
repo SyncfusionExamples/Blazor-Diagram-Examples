@@ -1,6 +1,6 @@
 #Drag Sample
 
-This sample demonstrate how to drag the connector by using the drag method. The connector can be dragged at runtime by using the Drag method.
+This sample demonstrates how to drag the connector by using the drag method. The connector can be dragged at runtime by using the Drag method.
 
 
 ## Prerequisites

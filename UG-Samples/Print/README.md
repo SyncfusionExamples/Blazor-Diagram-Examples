@@ -1,6 +1,6 @@
 #Print Sample
 
-This sample demonstrate how to print the region occupied by the diagram elements.
+This sample demonstrates how to print the region occupied by the diagram elements.
 
 Demo link: 
 https://blazor.syncfusion.com/demos/diagramcomponent/print?theme=fluent

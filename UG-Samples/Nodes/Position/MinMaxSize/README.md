@@ -1,6 +1,6 @@
 #Minmum and Maximum Size
 
-This sample demonstrate how minimum and maximum size is controlled.
+This sample demonstrates how the minimum and maximum size is controlled.
 
 
 ## Prerequisites

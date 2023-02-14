@@ -1,6 +1,6 @@
 #ConnectionChange Event Sample
 
-This sample demonstrate how to update connection change event.
+This sample demonstrates how to update the connection change event.
 
 Demo link: 
 https://blazor.syncfusion.com/demos/diagramcomponent/events?theme=fluent

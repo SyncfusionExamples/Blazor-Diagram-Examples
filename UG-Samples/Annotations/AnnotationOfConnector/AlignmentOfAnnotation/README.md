@@ -1,7 +1,6 @@
 # Alignment of annotation sample
 
-This sample demonstrate how to align the connector’s annotation. It can be aligned over its segment path using the Alignment property of annotation.
-We have demo application for this.
+This sample demonstrates how to align the connector’s annotation. It can be aligned over its segment path using the Alignment property of the annotation.
 
 Demo link: https://blazor.syncfusion.com/demos/diagramcomponent/annotations?theme=fluent
 

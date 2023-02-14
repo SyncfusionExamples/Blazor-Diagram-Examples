@@ -1,6 +1,6 @@
 #Custom commands Sample
 
-This sample demonstrate how to define a custom command. To define custom command, we can use Gesture and Name properties.
+This sample demonstrates how to define a custom command. To define custom command, use Gesture and Name properties.
 
 
 

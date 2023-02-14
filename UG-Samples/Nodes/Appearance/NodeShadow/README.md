@@ -1,6 +1,6 @@
 #NodeShadow Sample
 
-This sample how to update shadow of node.
+This sample shows how to update the shadow of the node.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/nodes?theme=fluent

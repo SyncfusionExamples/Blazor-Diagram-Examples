@@ -1,6 +1,6 @@
 #Radial Gradient Sample
 
-This sample how to update Radial Gradient style for node.
+This sample shows how to update the Radial Gradient style for the node.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/nodes?theme=fluent

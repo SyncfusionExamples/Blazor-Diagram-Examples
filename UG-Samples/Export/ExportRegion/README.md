@@ -1,6 +1,6 @@
 #Export Region Sample
 
-This sample demonstrate how to export the diagram based on page settings. Region specifies whether the diagram is to be exported based on page settings, content or clip bounds. We have PageSettings, Content and ClipBounds exporting options.
+This sample demonstrates how to export the diagram based on the page settings. The region specifies whether the diagram is to be exported based on page settings, content, or clip bounds. There are PageSettings, Content, and ClipBounds exporting options.
 
 Demo link: 
 

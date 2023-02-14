@@ -1,6 +1,6 @@
 #NodeDrawing Tools Sample
 
-This sample demonstrate how to draw a rectangle at runtime. To draw a shape, you have to activate the drawing tool by using the InteractionController property and you need to set the shape by using the DrawingObject property.
+This sample demonstrates how to draw a rectangle at runtime. To draw a shape, activate the drawing tool by using the InteractionController property and set the shape by using the DrawingObject property.
 
 Demo link: 
 

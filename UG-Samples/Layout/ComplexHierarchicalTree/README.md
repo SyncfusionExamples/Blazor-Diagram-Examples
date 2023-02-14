@@ -1,6 +1,6 @@
 #Complex Hierarchical sample
 
-This sample demonstrate how to update Complex Hierarchical. In this example, you can see how to generate a complex hierarchical tree from external data sources. You can customize the spacing among the objects in the tree. You can use the horizontal spacing andvertical spacing properties oflayout to customize the space between the objects in the tree. You can change layout orientation using Orientation.
+This sample demonstrates how to update the Complex Hierarchical. In this example, see how to generate a complex hierarchical tree from the external data sources. Customize the spacing among the objects in the tree. Use the horizontal spacing and vertical spacing properties of the layout to customize the space between the objects in the tree. Change the layout orientation using the Orientation.
 
 Demo Link:
 https://blazor.syncfusion.com/demos/diagramcomponent/complexhierarchical?theme=fluent

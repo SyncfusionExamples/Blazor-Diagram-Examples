@@ -1,6 +1,6 @@
 #Overview Cosntraints sample
 
-This sample demonstrate how to create an overview. The Constraints property of the SfDiagramOverviewComponent allows you to enable or disable the Zoom, Pan, Drawfocus, Tab Focus etc.
+This sample demonstrates how to create an overview. The Constraints property of the SfDiagramOverviewComponent allows you to enable or disable the Zoom, Pan, Drawfocus, Tab Focus, and more.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/overview?theme=fluent

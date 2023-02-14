@@ -1,6 +1,6 @@
 #PositionChange Event Sample
 
-This sample demonstrate how to update position change event. While dragging the diagram elements, the PositionChanged and PositionChanging events are invoked.
+This sample demonstrates how to update the position change event. While dragging the diagram elements, the PositionChanged and PositionChanging events are invoked.
 
 Demo link: 
 https://blazor.syncfusion.com/demos/diagramcomponent/events?theme=fluent

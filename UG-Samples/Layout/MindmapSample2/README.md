@@ -1,6 +1,6 @@
 #Mindmap Sample
 
-This sample shows how to set all branches on the right side for mind map layout using GetBranch method. 
+This sample shows how to set all branches on the right side for the mind map layout using the GetBranch method.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/mindmap?theme=fluent

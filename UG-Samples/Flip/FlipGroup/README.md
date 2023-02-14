@@ -1,7 +1,6 @@
 #Flip Group Sample
 
-This sample demonstrate how to flip the group. The Flip command is used to flip the content, and the port of the chosen object is mirrored across in either the horizontal, vertical, or both directions on the diagram page. We can flip the selected child nodes also.
-
+This sample demonstrates how to flip the group. The Flip command is used to flip the content, and the port of the chosen object is mirrored across in either the horizontal, vertical, or both directions on the diagram page. Flip the selected child nodes also.
 
 
 ## Prerequisites

@@ -1,6 +1,6 @@
 #Decorator Sample
 
-This sample demonstrate how to create decorators of various shapes. You can customize connector's decorators style.
+This sample demonstrates how to create decorators of various shapes. Customize the connector's decorators style.
 
 Demo link: 
 https://blazor.syncfusion.com/demos/diagramcomponent/connectors?theme=fluent

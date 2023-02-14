@@ -1,7 +1,6 @@
 #CanAutoLayout Sample
 
-This sample demonstrate how to update CanAutoLayout for node.CanAutoLayout value indicates whether the node should be automatically positioned or not. Applicable if the layout option is enabled.
-
+This sample demonstrates how to update the CanAutoLayout for the node. The CanAutoLayout value indicates whether the node should be automatically positioned or not. It is applicable if the layout option is enabled.
 
 
 ## Prerequisites

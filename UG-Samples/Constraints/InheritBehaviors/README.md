@@ -1,6 +1,6 @@
 #Inherit Behaviours Sample
 
-This sample demonstrate how to inherit the line bridging behavior from the diagram. Some of the behaviors can be defined through both the specific object (node or connector) and diagram. When the behaviors are contradictorily defined through both, the actual behavior is set through inherit options.
+This sample demonstrates how to inherit the line bridging behavior from the diagram. Some of the behaviors can be defined through both the specific object (node or connector) and diagram. When the behaviors are contradictorily defined through both, the actual behavior is set through inherit options.
 
 
 Demo:

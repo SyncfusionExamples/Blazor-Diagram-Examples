@@ -1,6 +1,6 @@
 #ContextMenuOpenning Event Sample
 
-This sample demonstrate how to invoke ContextMenuOpening event. ContextMenuOpening when performing right click on the diagram or the diagram elements such as Node, Connector and Groups.
+This sample demonstrates how to invoke the ContextMenuOpening event. The ContextMenuOpening performs when you right click on the diagram or the diagram elements such as Node, Connector, and Groups.
 
 
 

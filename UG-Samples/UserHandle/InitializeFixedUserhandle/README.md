@@ -1,6 +1,6 @@
 #FixedUserHandle Sample
 
-This sample demonstrate how to create an fixed user handles for the nodes and connectors.
+This sample demonstrates how to create the fixed user handles for the nodes and connectors.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/userhandles?theme=fluent

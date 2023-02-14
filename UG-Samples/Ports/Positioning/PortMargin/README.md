@@ -1,6 +1,6 @@
 #Port Margin
 
-This sample demonstrate how to align a port based on its Offset, HorizontalAlignment, VerticalAlignment, and Margin values. Margin property is used to set margin values of ports.
+This sample demonstrates how to align the port based on its Offset, HorizontalAlignment, VerticalAlignment, and Margin values. The Margin property is used to set the margin values of the ports.
 
 Demo link: 
 https://blazor.syncfusion.com/demos/diagramcomponent/ports?theme=fluent

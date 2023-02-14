@@ -1,6 +1,6 @@
 #Rotate Change event
 
-This sample demonstrate how invoke RotateChanging and RotateChanged event. The RotateChanging event is invoke while rotating the elements in the diagram. The RotateChanged event is invoke when the element’s rotate angle has changed in the diagram.
+This sample demonstrates how to invoke the RotateChanging and RotateChanged events. The RotateChanging event is invoked while rotating the elements in the diagram. The RotateChanged event is invoked when the element’s rotate angle has changed in the diagram.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/events?theme=fluent

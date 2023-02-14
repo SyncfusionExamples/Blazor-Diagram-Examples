@@ -1,6 +1,6 @@
 #TextAnnotation Target Sample
 
-This sample demonstrate how to create a TextAnnotation and connect the Activity and TextAnnotation shape.
+This sample demonstrates how to create a TextAnnotation and connect the Activity and TextAnnotation shape.
 
 TextAnnotation Target:
 ![image](https://user-images.githubusercontent.com/77827252/215400914-ed8376b6-78a5-474c-aa1c-36bdc67ee5f9.png)

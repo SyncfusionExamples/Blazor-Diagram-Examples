@@ -1,6 +1,6 @@
 #Symbol Preview Sample
 
-This sample demonstrate how to change the preview size of a palette item.
+This sample demonstrates how to change the preview size of a palette item.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/symbolpalette?theme=fluent

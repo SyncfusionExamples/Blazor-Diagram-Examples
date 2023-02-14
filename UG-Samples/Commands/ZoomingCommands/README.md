@@ -1,7 +1,6 @@
 #Zooming Commands
 
-This sample demonstrate how to execute the Zooming commands. The Zoom command is used to zoom-in and zoom-out the diagram view.
-
+This sample demonstrates how to execute the Zooming commands. The Zoom command is used to zoom-in and zoom-out the diagram view.
 
 Demo Link:
 https://blazor.syncfusion.com/demos/diagramcomponent/zooming-panning?theme=fluent

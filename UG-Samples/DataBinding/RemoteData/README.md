@@ -1,7 +1,6 @@
 #RemoteData Sample
 
-This sample demonstrate how to bind OData v4 service, use the ODataV4Adaptor. To bind remote data to Diagram component, assign service data as an instance of SfDataManager to the DataSource property or by using SfDataManager component. 
-
+This sample demonstrates how to bind the OData v4 service, use the ODataV4Adaptor. To bind the remote data to the Diagram component, assign the service data as an instance of the SfDataManager to the DataSource property or by using the SfDataManager component.
 Demo link: 
 
 https://blazor.syncfusion.com/demos/diagramcomponent/remote-data?theme=fluent

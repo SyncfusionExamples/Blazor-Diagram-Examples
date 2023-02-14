@@ -1,6 +1,6 @@
 #Export Option Sample
 
-This sample demonstrate how update margin of the exported diagram. Diagram provides support to export the desired region of the diagram to the desired formats. We have three DiagramExportFormat such as SVG, JPEG and PNG.
+This sample demonstrates how update the margin of the exported diagram. The diagram provides support to export the desired region of the diagram to the desired formats. There are three DiagramExportFormat, which are, SVG, JPEG, and PNG.
 
 Demo link: 
 

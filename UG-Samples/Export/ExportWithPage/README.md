@@ -1,6 +1,6 @@
 #Export With Page Sample
 
-This sample demonstrate how to export the diagram to a single page. Diagram provides support to export the entire diagram to a single page or multiple pages using the FitToPage property. The default value is false.
+This sample demonstrates how to export the diagram to a single page. The diagram provides support to export the entire diagram to a single page or multiple pages using the FitToPage property. The default value is false.
 
 Demo link: 
 

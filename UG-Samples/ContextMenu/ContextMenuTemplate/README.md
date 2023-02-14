@@ -1,6 +1,6 @@
 #ContextMenu Template Sample
 
-This sample demonstrate how to define template for context menu items. The context menu items can be customized using the ContextMenuTemplate at the tag level.
+This sample demonstrates how to define the template for the context menu items. The context menu items can be customized using the ContextMenuTemplate at the tag level.
 
 
 

@@ -1,7 +1,6 @@
 #Annotation ConstraintsSample
 
-This sample demonstrate how to enable read-only mode for the annotations. The Constraints property of the Annotations allows you to enable or disable read-only mode for the annotations by using the annotation constraints. we have three constraints such as ReadOnly, InheritReadOnly and None.
-
+This sample demonstrates how to enable the read-only mode for the annotations. The Constraints property of the Annotations allows you to enable or disable the read-only mode for the annotations by using the annotation constraints. There are three constraints, namely, ReadOnly, InheritReadOnly, and None.
 
 Demo:
 https://blazor.syncfusion.com/demos/diagramcomponent/constraints?theme=fluent

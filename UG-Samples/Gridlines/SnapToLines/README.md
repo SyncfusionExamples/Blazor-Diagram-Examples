@@ -1,7 +1,6 @@
 #Snap To Lines Sample
 
-This sample demonstrate how to enable/disable the snapping to gridlines. It allows the diagram objects to snap to the nearest intersection of gridlines while being dragged or resized. Snapping to gridlines can be enabled/disabled with the SnapConstraints.
-
+This sample demonstrates how to enable or disable the snapping to gridlines. It allows the diagram objects to snap to the nearest intersection of the gridlines while being dragged or resized. Snapping to gridlines can be enabled or disabled with the SnapConstraints.
 
 Demo link:
 

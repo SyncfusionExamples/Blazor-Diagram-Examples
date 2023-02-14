@@ -1,6 +1,6 @@
 #Node Constraints Sample
 
-This sample demonstrate  how to disable rotate constraint from the default node constraints. The Constraints property of the Node allows you to enable or disable the Select, Drag, Resize, Rotate, Delete, InConnect, OutConnect etc.
+This sample demonstrates how to disable the rotate constraint from the default node constraints. The Constraints property of the Node allows you to enable or disable the Select, Drag, Resize, Rotate, Delete, InConnect, OutConnect, and more.
 
 
 Demo:

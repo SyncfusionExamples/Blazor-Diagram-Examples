@@ -1,6 +1,6 @@
 #Appearance Sample
 
-This sample how to customize the appearance of the shape.
+This sample shows how to customize the appearance of the shape.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/nodes?theme=fluent

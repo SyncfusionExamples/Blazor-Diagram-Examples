@@ -1,6 +1,6 @@
 #Multiple Page Sample
 
-This sample demonstrate how to enable multiple page to pagesettings. MultiplePage property is used to enable multiple page support.
+This sample demonstrates how to enable multiple pages to the pagesettings. The MultiplePage property is used to enable multiple pages support.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/export?theme=fluent

@@ -1,6 +1,6 @@
 #UserHandle Sample
 
-This sample demonstrate how to create a user handles for the nodes and connectors.
+This sample demonstrates how to create the user handles for the nodes and connectors.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/userhandles?theme=fluent

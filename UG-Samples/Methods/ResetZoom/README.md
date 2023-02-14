@@ -1,6 +1,6 @@
 #ResetZoom Method
 
-This sample demonstrate how to reset the current zoom value of the diagram page.It is used to reset the current zoom value of the diagram page to 100% when the diagram is either in a zoomed in or zoomed out state.
+This sample demonstrates how to reset the current zoom value of the diagram page. It is used to reset the current zoom value of the diagram page to 100% when the diagram is either in a zoomed in or zoomed out state.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/zooming-panning?theme=fluent

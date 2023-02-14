@@ -1,7 +1,6 @@
 #TooltipPointer Sample
 
-This sample demonstrate how to set tooltip tip pointer for connectors.
-
+This sample demonstrates how to set the tooltip pointer for the connectors.
 
 
 

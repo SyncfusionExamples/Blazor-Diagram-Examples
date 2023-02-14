@@ -1,7 +1,6 @@
 #ZIndex sample
 
-This sample demonstrate how to render nodes based on the stack order. The node’s ZIndex property specifies the stack order of the node. The default value is -1.
-
+This sample demonstrates how to render nodes based on the stack order. The node’s ZIndex property specifies the stack order of the node. The default value is -1.
 
 ## Prerequisites
 

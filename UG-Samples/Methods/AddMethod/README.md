@@ -1,6 +1,6 @@
 #Add Method
 
-This sample demonstrate how to add diagram elements using "Add". In that sample, nodes ared added through "Add" method.
+This sample demonstrates how to add the diagram elements using the "Add." In this sample, nodes are added through the "Add" method.
 
 
 ## Prerequisites

@@ -1,6 +1,6 @@
 #Group Sample
 
-This sample demonstrate how to add nodes, connectors, nodegroups to the palette and add palette to the palettes collection of the symbol palette.
+This sample demonstrates how to add nodes, connectors, node groups to the palette and add palette to the palettes collection of the symbol palette.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/symbolpalette?theme=fluent

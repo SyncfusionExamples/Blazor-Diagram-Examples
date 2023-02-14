@@ -1,6 +1,6 @@
 #BeginUpdate and EndUpdate Method
 
-This sample demonstrate how to use BeginUpdate and EndUpdate. In that sample multiple properties updated using BeginUpdate and EndUpdate. 
+This sample demonstrates how to use the BeginUpdate and EndUpdate. In this sample, multiple properties are updated using the BeginUpdate and EndUpdate.
 
 
 ## Prerequisites

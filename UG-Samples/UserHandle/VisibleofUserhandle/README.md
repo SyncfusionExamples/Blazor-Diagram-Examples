@@ -1,6 +1,6 @@
 #Visible of Userhandle Sample
 
-This sample demonstrate how to change the VisibleTarget in the userhandle.
+This sample demonstrates how to change the VisibleTarget in the user handle.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/userhandles?theme=fluent

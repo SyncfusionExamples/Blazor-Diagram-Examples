@@ -1,6 +1,6 @@
 #ClipBoard commands Sample
 
-This sample demonstrate clipboard commands. Clipboard commands are used to cut, copy, or paste the selected elements.
+This sample demonstrates clipboard commands. The clipboard commands are used to cut, copy, or paste the selected elements.
 
 
 Demo link:

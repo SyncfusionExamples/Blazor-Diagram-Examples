@@ -1,6 +1,6 @@
 #Custom Entry Sample
 
-This sample demonstrate how to track such custom property changes.
+This sample demonstrates how to track such custom property changes.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/historymanager?theme=fluent

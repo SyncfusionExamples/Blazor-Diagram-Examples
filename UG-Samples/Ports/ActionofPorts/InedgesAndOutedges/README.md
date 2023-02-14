@@ -1,6 +1,6 @@
 #InEdges and OutEdges of Ports
 
-This sample demonstrate how to InEdges and OutEdges of ports. 
+This sample demonstrates how to InEdges and OutEdges the ports.
 
 
 

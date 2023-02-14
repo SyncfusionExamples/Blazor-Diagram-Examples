@@ -1,7 +1,6 @@
 #Snap To Object Sample
 
-This sample demonstrate how to enable or disable snap to object. The snap to object provides visual cues to assist with aligning and spacing diagram elements. snapping has SnapAngle, SnapDistance and Contsraints properties. 
-
+This sample demonstrates how to enable or disable the snap to object. The snap to object provides visual cues to assist with aligning and spacing the diagram elements. Snapping has SnapAngle, SnapDistance, and Contsraints properties.
 
 Demo link:
 

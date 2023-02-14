@@ -1,6 +1,6 @@
 #Appearance of Ports
 
-This sample demonstrate how to change the appearance of the port.
+This sample demonstrates how to change the appearance of the port.
 
 Demo link: 
 https://blazor.syncfusion.com/demos/diagramcomponent/ports?theme=fluent

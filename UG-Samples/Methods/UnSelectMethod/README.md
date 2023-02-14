@@ -1,7 +1,6 @@
 #UnSelect Method
 
-This sample demonstrate how to unselect diagram objects using "UnSelect" method.
-
+This sample demonstrates how to unselect diagram objects using the "UnSelect" method.
 
 ## Prerequisites
 

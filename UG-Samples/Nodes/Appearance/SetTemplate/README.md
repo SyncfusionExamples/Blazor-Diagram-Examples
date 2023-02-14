@@ -1,6 +1,6 @@
 #SetTemplate sample
 
-This sample how to using SetTemplate method.
+This sample shows how to use the SetTemplate method.
 
 
 ## Prerequisites

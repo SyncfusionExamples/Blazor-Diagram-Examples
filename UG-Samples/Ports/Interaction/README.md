@@ -1,6 +1,6 @@
 #Draw Constraints Sample
 
-This sample demonstrate how to draw the connector by using the port constraints.
+This sample demonstrates how to draw the connector by using the port constraints.
 
 Demo link: 
 https://blazor.syncfusion.com/demos/diagramcomponent/ports?theme=fluent

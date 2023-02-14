@@ -1,6 +1,6 @@
 #SVG Shape
 
-This sample demonstrate how a SVG node is created. You can create SVG shapes using SVG node property.
+This sample demonstrates how a SVG node is created. Create SVG shapes using the SVG node property.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/networkdiagram?theme=fluent

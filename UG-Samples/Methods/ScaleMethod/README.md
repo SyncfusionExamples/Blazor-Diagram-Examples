@@ -1,6 +1,6 @@
 #Scale Method
 
-This sample demonstrate how to scale the object using "Scale" Method.
+This sample demonstrates how to scale the object using the "Scale" method.
 
 
 ## Prerequisites

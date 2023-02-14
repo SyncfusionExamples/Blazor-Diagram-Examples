@@ -1,6 +1,6 @@
 #LocalData Sample
 
-This sample demonstrate how to binding local data through the SfDataManager to the Diagram component. Diagram can be populated based on the user defined JSON data (Local Data) by mapping the relevant data source fields. To map the user defined JSON data with diagram, configure the fields of DataSourceSettings.
+This sample demonstrates how to bind the local data through the SfDataManager to the Diagram component. The diagram can be populated based on the user defined JSON data (Local Data) by mapping the relevant data source fields. To map the user defined JSON data with the diagram, configure the fields of the DataSourceSettings.
 
 Demo link: 
 

@@ -1,6 +1,6 @@
 #ClearSelection Method
 
-This sample demonstrate how to clear the selection of diagram elements. 
+This sample demonstrates how to clear the selection of the diagram elements.
 
 
 ## Prerequisites

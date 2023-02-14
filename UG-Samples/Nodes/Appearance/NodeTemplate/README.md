@@ -1,6 +1,6 @@
 #NodeTempalte Sample
 
-This sample how to customize node appearance using NodeTempalte.
+This sample shows how to customize the node appearance using the NodeTemplate.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/html-shapes?theme=fluent

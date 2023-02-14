@@ -1,6 +1,6 @@
 #Mofying Existings Commands
 
-This sample demonstrate  how to disable a command and how to modify the built-in commands. When any one of the default commands is not desired, it can be disabled. To change the functionality of a specific command, the command can be completely modified.
+This sample demonstrates how to disable a command and modify the built-in commands. When any one of the default commands is not desired, it can be disabled. To change the functionality of a specific command, completely modify the command.
 
 
 ## Prerequisites

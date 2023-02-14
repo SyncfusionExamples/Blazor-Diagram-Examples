@@ -1,6 +1,6 @@
 #Palette Header Sample
 
-This sample demonstrate how to change the Title and IsExpanded properties at runtime.
+This sample demonstrates how to change the Title and IsExpanded properties at runtime.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/symbolpalette?theme=fluent

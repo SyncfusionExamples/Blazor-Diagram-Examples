@@ -1,7 +1,6 @@
 #Defaut Context Menu Sample
 
-This sample demonstrate how to enable the default context menu items. The Show property helps you to enable or disable the context menu. Diagram provides default context menu items such as copy, cut, paste, select all, undo, redo and group options.
-
+This sample demonstrates how to enable the default context menu items. The Show property helps you enable or disable the context menu. The diagram provides the default context menu items such as copy, cut, paste, select all, undo, redo, and group options.
 
 
 ## Prerequisites

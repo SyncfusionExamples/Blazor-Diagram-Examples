@@ -1,6 +1,6 @@
 #Responsive with Parent Container
 
-This sample demonstrate how to set width and height in percentage.
+This sample demonstrates how to set the width and height in percentage.
 
 
 

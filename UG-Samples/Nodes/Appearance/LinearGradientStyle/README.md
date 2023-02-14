@@ -1,6 +1,6 @@
 #Linear Gradient Style
 
-This sample demonstrate how to update linear gradient style for node.
+This sample demonstrates how to update the linear gradient style for the node.
 
 
 ## Prerequisites

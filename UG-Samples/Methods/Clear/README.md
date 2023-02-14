@@ -1,6 +1,6 @@
 #Clear Method
 
-This sample demonstrate how to clear diagram elements using clear method. 
+This sample demonstrates how to clear diagram elements using the clear method.
 
 
 ## Prerequisites

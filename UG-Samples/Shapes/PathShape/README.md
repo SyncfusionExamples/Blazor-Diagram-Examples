@@ -1,6 +1,6 @@
 #Path Shape
 
-This sample demonstrate how a path node is created. PathShape is used to represent the path shapes. Data property is used to define path data.
+This sample demonstrates how a path node is created. The PathShape is used to represent the path shapes. The Data property is used to define a path data.
 
 
 

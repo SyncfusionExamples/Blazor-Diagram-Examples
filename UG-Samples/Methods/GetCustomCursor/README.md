@@ -1,7 +1,6 @@
 #GetCustomCursor Method
 
-This sample demonstrate how to create the custom cursor. 
-
+This sample demonstrates how to create the custom cursor.
 
 ## Prerequisites
 

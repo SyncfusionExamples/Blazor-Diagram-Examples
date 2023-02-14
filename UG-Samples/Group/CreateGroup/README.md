@@ -1,6 +1,6 @@
 #Create Group sample
 
-This sample demonstrate how to create a group. NodeGroup is used to cluster multiple nodes and connectors in single element. The nodegroup is added through the nodes collection of the diagram. Group method is used to group the nodes. UnGroup method is used to ungroup the group nodes in diagram. 
+This sample demonstrates how to create a group. The NodeGroup is used to cluster multiple nodes and connectors in a single element. The nodegroup is added through the nodes collection of the diagram. The Group method is used to group the nodes while the UnGroup method is used to ungroup the group nodes in the diagram.
 
 ## Prerequisites
 

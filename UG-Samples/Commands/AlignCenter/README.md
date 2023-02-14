@@ -1,6 +1,6 @@
 #AlignCenter Sample
 
-This sample demonstrate how to align all the selected objects to the center of the selection boundary.
+This sample demonstrates how to align all the selected objects to the center of the selection boundary.
 
 
 ## Prerequisites

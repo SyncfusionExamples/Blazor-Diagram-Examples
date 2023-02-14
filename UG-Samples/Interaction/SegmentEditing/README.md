@@ -1,6 +1,6 @@
 #Segment editing sample
 
-This sample demonstrate segement collection change event. The Segment Collection Change event is invoke when the connector’s segment collection has modified in the diagram. 
+This sample demonstrates how to invoke the segment collection change event. The Segment Collection Change event is invoked when the connector’s segment collection has been modified in the diagram.
 
 ## Prerequisites
 

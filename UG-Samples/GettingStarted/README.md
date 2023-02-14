@@ -1,6 +1,6 @@
 #GettingStarted Sample
 
-This sample demonstrate how to create nodes and connectors. 
+This sample demonstrates how to create nodes and connectors.
 
 
 Demo link:

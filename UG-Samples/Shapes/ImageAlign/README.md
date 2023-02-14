@@ -1,6 +1,6 @@
 #Image Shape
 
-This sample demonstrate how to scale or stretch the content of the image node. You can Stretch and Align the image using Scale and ImageAlign  property. 
+This sample demonstrates how to scale or stretch the content of the image node. Stretch and Align the image using the Scale and ImageAlign property.
 
 
 

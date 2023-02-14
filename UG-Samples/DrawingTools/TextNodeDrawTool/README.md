@@ -1,6 +1,6 @@
 #Polygon Shape Tools Sample
 
-This sample demonstrate  how to draw a text. Diagram allows you to create a text Node as soon as you click on the Diagram page.
+This sample demonstrates how to draw a text. The diagram allows you to create a text Node as soon as you click on the Diagram page.
 
 Demo link: 
 

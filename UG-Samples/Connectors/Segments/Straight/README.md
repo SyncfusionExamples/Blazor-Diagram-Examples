@@ -1,7 +1,6 @@
 #Straight Segment Sample
 
-This sample demonstrate how to create straight segment.To create a straight line, specify the Type of the segment as Straight and add a straight segment to Segments collection and need to specify Type for the connector.
-
+This sample demonstrates how to create straight segment. To create a straight line, specify the Type of the segment as Straight and add a straight segment to the Segments collection and specify the Type for the connector.
 Straight Segment:
 
 ![image](https://user-images.githubusercontent.com/77827252/215650657-0ef5c49c-7cf3-4f87-88ee-a4faaba9394d.png)

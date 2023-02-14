@@ -1,6 +1,6 @@
 #Refresh Palette Sample
 
-This sample demonstrate how to refresh the symbolpalette.
+This sample demonstrates how to refresh the symbolpalette.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/symbolpalette?theme=fluent

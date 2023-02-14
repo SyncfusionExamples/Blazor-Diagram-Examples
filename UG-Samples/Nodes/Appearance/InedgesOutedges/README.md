@@ -1,6 +1,6 @@
 #InEdges and OutEdges
 
-This sample demonstrate how to get Inedges and OutEdges of node.
+This sample demonstrates how to get Inedges and OutEdges of the node.
 
 
 ## Prerequisites

@@ -1,6 +1,6 @@
 #Orthogonal Segment Editing Sample
 
-This sample demonstrate how to perform orthogonal segment editing. Orthogonal thumbs allow you to adjust the length of adjacent segments by clicking and dragging it. When necessary, some segments are added or removed automatically, when dragging the segment. This is to maintain proper routing of orthogonality between segments.
+This sample demonstrates how to perform orthogonal segment editing. Orthogonal thumbs allow you to adjust the length of the adjacent segments by clicking and dragging it. When necessary, some segments are added or removed automatically when dragging the segment. This is to maintain proper routing of orthogonality between the segments..
 
 
 

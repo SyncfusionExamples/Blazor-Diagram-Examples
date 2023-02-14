@@ -1,6 +1,6 @@
 #Connector Constraints Sample
 
-This sample demonstrate how to disable selection. The Constraints property of connector allows to enable/disable certain features of connectors.
+This sample demonstrates how to disable selection. The Constraints property of the connector allows you to enable or disable certain features of the connectors.
 
 
 Demo link:

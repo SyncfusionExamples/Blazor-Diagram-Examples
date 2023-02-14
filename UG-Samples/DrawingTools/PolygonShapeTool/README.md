@@ -1,6 +1,6 @@
 #Polygon Shape Tools Sample
 
-This sample demonstrate how to draw a polygon shape. Diagram allows to create the Polygon shape by clicking and moving the mouse at runtime on the diagram page.
+This sample demonstrates how to draw a polygon shape. The diagram allows you to create the Polygon shape by clicking and moving the mouse at runtime on the diagram page.
 
 Demo link: 
 

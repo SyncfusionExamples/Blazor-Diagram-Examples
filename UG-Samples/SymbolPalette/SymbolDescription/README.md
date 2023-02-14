@@ -1,6 +1,6 @@
 #Symbol Description Sample
 
-This sample demonstrate how to set a symbol description for symbols in the palette.
+This sample demonstrates how to set a symbol description for symbols in the palette.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/symbolpalette?theme=fluent

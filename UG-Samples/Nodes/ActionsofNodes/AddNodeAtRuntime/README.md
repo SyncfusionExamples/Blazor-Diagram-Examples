@@ -1,6 +1,6 @@
 #AddNode at Runtime
 
-This sample demonstrate how to add a node at runtime. You can add a Node at runtime by adding it to the nodes collection of the Diagram component.
+This sample demonstrates how to add a node at runtime. Add a Node at runtime by adding it to the nodes collection of the Diagram component.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/nodes?theme=fluent

@@ -1,6 +1,6 @@
 #Icon
 
-This sample demonstrate how to create an icon of various shapes in a simple node connection.
+This sample demonstrates how to create an icon of various shapes in a simple node connection.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/expandcollapse?theme=fluent

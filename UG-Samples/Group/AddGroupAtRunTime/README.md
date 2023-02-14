@@ -1,6 +1,6 @@
 #AddGroup at runtime
 
-This sample demonstrate how a node group is added at runtime. You can add nodes into group thorugh Nodecollections of diagram.
+This sample demonstrates how a node group is added at runtime. Add nodes to the group thorugh the Nodecollections of the diagram.
 
 ## Prerequisites
 

@@ -1,6 +1,6 @@
 #Bring To Front Sample
 
-This sample demonstrate how to execute the BringToFront command. The BringToFront command is used to visually brings the selected element to the front over all other overlapped elements.
+This sample demonstrates how to execute the BringToFront command. The BringToFront command is used to visually bring the selected element to the front over all other overlapped elements.
 
 
 Demo Link:

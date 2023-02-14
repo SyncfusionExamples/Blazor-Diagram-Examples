@@ -1,6 +1,6 @@
 # Annotation sample
 
-This sample demonstrate how to add annotation at run time. 
+This sample demonstrates how to add an annotation at run time using AddAsync().
 
 
 ## Prerequisites

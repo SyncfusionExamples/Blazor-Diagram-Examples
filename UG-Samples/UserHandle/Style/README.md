@@ -1,6 +1,6 @@
 #FixedUserHandle Sample
 
-This sample demonstrate how to customize the appearance of the fixed user handles.
+This sample demonstrates how to customize the appearance of the fixed user handles.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/userhandles?theme=fluent

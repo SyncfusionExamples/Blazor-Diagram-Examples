@@ -1,6 +1,6 @@
 #FixedUserHandle Event Sample
 
-This sample demonstrate how to invoke fixed userhandle event at sample.
+This sample demonstrates how to invoke the fixed user handle event at sample.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/userhandles?theme=fluent

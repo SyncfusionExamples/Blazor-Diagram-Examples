@@ -1,6 +1,6 @@
 #Select
 
-This sample demonstrate how to select the node by using the Select method. 
+This sample demonstrates how to select the node by using the Select method.
 
 
 ## Prerequisites

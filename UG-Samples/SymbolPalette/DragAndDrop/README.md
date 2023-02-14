@@ -1,6 +1,6 @@
 #Drag And Drop Sample
 
-This sample demonstrate how to drag and drop symbols from palette to diagram.
+This sample demonstrates how to drag and drop symbols from a palette to the diagram.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/symbolpalette?theme=fluent

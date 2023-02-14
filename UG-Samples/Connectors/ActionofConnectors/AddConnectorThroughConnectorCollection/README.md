@@ -1,6 +1,6 @@
 #Add Connector Through Connector Collection
 
-This sample demonstrate how to add connectors at runtime through connector collection.
+This sample demonstrates how to add the connectors at runtime through the connector collection.
 
 
 Demo Link:

@@ -1,6 +1,6 @@
 #Create Ports
 
-This sample demonstrate how to add ports when initializing the node.
+This sample demonstrates how to add ports when initializing the node.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/ports?theme=fluent

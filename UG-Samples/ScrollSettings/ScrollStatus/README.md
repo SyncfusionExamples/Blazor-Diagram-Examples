@@ -1,6 +1,6 @@
 #ScrollStatus Sample
 
-This sample demonstrate how to change the scroll offsets at runtime. In this sample scroll offset values changed through button click.
+This sample demonstrates how to change the scroll offsets at runtime. In this sample, the scroll offset values changes through a button click.
 
 Demo link: 
 https://blazor.syncfusion.com/demos/diagramcomponent/scrollsettings?theme=fluent

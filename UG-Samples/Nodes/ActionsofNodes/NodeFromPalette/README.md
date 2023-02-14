@@ -1,6 +1,6 @@
 #NodeFromPalette  Sample
 
-This sample demonstrate how to add a node to the symbol palette.
+This sample demonstrates how to add a node to the symbol palette.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/symbolpalette?theme=fluent

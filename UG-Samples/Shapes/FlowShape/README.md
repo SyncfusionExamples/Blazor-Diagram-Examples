@@ -1,6 +1,6 @@
 #Flow Shape Sample
 
-This sample demonstrate how to create a Flow shape.
+This sample demonstrates how to create a Flow shape.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/shapes?theme=fluent

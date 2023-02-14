@@ -1,6 +1,6 @@
 #Symbol Stretch Sample
 
-This sample demonstrate how to stretch the symbols in symbolpalette.
+This sample demonstrates how to stretch the symbols in the symbolpalette.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/symbolpalette?theme=fluent

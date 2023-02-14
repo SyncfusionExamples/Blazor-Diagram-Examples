@@ -1,6 +1,6 @@
 #SendBackward Sample
 
-This sample demonstrate how to execute the SendBackward command. The SendBackward command visually moves the selected elements behind the underlying element.
+This sample demonstrates how to execute the SendBackward command. The SendBackward command visually moves the selected elements behind the underlying element.
 
 
 Demo Link:

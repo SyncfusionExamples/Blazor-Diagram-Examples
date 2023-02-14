@@ -1,7 +1,6 @@
 #Orthogonal Segment Sample
 
-This sample demonstrate how to create a Orthogonal segment. Orthogonal segments are used to create segments that are perpendicular to each other. Set the segment Type as Orthogonal to create a default orthogonal segment and need to specify Type.
-
+This sample demonstrates how to create an Orthogonal segment. Orthogonal segments are used to create segments that are perpendicular to each other. Set the segment Type as Orthogonal to create a default orthogonal segment and need to specify the Type.
 
 Demo:
 https://blazor.syncfusion.com/demos/diagramcomponent/connectors?theme=fluent

@@ -1,6 +1,6 @@
 #Bezier Segment Sample
 
-This sample demonstrate how to create a bezier segment. Bezier segments are used to create curve segments and the curves are configurable either with the control points or with vectors. To create a bezier segment, the Type of the segment is set as Bezier and need to specify type for the connector.
+This sample demonstrates how to create a bezier segment. Bezier segments are used to create curve segments, and the curves are configurable either with the control points or vectors. To create a bezier segment, the Type of the segment is set as Bezier and need to specify the type for the connector..
 
 Bezier segment:
 ![image](https://user-images.githubusercontent.com/77827252/215648937-1d112542-124d-44e8-a774-0d9d39d37a23.png)

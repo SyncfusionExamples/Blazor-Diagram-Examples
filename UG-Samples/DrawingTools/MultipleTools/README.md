@@ -1,6 +1,6 @@
 #Mutiple Tools Sample
 
-This sample demonstrate how to enable multiple interaction controllers.
+This sample demonstrates how to enable multiple interaction controllers.
 
 Demo link: 
 

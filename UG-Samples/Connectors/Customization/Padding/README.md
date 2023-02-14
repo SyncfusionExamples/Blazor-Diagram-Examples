@@ -1,6 +1,6 @@
 #Decorator Apperance Sample
 
-This sample demonstrate how to customize the appearance of the decorator. You can customize connector's decorators style using StrokeColor, StrokeWidth and StrokeDashArray .
+This sample demonstrates how to customize the appearance of the decorator. Customize the connector's decorators style using the StrokeColor, StrokeWidth, and StrokeDashArray.
 
 Demo link: 
 https://blazor.syncfusion.com/demos/diagramcomponent/connectors?theme=fluent

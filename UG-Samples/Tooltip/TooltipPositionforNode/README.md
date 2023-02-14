@@ -1,6 +1,6 @@
 #Tooltip Position Sample
 
-This sample demonstrate how to set the tooltip position for the nodes.
+This sample demonstrates how to set the tooltip position for the nodes.
 
 
 

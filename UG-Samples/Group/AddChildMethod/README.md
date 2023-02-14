@@ -1,6 +1,6 @@
 #AddChild Method Sample
 
-This sample demonstrate how to add child to the existing node group through AddChild method. You can add nodes into group using 'AddChild' Method. 
+This sample demonstrates how to add a child to the existing node group through the AddChild method. Add nodes to group using the 'AddChild' Method.
 
 
 ## Prerequisites

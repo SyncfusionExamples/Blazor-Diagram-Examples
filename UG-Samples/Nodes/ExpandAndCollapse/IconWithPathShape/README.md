@@ -1,6 +1,6 @@
 #PathShape
 
-This sample demonstrate how to Initialize the Icon with Path shape. The shape of an ExpandIcon and a CollapseIcon can be changed by using the Shape property of DiagramExpandIcon and DiagramCollapseIcon respectively.
+This sample demonstrates how to initialize the Icon with the Path shape. The shape of an ExpandIcon and a CollapseIcon can be changed by using the Shape property of the DiagramExpandIcon and DiagramCollapseIcon respectively.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/expandcollapse?theme=fluent

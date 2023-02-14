@@ -1,6 +1,6 @@
 #NodeCreating Sample
 
-This sample how to update nodes properties using node creating event.
+This sample shows how to update nodes properties using the node creating event.
 
 
 ## Prerequisites

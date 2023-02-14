@@ -1,6 +1,6 @@
 #Port Horizontal and Vertical Alignment
 
-This sample demonstrate how to align ports like Horizontally or vertically.
+This sample demonstrateshow to align the ports Horizontally or vertically.
 
 Demo link: 
 https://blazor.syncfusion.com/demos/diagramcomponent/ports?theme=fluent

@@ -1,6 +1,6 @@
 #Snape Constraints Sample
 
-This sample demonstrate how to show only horizontal gridlines. SnapConstraints control the visibility of gridlines and enable or disable snapping.
+This sample demonstrates how to show only horizontal gridlines. The SnapConstraints control the visibility of gridlines and enable or disable snapping.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/snapping?theme=fluent

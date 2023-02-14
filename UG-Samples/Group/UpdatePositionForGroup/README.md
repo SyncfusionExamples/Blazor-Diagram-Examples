@@ -1,6 +1,6 @@
 #Update Position at Runtime
 
-This sample demonstrate how to update position for a group at runtime. You can change the position of the node group similar to node.
+This sample demonstrates how to update the position for a group at runtime. Change the position of the node group similar to the node.
 
 ## Prerequisites
 

@@ -1,7 +1,6 @@
 #Tooltip Sample
 
-This sample demonstrate how to customize the tooltip for nodes. 
-
+This sample demonstrates how to customize the tooltip for the nodes.
 
 
 ## Prerequisites

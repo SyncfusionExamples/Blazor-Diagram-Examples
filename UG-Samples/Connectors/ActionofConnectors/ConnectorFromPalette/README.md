@@ -1,6 +1,6 @@
 #Add Connector Through Connector Collection
 
-This sample demonstrate how to add connectors into symbol palette. Connectors can be predefined and added to the symbol palette. You can drop those connectors into the diagram when required.
+This sample demonstrates how to add the connectors into a symbol palette. The connectors can be predefined and added to the symbol palette. Drop those connectors into the diagram when required.
 
 
 Demo Link:

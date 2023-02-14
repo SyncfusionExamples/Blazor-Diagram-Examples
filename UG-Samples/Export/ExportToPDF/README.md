@@ -1,6 +1,6 @@
 #ExportToPDF Sample
 
-This sample demonstrate how to export the diagram as PDF file. Diagram does not have the built-in support to convert the diagram to a PDF file, but you can achieve this by exporting the diagram as base-64 and then converting the exported file to PDF using Syncfusion.PdfExport.PdfDocument. Invoked javascript functions downloadPdf and triggerDownload methods to automatically download the pdf file.
+This sample demonstrates how to export the diagram as a PDF file. The diagram does not have the built-in support to convert the diagram to a PDF file, but you can achieve this by exporting the diagram as a base-64 and then converting the exported file to a PDF using the Syncfusion.PdfExport.PdfDocument. Invoked the javascript functions downloadPdf and triggerDownload methods to automatically download the pdf file.
 
 Demo link: 
 

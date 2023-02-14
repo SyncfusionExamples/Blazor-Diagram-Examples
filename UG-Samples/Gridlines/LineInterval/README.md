@@ -1,7 +1,6 @@
 #LineInterval Sample
 
-This sample demonstrate how to customize the thickness of lines and the line intervals. Thickness and the space between gridlines can be customized by using LinesIntervals property of the HorizontalGridLines and VerticalGridLines.
-
+This sample demonstrates how to customize the thickness of lines and the line intervals. The thickness and the space between the gridlines can be customized by using the LinesIntervals property of the HorizontalGridLines and VerticalGridLines.
 
 
 ## Prerequisites

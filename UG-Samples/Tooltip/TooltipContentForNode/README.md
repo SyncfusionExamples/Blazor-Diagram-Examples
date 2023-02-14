@@ -1,6 +1,6 @@
 #Tooltip Content Sample
 
-This sample demonstrate how to set the tooltip content for the nodes.
+This sample demonstrates how to set the tooltip content for the nodes.
 
 
 

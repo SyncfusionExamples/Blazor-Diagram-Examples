@@ -1,6 +1,6 @@
 #Update Node  Sample
 
-This sample demonstrate how to update node at runtime.
+This sample demonstrates how to update the node at runtime.
 
 
 

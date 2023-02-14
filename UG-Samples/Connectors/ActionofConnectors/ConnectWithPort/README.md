@@ -1,6 +1,6 @@
 #Connections with ports
 
-This sample demonstrate how to remove a connector at runtime. The connector can be removed from the diagram at runtime by using the Remove method.
+This sample demonstrates how to remove a connector at runtime. The connector can be removed from the diagram at runtime by using the Remove method.
 
 
 

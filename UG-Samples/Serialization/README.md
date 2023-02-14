@@ -1,6 +1,6 @@
 #ScrollStatus Sample
 
-This sample demonstrate how to download the saved diagram as a file. You can save the diagram using "SaveDiagram" method also you can load the saved diagram using "LoadDiagram" Method.
+This sample demonstrates how to download the saved diagram as a file. Save the diagram using the "SaveDiagram" method. Also, load the saved diagram using the "LoadDiagram" method.
 
 Demo link: 
 https://blazor.syncfusion.com/demos/diagramcomponent/serialization?theme=fluent

@@ -1,6 +1,6 @@
 #Page Margin
 
-This sample demonstrate how to define margin of page. The default value of margin is 25 for all side.
+This sample demonstrates how to define the margin of the page. The default value of the margin is 25 for all side.
 
 
 ## Prerequisites

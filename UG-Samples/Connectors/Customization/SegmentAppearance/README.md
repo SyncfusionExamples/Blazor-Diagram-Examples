@@ -1,6 +1,6 @@
 #Segment Apperance Sample
 
-This sample demonstrate how to customize the segment appearance.
+This sample demonstrates how to customize the segment appearance.
 
 Demo link: 
 https://blazor.syncfusion.com/demos/diagramcomponent/connectors?theme=fluent

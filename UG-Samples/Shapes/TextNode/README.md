@@ -1,6 +1,6 @@
 #TextNode Sample
 
-This sample demonstrate how to create a text node. You can create text node shapes using TextShape node property.
+This sample demonstrates how to create a text node. Create the text node shapes using the TextShape node property.
 
 
 

@@ -1,6 +1,6 @@
 #BackgroundColor Sample
 
-This sample demonstrate how to update background color for node.
+This sample demonstrates how to update the background color for the node.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/nodes?theme=fluent

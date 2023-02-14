@@ -1,6 +1,6 @@
 #Sizing Commands
 
-This sample demonstrate how to execute the size commands. Sizing SetSameSize commands are used to resize all selected object based on width, height, and size of the reference object (FirstSelectedItem). It have three Sizing modes such as Height, Width and Both.
+This sample demonstrates how to execute the size commands. Sizing SetSameSize commands are used to resize all selected object based on the width, height, and size of the reference object (FirstSelectedItem). It have three Sizing modes such as Height, Width, and Both.
 
 
 

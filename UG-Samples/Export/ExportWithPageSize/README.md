@@ -1,6 +1,6 @@
 #Export With PageSize Sample
 
-This sample demonstrate how to set the page size of diagram. Diagram provides support to change the page size. Page size can be changed by setting the DiagramExportSettings.PageWidth and DiagramExportSettings.PageHeight properties. The default value for width is 1123 pixels and the height is 794 pixels.
+This sample demonstrates how to set the page size of the diagram. The diagram provides support to change the page size. The page size can be changed by setting the DiagramExportSettings.PageWidth and DiagramExportSettings.PageHeight properties. The default value for the width is 1123 pixels and the height is 794 pixels.
 
 Demo link: 
 

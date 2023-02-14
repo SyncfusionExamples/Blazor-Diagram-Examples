@@ -1,7 +1,6 @@
 #Custom ContextMenu Sample
 
-This sample demonstrate how to add custom context menu items along with the default context menu. Set the ShowCustomMenuOnly property to false to render both the custom context menu and default context menu.
-
+This sample demonstrates how to add the custom context menu items along with the default context menu. Set the ShowCustomMenuOnly property to false to render both the custom context menu and default context menu.
 
 
 ## Prerequisites

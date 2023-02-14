@@ -1,6 +1,6 @@
 #UndoRedo Commands
 
-This sample demonstrate how to execute the UndoRedo commands. The Undo and Redo commands help you to revert/restore the changes.
+This sample demonstrates how to execute the UndoRedo commands. The Undo and Redo commands help you to revert or restore the changes
 
 
 ## Prerequisites

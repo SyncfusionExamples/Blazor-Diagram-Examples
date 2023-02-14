@@ -1,7 +1,6 @@
 #FlipDirection Sample
 
-This sample demonstrate how to flip the node. The FlipDirection is used to flip the node or group or connector so that it is mirrored across in either the horizontal, vertical, or both directions.
-
+This sample demonstrates how to flip the node. The FlipDirection is used to flip the node or group or the connector so that it is mirrored across in either the horizontal, vertical, or both directions.
 
 
 ## Prerequisites

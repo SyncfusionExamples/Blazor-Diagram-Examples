@@ -1,6 +1,6 @@
 #GetPageBounds Method
 
-This sample demonstrate how to get pagebounds using "GetPageBounds" Method.
+This sample demonstrates how to get the pagebounds using the "GetPageBounds" Method.
 
 
 ## Prerequisites

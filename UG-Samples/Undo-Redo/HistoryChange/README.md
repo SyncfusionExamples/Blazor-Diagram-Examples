@@ -1,6 +1,6 @@
 #History Change Sample
 
-This sample demonstrate how to invoke history change event.
+This sample demonstrates how to invoke the history change event.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/historymanager?theme=fluent

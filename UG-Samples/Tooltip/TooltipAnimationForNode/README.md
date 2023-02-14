@@ -1,6 +1,6 @@
 #Tooltip Animation Sample
 
-This sample demonstrate how to set the animation to the tooltip for the nodes.
+This sample demonstrates how to set the animation to the tooltip for the nodes.
 
 
 

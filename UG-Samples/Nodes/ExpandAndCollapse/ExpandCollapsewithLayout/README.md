@@ -1,6 +1,6 @@
 #Expand and Collapse Icon in Layout
 
-This sample demonstrate how to create an icon of various shapes in a Layout.
+This sample demonstrates how to create an icon of various shapes in a Layout.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/expandcollapse?theme=fluent

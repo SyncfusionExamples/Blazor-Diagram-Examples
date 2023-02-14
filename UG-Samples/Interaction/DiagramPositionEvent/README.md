@@ -1,6 +1,6 @@
 #Diagram Position Change event
 
-This sample demonstrate how invoke PositionChanging and PositionChanged event. The PositionChanging event is invoke while dragging the elements in the diagram. The PositionChanged event is invoke when the element’s position has changed in the diagram.
+This sample demonstrates how invoke the PositionChanging and PositionChanged events. The PositionChanging event is invoked while dragging the elements in the diagram. The PositionChanged event is invoked when the element’s position has changed in the diagram.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/events?theme=fluent

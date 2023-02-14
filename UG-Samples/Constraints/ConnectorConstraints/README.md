@@ -1,6 +1,6 @@
 #Connector Constraints Sample
 
-This sample demonstrate how to disable select constraint from the default constraints of connector. The Constraints property of the Connector allows you to enable or disable Select, Drag, Delete, Tooltip etc.
+This sample demonstrates how to disable the select constraint from the default constraints of the connector. The Constraints property of the connector allows you to enable or disable the Select, Drag, Delete, Tooltip, and more.
 
 
 Demo:

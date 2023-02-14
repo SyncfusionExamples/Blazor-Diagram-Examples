@@ -1,6 +1,6 @@
 #GetObject Method
 
-This sample demonstrate how to get object based on object's id.
+This sample demonstrates how to get an object based on the object's id.
 
 
 ## Prerequisites

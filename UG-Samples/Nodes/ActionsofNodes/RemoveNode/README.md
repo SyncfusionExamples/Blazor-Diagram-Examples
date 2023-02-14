@@ -1,6 +1,6 @@
 #Remove Node  Sample
 
-This sample demonstrate how to remove node at runtime using "Remove" method.
+This sample demonstrates how to remove the node at runtime using the "Remove" method.
 
 
 

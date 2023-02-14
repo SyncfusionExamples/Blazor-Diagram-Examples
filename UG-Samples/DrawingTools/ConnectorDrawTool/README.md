@@ -1,6 +1,6 @@
 #Connector Drawing Tool Sample
 
-This sample demonstrate how to draw a StraightSegment. To draw a Connector, you have to activate the drawing tool by using the InteractionController property and you need to set the connector by using the DrawingObject property. 
+This sample demonstrates how to draw a StraightSegment. To draw a Connector, activate the drawing tool by using the InteractionController property and set the connector by using the DrawingObject property.
 
 Demo link: 
 

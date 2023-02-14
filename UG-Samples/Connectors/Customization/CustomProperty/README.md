@@ -1,7 +1,6 @@
 #AdditionalInfo Sample
 
-This sample demonstrate how to add additional information for connector. The AdditionalInfo property of connector allows you to maintain additional information to the connectors.
-
+This sample demonstrates how to add additional information for the connector. The AdditionalInfo property of the connector allows you to maintain additional information to the connectors.
 
 
 ## Prerequisites

@@ -1,6 +1,6 @@
 #BringForward Sample
 
-This sample demonstrate how to execute the BringForward command. The BringForward command visually moves the selected element over the nearest overlapping element.
+This sample demonstrates how to execute the BringForward command. The BringForward command visually moves the selected element over the nearest overlapping element.
 
 
 Demo Link:

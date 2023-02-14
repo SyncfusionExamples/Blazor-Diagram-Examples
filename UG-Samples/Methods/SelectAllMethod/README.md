@@ -1,6 +1,6 @@
 #SelectAll Method
 
-This sample demonstrate how to select diagram objects using "SelectAll" method.
+This sample demonstrates how to select diagram objects using the "SelectAll" method.
 
 
 ## Prerequisites

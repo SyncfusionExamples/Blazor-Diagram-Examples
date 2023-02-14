@@ -1,6 +1,6 @@
 #Overview
 
-This sample demonstrate how to create an overview. In that sample height and width property of overview defines Width and Height properties of the SfDiagramOverviewComponent. SourceID is used to set SfDiagramOverviewComponent should be set with the corresponding diagram ID for the overall view.
+This sample demonstrates how to create an overview. In this sample, the height and width property of the overview defines the Width and Height properties of the SfDiagramOverviewComponent. The SourceID is used to set the SfDiagramOverviewComponent. It should be set with the corresponding diagram ID for the overall view.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/overview?theme=fluent

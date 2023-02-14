@@ -1,6 +1,6 @@
 #IsExpanded Property
 
-This sample demonstrate how to update node's IsExpanded property.
+This sample demonstrates how to update the node's IsExpanded property.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/expandcollapse?theme=fluent

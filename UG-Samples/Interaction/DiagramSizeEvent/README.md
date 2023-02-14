@@ -1,6 +1,6 @@
 #Diagram Size Change event
 
-This sample demonstrate how invoke SizeChanging and SizeChanged event. The SizeChanging event is invoke while resizing the elements in the diagram. The SizeChanged event is invoke when the element’s size has changed in the diagram.
+This sample demonstrates how invoke the SizeChanging and SizeChanged events. The SizeChanging event is invoked while resizing the elements in the diagram. The SizeChanged event is invoked when the element’s size has changed in the diagram.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/events?theme=fluent

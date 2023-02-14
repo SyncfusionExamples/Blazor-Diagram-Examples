@@ -1,7 +1,6 @@
 #CustomGridline Sample
 
-This sample demonstrate  how to customize the appearance of gridlines visibility. The Constraints property of SnapSettings class allows to control the visibility of the gridlines.
-
+This sample demonstrates how to customize the appearance of the gridlines visibility. The Constraints property of the SnapSettings class allows you to control the visibility of the gridlines.
 
 
 ## Prerequisites

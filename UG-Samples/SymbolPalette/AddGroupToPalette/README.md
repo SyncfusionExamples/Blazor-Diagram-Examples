@@ -1,6 +1,6 @@
 #Symbol Palette Sample
 
-This sample demonstrate how to add nodegroup to a palette.
+This sample demonstrates how to add a node group to a palette.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/symbolpalette?theme=fluent

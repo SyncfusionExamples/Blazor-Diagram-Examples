@@ -1,7 +1,6 @@
 #Page Break Sample
 
-This sample demonstrate how to change the stroke, stroke-dasharray of the pagebreak. you can customize the pagebreak of page using Stroke, Storke-DashArray properties.
-
+This sample demonstrates how to change the stroke and stroke-dasharray of the pagebreak. Customize the pagebreak of the page using the Stroke and Storke-DashArray properties.
 
 
 ## Prerequisites

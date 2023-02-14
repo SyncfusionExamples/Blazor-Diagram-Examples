@@ -1,8 +1,8 @@
 #Grouping Commands Sample
 
-This sample demonstrate how to execute the grouping commands. Grouping commands are used to group/ungroup the selected elements on the diagram. To group the elements, select the elements using select all command and group the selected elements using group command.
+This sample demonstrates how to execute the grouping commands. The grouping commands are used to group or ungroup the selected elements on the diagram. To group the elements, select the elements using select all command and group the selected elements using the group command..
 
-Group command is used to group the selected nodes and connectors in the diagram. Ungroup command is used to ungroup the selected nodes and connectors in the diagram.
+The group command is used to group the selected nodes and connectors in the diagram while the ungroup command is used to ungroup the selected nodes and connectors in the diagram.
 
 Demo Link:
 https://blazor.syncfusion.com/demos/diagramcomponent/keyboard-interaction?theme=fluent

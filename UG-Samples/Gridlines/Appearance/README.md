@@ -1,7 +1,6 @@
 #Appearance Sample
 
-This sample demonstrate  how to customize the appearance of gridlines. The appearance of the gridlines can be customized by using a set of predefined properties. LineColor and LineDashArray property of Vertical and Horizontal gridlines properties is used to customized the line color and styles.
-
+This sample demonstrates how to customize the appearance of the gridlines. The appearance of the gridlines can be customized by using a set of predefined properties. The LineColor and LineDashArray property of the Vertical and Horizontal gridlines properties are used to customized the line color and styles.
 
 
 ## Prerequisites

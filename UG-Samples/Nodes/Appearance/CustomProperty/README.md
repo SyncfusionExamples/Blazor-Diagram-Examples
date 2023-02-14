@@ -1,6 +1,6 @@
 #CustomProperty Sample
 
-This sample demonstrate how to customize the node's property. 
+This sample demonstrates how to customize the node's property.
 
 
 

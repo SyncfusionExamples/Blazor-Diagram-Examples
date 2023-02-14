@@ -1,6 +1,6 @@
 #Padding Sample
 
-This sample demonstrate  leave space between the connection end points and source, target nodes. Padding is used to leave the space between the Connector’s end point and the object to where it is connected.
+This sample demonstrates how to leave space between the connection end points and source or target nodes. Padding is used to leave the space between the Connector’s end point and the object to where it is connected.
 
 
 ## Prerequisites

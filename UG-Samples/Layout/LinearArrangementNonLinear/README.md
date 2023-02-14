@@ -1,6 +1,6 @@
 #Non-Linear Arrangement Sample
 
-This sample shows how to arrange the nodes in non-linear manner. 
+This sample shows how to arrange the nodes in a non-linear manner.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/complexhierarchical?theme=fluent

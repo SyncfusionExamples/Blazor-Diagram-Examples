@@ -1,6 +1,6 @@
 #Basic64 Images Sample
 
-This sample demonstrate how to add Base64 image into the image node.
+This sample demonstrates how to add a Base64 image into the image node.
 
 
 

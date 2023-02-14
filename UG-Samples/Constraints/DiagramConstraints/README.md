@@ -1,6 +1,6 @@
 #Diagram Constraints Sample
 
-This sample demonstrate how to disable PageEditable constraint from default diagram constraints. DiagramConstraints allow you to enable or disable the Zoom, Briding, UndoRedo, Tooltip, UserInteraction etc.
+This sample demonstrates how to disable the PageEditable constraint from the default diagram constraints. The DiagramConstraints allow you to enable or disable the Zoom, Briding, UndoRedo, Tooltip, UserInteraction, and more.
 
 
 Demo:

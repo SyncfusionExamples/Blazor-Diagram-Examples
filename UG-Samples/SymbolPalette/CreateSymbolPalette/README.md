@@ -1,6 +1,6 @@
 #Symbol Palette Sample
 
-This sample demonstrate how to create symbolpalette. 
+This sample demonstrates how to create the symbolpalette.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/symbolpalette?theme=fluent

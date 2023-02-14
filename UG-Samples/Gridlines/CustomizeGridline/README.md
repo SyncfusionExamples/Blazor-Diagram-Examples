@@ -1,7 +1,6 @@
 #CustomGridline Sample
 
-This sample demonstrate  how to render grid patterns as Dots. The appearance of the grid lines can be changed into dots by using the GridType as Dots.
-
+This sample demonstrates how to render the grid patterns as Dots. The appearance of the grid lines can be changed into dots by using the GridType as Dots.
 
 
 ## Prerequisites

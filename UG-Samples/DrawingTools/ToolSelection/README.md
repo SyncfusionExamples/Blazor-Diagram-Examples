@@ -1,6 +1,6 @@
 #Tools Sample
 
-This sample demonstrate how to enable single interaction controller.
+This sample demonstrates how to enable the single interaction controller.
 
 Demo link: 
 

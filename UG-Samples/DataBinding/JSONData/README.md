@@ -1,7 +1,6 @@
 #JSONData Sample
 
-This sample demonstrate how to binding local data through the SfDataManager to the Diagram component. Local JSON data can be bound to the Diagram component by assigning the array of objects to the Json property of the SfDataManager component.
-
+This sample demonstrates how to binding local data through the SfDataManager to the Diagram component. The local JSON data can be bound to the Diagram component by assigning the array of objects to the Json property of the SfDataManager component.
 
 
 ## Prerequisites

@@ -1,6 +1,6 @@
 #AddNode Method
 
-This sample demonstrate how to add a node to the diagram. 
+This sample demonstrates how to add a node to the diagram.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/nodes?theme=fluent

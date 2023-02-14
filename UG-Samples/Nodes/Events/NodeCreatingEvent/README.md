@@ -1,6 +1,6 @@
 #Nodecreating Event sample
 
-This sample demonstrate how to update node properties in Nodecreating event. You can customize the node's properties.
+This sample demonstrates how to update node properties in the Nodecreating event. Customize the node's properties.
 
 ## Prerequisites
 

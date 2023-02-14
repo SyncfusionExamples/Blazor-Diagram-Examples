@@ -1,6 +1,6 @@
 #Linear Arrangement Sample
 
-This sample shows how to arrange the nodes in linear manner. Linear arrangement is used to arrange the child nodes in linear manner in the layout, that is the parent node is placed in the center, corresponding to its children. When line distribution is enabled, the linear arrangement is also activated by default. The LinearArrangement property of layout is used to enable or disable the linear arrangement in the layout. By default, the value is false.
+This sample shows how to create a complex hierarchical tree with the line distribution. The line distribution is used to arrange the connectors without overlapping in an automatic layout. The SamePoint property of the layout is used to enable or disable the line distribution in the layout. By default, the value is true.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/complexhierarchical?theme=fluent

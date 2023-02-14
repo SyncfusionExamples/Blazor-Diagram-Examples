@@ -1,6 +1,6 @@
 #Export ClipBounds Sample
 
-This sample demonstrate how to export the region specified in the bounds. Diagram provides support to export any specific region of the diagram by using the ClipBounds property.
+This sample demonstrates how to export the region specified in the bounds. The diagram provides support to export any specific region of the diagram by using the ClipBounds property.
 
 Demo link: 
 

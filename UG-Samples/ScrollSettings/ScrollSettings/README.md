@@ -1,6 +1,6 @@
 #ScrollSettings Sample
 
-This sample demonstrate how to call ScrollSettings. 
+This sample demonstrates how to call the ScrollSettings.
 
 Demo link: 
 https://blazor.syncfusion.com/demos/diagramcomponent/scrollsettings?theme=fluent

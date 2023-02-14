@@ -1,7 +1,6 @@
 #Tooltip OpenMode Sample
 
-This sample demonstrate how to set the open mode to the tooltip for the connectors.
-
+This sample demonstrates how to set the open mode to the tooltip for the connectors.
 
 
 ## Prerequisites

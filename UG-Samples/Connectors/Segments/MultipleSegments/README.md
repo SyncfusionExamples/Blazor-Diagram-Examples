@@ -1,7 +1,6 @@
 #Multiple Segment Sample
 
-This sample demonstrate how to create a multiple segment.Multiple segments can be defined one after another. To create a connector with multiple segments, define and add the segments to connector Segments collection.
-
+This sample demonstrates how to create a multiple segments. Multiple segments can be defined one after another. To create a connector with multiple segments, define and add the segments to the connector Segments collection.
 Multiple Segment:
 ![image](https://user-images.githubusercontent.com/77827252/215649094-27ea9b6f-af9d-4f99-8a9e-6a40b9b0c071.png)
 

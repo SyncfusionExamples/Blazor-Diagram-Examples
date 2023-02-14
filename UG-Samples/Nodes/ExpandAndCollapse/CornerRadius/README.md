@@ -1,6 +1,6 @@
 #CornerRadius property
 
-This sample demonstrate how to change the appearance of the Icon using CornerRadius Property.
+This sample demonstrates how to change the appearance of the Icon using the CornerRadius Property.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/expandcollapse?theme=fluent

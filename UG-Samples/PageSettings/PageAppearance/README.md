@@ -1,7 +1,6 @@
 #Page Appearance Sample
 
-This sample demonstrate how Customize the appearance of page. Background property of BackgroundStyle is used to set background color of page. ImageSource property is used to set the path of image. Also, ImageAlign and ImageScale property is used to align and stretch the images.
-
+This sample demonstrates how to customize the appearance of the page. The Background property of the BackgroundStyle is used to set the background color of the page. The ImageSource property is used to set the path of the image. Also, the ImageAlign and ImageScale properties are used to align and stretch the images.
 
 
 ## Prerequisites

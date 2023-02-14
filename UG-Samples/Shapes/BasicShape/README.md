@@ -1,6 +1,6 @@
 #Basic Shape Sample
 
-This sample demonstrate how to create a basic shape. In this we have created Rectangle shape. 
+This sample demonstrates how to create a basic shape. In this, a Rectangle shape is created.
 
 
 Demo link:

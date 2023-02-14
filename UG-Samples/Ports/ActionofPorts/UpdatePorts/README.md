@@ -1,6 +1,6 @@
 #Update Ports
 
-This sample demonstrate how to change the port properties at runtime.
+This sample demonstrates how to change the port properties at runtime.
 
 
 

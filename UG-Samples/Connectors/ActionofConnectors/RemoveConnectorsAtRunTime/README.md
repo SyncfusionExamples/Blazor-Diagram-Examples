@@ -1,6 +1,6 @@
 #Remove connector at Runtime
 
-This sample demonstrate how to create port to port connections. The SourcePortID and TargetPortID properties allow to create connections between some specific points of source/target nodes
+This sample demonstrates how to create port to port connections. The SourcePortID and TargetPortID properties allows you to create connections between some specific points of source or target nodes.
 
 
 Demo Link:

@@ -1,6 +1,6 @@
 #SelectionChange Event Sample
 
-This sample demonstrate how to update selection change event. While selecting the diagram elements, the SelectionChanging and SelectionChanged events are invoked. Also it invoked selecting or unselecting the diagram elements.
+This sample demonstrates how to update the selection change event. While selecting the diagram elements, the SelectionChanging and SelectionChanged events are invoked. Also, it invoked selecting or unselecting the diagram elements.
 
 Demo link: 
 https://blazor.syncfusion.com/demos/diagramcomponent/events?theme=fluent

@@ -1,6 +1,6 @@
 #Boundary Constraints sample
 
-This sample demonstrate how to define boundary constraints with respect to the page.
+This sample demonstrates how to define the boundary constraints with respect to the page.
 
 
 ## Prerequisites

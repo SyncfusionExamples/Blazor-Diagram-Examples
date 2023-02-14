@@ -1,7 +1,6 @@
 #Straight Segment Editing sample
 
-This sample demonstrate how to create and remove straight segment.To create a new segments can be inserted into a straight line by clicking, when Shift and Ctrl keys are pressed (Ctrl+Shift+Click). 
-You can remove straight segment by clicking (Ctrl+Shift+Click).
+This sample demonstrates how to create and remove the straight segment. New segments can be inserted into a straight line by clicking (Ctrl+Shift+Click). Remove straight segments by clicking (Ctrl+Shift+Click).
 
 
 ## Prerequisites

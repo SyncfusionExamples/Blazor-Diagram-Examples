@@ -1,6 +1,6 @@
 #Rotate
 
-This sample demonstrate how to rotate the node by using the Rotate method. 
+This sample demonstrates how to rotate the node by using the Rotate method.
 
 
 ## Prerequisites

@@ -1,6 +1,6 @@
 #ContextMenuItemClick Event Sample
 
-This sample demonstrate how to invoke ContextMenuItemClick events. ContextMenuItemClick is invoked when the context menu item is clicked.
+This sample demonstrates how to invoke the ContextMenuItemClick events. The ContextMenuItemClick is invoked when the context menu item is clicked.
 
 
 

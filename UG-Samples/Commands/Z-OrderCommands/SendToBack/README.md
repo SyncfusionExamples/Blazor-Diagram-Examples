@@ -1,6 +1,6 @@
 #SendToBack Sample
 
-This sample demonstrate how to execute the SendToBack command. The SendToBack command visually moves the selected elements behind all the other overlapped elements.
+This sample demonstrates how to execute the SendToBack command. The SendToBack command visually moves the selected elements behind all the other overlapped elements.
 
 
 Demo Link:

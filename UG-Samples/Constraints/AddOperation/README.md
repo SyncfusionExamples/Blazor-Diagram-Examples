@@ -1,7 +1,6 @@
 #Add Operation Sample
 
-This sample demonstrate how to add bridging constraints into the default diagram constraints to enable bridging functionality in the diagram. You can add or enable multiple values at a time by using the Bitwise | (OR) operator.
-
+This sample demonstrates how to add bridging constraints into the default diagram constraints to enable bridging functionality in the diagram. Add or enable multiple values at a time by using the Bitwise | (OR) operator.
 
 Demo:
 https://blazor.syncfusion.com/demos/diagramcomponent/constraints?theme=fluent

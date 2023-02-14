@@ -1,6 +1,6 @@
 #TooltipPointer Sample
 
-This sample demonstrate how to set tooltip tip pointer for nodes.
+This sample demonstrates how to set the tooltip pointer for the nodes.
 
 
 

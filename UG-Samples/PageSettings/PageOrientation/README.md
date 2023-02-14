@@ -1,6 +1,6 @@
 #Page Orientation Sample
 
-This sample demonstrate how to change orientation of page using Orientation property of PageSettings. You can change orientation of page such as LandScape and Portrait.
+This sample demonstrates how to change the orientation of the page using the Orientation property of the PageSettings. Change the orientation of the page such as LandScape and Portrait.
 
 
 

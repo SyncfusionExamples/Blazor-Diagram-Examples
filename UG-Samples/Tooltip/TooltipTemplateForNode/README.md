@@ -1,6 +1,6 @@
 #Tooltip Template Sample
 
-This sample demonstrate how to add the formatted template content to the tooltip for the nodes.
+This sample demonstrates how to add the formatted template content to the tooltip for the nodes.
 
 
 

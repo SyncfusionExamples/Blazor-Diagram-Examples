@@ -32,7 +32,6 @@ namespace HTMLToImageExport
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<ExportService>();
             services.AddSyncfusionBlazor(options => { options.IgnoreScriptIsolation = false; });
             services.AddSignalR(e => {

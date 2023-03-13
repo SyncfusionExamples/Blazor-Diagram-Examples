@@ -1,0 +1,180 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using System.Text.Json;
+@using Microsoft.JSInterop;
+@inject IJSRuntime JsRuntime
+@using System.IO;
+
+<h3>OrgChart</h3>
+
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-12">
+                @if (Items.Any())
+                {
+                    <div id="OrgChartDiagram">
+                        <SfDiagramComponent @ref="@Diagram" Width="900px" Height="690px" NodeCreating="@OnNodeCreating" ConnectorCreating="@OnConnectorCreating" InteractionController="@DiagramInteractions.ZoomPan">                            
+                            <ScrollSettings @bind-ScrollLimit="@scrollLimit"></ScrollSettings>
+                            <DataSourceSettings ID="UserId" ParentID="ManagerId" DataSource="Items"></DataSourceSettings>
+                            <Layout @bind-Type="@Type" @bind-HorizontalSpacing="@HorizontalSpacing" @bind-Orientation="@OrientationType" @bind-VerticalSpacing="@VerticalSpacing" @bind-HorizontalAlignment="@HorizontalAlignment" @bind-VerticalAlignment="@VerticalAlignment" GetLayoutInfo="GetLayoutInfo">
+                                <LayoutMargin @bind-Top="@Top" @bind-Bottom="@Bottom" @bind-Right="@Right" @bind-Left="@Left"></LayoutMargin>
+                            </Layout>
+                            <SnapSettings Constraints="SnapConstraints.None"></SnapSettings>
+                            <DiagramTemplates>
+                                <NodeTemplate>
+                                    @{
+                                            Node node1 = (context as Node);
+                                            string Name = (node1.Data as OrgChartItem).Name;
+                                            string JobTitle = (node1.Data as OrgChartItem).JobTitle;
+                                            string ImageUrl = (node1.Data as OrgChartItem).ImageUrl;
+
+                                            <div class="row" style="padding-bottom: 10px;">
+                                                <div class="col" style="max-width:60px;">
+                                                    <img src="@(ImageUrl)" style="height:50px; width:50px; object-fit:cover; border-radius: 50px;">
+                                                </div>
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <label style="font-weight: bold;">@Name</label>
+                                                    </div>
+                                                    <div class="row">
+                                                        <label style="font-weight: normal;">@JobTitle</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </NodeTemplate>
+                                </DiagramTemplates>
+                            </SfDiagramComponent>
+                        </div>
+                }
+                else
+                {
+                    <div style="width: 100%; text-align: center;">
+                        @*<img src="/images/loading-spinner.gif" style="width: 100px; height: 100px;">*@
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <button @onclick="async () => await PrintAsync()">Print</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+
+    public List<OrgChartItem> Items = new List<OrgChartItem>();
+
+    ScrollLimitMode scrollLimit { get; set; } = ScrollLimitMode.Diagram;
+    private Orientation subTreeOrientation = Orientation.Vertical;
+    private SubTreeAlignmentType subTreeAlignment = SubTreeAlignmentType.Right;
+    private int rows = 0;
+    private string pattern;
+    private double offset = 20;
+
+    public SfDiagramComponent Diagram;
+    public LayoutOrientation OrientationType = LayoutOrientation.TopToBottom;
+    public LayoutType Type = LayoutType.OrganizationalChart;
+    public HorizontalAlignment HorizontalAlignment = HorizontalAlignment.Auto;
+    public VerticalAlignment VerticalAlignment = VerticalAlignment.Auto;
+    public int HorizontalSpacing = 30;
+    public int VerticalSpacing = 30;
+    public double Top = 25;
+    public double Bottom = 25;
+    public double Right = 25;
+    public double Left = 25;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        Items = new List<OrgChartItem>()
+            {
+                new OrgChartItem { Name = "Bob Smith", ManagerId = "2", UserId = "1", ImageUrl = "https://kbbuilding.blob.core.windows.net/profilepicutres/file_e174c0ec-a30b-4e12-9713-26589c3afb98.png", JobTitle = "Day Campus Supervisor" },
+                new OrgChartItem { Name = "Will Gidley", ManagerId = "", UserId = "2", ImageUrl = "https://kbbuilding.blob.core.windows.net/profilepicutres/file_08cf4d49-032e-406f-b6e8-21e36c523bbe.jpg", JobTitle = "CEO" },
+                new OrgChartItem { Name = "Deborah Sanford", ManagerId = "6", UserId = "3", ImageUrl = "https://kbbuilding.blob.core.windows.net/profilepicutres/file_e174c0ec-a30b-4e12-9713-26589c3afb98.png", JobTitle = "" },
+                new OrgChartItem { Name = "Mike Goldstein", ManagerId = "2", UserId = "4", ImageUrl = "https://kbbuilding.blob.core.windows.net/profilepicutres/file_d819b289-617f-44b4-9268-d04c8a3e747c.png", JobTitle = "Building Lead" },
+                new OrgChartItem { Name = "Nolan Jones", ManagerId = "6", UserId = "5", ImageUrl = "https://kbbuilding.blob.core.windows.net/profilepicutres/file_e174c0ec-a30b-4e12-9713-26589c3afb98.png", JobTitle = "" },
+                new OrgChartItem { Name = "Rafael Matthews", ManagerId = "2", UserId = "6", ImageUrl = "https://kbbuilding.blob.core.windows.net/profilepicutres/file_d819b289-617f-44b4-9268-d04c8a3e747c.png", JobTitle = "Night Floater" },
+            };
+    }
+
+    // Defines default values for Node object
+    private void OnNodeCreating(IDiagramObject obj)
+    {
+        Node node = obj as Node;
+        if (node.Data is System.Text.Json.JsonElement)
+        {
+            node.Data = System.Text.Json.JsonSerializer.Deserialize<OrgChartItem>(node.Data.ToString());
+        }
+        OrgChartItem item = node.Data as OrgChartItem;
+        node.Width = 177;
+        node.Height = 54;
+        node.Shape = new Shape()
+            {
+                Type = NodeShapes.HTML,
+            };
+    }
+    // Defines default values for Connector object
+    private void OnConnectorCreating(IDiagramObject connector1)
+    {
+        Connector connector = (connector1 as Connector);
+        connector.Type = ConnectorSegmentType.Orthogonal;
+        connector.CornerRadius = 0;
+        connector.Style = new ShapeStyle()
+            {
+                StrokeWidth = 2,
+                //StrokeDashArray = "1,1"
+            };
+        connector.TargetDecorator.Shape = DecoratorShape.None;
+        connector.SourceDecorator.Shape = DecoratorShape.None;
+    }
+    private TreeInfo GetLayoutInfo(IDiagramObject obj, TreeInfo options)
+    {
+        if (rows == 0)
+        {
+            if (rows == 0 && options.Rows != null)
+                options.Rows = null;
+            Node node = obj as Node;
+            if (pattern == "LeftOrientationVertical50" || pattern == "RightOrientationVertical50")
+            {
+                options.Offset = -50;
+            }
+            if (!options.HasSubTree)
+            {
+                options.AlignmentType = subTreeAlignment;
+                options.Orientation = subTreeOrientation;
+                options.AlignmentType = subTreeAlignment;
+            }
+        }
+        else
+        {
+            if (!options.HasSubTree)
+            {
+                options.AlignmentType = subTreeAlignment;
+                options.Orientation = subTreeOrientation;
+                options.Offset = offset;
+            }
+        }
+        return options;
+    }
+
+    private async Task PrintAsync()
+    {
+        await JsRuntime.InvokeAsync<string>("print", new object[] { "OrgChartDiagram" }).ConfigureAwait(true);        
+    }   
+
+
+    public class OrgChartItem
+    {
+        public string Name { get; set; }
+        public string ManagerId { get; set; }
+        public string UserId { get; set; }
+        public string ImageUrl { get; set; }
+        public string JobTitle { get; set; }
+    }
+}

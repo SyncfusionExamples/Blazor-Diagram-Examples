@@ -2,7 +2,8 @@
 
 @using Syncfusion.Blazor.Diagram
 
-<SfDiagramComponent @ref="diagram" Width="100%" Height="600px" DataLoaded="@DataLoaded" NodeCreating="NodeCreating" ConnectorCreating="ConnectorCreating">
+
+<SfDiagramComponent @ref="diagram" Width="100%" Height="600px" InteractionController="@DiagramInteractions.ZoomPan" NodeCreating="NodeCreating" ConnectorCreating="ConnectorCreating">
     <DataSourceSettings DataSource="DataSource" ID="Id" ParentID="Manager"></DataSourceSettings>
     <Layout @bind-Type="type" @bind-HorizontalSpacing="@HorizontalSpacing" @bind-FixedNode="@FixedNode" @bind-Orientation="@oreintation" @bind-VerticalSpacing="@VerticalSpacing" @bind-HorizontalAlignment="@horizontalAlignment" @bind-VerticalAlignment="@verticalAlignment">
         <LayoutMargin @bind-Top="@top" @bind-Bottom="@bottom" @bind-Right="@right" @bind-Left="@left"></LayoutMargin>
@@ -11,8 +12,7 @@
 </SfDiagramComponent>
 
 @code
-{
-    public SfDiagramComponent diagram;
+{ public SfDiagramComponent diagram;
     double top = 50;
     double bottom = 50;
     double right = 50;
@@ -66,7 +66,7 @@
         node.Width = 150;
         node.Height = 50;
         node.Style.Fill = hierarchicalData.Color;
-        // node.IsVisible = false;
+       // node.IsVisible = false;
         node.Annotations = new DiagramObjectCollection<ShapeAnnotation>()
         {
             new ShapeAnnotation()
@@ -74,16 +74,12 @@
                 Content = hierarchicalData.Role,
                 Style =new TextStyle(){Color = "white"}
             }
-        };
+        };       
     }
     private void ConnectorCreating(IDiagramObject connector)
     {
         (connector as Connector).Type = ConnectorSegmentType.Orthogonal;
         (connector as Connector).TargetDecorator.Shape = DecoratorShape.None;
     }
-    private void DataLoaded(object args)
-    {
-        //Action to be performed.
-    }
-
+   
 }

@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <PackageReference Include="Syncfusion.Blazor.Diagram" Version="*" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Syncfusion.Blazor.Diagram" Version="*" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

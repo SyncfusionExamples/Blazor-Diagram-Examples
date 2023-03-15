@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Syncfusion.Blazor.Diagram" Version="20.4.0.54" />
+    <PackageReference Include="Syncfusion.Blazor.Diagram" Version="*" />
   </ItemGroup>
 
 </Project>

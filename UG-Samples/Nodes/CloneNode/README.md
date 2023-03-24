@@ -1,4 +1,4 @@
-#AddNode Method
+#Clone Node
 
 This sample demonstrates how to clone the node at runtime.
 

@@ -1,4 +1,4 @@
-#AddNode Method
+#Clone GroupNode
 
 This sample demonstrates how to clone the group of node at runtime.
 

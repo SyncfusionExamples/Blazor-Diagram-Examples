@@ -1,4 +1,4 @@
-#AddNode Method
+#Clone Selected Item
 
 This sample demonstrates how to clone the selected nodes and connector at runtime.
 

@@ -1,4 +1,4 @@
-#AddNode Method
+#Clone Connector
 
 This sample demonstrates how to clone the connector at runtime.
 

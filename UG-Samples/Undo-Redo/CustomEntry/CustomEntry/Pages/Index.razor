@@ -7,7 +7,7 @@
 <SfButton Content="CustomEntry" OnClick="@OnCustomEntry" />
 
 <SfDiagramComponent @ref="@diagram" Height="600px" Nodes="@nodes">
-    <DiagramHistoryManager HistoryAdding="@OnHistoryAdding" Undo="@onCustomUndo" Redo="@onCustomRedo" />
+    <DiagramHistoryManager StackLimit="@stackLimit" HistoryAdding="@OnHistoryAdding" Undo="@onCustomUndo" Redo="@onCustomRedo" />
 </SfDiagramComponent>
 
 @code
@@ -17,6 +17,8 @@
     //Intialize diagram's nodes collection
     DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
     string EventValue = string.Empty;
+
+    int stackLimit = 3;
 
     protected override void OnInitialized()
     {

@@ -3,7 +3,7 @@
 This sample demonstrates how to customize the scrollable area..
 
 Demo link:
-https://blazor.syncfusion.com/demos/diagramcomponent/nodes?theme=fluent
+https://blazor.syncfusion.com/demos/diagramcomponent/scrollsettings?theme=fluent
 
 
 ## Prerequisites

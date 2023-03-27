@@ -7,6 +7,7 @@
 <SfButton Content="Cut" OnClick="@OnCut" />
 <SfButton Content="Copy" OnClick="@OnCopy" />
 <SfButton Content="Paste" OnClick="@OnPaste" />
+<SfButton Content="PasteWithArgument" OnClick="@PasteWithArgument"/>
 
 <SfDiagramComponent @ref="@diagram" Height="600px" Nodes="@nodes"  />
 
@@ -57,5 +58,15 @@
     private void OnPaste()
     {
         diagram.Paste();
+    }
+    //Method to adds the given objects in the parameter to the diagram control.
+    private void PasteWithArgument()
+    {
+        DiagramObjectCollection<NodeBase> nodeBase = new DiagramObjectCollection<NodeBase>();
+        Node clonedNode = diagram.Nodes[0].Clone() as Node;
+        clonedNode.OffsetX += 10;
+        clonedNode.OffsetY += 10;
+        nodeBase.Add(clonedNode);
+        diagram.Paste(nodeBase);
     }
 }

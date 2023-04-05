@@ -1,10 +1,5 @@
-﻿function getDiagramFileName(dialogName) {
-    if (dialogName === 'export')
-        return document.getElementById('diagramName').innerHTML.toString();
-    if (dialogName === 'save')
-        return document.getElementById('diagramName').value.toString();
-    else
-        return document.getElementById('diagramName').innerHTML.toString();
+﻿function getDiagramFileName() {
+    return document.getElementById('diagramName').innerHTML.toString();
 }
 
 function saveDiagram(data, filename) {
@@ -24,4 +19,9 @@ function saveDiagram(data, filename) {
 
 function click() {
     document.getElementById('UploadFiles').click();
+}
+function loadFile(file) {
+    var base64 = file.rawFile.replace("data:application/json;base64,", "");
+    var json = atob(base64)
+    return json;
 }

@@ -1,8 +1,4 @@
 ﻿using Microsoft.JSInterop;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SaveAndLoad.Pages
 {
@@ -29,10 +25,5 @@ namespace SaveAndLoad.Pages
             return await js.InvokeAsync<string>(
                   "loadFile", data).ConfigureAwait(true);
         }
-
-        //public async static Task SetGradient(IJSRuntime js, int level)
-        //{
-        //    await js.InvokeAsync<object>("setWaterLevel", level).ConfigureAwait(true);
-        //}
     }
 }

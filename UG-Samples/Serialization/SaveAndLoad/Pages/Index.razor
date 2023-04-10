@@ -3,14 +3,29 @@
 @using Syncfusion.Blazor.Diagram
 @using Syncfusion.Blazor.Buttons
 @using Microsoft.JSInterop
+@using Syncfusion.Blazor.Navigations
+@using Syncfusion.Blazor.Inputs
 @inject IJSRuntime jsRuntime
+
+<style>
+    .e-file-select-wrap {
+        display: none;
+    }
+</style>
+
 <div>
 <SfDiagramComponent Height="700px" @ref="@diagram" @bind-Nodes="@nodes"></SfDiagramComponent>
-<span id='diagramName' style="display:none">UntitledDiagram</span>
+<span id='diagramName' style="display:none">DiagramComponent</span>
 </div>
-  <SfButton OnClick="@SaveDiagram" >Save</SfButton>
+<SfButton OnClick="@SaveDiagram" >Save</SfButton>
 <SfButton OnClick="@LoadDiagram">Load</SfButton>
+<SfUploader @ref="@uploadFiles" ID="UploadFiles" ShowFileList="false" AllowedExtensions="@ExtensionType">
+                <UploaderEvents OnUploadStart="@OnUploadFileSelected"></UploaderEvents>
+                <UploaderAsyncSettings SaveUrl="https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save" RemoveUrl="https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove"></UploaderAsyncSettings>
+            </SfUploader>  
 @code{
+    //Reference to uploder
+    SfUploader uploadFiles;
     SfDiagramComponent diagram;
     private string fileName;
     DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
@@ -50,21 +65,17 @@
         await diagram.EndUpdate();
     }
 
-    public async static Task SaveAs(IJSRuntime js, string data, string fileName)
+    public async Task OnUploadFileSelected(UploadingEventArgs args)
     {
-        await js.InvokeAsync<object>(
-        "saveDiagram",
-        // Specify IFormatProvider
-        Convert.ToString(data), fileName).ConfigureAwait(true);
-        // Specify IFormatProvider
+        if (args.FileData.Type == "json")
+        {
+            string json = await FileUtil.LoadFile(jsRuntime, args.FileData);
+            json = json.Replace(System.Environment.NewLine, string.Empty);
+            await diagram.LoadDiagram(json.ToString());
+            await uploadFiles.ClearAllAsync();
+        }
     }
 
-    public async static Task Click(IJSRuntime js)
-    {
-        await js.InvokeAsync<object>(
-            "click").ConfigureAwait(true);
-    }
-
-    }
+}
 
    

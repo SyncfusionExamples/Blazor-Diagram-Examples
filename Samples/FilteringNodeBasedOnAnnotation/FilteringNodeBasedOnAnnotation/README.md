@@ -7,7 +7,7 @@ In this sample, We have created a layout sample with overview control and node f
 
 
 
-FloorPlans Sample:
+FilteringNodeBasedOnAnnotation Sample:
 ![image](../FilteringNodeBasedOnAnnotation/FilteringNodeBasedOnAnnotation/FilteringNodeBasedOnAnnotation.png)
 
 

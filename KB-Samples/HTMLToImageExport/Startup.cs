@@ -33,7 +33,7 @@ namespace HTMLToImageExport
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<ExportService>();
-            services.AddSyncfusionBlazor(options => { options.IgnoreScriptIsolation = false; });
+            services.AddSyncfusionBlazor();
             services.AddSignalR(e => {
                 e.MaximumReceiveMessageSize = 102400000;
             });

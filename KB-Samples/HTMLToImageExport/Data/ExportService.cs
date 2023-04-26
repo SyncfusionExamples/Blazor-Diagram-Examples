@@ -16,8 +16,6 @@ namespace HTMLToImageExport.Data
         public string ConvertImage(string htmlContent, int viewPortSize)
         {
 
-            File.WriteAllText("D://image.html", htmlContent);
-
             HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter(HtmlRenderingEngine.Blink);
             string baseUrl1 = Path.GetFullPath("wwwroot");
             BlinkConverterSettings settings = new BlinkConverterSettings();

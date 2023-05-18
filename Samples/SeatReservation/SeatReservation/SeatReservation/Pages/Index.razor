@@ -1,0 +1,434 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+<div class="control-section">
+    <div id="diagramControlSection" class="content-wrapper" style="width:1200px;height:800px;overflow:hidden; background: white;float:left">
+        <div id="diagram-space" class="sb-mobile-diagram">
+            <SfDiagramComponent @ref="@Diagram" Nodes="@nodes" Height="800px" SelectionChanged="@SeatSelected">
+                <PageSettings Width="1200" Height="800">
+                    <BackgroundStyle Background="#002f2f">
+                    </BackgroundStyle>
+                </PageSettings>
+                <DiagramTemplates>
+                    <NodeTemplate>
+                        @{
+                                Node node = context as Node;
+                                if (CurrentSelection.Contains(node))
+                                {
+                                    <svg fill="Green" height="40px" width="40px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" stroke="Red"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M443.733,204.8h-57.353l-7.518-135.236C376.704,30.558,344.397,0,305.331,0h-98.662 c-39.066,0-71.373,30.558-73.532,69.564L125.619,204.8H68.267c-9.412,0-17.067,7.654-17.067,17.067v17.067 c0,9.412,7.654,17.067,17.067,17.067v93.867c0,14.114,11.486,25.6,25.6,25.6h8.533V384c0,4.71,3.814,8.533,8.533,8.533h25.6V486.4 c0,14.114,11.486,25.6,25.6,25.6s25.6-11.486,25.6-25.6v-93.867h136.533V486.4c0,14.114,11.486,25.6,25.6,25.6 c14.114,0,25.6-11.486,25.6-25.6v-93.867h25.6c4.719,0,8.533-3.823,8.533-8.533v-8.533h8.533c14.114,0,25.6-11.486,25.6-25.6V256 c9.412,0,17.067-7.654,17.067-17.067v-17.067C460.8,212.454,453.146,204.8,443.733,204.8z M167.219,71.467 c1.152-20.941,18.483-37.333,39.45-37.333h98.662c20.966,0,38.298,16.393,39.45,37.333c0.273,4.702-3.336,8.721-8.038,8.986 c-0.171,0.009-0.324,0.017-0.486,0.017c-4.497,0-8.26-3.516-8.508-8.064C327.091,60.51,317.244,51.2,305.331,51.2h-98.662 c-11.913,0-21.76,9.31-22.417,21.205c-0.256,4.702-4.224,8.243-8.994,8.047C170.556,80.188,166.946,76.169,167.219,71.467z M68.267,238.933v-17.067h56.397l-0.947,17.067H76.8H68.267z M116.267,301.525c-0.947,0.879-1.843,1.801-2.714,2.765 c-0.811,0.887-1.553,1.818-2.278,2.765c-0.905,1.178-1.749,2.372-2.517,3.644c-0.828,1.34-1.579,2.714-2.253,4.13 c-0.358,0.768-0.725,1.528-1.041,2.321c-0.828,2.065-1.485,4.198-1.98,6.383c-0.128,0.563-0.213,1.135-0.316,1.707 c-0.461,2.475-0.768,4.992-0.768,7.561v25.6h-8.533c-4.71,0-8.533-3.831-8.533-8.533V256h37.444l-2.338,42.086 c-0.947,0.674-1.792,1.459-2.679,2.21C117.265,300.706,116.745,301.09,116.267,301.525z M392.533,366.933v8.533h-25.6H332.8H179.2 h-34.133h-25.6v-8.533V332.8c0-2.133,0.333-4.224,0.862-6.238c0.102-0.418,0.247-0.811,0.375-1.22 c0.563-1.792,1.28-3.541,2.227-5.163c0.077-0.137,0.145-0.282,0.23-0.418c2.304-3.797,5.598-7.031,9.66-9.267 c1.929-1.058,3.891-1.843,5.871-2.398c0.094-0.017,0.188-0.06,0.282-0.085c2.005-0.529,4.045-0.811,6.093-0.811h221.867 c2.048,0,4.087,0.282,6.093,0.811c0.094,0.026,0.188,0.068,0.273,0.085c1.988,0.555,3.951,1.34,5.879,2.398 c4.07,2.236,7.356,5.47,9.66,9.267c0.085,0.136,0.154,0.282,0.23,0.418c0.947,1.621,1.664,3.371,2.227,5.163 c0.128,0.41,0.273,0.802,0.375,1.212c0.529,2.022,0.862,4.113,0.862,6.246V366.933z M426.667,349.867 c0,4.702-3.823,8.533-8.533,8.533H409.6v-25.6c0-2.568-0.307-5.086-0.768-7.561c-0.102-0.572-0.188-1.143-0.316-1.707 c-0.495-2.185-1.152-4.318-1.98-6.383c-0.316-0.794-0.683-1.553-1.041-2.321c-0.674-1.417-1.425-2.79-2.253-4.13 c-0.768-1.271-1.613-2.466-2.517-3.644c-0.725-0.947-1.468-1.877-2.278-2.765c-0.87-0.964-1.766-1.886-2.714-2.765 c-0.478-0.435-0.998-0.819-1.493-1.229c-0.887-0.751-1.732-1.536-2.679-2.21L389.222,256h37.444V349.867z M443.733,238.933H435.2 h-46.916l-0.947-17.067h56.397V238.933z"></path> </g> </g> </g></svg>
+
+                                }else if (BookedSeats.Contains(node))
+                                {
+                                    <svg fill="Gray" height="40px" width="40px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" stroke="Red"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M443.733,204.8h-57.353l-7.518-135.236C376.704,30.558,344.397,0,305.331,0h-98.662 c-39.066,0-71.373,30.558-73.532,69.564L125.619,204.8H68.267c-9.412,0-17.067,7.654-17.067,17.067v17.067 c0,9.412,7.654,17.067,17.067,17.067v93.867c0,14.114,11.486,25.6,25.6,25.6h8.533V384c0,4.71,3.814,8.533,8.533,8.533h25.6V486.4 c0,14.114,11.486,25.6,25.6,25.6s25.6-11.486,25.6-25.6v-93.867h136.533V486.4c0,14.114,11.486,25.6,25.6,25.6 c14.114,0,25.6-11.486,25.6-25.6v-93.867h25.6c4.719,0,8.533-3.823,8.533-8.533v-8.533h8.533c14.114,0,25.6-11.486,25.6-25.6V256 c9.412,0,17.067-7.654,17.067-17.067v-17.067C460.8,212.454,453.146,204.8,443.733,204.8z M167.219,71.467 c1.152-20.941,18.483-37.333,39.45-37.333h98.662c20.966,0,38.298,16.393,39.45,37.333c0.273,4.702-3.336,8.721-8.038,8.986 c-0.171,0.009-0.324,0.017-0.486,0.017c-4.497,0-8.26-3.516-8.508-8.064C327.091,60.51,317.244,51.2,305.331,51.2h-98.662 c-11.913,0-21.76,9.31-22.417,21.205c-0.256,4.702-4.224,8.243-8.994,8.047C170.556,80.188,166.946,76.169,167.219,71.467z M68.267,238.933v-17.067h56.397l-0.947,17.067H76.8H68.267z M116.267,301.525c-0.947,0.879-1.843,1.801-2.714,2.765 c-0.811,0.887-1.553,1.818-2.278,2.765c-0.905,1.178-1.749,2.372-2.517,3.644c-0.828,1.34-1.579,2.714-2.253,4.13 c-0.358,0.768-0.725,1.528-1.041,2.321c-0.828,2.065-1.485,4.198-1.98,6.383c-0.128,0.563-0.213,1.135-0.316,1.707 c-0.461,2.475-0.768,4.992-0.768,7.561v25.6h-8.533c-4.71,0-8.533-3.831-8.533-8.533V256h37.444l-2.338,42.086 c-0.947,0.674-1.792,1.459-2.679,2.21C117.265,300.706,116.745,301.09,116.267,301.525z M392.533,366.933v8.533h-25.6H332.8H179.2 h-34.133h-25.6v-8.533V332.8c0-2.133,0.333-4.224,0.862-6.238c0.102-0.418,0.247-0.811,0.375-1.22 c0.563-1.792,1.28-3.541,2.227-5.163c0.077-0.137,0.145-0.282,0.23-0.418c2.304-3.797,5.598-7.031,9.66-9.267 c1.929-1.058,3.891-1.843,5.871-2.398c0.094-0.017,0.188-0.06,0.282-0.085c2.005-0.529,4.045-0.811,6.093-0.811h221.867 c2.048,0,4.087,0.282,6.093,0.811c0.094,0.026,0.188,0.068,0.273,0.085c1.988,0.555,3.951,1.34,5.879,2.398 c4.07,2.236,7.356,5.47,9.66,9.267c0.085,0.136,0.154,0.282,0.23,0.418c0.947,1.621,1.664,3.371,2.227,5.163 c0.128,0.41,0.273,0.802,0.375,1.212c0.529,2.022,0.862,4.113,0.862,6.246V366.933z M426.667,349.867 c0,4.702-3.823,8.533-8.533,8.533H409.6v-25.6c0-2.568-0.307-5.086-0.768-7.561c-0.102-0.572-0.188-1.143-0.316-1.707 c-0.495-2.185-1.152-4.318-1.98-6.383c-0.316-0.794-0.683-1.553-1.041-2.321c-0.674-1.417-1.425-2.79-2.253-4.13 c-0.768-1.271-1.613-2.466-2.517-3.644c-0.725-0.947-1.468-1.877-2.278-2.765c-0.87-0.964-1.766-1.886-2.714-2.765 c-0.478-0.435-0.998-0.819-1.493-1.229c-0.887-0.751-1.732-1.536-2.679-2.21L389.222,256h37.444V349.867z M443.733,238.933H435.2 h-46.916l-0.947-17.067h56.397V238.933z"></path> </g> </g> </g></svg>
+                                }
+                                else if (node.ID == "PageTitle")
+                                {
+                                    <div style="width:100%; height:100%;    display: flex;
+        justify-content: center;
+        align-items: center;">
+                                    <tspan style="font-size:40px;font-weight:bold;color:white ">View and Select Seats
+                                    </tspan></div>
+                                }
+                                else if (node.ID == "RowA")
+                                {
+                                    <div style="width:100%; height:100%;background-color: yellow;border: 2px solid black;    display: flex;
+        justify-content: center;
+        align-items: center;">
+                                        <tspan style="font-size:16px;font-weight:bold">
+                                            A
+                                        </tspan>
+                                    </div>
+                                }
+                                else if (node.ID == "RowB")
+                                {
+                                    <div style="width:100%; height:100%;background-color: yellow;border: 2px solid black;    display: flex;
+        justify-content: center;
+        align-items: center;">
+                                        <tspan style="font-size:16px;font-weight:bold">
+                                            B
+                                        </tspan>
+                                    </div>
+                                }
+                                else if (node.ID == "RowC")
+                                {
+                                    <div style="width:100%; height:100%;background-color: yellow;border: 2px solid black;    display: flex;
+        justify-content: center;
+        align-items: center;">
+                                        <tspan style="font-size:16px;font-weight:bold">
+                                            C
+                                        </tspan>
+                                    </div>
+                                }
+                                else if (node.ID == "RowD")
+                                {
+                                    <div style="width:100%; height:100%;background-color: yellow;border: 2px solid black;    display: flex;
+        justify-content: center;
+        align-items: center;">
+                                        <tspan style="font-size:16px;font-weight:bold">
+                                            D
+                                        </tspan>
+                                    </div>
+                                }
+                                else if (node.ID == "RowE")
+                                {
+                                    <div style="width:100%; height:100%;background-color: yellow;border: 2px solid black;    display: flex;
+        justify-content: center;
+        align-items: center;">
+                                        <tspan style="font-size:16px;font-weight:bold">
+                                            E
+                                        </tspan>
+                                    </div>
+                                }
+                                else if (node.ID == "RowF")
+                                {
+                                    <div style="width:100%; height:100%;background-color: yellow;border: 2px solid black;    display: flex;
+        justify-content: center;
+        align-items: center;">
+                                        <tspan style="font-size:16px;font-weight:bold">
+                                            F
+                                        </tspan>
+                                    </div>
+                                }
+                                else if (node.ID == "RowG")
+                                {
+                                    <div style="width:100%; height:100%;background-color: yellow;border: 2px solid black;    display: flex;
+        justify-content: center;
+        align-items: center;">
+                                        <tspan style="font-size:16px;font-weight:bold">
+                                            G
+                                        </tspan>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <svg fill="Red" height="40px" width="40px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" stroke="Red"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M443.733,204.8h-57.353l-7.518-135.236C376.704,30.558,344.397,0,305.331,0h-98.662 c-39.066,0-71.373,30.558-73.532,69.564L125.619,204.8H68.267c-9.412,0-17.067,7.654-17.067,17.067v17.067 c0,9.412,7.654,17.067,17.067,17.067v93.867c0,14.114,11.486,25.6,25.6,25.6h8.533V384c0,4.71,3.814,8.533,8.533,8.533h25.6V486.4 c0,14.114,11.486,25.6,25.6,25.6s25.6-11.486,25.6-25.6v-93.867h136.533V486.4c0,14.114,11.486,25.6,25.6,25.6 c14.114,0,25.6-11.486,25.6-25.6v-93.867h25.6c4.719,0,8.533-3.823,8.533-8.533v-8.533h8.533c14.114,0,25.6-11.486,25.6-25.6V256 c9.412,0,17.067-7.654,17.067-17.067v-17.067C460.8,212.454,453.146,204.8,443.733,204.8z M167.219,71.467 c1.152-20.941,18.483-37.333,39.45-37.333h98.662c20.966,0,38.298,16.393,39.45,37.333c0.273,4.702-3.336,8.721-8.038,8.986 c-0.171,0.009-0.324,0.017-0.486,0.017c-4.497,0-8.26-3.516-8.508-8.064C327.091,60.51,317.244,51.2,305.331,51.2h-98.662 c-11.913,0-21.76,9.31-22.417,21.205c-0.256,4.702-4.224,8.243-8.994,8.047C170.556,80.188,166.946,76.169,167.219,71.467z M68.267,238.933v-17.067h56.397l-0.947,17.067H76.8H68.267z M116.267,301.525c-0.947,0.879-1.843,1.801-2.714,2.765 c-0.811,0.887-1.553,1.818-2.278,2.765c-0.905,1.178-1.749,2.372-2.517,3.644c-0.828,1.34-1.579,2.714-2.253,4.13 c-0.358,0.768-0.725,1.528-1.041,2.321c-0.828,2.065-1.485,4.198-1.98,6.383c-0.128,0.563-0.213,1.135-0.316,1.707 c-0.461,2.475-0.768,4.992-0.768,7.561v25.6h-8.533c-4.71,0-8.533-3.831-8.533-8.533V256h37.444l-2.338,42.086 c-0.947,0.674-1.792,1.459-2.679,2.21C117.265,300.706,116.745,301.09,116.267,301.525z M392.533,366.933v8.533h-25.6H332.8H179.2 h-34.133h-25.6v-8.533V332.8c0-2.133,0.333-4.224,0.862-6.238c0.102-0.418,0.247-0.811,0.375-1.22 c0.563-1.792,1.28-3.541,2.227-5.163c0.077-0.137,0.145-0.282,0.23-0.418c2.304-3.797,5.598-7.031,9.66-9.267 c1.929-1.058,3.891-1.843,5.871-2.398c0.094-0.017,0.188-0.06,0.282-0.085c2.005-0.529,4.045-0.811,6.093-0.811h221.867 c2.048,0,4.087,0.282,6.093,0.811c0.094,0.026,0.188,0.068,0.273,0.085c1.988,0.555,3.951,1.34,5.879,2.398 c4.07,2.236,7.356,5.47,9.66,9.267c0.085,0.136,0.154,0.282,0.23,0.418c0.947,1.621,1.664,3.371,2.227,5.163 c0.128,0.41,0.273,0.802,0.375,1.212c0.529,2.022,0.862,4.113,0.862,6.246V366.933z M426.667,349.867 c0,4.702-3.823,8.533-8.533,8.533H409.6v-25.6c0-2.568-0.307-5.086-0.768-7.561c-0.102-0.572-0.188-1.143-0.316-1.707 c-0.495-2.185-1.152-4.318-1.98-6.383c-0.316-0.794-0.683-1.553-1.041-2.321c-0.674-1.417-1.425-2.79-2.253-4.13 c-0.768-1.271-1.613-2.466-2.517-3.644c-0.725-0.947-1.468-1.877-2.278-2.765c-0.87-0.964-1.766-1.886-2.714-2.765 c-0.478-0.435-0.998-0.819-1.493-1.229c-0.887-0.751-1.732-1.536-2.679-2.21L389.222,256h37.444V349.867z M443.733,238.933H435.2 h-46.916l-0.947-17.067h56.397V238.933z"></path> </g> </g> </g></svg>
+                                }
+                            }
+                    </NodeTemplate>
+                </DiagramTemplates>
+                <SnapSettings Constraints="SnapConstraints.None">
+
+                </SnapSettings>
+            </SfDiagramComponent>
+        </div>
+    </div>
+        <div id="reservationControlSection" style="width:300px;height:800px;overflow:hidden; float:right; border-top: 1px solid black">
+            
+        <div id="Current-selectiion-block" style="width:300px;height:300px; border-top: 1px solid black">
+            <SfTab LoadOn="ContentLoad.Init">
+                <TabItems>
+                    <TabItem>
+                        <HeaderTemplate>Selected Seats</HeaderTemplate>
+                        <ContentTemplate>
+                                <div class="prop-grid content" style="height:50%; border-top: 1px solid black">
+                                <div id="EventLog">
+                                    @{
+                                        foreach (string eventDetails in CurrentSelectedSeatsNo)
+                                        {
+                                            <p><b>@eventDetails;</b></p>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </ContentTemplate>
+                    </TabItem>
+                </TabItems>
+            </SfTab>
+        </div>
+            
+        <div id="reserved-selectiion-block" style="width:300px;height:300px; background: white;border-top: 1px solid black">
+                    <SfTab LoadOn="ContentLoad.Init">
+                        <TabItems>
+                            <TabItem>
+                                <HeaderTemplate>Reserved Seats</HeaderTemplate>
+                                <ContentTemplate>
+                                    <div class="prop-grid content" style="height:50%; border-top: 1px solid black">
+                                        <div id="Reserved-seats">
+                                            @{
+                                                foreach (string eventDetails in BookedSeatsNo)
+                                                {
+                                                    <p><b>@eventDetails;</b></p>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </ContentTemplate>
+                            </TabItem>
+                           
+                        </TabItems>
+                    </SfTab>
+        </div>
+            <div id="booking-button-block" style="width:300px;height:300px;background: white"
+            <button onclick="@BookTickets">Submit</button>
+        </div>
+    </div>
+</div>
+@code{
+    public SfDiagramComponent Diagram;
+    List<string> Rows = new List<string>() { "A", "B", "C", "D", "E", "F", "G" };
+    double Column = 15;
+    double SectionB = 0;
+    List<string> BookedSeatsNo = new List<string>();
+    List<string> PreBookedSeatsNo = new List<string>();
+    List<string> CurrentSelectedSeatsNo = new List<string>();
+    private DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+    private DiagramObjectCollection<Node> AvailableSeats = new DiagramObjectCollection<Node>();
+    private DiagramObjectCollection<Node> BookedSeats = new DiagramObjectCollection<Node>();
+    private DiagramObjectCollection<Node> CurrentSelection = new DiagramObjectCollection<Node>();
+
+    protected override void OnInitialized()
+    {
+        InitializeReservationPage();
+        InitializeSeatNodes();
+    }
+    public void InitializeReservationPage()
+    {
+        CreateTopPanel();
+        CreateRowNodes();
+        CreateScrean();
+    }
+    public void InitializeSeatNodes()
+    {
+        double x = 105;
+        double y = 220;
+        double SectionA = 0;
+        for (int i = 0; i < Rows.Count; i++)
+        {
+            for (int j = 1; j < Column; j++)
+            {
+                SectionA++;
+                string row = Rows[i];
+                Node node = new Node()
+                {
+                    ID = "Row" + row + "Seat" + j,
+                    Height = 40,
+                    Width = 40,
+                    OffsetX = x,
+                    OffsetY = y,
+                    Constraints = NodeConstraints.Default &~NodeConstraints.Drag,
+                    Shape = new Shape()
+                    {
+                        Type = NodeShapes.SVG
+                    }
+                };
+                if (PreBookedSeatsNo.Contains(node.ID))
+                {
+                    BookedSeats.Add(node);
+                }
+                else
+                {
+                    AvailableSeats.Add(node);
+                }
+                nodes.Add(node);
+                x += SectionA == 9 ? 105 : 65;
+            }
+            SectionA = 0;
+            y += 55;
+            x = 105;
+        }
+    }
+    public void CreateRowNodes()
+    {
+        double x = 40;
+        double y = 220;
+        for (int i = 0; i < Rows.Count; i++)
+        {
+            string row = Rows[i];
+            Node node = new Node()
+            {
+                ID = "Row" + row,
+                Height = 25,
+                Width = 25,
+                OffsetX = x,
+                OffsetY = y,
+                Shape = new Shape()
+                {
+                    Type = NodeShapes.HTML
+                },
+                Constraints = NodeConstraints.Default &~NodeConstraints.Drag
+            };
+
+            nodes.Add(node);
+            y += 55;
+        }
+    }
+    public void CreateScrean()
+    {
+        Node node = new Node()
+        {
+            ID = "Screan",
+            Height = 75,
+            Width = 900,
+            OffsetX = 550,
+            OffsetY = 700,
+            Shape = new ImageShape
+            {
+                Source = "../Images/Screen.png"
+            },
+            Constraints = NodeConstraints.Default & ~NodeConstraints.Drag
+        };
+        nodes.Add(node);
+    }
+    public void CreateTopPanel()
+    {
+        Node node = new Node()
+        {
+            ID = "PageTitle",
+            Height = 75,
+            Width = 500,
+            OffsetX = 550,
+            OffsetY = 50,
+            Shape = new Shape()
+            {
+                Type = NodeShapes.HTML
+            },
+            Constraints = NodeConstraints.Default | NodeConstraints.ReadOnly
+        };
+        nodes.Add(node);
+        Node nodeObj1 = new Node()
+        {
+            ID = "AvailableSeatLable",
+            Height = 50,
+            Width = 50,
+            OffsetX = 350,
+            OffsetY = 150,
+            Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+            {
+                new ShapeAnnotation()
+                {
+                    ID = "AvailableSeatLableAnnotation",
+                    Content = "Avasilable Seats",
+                    Style = new TextStyle()
+                    {
+                        Bold = true,
+                        Color = "white"
+                    },
+                    Offset = new DiagramPoint()
+                    {
+                        X = 2,
+                        Y = 0.5
+                    }
+                }
+            },
+            Shape = new ImageShape
+            {
+                    Source = "../Images/AvailableSeat.png"
+            },
+            Style = new ShapeStyle()
+            {
+                StrokeColor = "transparent",
+                    Fill = "tramsparent"
+            },
+            Constraints = NodeConstraints.Default & ~NodeConstraints.Drag
+        };
+        nodes.Add(nodeObj1);
+        Node nodeObj2 = new Node()
+            {
+                ID = "BookedSeatLable",
+                Height = 50,
+                Width = 50,
+                OffsetX = 550,
+                OffsetY = 150,
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+                {
+                    new ShapeAnnotation()
+                    {
+                        ID = "BookedSeatLable",
+                        Content = "Booked Seats",
+                        Style = new TextStyle()
+                        {
+                            Bold = true,
+                            Color = "white"
+                        },
+                        Offset = new DiagramPoint()
+                        {
+                            X = 2,
+                            Y = 0.5
+                        }
+                    }
+                },
+                Shape = new ImageShape
+                {
+                    Source = "../Images/BookedSeat.png"
+                },
+                Style = new ShapeStyle()
+                {
+                    StrokeColor = "transparent",
+                    Fill = "tramsparent"
+                },
+                Constraints = NodeConstraints.Default & ~NodeConstraints.Drag
+            };
+        nodes.Add(nodeObj2);
+        Node nodeObj3 = new Node()
+            {
+                ID = "CurrentSelectionSeatLable",
+                Height = 50,
+                Width = 50,
+                OffsetX = 750,
+                OffsetY = 150,
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+                {
+                    new ShapeAnnotation()
+                    {
+                        ID = "CurrentSelectionSeatLable",
+                        Content = "Current Selection",
+                        Style = new TextStyle()
+                        {
+                            Bold = true,
+                            Color = "white"
+                        },
+                        Offset = new DiagramPoint()
+                        {
+                            X = 2,
+                            Y = 0.5
+                        }
+                    }
+                },
+                Shape = new ImageShape
+                {
+                    Source = "../Images/CurrentSelection.png"
+                },
+                Style = new ShapeStyle()
+                {
+                    StrokeColor = "transparent",
+                    Fill = "tramsparent"
+                },
+                Constraints = NodeConstraints.Default & ~NodeConstraints.Drag
+            };
+        nodes.Add(nodeObj3);
+    }
+    public void SeatSelected(SelectionChangedEventArgs args)
+    {
+        if(args.NewValue[0] is Node node)
+        {
+            if (!BookedSeats.Contains(node))
+            {
+                if (CurrentSelection.Contains(node))
+                {
+                    CurrentSelection.Remove(node);
+                    CurrentSelectedSeatsNo.Remove(node.ID);
+                    AvailableSeats.Add(node);
+                    Diagram.RefreshDataSource();
+                }
+                else if(AvailableSeats.Contains(node))
+                {
+                    CurrentSelection.Add(node);
+                    CurrentSelectedSeatsNo.Add(node.ID);
+                    AvailableSeats.Remove(node);
+                    Diagram.RefreshDataSource();
+                }
+            }
+            BookedSeatsNo.Clear();
+        }
+    }
+    public void BookTickets()
+    {
+        foreach(Node node in CurrentSelection)
+        {
+            BookedSeats.Add(node);
+            BookedSeatsNo.Add(node.ID);
+        }
+        CurrentSelection.Clear();
+        CurrentSelectedSeatsNo.Clear();
+    }
+}

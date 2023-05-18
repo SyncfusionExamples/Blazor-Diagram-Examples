@@ -4,7 +4,7 @@
 <div class="control-section">
     <div id="diagramControlSection" class="content-wrapper" style="width:1200px;height:800px;overflow:hidden; background: white;float:left">
         <div id="diagram-space" class="sb-mobile-diagram">
-            <SfDiagramComponent @ref="@Diagram" Nodes="@nodes" Height="800px" SelectionChanged="@SeatSelected">
+            <SfDiagramComponent @ref="@Diagram" Nodes="@nodes" Height="800px" Click="@SeatSelected">
                 <PageSettings Width="1200" Height="800">
                     <BackgroundStyle Background="#002f2f">
                     </BackgroundStyle>
@@ -112,51 +112,29 @@
             </SfDiagramComponent>
         </div>
     </div>
-        <div id="reservationControlSection" style="width:300px;height:800px;overflow:hidden; float:right; border-top: 1px solid black">
-            
-        <div id="Current-selectiion-block" style="width:300px;height:300px; border-top: 1px solid black">
-            <SfTab LoadOn="ContentLoad.Init">
-                <TabItems>
-                    <TabItem>
-                        <HeaderTemplate>Selected Seats</HeaderTemplate>
-                        <ContentTemplate>
-                                <div class="prop-grid content" style="height:50%; border-top: 1px solid black">
-                                <div id="EventLog">
-                                    @{
-                                        foreach (string eventDetails in CurrentSelectedSeatsNo)
-                                        {
-                                            <p><b>@eventDetails;</b></p>
-                                        }
-                                    }
-                                </div>
-                            </div>
-                        </ContentTemplate>
-                    </TabItem>
-                </TabItems>
-            </SfTab>
+    <div id="reservationControlSection" style="width:300px;height:800px; float:right; border-top: 1px solid black">
+            <div id="Current-selectiion-block" style="width:300px;height:300px;overflow-y:hidden border-top: 1px solid black; overflow:hidden">
+            <p><b>Selected Seats;</b></p>
+                <div id="EventLog" style="height:300px;overflow-y:scroll">
+                @{
+                    foreach (string eventDetails in CurrentSelectedSeatsNo)
+                    {
+                        <p><b>@eventDetails;</b></p>
+                    }
+                }
+            </div>
         </div>
-            
-        <div id="reserved-selectiion-block" style="width:300px;height:300px; background: white;border-top: 1px solid black">
-                    <SfTab LoadOn="ContentLoad.Init">
-                        <TabItems>
-                            <TabItem>
-                                <HeaderTemplate>Reserved Seats</HeaderTemplate>
-                                <ContentTemplate>
-                                    <div class="prop-grid content" style="height:50%; border-top: 1px solid black">
-                                        <div id="Reserved-seats">
-                                            @{
-                                                foreach (string eventDetails in BookedSeatsNo)
-                                                {
-                                                    <p><b>@eventDetails;</b></p>
-                                                }
-                                            }
-                                        </div>
-                                    </div>
-                                </ContentTemplate>
-                            </TabItem>
-                           
-                        </TabItems>
-                    </SfTab>
+        <div id="reserved-selectiion-block" style="width:300px;height:300px;overflow-y:hidden;background: white;border-top: 1px solid black; overflow:hidden">
+            <p><b>Reserved Seats;</b></p>
+
+            <div id="Reserved-seats" style="height:300px;overflow-y:scroll">
+                @{
+                    foreach (string eventDetails in BookedSeatsNo)
+                    {
+                        <p><b>@eventDetails;</b></p>
+                    }
+                }
+            </div>
         </div>
             <div id="booking-button-block" style="width:300px;height:300px;background: white"
             <button onclick="@BookTickets">Submit</button>
@@ -205,7 +183,7 @@
                     Width = 40,
                     OffsetX = x,
                     OffsetY = y,
-                    Constraints = NodeConstraints.Default &~NodeConstraints.Drag,
+                        Constraints = NodeConstraints.Default & ~(NodeConstraints.Select | NodeConstraints.Drag | NodeConstraints.Delete | NodeConstraints.Resize) | NodeConstraints.ReadOnly,
                     Shape = new Shape()
                     {
                         Type = NodeShapes.SVG
@@ -245,7 +223,7 @@
                 {
                     Type = NodeShapes.HTML
                 },
-                Constraints = NodeConstraints.Default &~NodeConstraints.Drag
+                    Constraints = NodeConstraints.Default & ~(NodeConstraints.Select | NodeConstraints.Drag | NodeConstraints.Delete | NodeConstraints.Resize) | NodeConstraints.ReadOnly
             };
 
             nodes.Add(node);
@@ -265,7 +243,7 @@
             {
                 Source = "../Images/Screen.png"
             },
-            Constraints = NodeConstraints.Default & ~NodeConstraints.Drag
+                Constraints = NodeConstraints.Default & ~(NodeConstraints.Select | NodeConstraints.Drag | NodeConstraints.Delete | NodeConstraints.Resize) | NodeConstraints.ReadOnly
         };
         nodes.Add(node);
     }
@@ -282,7 +260,7 @@
             {
                 Type = NodeShapes.HTML
             },
-            Constraints = NodeConstraints.Default | NodeConstraints.ReadOnly
+                Constraints = NodeConstraints.Default & ~(NodeConstraints.Select | NodeConstraints.Drag | NodeConstraints.Delete | NodeConstraints.Resize) | NodeConstraints.ReadOnly
         };
         nodes.Add(node);
         Node nodeObj1 = new Node()
@@ -319,7 +297,7 @@
                 StrokeColor = "transparent",
                     Fill = "tramsparent"
             },
-            Constraints = NodeConstraints.Default & ~NodeConstraints.Drag
+                Constraints = NodeConstraints.Default & ~(NodeConstraints.Select | NodeConstraints.Drag | NodeConstraints.Delete | NodeConstraints.Resize) | NodeConstraints.ReadOnly
         };
         nodes.Add(nodeObj1);
         Node nodeObj2 = new Node()
@@ -356,7 +334,7 @@
                     StrokeColor = "transparent",
                     Fill = "tramsparent"
                 },
-                Constraints = NodeConstraints.Default & ~NodeConstraints.Drag
+                Constraints = NodeConstraints.Default & ~(NodeConstraints.Select | NodeConstraints.Drag | NodeConstraints.Delete | NodeConstraints.Resize) | NodeConstraints.ReadOnly
             };
         nodes.Add(nodeObj2);
         Node nodeObj3 = new Node()
@@ -393,13 +371,13 @@
                     StrokeColor = "transparent",
                     Fill = "tramsparent"
                 },
-                Constraints = NodeConstraints.Default & ~NodeConstraints.Drag
+                Constraints = NodeConstraints.Default & ~(NodeConstraints.Select | NodeConstraints.Drag | NodeConstraints.Delete | NodeConstraints.Resize) | NodeConstraints.ReadOnly
             };
         nodes.Add(nodeObj3);
     }
-    public void SeatSelected(SelectionChangedEventArgs args)
+    public void SeatSelected(ClickEventArgs args)
     {
-        if(args.NewValue[0] is Node node)
+        if(args.Element !=null && args.Element is Node node)
         {
             if (!BookedSeats.Contains(node))
             {

@@ -1,0 +1,418 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Navigations
+@using shapes = Syncfusion.Blazor.Diagram.NodeShapes
+@using Syncfusion.HtmlConverter
+@using HTMLToPdfExport.Data
+@inject ExportService exportService
+@inject NavigationManager NavigationManager
+@inject Microsoft.JSInterop.IJSRuntime JS
+@using Syncfusion.Pdf
+@using System.IO;
+@using System.Text.Json;
+
+<div id="OrgChartDiagram" style="height:2000px">
+    <button @onclick="async () => await export()">Export</button>
+
+    <SfDiagramComponent @ref="@Diagram" ID="Diagram" Width="100%" Height="1000px" ConnectorCreating="@OnConnectorCreating" NodeCreating="@OnNodeCreating">
+        <PageSettings>
+            <BackgroundStyle Background="transaparent"></BackgroundStyle>
+        </PageSettings>
+        <DataSourceSettings ID="EmployeeID" ParentID="ParentID" DataSource="DataSource"> </DataSourceSettings>
+        <Layout @bind-Type="Type" @bind-HorizontalSpacing="@HorizontalSpacing" @bind-Orientation="@OrientationType" @bind-VerticalSpacing="@VerticalSpacing" @bind-HorizontalAlignment="@HorizontalAlignment" @bind-VerticalAlignment="@VerticalAlignment" GetLayoutInfo="GetLayoutInfo">
+            <LayoutMargin @bind-Top="@Top" @bind-Bottom="@Bottom" @bind-Right="@Right" @bind-Left="@Left"></LayoutMargin>
+        </Layout>
+
+        <SnapSettings Constraints="@SnapConstraints.None"></SnapSettings>
+        <DiagramTemplates>
+            <NodeTemplate>
+                @{
+                        Node node1 = (context as Node);
+                        string Name = (node1.Data as HierarchicalDetails).Name;
+                        string Role = (node1.Data as HierarchicalDetails).Designation;
+                        string Imageurl = (node1.Data as HierarchicalDetails).BG;
+                        if (Name == "Maria Anders")
+                        {
+                            <div class=e-orgchart-div style=" width: 181px;
+                height: 54px;
+                position: absolute;">
+                                <div class="e-orgchart-image-div" style=" width: 181px;
+                height: 54px;
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                border: 1px solid #9B9B9B;
+                box-sizing: border-box;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+                border-bottom-left-radius: 4px;
+                border-bottom-right-radius: 4px;padding-left:8px;padding-right:12px;padding-top:5px;padding-bottom:5px">
+                                    <div id="image" class="e-orgchart-template-image-style" style=" width: 44px;
+                height: 42px;
+                left: 12px;
+                right: 12px;
+                /* top: 154px; */
+                float: left;
+                background-size: 100% 100%;background-image: url(@( @Imageurl));">
+                                    </div>
+                                </div><span class="e-orgchart-name-div" style="     color: rgba(64.81249898672104, 64.81249898672104, 64.81249898672104, 1);
+                width: 150px;
+                height: 16px;
+                position: absolute;
+                left: 68px;
+                top: 10px;
+                font-family: Roboto;
+                text-align: left;
+                font-size: 14px;
+                letter-spacing: 0;margin-left:-4px">@Name</span><span style="  color: rgba(122.1874974668026, 122.1874974668026, 122.1874974668026, 1);
+                width: 100px;
+                height: 14px;
+                position: absolute;
+                left: 68px;
+                top: 30px;
+                font-family: Roboto;
+                text-align: left;
+                font-size: 12px;
+                letter-spacing: 0;" class="e-orgchart-role-div">@Role</span>
+                                <div class="e-orgchart-whole-div" style=" border-radius: 500px;
+
+                width: 44px;
+                height: 44px;
+                position: absolute;
+                left: 12px;
+                top: 5px;margin-left:-4px"></div>
+                            </div>
+                        }
+                        else if (Name == "Miguel Angel Paolino")
+                        {
+                            <div class=e-orgchart-div style=" width: 181px;
+                height: 54px;
+                position: absolute;">
+                                <div class="e-orgchart-image-div" style=" width: 181px;
+                height: 54px;
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                border: 1px solid #9B9B9B;
+                box-sizing: border-box;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+                border-bottom-left-radius: 4px;
+                border-bottom-right-radius: 4px;padding-left:8px;padding-right:12px;padding-top:5px;padding-bottom:5px;width:210px">
+                                    <div id="image" class="e-orgchart-template-image-style" style=" width: 44px;
+                height: 42px;
+                left: 12px;
+                right: 12px;
+                /* top: 154px; */
+                float: left;
+                background-size: 100% 100%;background-image: url(@(  @Imageurl));">
+                                    </div>
+                                </div><span class="e-orgchart-name-div" style="     color: rgba(64.81249898672104, 64.81249898672104, 64.81249898672104, 1);
+                width: 150px;
+                height: 16px;
+                position: absolute;
+                left: 68px;
+                top: 10px;
+                font-family: Roboto;
+                text-align: left;
+                font-size: 14px;
+                letter-spacing: 0;margin-left:-4px">@Name</span><span style="  color: rgba(122.1874974668026, 122.1874974668026, 122.1874974668026, 1);
+                width: 100px;
+                height: 14px;
+                position: absolute;
+                left: 68px;
+                top: 30px;
+                font-family: Roboto;
+                text-align: left;
+                font-size: 12px;
+                letter-spacing: 0;" class="e-orgchart-role-div">@Role</span>
+                                <div class="e-orgchart-whole-div" style=" border-radius: 500px;
+
+                width: 44px;
+                height: 44px;
+                position: absolute;
+                left: 12px;
+                top: 5px;margin-left:-4px"></div>
+                            </div>
+
+                        }
+                        else if (Name == "Frédérique Citeaux" || Name == "Christina Berglund" || Name == "Art Braunschweiger")
+                        {
+                            <div class=e-orgchart-div style=" width: 181px;
+                height: 54px;
+                position: absolute;">
+                                <div class="e-orgchart-image-div" style=" width: 181px;
+                height: 54px;
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                border: 1px solid #9B9B9B;
+                box-sizing: border-box;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+                border-bottom-left-radius: 4px;
+                border-bottom-right-radius: 4px;padding-left:8px;padding-right:12px;padding-top:5px;padding-bottom:5px;width:195px">
+                                    <div id="image" class="e-orgchart-template-image-style" style=" width: 44px;
+                height: 42px;
+                left: 12px;
+                right: 12px;
+                /* top: 154px; */
+                float: left;
+                background-size: 100% 100%;background-image: url(@(  @Imageurl));">
+                                    </div>
+                                </div><span class="e-orgchart-name-div" style="     color: rgba(64.81249898672104, 64.81249898672104, 64.81249898672104, 1);
+                width: 150px;
+                height: 16px;
+                position: absolute;
+                left: 68px;
+                top: 10px;
+                font-family: Roboto;
+                text-align: left;
+                font-size: 14px;
+                letter-spacing: 0;margin-left:-4px">@Name</span><span style="  color: rgba(122.1874974668026, 122.1874974668026, 122.1874974668026, 1);
+                width: 100px;
+                height: 14px;
+                position: absolute;
+                left: 68px;
+                top: 30px;
+                font-family: Roboto;
+                text-align: left;
+                font-size: 12px;
+                letter-spacing: 0;" class="e-orgchart-role-div">@Role</span>
+                                <div class="e-orgchart-whole-div" style=" border-radius: 500px;
+
+                width: 44px;
+                height: 44px;
+                position: absolute;
+                left: 12px;
+                top: 5px;margin-left:-4px"></div>
+                            </div>
+
+                        }
+                        else
+
+                        {
+
+                            <div class=e-orgchart-div style=" width: 181px;
+                height: 54px;
+                position: absolute;">
+                                <div class="e-orgchart-image-div" style=" width: 181px;
+                height: 54px;
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                border: 1px solid #9B9B9B;
+                box-sizing: border-box;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+                border-bottom-left-radius: 4px;
+                border-bottom-right-radius: 4px;padding-left:8px;padding-right:12px;padding-top:5px;padding-bottom:5px">
+                                    <div id="image" class="e-orgchart-template-image-style" style=" width: 44px;
+                height: 42px;
+                left: 12px;
+                right: 12px;
+                /* top: 154px; */
+                float: left;
+                background-size: 100% 100%;background-image: url(@(@Imageurl));">
+                                    </div>
+                                </div><span class="e-orgchart-name-div" style="color: rgba(64.81249898672104, 64.81249898672104, 64.81249898672104, 1);
+                width: 150px;
+                height: 16px;
+                position: absolute;
+                left: 68px;
+                top: 10px;
+                font-family: Roboto;
+                text-align: left;
+                font-size: 14px;
+                letter-spacing: 0;margin-left:-4px">@Name</span><span style="  color: rgba(122.1874974668026, 122.1874974668026, 122.1874974668026, 1);
+                width: 100px;
+                height: 14px;
+                position: absolute;
+                left: 68px;
+                top: 30px;
+                font-family: Roboto;
+                text-align: left;
+                font-size: 12px;
+                letter-spacing: 0;" class="e-orgchart-role-div">@Role</span>
+                                <div class="e-orgchart-whole-div" style=" border-radius: 500px;
+
+                width: 44px;
+                height: 44px;
+                position: absolute;
+                left: 12px;
+                top: 5px;margin-left:-4px"></div>
+                            </div>
+                        }
+                    }
+                </NodeTemplate>
+            </DiagramTemplates>
+        </SfDiagramComponent>
+    </div>
+
+
+    @*Hidden:Lines*@
+
+
+    @*End:Hidden*@
+    @code {
+    @*Hidden:Lines*@
+
+    DiagramInteractions DiagramTool = DiagramInteractions.ZoomPan;
+    ScrollLimitMode scrollLimit { get; set; } = ScrollLimitMode.Diagram;
+    public SfDiagramComponent Diagram;
+    public int? HValue { get; set; } = 60;
+    public int? VValue { get; set; } = 60;
+    public LayoutType Type = LayoutType.HierarchicalTree;
+    public LayoutOrientation OrientationType = LayoutOrientation.TopToBottom;
+    public HorizontalAlignment HorizontalAlignment = HorizontalAlignment.Auto;
+    public VerticalAlignment VerticalAlignment = VerticalAlignment.Auto;
+    public int HorizontalSpacing = 30;
+    public int VerticalSpacing = 60;
+    public double Top = 30;
+    public double Bottom = 30;
+    public double Right = 30;
+    public double Left = 30;
+
+
+    //Defines sfdiagramComponent
+    SfDiagramComponent diagram;
+
+    //Defines diagram constraints
+    public DiagramConstraints constraints { get; set; }
+
+    //Defines diagrams's nodes collection
+    public DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+
+    //Defines diagrams's connectors collection
+    public DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
+
+
+    private void OnConnectorCreating(IDiagramObject connector)
+    {
+        (connector as Connector).Type = ConnectorSegmentType.Orthogonal;
+        (connector as Connector).TargetDecorator.Shape = DecoratorShape.None;
+        (connector as Connector).Style = new ShapeStyle() { StrokeColor = "Black", StrokeWidth = 1 };
+        (connector as Connector).Constraints = 0;
+        (connector as Connector).TargetDecorator = new DecoratorSettings()
+            {
+
+                Style = new ShapeStyle()
+                {
+                    StrokeColor = "#4f4f4f",
+                    Fill = "#4f4f4f",
+                    StrokeWidth = 1,
+                }
+            };
+    }
+
+    private TreeInfo GetLayoutInfo(IDiagramObject obj, TreeInfo options)
+    {
+        options.EnableSubTree = true;
+        options.Orientation = Syncfusion.Blazor.Diagram.Orientation.Horizontal;
+        return options;
+    }
+    private void OnNodeCreating(IDiagramObject obj)
+    {
+        Node node = obj as Node;
+        node.Width = 180;
+        node.Height = 53;
+        //node.Style = new ShapeStyle() { Fill = "transaprent" };
+        node.Shape = new Shape()
+            { Type = shapes.HTML };
+    }
+
+    public class HierarchicalDetails
+    {
+        public string Name { get; set; }
+        public string Designation { get; set; }
+        public string EmployeeID { get; set; }
+        public string TeamName { get; set; }
+        public string TeamSize { get; set; }
+        public string ParentID { get; set; }
+        public string BG { get; set; }
+    }
+    //Initialize Data Source
+    public List<HierarchicalDetails> DataSource = new List<HierarchicalDetails>()
+{
+        new HierarchicalDetails(){ Name="Maria Anders", Designation="Managing Director", EmployeeID="SF10001", TeamName="Web-Diagram", TeamSize="10", ParentID = "", BG= "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOQAAADdCAMAAACc/C7aAAAAsVBMVEX///8rNXz2kh6uscm5vNAXJXUVI3UAGXHy8/gIG3KNkbHu7vI8RYaztswaJ3ago73V1uMmMXpMVI4eKnf1igAOH3P/+vH6wIr3oUJwdaGChqr70bD1iQD2kBT2jgAAAGz969v+8uf3pFD84Mj6xpj4qVr4snD4rmb6yJv2lij6zKP5un782Lj+9ez3mzn3nTyUl7bFxtYzPYL5tnj83MIAEW9dZJlASYnj5OzO0NxobZ11NT2/AAAEjklEQVR4nO2da1vaMBiGYz0gotucFZk0pYigKIdtypT9/x82PLWlpkneQK8k3XN/f5LcBpI3TccYAwAAAP4T+p227SFUTxAHie0xVM0VD3g4sD2KahnFwYrozvY4quQ6DF4J722PpDomUfBOOLQ9lqpIUscg4OOp7eFUwpQHOXic2B5QFYzXJFcf2YntEW2fYcFxtche2x7TtnkIi46rubyxPartcidwDIK4VjXeJBI5rpafoG97aFsjEc7jq2VtarzppzUnv/zUpMabySRrUuMNY5ljPWq8+9Iv5AfxzPca765kYc3je403UM7j20fW5xov0ZjHVzyu8dqBdGFdm8uR7cGaMtd29LfGu1FsHuvwsY813oXeopNZeljjdXUXnQzvarwB3XFleSFp8fDyiMzPNL2kh49+KRz7xM/qO7Iar9U7o7L/O02fLMjpxle5Y7v4SEcXSY3XauxQOT3OJA/I6S8KyY6ho6zGc01yRNo8CpTVeI5JUjePAiU1nluSZY909OdSWOM5JWm0eawTdwTLj0uS002+jx9EXbclTTePPKGoKHBI8moLjrHw2bo7khttHu/wubBpZyRvN9s83hwD8cnSFUmDk8dnwpJzpSuSossrKlHZqdIVSXa78VSWnymdkWSPG1pKbg3ckWQJ32QPiWXnSXckWXtmvovwWbmjU5KM3ZguP5zLHku6JckuDL+YUSJr1TFJw/0yepQ26pokG8T05Se8lbfpnCTrkw8j4YOiSfckV8cR2iLLr1QNuijJRpRFlo+V7TkpSarxYvWVupuS7FF7LsNE3Zqjkto1XqRzne6qJJvOdZafUOsy3VlJxobqj2ysd5XusKS6xlNvHu5Lsq58LjU2Dw8k2SCULT+x7qsCbktKa7zSRzq+SUpqPNF9gK+SZTWe8D7AW0l2LVpkxfcB/kqKajzeoTTggyRLigdp+SMdPyVZu1Djld0HeC1ZqPH0Nw+/JPOvTIT6m4dnktlzPPq/IvBH8uM5Hmnz8E6S9V9eZ5beB9RA8qXGK7tMrpEkG8nvA+ohyUwcvZM0ApK1keydU2mepulderpnQZJ9MyD7ExmEny1IAgAAAKCcQwO2lW7TMXJs9ZpUGvmyjpzOlXXdKKQSGf1KhM0CvUt/KTIm3IBAEpKQhCQkIQlJSEISkpCEJCQhCUlIQhKSkIQkJCEJSUhCEpKQhCQkIQlJSEISkpCEJCQhCUlIQhKSnkguTsnkJM/J4YOcZMipUH7WJCd5/J3MnzS990QOP+2m6cmsQ2Wu+NVIAAAAAAARuwak4ZZBOPtv4J43ShNo9fapHDTS9JKebv5N03sLcrpxaSTZJJ8jds4yyXN6+EcmST/DnEESktSeIKkKQ1KZhiQkqT1BUhWGpDINSUhSe4KkKgxJZRqSkKT2BElVGJLKNCQhSe0JkqowJJVpSEKS2hMkVWFIKtOQhCS1J0iqwpBUpiEJSWpPkFSFIalMQxKS1J4gqQpDUpmGJCSpPXkn2Tsgk39zmR7OvblMTy+MJNmeAdmf6IQeXqbpZ4OulyIHAAAAAABQZ/4BUpFG1g/DdfIAAAAASUVORK5CYII="  },
+        new HierarchicalDetails(){ Name="Ana Trujillo", Designation="Project Manager ", EmployeeID="SF10002", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF10001", BG= "images/diagram/people/people-circle12.png"  },
+        new HierarchicalDetails(){ Name="Patricio Simpson" ,Designation="Project Lead", EmployeeID="SF10003", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF10002", BG= "images/diagram/people/people-circle18.png"  },
+        new HierarchicalDetails(){ Name="Aria Cruz" ,Designation="Project Lead", EmployeeID="SF10004", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF10003", BG= "images/diagram/people/people-circle0.png"  },
+        new HierarchicalDetails(){ Name="Antonio Moreno", Designation="Project Lead", EmployeeID="SF10005", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF10004", BG= "images/diagram/people/people-circle17.png"  },
+        new HierarchicalDetails(){ Name="Thomas Hardy", Designation="Senior S/w Engg", EmployeeID="SF10006", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF10005", BG= "images/diagram/people/people-circle29.png"  },
+        new HierarchicalDetails(){ Name="Christina Berglund" ,Designation="S/w Engg", EmployeeID="SF10007", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF10006", BG= "images/diagram/people/people-circle12.png"  },
+        new HierarchicalDetails(){ Name="Hanna Moos", Designation="Project Trainee", EmployeeID="SF10008", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF10007", BG= "images/diagram/people/people-circle27.png"  },
+        new HierarchicalDetails(){ Name="Frédérique Citeaux", Designation="Project Trainee", EmployeeID="SF100050", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF10007", BG= "images/diagram/people/people-circle1.png"  },
+        new HierarchicalDetails(){ Name="Martín Sommer" ,Designation="Senior S/w Engg",EmployeeID="SF10009", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF10006", BG= "images/diagram/people/people-circle25.png"  },
+        new HierarchicalDetails(){ Name="Maria Larsson" ,Designation="Senior S/w Engg", EmployeeID="SF100010", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF10004", BG= "images/diagram/people/people-circle11.png"  },
+        new HierarchicalDetails(){ Name="Isabel de Castro", Designation="Project Manager", EmployeeID="SF100011", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF10001", BG= "images/diagram/people/people-circle1.png"  },
+        new HierarchicalDetails(){ Name="Horst Batista", Designation="Project Lead", EmployeeID="SF100012", TeamName="Web-Diagram", TeamSize="10", ParentID = "SF100021", BG= "images/diagram/people/people-circle17.png"  },
+        new HierarchicalDetails(){ Name="Lúcia Carvalho" ,Designation="Senior S/w Engg", EmployeeID="SF100013", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100012", BG= "images/diagram/people/people-circle27.png"  },
+        new HierarchicalDetails(){ Name="José Pedro Freyre" ,Designation="Senior S/w Engg", EmployeeID="SF100014", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100013", BG= "images/diagram/people/people-circle21.png"  },
+        new HierarchicalDetails(){  Name="André Fonseca", Designation="Senior S/w Engg", EmployeeID="SF100015", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100014", BG= "images/diagram/people/people-circle5.png"  },
+        new HierarchicalDetails(){ Name="Paula Wilson", Designation="S/w Engg", EmployeeID="SF100016", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100015", BG= "images/diagram/people/people-circle0.png"  },
+        new HierarchicalDetails(){ Name="John Bergulfsen", Designation="Project Trainee", EmployeeID="SF100017", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100015", BG= "images/diagram/people/people-circle17.png"  },
+        new HierarchicalDetails(){ Name="Jose Pavarotti", Designation="S/w Engg", EmployeeID="SF100018", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100015", BG= "images/diagram/people/people-circle17.png"  },
+        new HierarchicalDetails(){ Name="Miguel Angel Paolino" ,Designation="Project Trainee", EmployeeID="SF100019", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100015", BG= "images/diagram/people/people-circle14.png"  },
+        new HierarchicalDetails(){  Name="Horst Kloss", Designation="Project Trainee",EmployeeID="SF100020", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100015", BG= "images/diagram/people/people-circle1.png"  },
+        new HierarchicalDetails(){  Name="Wilson Holz" ,Designation="Project Lead", EmployeeID="SF100021", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100011", BG= "images/diagram/people/people-circle12.png"  },
+        new HierarchicalDetails(){ Name="Jytte Petersen" ,Designation="Project Manager", EmployeeID="SF100022", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF10001", BG= "images/diagram/people/people-circle2.png"  },
+        new HierarchicalDetails(){ Name="Liz Nixon" ,Designation="Project Lead", EmployeeID="SF100023", TeamName="Web-Diagram", TeamSize="10", ParentID = "SF100022", BG= "images/diagram/people/people-circle26.png"  },
+        new HierarchicalDetails(){Name="Liu Wong" ,Designation="Senior S/w Engg", EmployeeID="SF100024", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100023", BG= "images/diagram/people/people-circle29.png"  },
+        new HierarchicalDetails(){  Name="Dominique Perrier" ,Designation="Project Lead", EmployeeID="SF100025", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100023", BG= "images/diagram/people/people-circle10.png"  },
+        new HierarchicalDetails(){  Name="Annette Roulet" ,Designation="Senior S/w Engg", EmployeeID="SF100026", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100025", BG= "images/diagram/people/people-circle4.png"  },
+        new HierarchicalDetails(){ Name="Carlos González", Designation="SR", EmployeeID="SF100027", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100026", BG= "images/diagram/people/people-circle1.png"  },
+        new HierarchicalDetails(){Name="Felipe Izquierdo" ,Designation="SR", EmployeeID="SF100028", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100027", BG= "images/diagram/people/people-circle21.png"  },
+        new HierarchicalDetails(){Name="Yoshi Tannamuri", Designation="S/w Engg", EmployeeID="SF100029", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100028", BG= "images/diagram/people/people-circle5.png"  },
+        new HierarchicalDetails(){ Name="Fran Wilson", Designation="SR", EmployeeID="SF100030", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100028", BG= "images/diagram/people/people-circle17.png"  },
+        new HierarchicalDetails(){  Name="Jean Fresnière", Designation="S/w Engg", EmployeeID="SF100031", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100028", BG= "images/diagram/people/people-circle27.png"  },
+        new HierarchicalDetails(){  Name="Giovanni Rovelli", Designation="SR", EmployeeID="SF100032", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100028", BG= "images/diagram/people/people-circle26.png"  },
+        new HierarchicalDetails(){ Name="Renate Messner", Designation="Project Trainee", EmployeeID="SF100033", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100028", BG= "images/diagram/people/people-circle11.png"  },
+        new HierarchicalDetails(){Name="Jaime Yorres" ,Designation="Project Trainee", EmployeeID="SF100034", TeamName="Web-Diagram", TeamSize="10", ParentID = "SF100028", BG= "images/diagram/people/people-circle27.png"  },
+        new HierarchicalDetails(){Name="John Steel", Designation="Project Trainee", EmployeeID="SF100035", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100027", BG= "images/diagram/people/people-circle17.png"  },
+        new HierarchicalDetails(){   Name="Yvonne Moncada", Designation="Project Trainee", EmployeeID="SF100036", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100037", BG= "images/diagram/people/people-circle17.png"  },
+        new HierarchicalDetails(){ Name="Michael Suyama", Designation="S/w Engg", EmployeeID="SF100037", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100024", BG= "images/diagram/people/people-circle27.png"  },
+        new HierarchicalDetails(){ Name="Alexander Feuer", Designation="Project Trainee", EmployeeID="SF100038", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100037", BG= "images/diagram/people/people-circle1.png"  },
+        new HierarchicalDetails(){Name="Art Braunschweiger" ,Designation="Project Trainee", EmployeeID="SF100039", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100037", BG= "images/diagram/people/people-circle21.png"  },
+        new HierarchicalDetails(){Name="Pascale Cartrain", Designation="Project Trainee", EmployeeID="SF100040", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100037", BG= "images/diagram/people/people-circle10.png"  },
+        new HierarchicalDetails(){  Name="Mary Saveley", Designation="Project Manager" , EmployeeID="SF100041", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF10001", BG= "images/diagram/people/people-circle25.png"  },
+        new HierarchicalDetails(){  Name="Paul Henriot", Designation="Project Lead",EmployeeID="SF100042", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100041", BG= "images/diagram/people/people-circle21.png"  },
+        new HierarchicalDetails(){  Name="Rita Müller" ,Designation="Project Trainee", EmployeeID="SF100043", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100044", BG= "images/diagram/people/people-circle23.png"  },
+        new HierarchicalDetails(){ Name="Pirkko Koskitalo", Designation="Senior S/w Engg", EmployeeID="SF100044", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100042", BG= "images/diagram/people/people-circle8.png"  },
+        new HierarchicalDetails(){ Name="Karl Jablonski", Designation="Senior S/w Engg" , EmployeeID="SF100045", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100044", BG= "images/diagram/people/people-circle17.png"  },
+        new HierarchicalDetails(){  Name="Paula Parente" ,Designation="Project Lead", EmployeeID="SF100046",TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100048", BG= "images/diagram/people/people-circle5.png"  },
+        new HierarchicalDetails(){  Name="John Camino" ,Designation="Senior S/w Engg", EmployeeID="SF100047", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100013", BG= "images/diagram/people/people-circle21.png"  },
+        new HierarchicalDetails(){ Name="Matti Karttunen", Designation="Project Lead", EmployeeID="SF100048", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100041", BG= "images/diagram/people/people-circle0.png"  },
+        new HierarchicalDetails(){  Name="Nancy" ,Designation="Senior S/w Engg", EmployeeID="SF100049", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100044", BG= "images/diagram/people/people-circle29.png"  },
+    };
+
+
+    private async Task<string> ConvertImage()
+    {
+        ExportService exportService = new ExportService();
+        string diagramContent = await JS.InvokeAsync<string>("getDiagramContent", new object[] { "OrgChartDiagram" }).ConfigureAwait(true);
+        DiagramRect diagramBounds = Diagram.GetPageBounds();
+        string diagram = exportService.ConvertImage(diagramContent, Convert.ToInt32(diagramBounds.Width));
+
+        return diagramContent;
+    }
+    private async Task export()
+    {
+        string diagramImage = await ConvertImage();
+        string currentURL = NavigationManager.Uri;
+        HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
+        //Convert URL to PDF
+        BlinkConverterSettings settings = new BlinkConverterSettings();
+        settings.ViewPortSize = new Syncfusion.Drawing.Size() { Width = 5000, Height = 3000 };
+        settings.EnableLazyLoadImages = true;
+        htmlConverter.ConverterSettings = settings;
+        PdfDocument document = htmlConverter.Convert(diagramImage, currentURL);
+        MemoryStream fileStream = new MemoryStream();
+        //Save and close the PDF document.
+        document.Save(fileStream);
+        await JS.SaveAs("HTML-to-PDF.pdf", fileStream.ToArray());
+    }
+   
+}

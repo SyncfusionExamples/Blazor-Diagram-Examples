@@ -1,0 +1,41 @@
+﻿@page "/"
+@using Syncfusion.Blazor.Diagram
+
+<div id="diagramSpace" style="height:1000px;width:1000px">
+    <SfDiagramComponent @ref="@Diagram" ID="diagram" Height="100%" Width="100%" @bind-Nodes="@nodes" Click="@Click">
+
+    </SfDiagramComponent>
+</div>
+
+@code{
+    public SfDiagramComponent Diagram;
+    public DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Node node = new Node()
+        {
+            Height = 100,
+            Width = 100,
+            OffsetX = 300,
+            OffsetY = 300,
+            Style = new ShapeStyle() 
+            { 
+                Fill = "#6495ED", 
+            },
+        };
+        nodes.Add(node);
+    }
+    public void Click( ClickEventArgs args)
+    {
+        if(args!= null)
+        {
+            if(args.Count == 2)
+            {
+                DiagramPoint currentPosition = args.Position;
+                Diagram.Zoom(1.2, currentPosition);
+            }
+        }
+    }
+
+}

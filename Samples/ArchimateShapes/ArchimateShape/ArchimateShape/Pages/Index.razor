@@ -1,0 +1,364 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.DropDowns;
+@using Syncfusion.Blazor.Navigations
+@using shapes = Syncfusion.Blazor.Diagram.NodeShapes
+@using Syncfusion.HtmlConverter
+@using ArchimateShape.Data
+@inject ExportService exportService
+@inject NavigationManager NavigationManager
+@inject Microsoft.JSInterop.IJSRuntime JS
+@using Syncfusion.Pdf
+@using System.IO;
+@using System.Text.Json;
+@using Syncfusion.Blazor.SplitButtons
+
+<style>
+    #diagramSpace {
+        width: 75%;
+        float: left;
+    }
+
+    #properties {
+        width: 25%;
+        float: right;
+    }
+</style>
+
+<div id="diagramSpace">
+    <SfDiagramComponent @ref="@Diagram" Height="1000px" Nodes="@nodes">
+        <PageSettings Height="600" Width="700">
+
+        </PageSettings>
+        <DiagramTemplates>
+            <NodeTemplate>
+                @{
+                        if ((context as Node).ID == "node1")
+                        {
+                            <svg width="125" height="75" viewBox="0 0 125 75" fill="white" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 1H124V17V58V74H1V58V17V1Z" fill="white" />
+                                <path d="M1 17V1H124V17M1 17H124M1 17V58M124 17V58M1 58V74H124V58M1 58H124" stroke="black" stroke-width="1" />
+                            </svg>
+                        }
+                        else if ((context as Node).ID == "node3")
+                        {
+                            <svg width="125" height="75" viewBox="0 0 125 75" fill="white" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 1H124V74H1V1Z" stroke="black" stroke-width="1" />
+                                <path d="M108 14C109.657 14 111 12.6569 111 11C111 9.34315 109.657 8 108 8C106.343 8 105 9.34315 105 11C105 12.6569 106.343 14 108 14ZM108 14V19M108 25L114 30M108 25L102 30M108 25V19M108 19H115M108 19H101" stroke="black" stroke-width="1" />
+                            </svg>
+                        }
+                        else if ((context as Node).ID == "node5")
+                        {
+                            <svg width="125" height="75" viewBox="0 0 125 75" fill="white" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 11C1 5.47715 5.47715 1 11 1H114C119.523 1 124 5.47715 124 11V64C124 69.5228 119.523 74 114 74H11C5.47715 74 1 69.5228 1 64V11Z" stroke="black" stroke-width="1" />
+                                <path d="M96.5 10H110.5C114.09 10 117 12.9101 117 16.5C117 20.0899 114.09 23 110.5 23H96.5L102.5 16.5L96.5 10Z" stroke="black" stroke-width="1" />
+                            </svg>
+                        }
+                        else if ((context as Node).ID == "node7")
+                        {
+                            <svg width="125" height="75" viewBox="0 0 125 75" fill="white" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 11C1 5.47715 5.47715 1 11 1H114C119.523 1 124 5.47715 124 11V64C124 69.5228 119.523 74 114 74H11C5.47715 74 1 69.5228 1 64V11Z" stroke="black" stroke-width="1" />
+                                <path d="M95 17C95 13.134 98.134 10 102 10H110C113.866 10 117 13.134 117 17C117 20.866 113.866 24 110 24H102C98.134 24 95 20.866 95 17Z" stroke="black" stroke-width="1" />
+                            </svg>
+                        }
+                        else if ((context as Node).ID == "node9")
+                        {
+                            <svg width="125" height="75" viewBox="0 0 125 75" fill="white" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 11C1 5.47715 5.47715 1 11 1H114C119.523 1 124 5.47715 124 11V64C124 69.5228 119.523 74 114 74H11C5.47715 74 1 69.5228 1 64V11Z" stroke="black" stroke-width="1" />
+                                <path d="M97 18C97 13.1621 100.436 9.12655 105 8.20001V27.7999C100.436 26.8734 97 22.8379 97 18Z" stroke="black" stroke-width="1" />
+                                <path d="M109 8.20001C113.564 9.12655 117 13.1621 117 18C117 22.8379 113.564 26.8734 109 27.7999V8.20001Z" stroke="black" stroke-width="1" />
+                            </svg>
+                        }
+                        else if ((context as Node).ID == "node11")
+                        {
+                            <svg width="125" height="75" viewBox="0 0 125 75" fill="white" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 11C1 5.47715 5.47715 1 11 1H114C119.523 1 124 5.47715 124 11V64C124 69.5228 119.523 74 114 74H11C5.47715 74 1 69.5228 1 64V11Z" stroke="black" stroke-width="1" />
+                                <path d="M97 12L107 7.5L117 12V26.5L107 23L97 26.5V12Z" stroke="black" stroke-width="1" />
+                            </svg>
+                        }
+                        else if ((context as Node).ID == "node13")
+                        {
+                            <svg width="125" height="75" viewBox="0 0 125 75" fill="white" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 11C1 5.47715 5.47715 1 11 1H114C119.523 1 124 5.47715 124 11V64C124 69.5228 119.523 74 114 74H11C5.47715 74 1 69.5228 1 64V11Z" stroke="black" stroke-width="1" />
+                                <path d="M96 14H109V10L117 17L109 24V20H96V14Z" stroke="black" stroke-width="1" />
+                            </svg>
+                        }
+                        else if ((context as Node).ID == "node15")
+                        {
+                            <svg width="125" height="75" viewBox="0 0 125 75" fill="white" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 1H124V74H1V1Z" stroke="black" stroke-width="1" />
+                                <path d="M103 17C103 20.866 106.134 24 110 24C113.866 24 117 20.866 117 17C117 13.134 113.866 10 110 10C106.134 10 103 13.134 103 17ZM103 17H94" stroke="black" stroke-width="1" />
+                            </svg>
+                        }
+                        else if ((context as Node).ID == "node17")
+                        {
+                            <svg width="125" height="75" viewBox="0 0 125 75" fill="white" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 1H124V74H1V1Z" stroke="black" stroke-width="1" />
+                                <path d="M106 11.2547C104.187 12.5196 103 14.6213 103 17C103 19.3787 104.187 21.4804 106 22.7453M106 11.2547C107.134 10.4638 108.513 10 110 10C113.866 10 117 13.134 117 17C117 20.866 113.866 24 110 24C108.513 24 107.134 23.5362 106 22.7453M106 11.2547C104.866 10.4638 103.487 10 102 10C98.134 10 95 13.134 95 17C95 20.866 98.134 24 102 24C103.487 24 104.866 23.5362 106 22.7453" stroke="black" stroke-width="1" />
+                            </svg>
+                        }
+                        else if ((context as Node).ID == "node19")
+                        {
+                            <svg width="125" height="75" viewBox="0 0 125 75" fill="white" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 1H124V74H1V1Z" fill="white" stroke="black" stroke-width="1" />
+                                <path d="M100 8H117V28H100V24H95V20H100V16H95V12H100V8Z" fill="transparent" />
+                                <path d="M100 12H95V16H100M100 12H105V16H100M100 12V8H117V28H100V24M100 24H95V20H100M100 24H105V20H100M100 20V16" stroke="black" stroke-width="1" />
+                            </svg>
+                        }
+                    }
+                </NodeTemplate>
+            </DiagramTemplates>
+    </SfDiagramComponent>
+</div>
+<div id="properties">
+    <input value="Print" type="button" @onclick="@Print" name="Print" />
+    <br />
+    <input value="Export PDF" type="button" @onclick="@ExportToPDF" name="CustomEntry" />
+    <br />
+    <input value="Export" type="button" @onclick="@Export" name="CustomEntry" />
+    <br />
+
+    <SfComboBox TValue="string" TItem="FileFormat" Value="@format1" Placeholder="Select a FileFormat" DataSource="@LocalData">
+        <ComboBoxEvents TItem="FileFormat" TValue="string" ValueChange="@FileFormateChange"></ComboBoxEvents>
+        <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+    </SfComboBox>
+</div>
+
+
+@code
+    {
+    SfDiagramComponent Diagram;
+    double x = 0;
+    double y = 0;
+    double cwidth = 0;
+    double cheight = 0;
+    double left = 25;
+    double top = 25;
+    double right = 25;
+    double bottom = 25;
+    //ImageElementNode image;
+    int index = 0;
+    double Width = 1123;
+    double Height = 794;
+    double PageWidth = 1123;
+    double PageHeight = 794;
+    bool multiplepage = false;
+    bool showPagebreak = false;
+    DiagramExportFormat format = DiagramExportFormat.PNG;
+    DiagramPrintExportRegion region = DiagramPrintExportRegion.PageSettings;
+    PageOrientation orientation = PageOrientation.Landscape;
+    string format1 = "PNG";
+    string region1 = "PageSettings";
+    string orientation1 = "Landscape";
+
+    public DiagramObjectCollection<Node> nodes;
+    public DiagramObjectCollection<Connector> ConnectorCollection;
+
+
+    public void FileFormateChange(ChangeEventArgs<string, FileFormat> args)
+    {
+        format = args.Value.ToString() == "PNG" ? DiagramExportFormat.PNG : args.Value.ToString() == "JPEG" ? DiagramExportFormat.JPEG : args.Value.ToString() == "SVG" ? DiagramExportFormat.SVG : DiagramExportFormat.PNG;
+        format1 = args.Value.ToString();
+    }
+
+    public class FileFormat
+    {
+        public string ID { get; set; }
+        public string Text { get; set; }
+    }
+    List<FileFormat> LocalData = new List<FileFormat>
+    {
+        new FileFormat() { ID= "PNG", Text= "PNG" },
+        new FileFormat() { ID= "JPEG", Text= "JPEG" },
+        new FileFormat() { ID= "SVG", Text= "SVG" },
+    };
+
+    protected override void OnInitialized()
+    {
+        nodes = new DiagramObjectCollection<Node>();
+        Node node1 = new Node()
+            {
+                ID = "node1",
+                Height = 75,
+                Width = 125,
+                OffsetX = 100,
+                OffsetY = 100,
+                Shape = new Shape()
+                {
+                    Type = NodeShapes.SVG
+                }
+            };
+        nodes.Add(node1);
+        Node node3 = new Node()
+            {
+                ID = "node3",
+                Height = 75,
+                Width = 125,
+                OffsetX = 100,
+                OffsetY = 200,
+                Shape = new Shape()
+                {
+                    Type = NodeShapes.SVG
+                }
+            };
+        nodes.Add(node3);
+        Node node5 = new Node()
+            {
+                ID = "node5",
+                Height = 75,
+                Width = 125,
+                OffsetX = 100,
+                OffsetY = 300,
+                Shape = new Shape()
+                {
+                    Type = NodeShapes.SVG
+                }
+            };
+        nodes.Add(node5);
+        Node node7 = new Node()
+            {
+                ID = "node7",
+                Height = 75,
+                Width = 125,
+                OffsetX = 100,
+                OffsetY = 400,
+                Shape = new Shape()
+                {
+                    Type = NodeShapes.SVG
+                }
+            };
+        nodes.Add(node7);
+        Node node9 = new Node()
+            {
+                ID = "node9",
+                Height = 75,
+                Width = 125,
+                OffsetX = 100,
+                OffsetY = 500,
+                Shape = new Shape()
+                {
+                    Type = NodeShapes.SVG
+                }
+            };
+        nodes.Add(node9);
+        Node node11 = new Node()
+            {
+                ID = "node11",
+                Height = 75,
+                Width = 125,
+                OffsetX = 500,
+                OffsetY = 100,
+                Shape = new Shape()
+                {
+                    Type = NodeShapes.SVG
+                }
+            };
+        nodes.Add(node11);
+        Node node13 = new Node()
+            {
+                ID = "node13",
+                Height = 75,
+                Width = 125,
+                OffsetX = 500,
+                OffsetY = 200,
+                Shape = new Shape()
+                {
+                    Type = NodeShapes.SVG
+                }
+            };
+        nodes.Add(node13);
+        Node node15 = new Node()
+            {
+                ID = "node15",
+                Height = 75,
+                Width = 125,
+                OffsetX = 500,
+                OffsetY = 300,
+                Shape = new Shape()
+                {
+                    Type = NodeShapes.SVG
+                }
+            };
+        nodes.Add(node15);
+        Node node17 = new Node()
+            {
+                ID = "node17",
+                Height = 75,
+                Width = 125,
+                OffsetX = 500,
+                OffsetY = 400,
+                Shape = new Shape()
+                {
+                    Type = NodeShapes.SVG
+                }
+            };
+        nodes.Add(node17);
+        Node node19 = new Node()
+            {
+                ID = "node19",
+                Height = 75,
+                Width = 125,
+                OffsetX = 500,
+                OffsetY = 500,
+                Shape = new Shape()
+                {
+                    Type = NodeShapes.SVG
+                }
+            };
+        nodes.Add(node19);
+    }
+
+    private async Task Print()
+    {
+        DiagramPrintSettings print = new DiagramPrintSettings();
+        print.PageWidth = PageWidth;
+        print.PageHeight = PageHeight;
+        print.Region = region;
+        print.FitToPage = multiplepage;
+        print.Orientation = orientation;
+        print.Margin = new DiagramThickness() { Left = left, Top = top, Right = right, Bottom = bottom };
+        await Diagram.PrintAsync(print);
+    }
+  
+    private async Task Export()
+    {
+        DiagramExportSettings print = new DiagramExportSettings();
+        print.Region = region;
+        print.PageWidth = PageWidth;
+        print.PageHeight = PageHeight;
+        print.Orientation = orientation;
+        print.FitToPage = multiplepage;
+        print.Margin = new DiagramThickness() { Left = left, Top = top, Right = right, Bottom = bottom };
+        print.ClipBounds = new DiagramRect() { X = x, Y = y, Width = cwidth, Height = cheight };
+        await Diagram.ExportAsync("ArchimateShapes", format, print);
+    }
+
+    private async Task<string> ConvertImage()
+    {
+        ExportService exportService = new ExportService();
+        string diagramContent = await JS.InvokeAsync<string>("getDiagramContent", new object[] { "diagramSpace" }).ConfigureAwait(true);
+        DiagramRect diagramBounds = Diagram.GetPageBounds();
+        string diagram = exportService.ConvertImage(diagramContent, Convert.ToInt32(diagramBounds.Width));
+
+        return diagramContent;
+    }
+    private async Task ExportToPDF()
+    {
+        string diagramImage = await ConvertImage();
+        string currentURL = NavigationManager.Uri;
+        HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
+        //Convert URL to PDF
+        BlinkConverterSettings settings = new BlinkConverterSettings();
+        settings.ViewPortSize = new Syncfusion.Drawing.Size() { Width = 1250, Height = 1000 };
+        settings.EnableLazyLoadImages = true;
+        htmlConverter.ConverterSettings = settings;
+        PdfDocument document = htmlConverter.Convert(diagramImage, currentURL);
+        MemoryStream fileStream = new MemoryStream();
+        //Save and close the PDF document.
+        document.Save(fileStream);
+        await JS.SaveAs("ArchiMateShapes.pdf", fileStream.ToArray());
+    }
+}
+

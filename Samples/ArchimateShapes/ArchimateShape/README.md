@@ -1,6 +1,6 @@
 # Create a sample with Archimate shapes
 
-This sample demonstrates how to created  Archimate shapes using SVG 
+This sample demonstrates how to create Archimate shapes using SVG 
 
 
 In this sample, We have created Archimmate shapes using the SVG Nodes. Also provide support to print and export in all the supported formats such as SVG, PNG, JPG, PDF.

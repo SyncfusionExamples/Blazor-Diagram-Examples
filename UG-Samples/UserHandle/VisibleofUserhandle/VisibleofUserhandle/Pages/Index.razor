@@ -2,11 +2,14 @@
 
 @using Syncfusion.Blazor.Diagram
 @using System.Collections.ObjectModel
+@using Syncfusion.Blazor.Buttons
+
 <SfDiagramComponent @ref="@Diagram" Width="1200px" Height="600px" Nodes="@nodes" GetCustomTool="@tools" GetCustomCursor="@cursor" Connectors="@connectors" SelectionSettings="@SelectedModel">
 </SfDiagramComponent>
-<input type="button" value="VisibilityNode" @onclick="VisibilityNode" />
-<input type="button" value="VisibilityConnector" @onclick="VisibilityConnector" />
-<input type="button" value="VisibilityBoth" @onclick="VisibilityBoth" />
+
+<SfButton Content="VisibilityNode" OnClick="@VisibilityNode" />
+<SfButton Content="VisibilityConnector" OnClick="@VisibilityConnector" />
+<SfButton Content="VisibilityBoth" OnClick="@VisibilityBoth" />
 
 @code
 {

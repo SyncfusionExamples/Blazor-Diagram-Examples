@@ -1,7 +1,8 @@
 ﻿@page "/"
 @using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
 
-<input type="button" value="Print" @onclick="@OnPrint" />
+<SfButton Content="Print" OnClick="@OnPrint" />
 <SfDiagramComponent Height="600px" @ref="@diagram">
     <PageSettings MultiplePage="true" Width="@width" Height="@height" Orientation="@orientation" ShowPageBreaks="@showPageBreak">
         <PageMargin Left="@left" Right="@right" Top="@top" Bottom="@bottom"></PageMargin>

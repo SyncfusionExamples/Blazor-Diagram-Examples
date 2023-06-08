@@ -2,8 +2,9 @@
 
 @using Syncfusion.Blazor.Diagram
 @using Syncfusion.Blazor.Popups
+@using Syncfusion.Blazor.Buttons
 
-<input type="button" value="Connector Content" @onclick="ContentChange" />
+<SfButton Content="Connector Content" OnClick="@ContentChange" />
 <SfDiagramComponent Width="1000px" Height="500px" Connectors="connector" />
 @code
 {

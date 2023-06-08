@@ -1,6 +1,7 @@
 ﻿@page "/"
 
 @using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
 
 <style>
     #diagram-space {
@@ -20,8 +21,7 @@
 </div>
 
 <div id="properties">
-    <input type="button" value="CloneMethod" @onclick="CloneMethod" />
-
+    <SfButton Content="CloneMethod" OnClick="@CloneMethod" />
 </div>
 
 @code {

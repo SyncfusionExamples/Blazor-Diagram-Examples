@@ -1,13 +1,14 @@
 ﻿@page "/"
 
 @using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
 
     <SfDiagramComponent @ref="diagram" Width="600px" Height="600px" Nodes="nodes" Connectors="connectors">
 
         <SnapSettings Constraints="@SnapConstraints.None"></SnapSettings>
     </SfDiagramComponent>
 
-<input type="button" value="PropertyUpdate" @onclick="PropertyUpdate" />
+<SfButton Content="PropertyUpdate" OnClick="@PropertyUpdate" />
 
 
 @code {

@@ -1,9 +1,11 @@
 ﻿@page "/"
 
 @using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
 
-<input type="button" value="Delete" @onclick="Delete" />
-<input type="button" value="DeletewithArgument" @onclick="DeletewithArgument" />
+<SfButton Content="Delete" OnClick="@Delete" />
+<SfButton Content="DeletewithArgument" OnClick="@DeletewithArgument" />
+
 <SfDiagramComponent @ref="diagram" Width="500px" Height="500px" @bind-Nodes="@Nodes" @bind-Connectors="@Connectors">
     <SnapSettings Constraints="@SnapConstraints.None"></SnapSettings>
 </SfDiagramComponent>

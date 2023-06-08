@@ -2,9 +2,10 @@
 @using Syncfusion.PdfExport;
 
 @using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
 @inject IJSRuntime JS;
 
-<input type="button" value="ExportToPDF" @onclick="@ExportPDF" />
+<SfButton Content="ExportPDF" OnClick="@ExportPDF" />
 <SfDiagramComponent Height="600px" @ref="@diagram">
 </SfDiagramComponent>
 

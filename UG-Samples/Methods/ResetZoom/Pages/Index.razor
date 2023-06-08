@@ -1,6 +1,7 @@
 ﻿@page "/"
 
 @using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
 
 <style>
     #diagram-space {
@@ -20,10 +21,9 @@
 </div>
 
 <div id="properties">
-    <input type="button" value="ZoomIn" @onclick="ZoomIn" />
-    <input type="button" value="ZoomOut" @onclick="ZoomOut" />
-    <input type="button" value="Reset" @onclick="ResetZoom" />
-
+    <SfButton Content="ZoomIn" OnClick="@ZoomIn" />
+    <SfButton Content="ZoomOut" OnClick="@ZoomOut" />
+    <SfButton Content="Reset" OnClick="@Reset" />
 </div>
 
 @code {

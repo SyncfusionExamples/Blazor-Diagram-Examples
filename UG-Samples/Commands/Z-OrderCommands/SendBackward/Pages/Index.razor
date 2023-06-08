@@ -2,7 +2,9 @@
 
 @using Syncfusion.Blazor.Diagram
 @using System.Collections.ObjectModel
-<input type="button" value="SendBackward" @onclick="@sendBackward"></input>
+@using Syncfusion.Blazor.Buttons
+
+<SfButton Content="sendBackward" OnClick="@sendBackward" />
 <SfDiagramComponent @ref="diagram" Width="1000px" Height="500px" @bind-Nodes="@nodes">
 </SfDiagramComponent>
 @code {

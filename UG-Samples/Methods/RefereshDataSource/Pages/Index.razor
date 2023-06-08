@@ -1,6 +1,7 @@
 ﻿@page "/"
 
 @using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
 
 <SfDiagramComponent @ref="Diagram" Height="600px" NodeCreating="@OnNodeCreating" ConnectorCreating="@OnConnectorCreating">
     <DataSourceSettings ID="Id" ParentID="ParentId" DataSource="@DataSource"></DataSourceSettings>
@@ -8,7 +9,7 @@
         <LayoutMargin Top="20" Left="20"></LayoutMargin>
     </Layout>
 </SfDiagramComponent>
-<input type="button" value="RefreshDataSource" @onclick="RefreshDataSource" />
+<SfButton Content="RefreshDataSource" OnClick="@RefreshDataSource" />
 
 @code
 {

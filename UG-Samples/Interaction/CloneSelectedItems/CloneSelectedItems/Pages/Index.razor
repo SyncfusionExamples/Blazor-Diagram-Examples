@@ -3,7 +3,10 @@
 @using Syncfusion.Blazor.Diagram
 @using System.Collections.ObjectModel
 @inject IJSRuntime js
-<input type="button" id="add" value="Clone" @onclick="@Clone" />
+@using Syncfusion.Blazor.Buttons
+
+
+<SfButton Content="Clone" OnClick="@Clone" />
 <SfDiagramComponent @ref="diagram" Width="50%" Height="800px" @bind-Connectors="@Connectors" @bind-Nodes="NodeCollection"></SfDiagramComponent>
 @functions
 {

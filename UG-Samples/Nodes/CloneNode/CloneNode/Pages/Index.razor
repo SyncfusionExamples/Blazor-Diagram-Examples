@@ -2,8 +2,10 @@
 
 @using Syncfusion.Blazor.Diagram
 @using System.Collections.ObjectModel
+@using Syncfusion.Blazor.Buttons
 @inject IJSRuntime js
-<input type="button" id="add" value="Clone Node" @onclick="@CloneNode" />
+
+<SfButton Content="Clone Node" OnClick="@CloneNode" />
 <SfDiagramComponent @ref="diagram" Width="50%" Height="500px" @bind-Nodes="NodeCollection"></SfDiagramComponent>
 
 @functions

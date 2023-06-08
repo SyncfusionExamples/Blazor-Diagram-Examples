@@ -1,9 +1,10 @@
 ﻿@page "/"
 
-
 @using Syncfusion.Blazor.Diagram
 @using Syncfusion.Blazor.Popups
-<input type="button" value="Connector TipPointer" @onclick="TipPointerChange" />
+@using Syncfusion.Blazor.Buttons
+
+<SfButton Content="Connector TipPointer" OnClick="@TipPointerChange" />
 <SfDiagramComponent Width="1000px" Height="500px" Connectors="connector" />
 @code
 {

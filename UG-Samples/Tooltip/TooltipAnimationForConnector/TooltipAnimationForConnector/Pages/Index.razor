@@ -2,7 +2,9 @@
 
 @using Syncfusion.Blazor.Diagram
 @using Syncfusion.Blazor.Popups
-<input type="button" value="Connector Animation" @onclick="AnimationChange" />
+@using Syncfusion.Blazor.Buttons
+
+<SfButton Content="Connector Animation" OnClick="@AnimationChange" />
 <SfDiagramComponent Width="1000px" Height="500px" Connectors="connector" />
 @code
 {

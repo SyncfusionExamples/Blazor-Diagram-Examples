@@ -2,8 +2,10 @@
 
 @using Syncfusion.Blazor.Diagram
 @using Syncfusion.Blazor.Popups
-<input type="button" value="Show CustomTooltip" @onclick="show" />
-<input type="button" value="Hide CustomTooltip" @onclick="hide" />
+@using Syncfusion.Blazor.Buttons
+
+<SfButton Content="Show CustomTooltip" OnClick="@show" />
+<SfButton Content="Hide CustomTooltip" OnClick="@hide" />
 <SfDiagramComponent @ref="@diagram" Width="1000px" Height="500px" Connectors="connector" />
 @code
 {

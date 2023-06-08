@@ -1,12 +1,13 @@
 ﻿@page "/"
 
-
 @using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
 
-<input type="button" value="HorizontalPort" @onclick="@HorizontalPort" />
-<input type="button" value="HorizontalContent" @onclick="@HorizontalContent" />
-<input type="button" value="HorizontalAll" @onclick="@HorizontalAll" />
-<input type="button" value="HorizontalNone" @onclick="@HorizontalNone" />
+<SfButton Content="HorizontalPort" OnClick="@HorizontalPort" />
+<SfButton Content="HorizontalContent" OnClick="@HorizontalContent" />
+<SfButton Content="HorizontalAll" OnClick="@HorizontalAll" />
+<SfButton Content="HorizontalNone" OnClick="@HorizontalNone" />
+
 <SfDiagramComponent @ref="diagram" Width="1000px" Height="1000px" Nodes="@NodeCollection" Connectors="@connectors">
 </SfDiagramComponent>
 @code

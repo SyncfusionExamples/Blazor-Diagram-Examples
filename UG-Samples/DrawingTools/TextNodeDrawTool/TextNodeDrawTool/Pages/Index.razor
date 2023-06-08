@@ -1,8 +1,10 @@
 ﻿@page "/"
 
 @using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
 
-<input Type="button" value="addNode" @onclick="AddNode" />
+
+<SfButton Content="AddNode" OnClick="@AddNode" />
 <SfDiagramComponent @ref="diagram" Nodes="@nodes" Height="600px" />
 
 @code

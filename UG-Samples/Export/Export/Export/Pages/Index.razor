@@ -1,8 +1,9 @@
 ﻿@page "/"
 @using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
 
-<input type="button" value="ExportBase64" @onclick="@ExportBase64" />
-<input type="button" value="ExportPng" @onclick="@ExportPng" />
+<SfButton Content="ExportBase64" OnClick="@ExportBase64" />
+<SfButton Content="ExportPng" OnClick="@ExportPng" />
 <SfDiagramComponent Height="600px" @ref="@diagram">
 </SfDiagramComponent>
 

@@ -2,7 +2,9 @@
 
 @using Syncfusion.Blazor.Diagram
 @using Node = Syncfusion.Blazor.Diagram.Node
+@using Syncfusion.Blazor.Buttons
 
+<SfButton Content="FitToPage" OnClick="@FitToPage" />
 <SfDiagramComponent @ref="diagram" Width="1000px" Height="600px" Nodes="nodes" Connectors="connectors">
 </SfDiagramComponent>
 @code {

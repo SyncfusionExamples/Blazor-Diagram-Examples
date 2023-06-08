@@ -10,16 +10,17 @@
                               Palettes="@Palettes" SymbolDragPreviewSize="@SymbolPreview" SymbolHeight="@symbolSizeHeight" SymbolWidth="@symbolSizeWidth" SymbolMargin="@SymbolMargin">
     </SfSymbolPaletteComponent>
 </div>
-<div style="border: 1px solid #D7D7D7">
-    <SfDiagramComponent Height="400px" Width="1200px">
+<div style="border: 1px solid #D7D7D7;float: right">
+    <SfDiagramComponent @ref="@Diagram" Height="400px" Width="1200px">
     </SfDiagramComponent>
 </div>
 @code
 {
+    SfDiagramComponent Diagram;
     //Reference the symbol palette
     SfSymbolPaletteComponent PaletteInstance;
     DiagramSize SymbolPreview;
-    string paletteWidth = "500";
+    string paletteWidth = "300";
     string paletteHeight = "800";
     //Intialize the  palette's collection
     DiagramObjectCollection<Palette> Palettes = new DiagramObjectCollection<Palette>();
@@ -57,5 +58,11 @@
                      Title = "Flow Shapes",
                  }
           );
+    
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        PaletteInstance.Targets = new DiagramObjectCollection<SfDiagramComponent>() { };
+        PaletteInstance.Targets.Add(Diagram);
     }
 }

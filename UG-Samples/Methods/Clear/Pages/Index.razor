@@ -1,8 +1,9 @@
 ﻿@page "/"
 
 @using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
 
-<input type="button" value="Clear" @onclick="Clear" />
+<SfButton Content="Clear" OnClick="@Clear" />
 <SfDiagramComponent @ref="diagram" Width="500px" Height="500px" @bind-Nodes="@Nodes" @bind-Connectors="@Connectors"></SfDiagramComponent>
 
 @code

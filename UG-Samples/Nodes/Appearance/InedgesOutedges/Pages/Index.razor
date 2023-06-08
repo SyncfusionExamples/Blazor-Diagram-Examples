@@ -1,8 +1,9 @@
 ﻿@page "/"
 
 @using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
 
-<input type="button" value="GetInEdges" @onclick="@GetInEdges">
+<SfButton Content="GetInEdges" OnClick="@GetInEdges" />
 <SfDiagramComponent @ref="diagram" Height="600px" Nodes="@nodes" Connectors="@connectors" />
 
 @code

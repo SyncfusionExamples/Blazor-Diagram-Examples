@@ -1,8 +1,9 @@
 ﻿@page "/"
 
 @using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
 
-<button @onclick="AddDiagramElementMethod">AddDiagramElementMethod</button>
+<SfButton Content="AddDiagramElementMethod" OnClick="@AddDiagramElementMethod" />
 
 <SfDiagramComponent @ref="Diagram" Width="1000px" Height="500px">
 </SfDiagramComponent>

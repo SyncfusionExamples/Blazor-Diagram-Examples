@@ -1,7 +1,9 @@
 ﻿@page "/"
 
 @using Syncfusion.Blazor.Diagram
-<input type="button" value="BringIntoCenter" @onclick="BringIntoCenter" />
+@using Syncfusion.Blazor.Buttons
+
+<SfButton Content="BringIntoCenter" OnClick="@BringIntoCenter" />
 <SfDiagramComponent @ref="diagram" Width="1000px" Height="500px" @bind-Nodes="@nodes">
     
 </SfDiagramComponent>

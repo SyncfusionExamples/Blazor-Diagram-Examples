@@ -1,7 +1,9 @@
 ﻿@page "/"
 
 @using Syncfusion.Blazor.Diagram
-<input type="button" value="BringIntoView" @onclick="BringIntoView" />
+@using Syncfusion.Blazor.Buttons
+
+<SfButton Content="BringIntoView" OnClick="@BringIntoView" />
 <SfDiagramComponent @ref="diagram" Width="1000px" Height="500px" @bind-Nodes="@nodes">
 </SfDiagramComponent>
 @code

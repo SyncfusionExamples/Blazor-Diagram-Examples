@@ -1,8 +1,11 @@
 ﻿@page "/"
 
 @using Syncfusion.Blazor.Diagram
-<input type="button" value="Undo" @onclick="@Undo"></input>
-<input type="button" value="Redo" @onclick="@Redo"></input>
+@using Syncfusion.Blazor.Buttons
+
+<SfButton Content="Undo" OnClick="@Undo" />
+<SfButton Content="Redo" OnClick="@Redo" />
+
 <SfDiagramComponent @ref="@diagram" Height="600px" Nodes="@nodes">
 </SfDiagramComponent>
 

@@ -1,9 +1,10 @@
 ﻿@page "/"
 
 @using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
 
-<input type="button" value="Update Style" @onclick="@UpdateStyle" />
 
+<SfButton Content="UpdateStyle" OnClick="@UpdateStyle" />
 <SfDiagramComponent @ref="@Diagram" Height="600px" Nodes="@nodes" />
 
 @code

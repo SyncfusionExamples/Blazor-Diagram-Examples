@@ -1,9 +1,10 @@
 ﻿@page "/"
 
-
 @using Syncfusion.Blazor.Diagram
 @using Syncfusion.Blazor.Popups
-<input type="button" value="Node Content" @onclick="ContentChange" />
+@using Syncfusion.Blazor.Buttons
+
+<SfButton Content="Node Content" OnClick="@ContentChange" />
 <SfDiagramComponent Width="1000px" Height="500px" Nodes="@nodes" />
 @code
 {

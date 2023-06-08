@@ -1,7 +1,8 @@
 ﻿@page "/"
 @using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
 
-<input type="button" @onclick="@Export" />
+<SfButton Content="Export" OnClick="@Export" />
 <SfDiagramComponent Height="600px" @ref="@diagram">
 </SfDiagramComponent>
 
@@ -21,6 +22,6 @@
         export.Margin = new DiagramThickness() { Left = 10, Top = 10, Right = 10, Bottom = 10 };
         export.ClipBounds = new DiagramRect() { X = 0, Y = 0, Width = 500, Height = 500 };
         //To export the diagram
-        await diagram.ExportAsync(DiagramExportFormat.PNG, export);
+        await diagram.ExportAsync("diagram", DiagramExportFormat.PNG, export);
     }
 }

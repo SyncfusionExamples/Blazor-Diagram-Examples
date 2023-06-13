@@ -1,8 +1,9 @@
 ﻿@page "/"
 
 @using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
 
-<input Type="button" value="Freehand" @onclick="Freehand" />
+<SfButton Content="Freehand" OnClick="@Freehand" />
 
 <SfDiagramComponent @ref="diagram" Nodes="@nodes" Height="600px">
    <SnapSettings Constraints="SnapConstraints.None"></SnapSettings>

@@ -1,7 +1,7 @@
 ﻿@page "/"
 
 @using Syncfusion.Blazor.Diagram
-<SfDiagramComponent Height="400px" Width="400px" Nodes="@nodes">
+<SfDiagramComponent Height="400px" Width="400px" Nodes="@nodes" Connectors="@connectors">
     @* Sets the ScrollSettings for the diagram *@
     <ScrollSettings EnableAutoScroll=true @bind-ScrollLimit="@scrollLimit">
     </ScrollSettings>
@@ -9,7 +9,10 @@
 @code
 {
     ScrollLimitMode scrollLimit { get; set; } = ScrollLimitMode.Infinity;
+    //Defines diagram's node collection.
     DiagramObjectCollection<Node> nodes;
+    //Defines diagram's connector collection.
+    DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
     protected override void OnInitialized()
     {
         nodes = new DiagramObjectCollection<Node>();
@@ -31,5 +34,20 @@
             };
         // Add node.
         nodes.Add(node);
+        Connector Connector = new Connector()
+            {
+                ID = "connector1",
+                // Set the source and target point of the connector.
+                SourcePoint = new DiagramPoint() { X = 100, Y = 100 },
+                TargetPoint = new DiagramPoint() { X = 100, Y = 200 },
+                // Type of the connector segments.
+                Type = ConnectorSegmentType.Straight,
+                Style = new ShapeStyle()
+                {
+                    StrokeColor = "#6495ED",
+                    StrokeWidth = 1
+                },
+            };
+        connectors.Add(Connector);
     }
 }

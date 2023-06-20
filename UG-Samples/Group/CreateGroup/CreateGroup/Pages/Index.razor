@@ -3,6 +3,7 @@
 @using Syncfusion.Blazor.Diagram
 
 @* Initialize the diagram with NodeCollection *@
+<input type="button" value="Padding" @onclick="AddPadding" />
 <SfDiagramComponent Height="500px" @ref="diagram" Nodes="@nodes">
     <SnapSettings>
         <HorizontalGridLines LineColor="white" LineDashArray="2,2"></HorizontalGridLines>
@@ -68,6 +69,14 @@
             diagram.SelectAll();
             // Adding the third node into the existing group
             diagram.Group();
+        }
+    }
+
+    private void AddPadding()
+    {
+        if(diagram.Nodes[4] is NodeGroup groupnode)
+        {
+            groupnode.Padding = new DiagramThickness() { Left=20, Right= 20, Top=20, Bottom=20 };
         }
     }
 }

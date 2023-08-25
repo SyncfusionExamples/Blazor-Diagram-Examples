@@ -67,8 +67,11 @@
             Node node = obj as Node;
             if ((node.Data as HierarchicalDetails).Role == "General Manager")
             {
-                options.Assistants.Add(options.Children[0]);
-                options.Children.RemoveAt(0);
+                if (options.Children.Count > 0)
+                {
+                    options.Assistants.Add(options.Children[0]);
+                    options.Children.RemoveAt(0);
+                }
             }
             if (!options.HasSubTree)
             {

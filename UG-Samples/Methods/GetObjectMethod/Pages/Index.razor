@@ -82,5 +82,6 @@
     public void GetObjectMethod()
     {
         Node node = diagram.GetObject("node1") as Node;
+        diagram.Select(new System.Collections.ObjectModel.ObservableCollection<IDiagramObject> (){node});
     }
 }

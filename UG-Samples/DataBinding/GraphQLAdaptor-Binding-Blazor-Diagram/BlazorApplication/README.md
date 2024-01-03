@@ -1,4 +1,4 @@
-#GraphQL Adaptor service-Blazor Application
+# GraphQL Adaptor service-Blazor Application
 
 This sample demonstrates how to bind the GraphQL service, use the GraphQLAdaptorr. To bind the remote data to the Diagram component, assign the service data as an instance of the SfDataManager to the DataSource property or by using the SfDataManager component.
 

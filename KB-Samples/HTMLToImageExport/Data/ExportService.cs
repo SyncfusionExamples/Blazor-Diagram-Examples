@@ -13,7 +13,7 @@ namespace HTMLToImageExport.Data
     {
         // Export HTML to Image
 
-        public string ConvertImage(string htmlContent, int viewPortSize)
+        public string ConvertImage(string htmlContent, int viewPortSize,int viewPortHeight)
         {
 
             HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter(HtmlRenderingEngine.Blink);
@@ -21,7 +21,7 @@ namespace HTMLToImageExport.Data
             BlinkConverterSettings settings = new BlinkConverterSettings();
            
             
-            settings.ViewPortSize = new Syncfusion.Drawing.Size(viewPortSize, 0);
+            settings.ViewPortSize = new Syncfusion.Drawing.Size(viewPortSize, viewPortHeight+50);
             htmlConverter.ConverterSettings = settings;
             Image image = htmlConverter.ConvertToImage(htmlContent, baseUrl1);
 

@@ -10,8 +10,8 @@
 @using System.IO;
 @using System.Text.Json;
 
-<div id="OrgChartDiagram">
-    <SfDiagramComponent @ref="@Diagram" Width="100%" Height="800px" ConnectorCreating="@OnConnectorCreating" NodeCreating="@OnNodeCreating">
+<div id="OrgChartDiagram" style="width:3000px;height:1000px">
+    <SfDiagramComponent @ref="@Diagram" Width="100%" Height="100%" ConnectorCreating="@OnConnectorCreating" NodeCreating="@OnNodeCreating">
         <PageSettings>
             <BackgroundStyle Background="transaparent"></BackgroundStyle>
         </PageSettings>
@@ -390,7 +390,7 @@
         ExportService exportService = new ExportService();
         string diagramContent = await JS.InvokeAsync<string>("getDiagramContent", new object[] { "OrgChartDiagram" }).ConfigureAwait(true);
         DiagramRect diagramBounds = Diagram.GetPageBounds();
-        string diagram = exportService.ConvertImage(diagramContent, Convert.ToInt32(diagramBounds.Width));
+        string diagram = exportService.ConvertImage(diagramContent, Convert.ToInt32(diagramBounds.Width), Convert.ToInt32(diagramBounds.Height));
 
         return diagram;
     }

@@ -1,0 +1,100 @@
+﻿@page "/"
+@using System.IO;
+@using DiagramToExcel;
+@inject DiagramToExcel.Data.CreateExcel service
+@inject Microsoft.JSInterop.IJSRuntime JS
+@using Syncfusion.Blazor.Diagram
+
+
+<button class="btn btn-primary" @onclick="@ExportExcel">ExportExcel</button>
+
+<SfDiagramComponent Height="900px" @ref="diagram"  NodeCreating="@OnNodeCreating" ConnectorCreating="@OnConnectorCreating">
+    <Syncfusion.Blazor.Diagram.DiagramTemplates>
+        <NodeTemplate>
+            @{
+                Node node1 = (context as Node);
+                string NameId = (node1.Data as HierarchicalDetails).Id;
+                string TeamName = (node1.Data as HierarchicalDetails).Role;
+                string EmpId = (node1.Data as HierarchicalDetails).Manager;
+                string color = (node1.Data as HierarchicalDetails).Color;
+                <div style="position: absolute;
+                width: 100%;
+                height: 100%;
+                border: 1px solid #E0E0E0;
+                background-color:@color;
+                box-sizing: border-box;
+                border-radius: 8px;
+                padding-top: 5px;">
+                    <p>@NameId</p>
+                    <p>@TeamName</p>
+                    <p>@EmpId</p>
+                </div>
+                Syncfusion.Blazor.Diagram.NodeShapes type = (context as Node).Shape.Type;
+            }
+        </NodeTemplate>
+    </Syncfusion.Blazor.Diagram.DiagramTemplates>
+    <DataSourceSettings ID="Id" ParentID="Manager" DataSource="@DataSource"> </DataSourceSettings>
+    <Layout Type="LayoutType.HierarchicalTree" HorizontalSpacing="@HorizontalSpacing" VerticalSpacing="@VerticalSpacing">
+    </Layout>
+</SfDiagramComponent>
+
+@code {
+    int connectorCount = 0;
+    SfDiagramComponent diagram;
+    DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+    DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
+    int left = 40;
+    int top = 50;
+    int HorizontalSpacing = 40;
+    int VerticalSpacing = 40;
+
+    private void OnNodeCreating(IDiagramObject obj)
+    {
+        Node node = obj as Node;
+        node.Height = 120;
+        node.Width = 250;
+        node.ID = (node.Data as HierarchicalDetails).Id;
+        node.Shape = new Shape()
+            { Type = Syncfusion.Blazor.Diagram.NodeShapes.HTML };
+        if (node.Data != null)
+        {
+            node.Style = new ShapeStyle() { Fill = (node.Data as HierarchicalDetails).Color, StrokeWidth = 3, StrokeColor = "Black" };
+        }
+        //Initializing the default node's shape style.
+
+    }
+
+    private void OnConnectorCreating(IDiagramObject connector)
+    {
+        (connector as Connector).Type = ConnectorSegmentType.Orthogonal;
+    }
+
+    public class HierarchicalDetails
+    {
+        public string Id { get; set; }
+        public string Role { get; set; }
+        public string Manager { get; set; }
+        public string ChartType { get; set; }
+        public string Color { get; set; }
+    }
+    public List<HierarchicalDetails> DataSource = new List<HierarchicalDetails>()
+    {
+        new HierarchicalDetails()   { Id= "FirstNode", Role= "Board ", Color= "Red" },
+        new HierarchicalDetails()   { Id= "SecondNode", Role= "General Manager", Manager= "FirstNode", ChartType= "right", Color= "Blue" },
+        new HierarchicalDetails()   { Id= "ThirdNode", Role= "Assistant Manager", Manager= "SecondNode", Color= "Yellow" },
+        new HierarchicalDetails()   { Id= "FourthNode", Role= "Human Resource Manager", Manager= "SecondNode", ChartType= "right", Color= "Orange" },
+        new HierarchicalDetails()   { Id= "FifthNode", Role= "Trainers", Manager= "SecondNode", Color= "Pink" },
+        new HierarchicalDetails()   { Id= "SixthNode", Role= "Recruiting Team", Manager= "FourthNode", Color= "Green" },
+
+    };
+    MemoryStream excelStream;
+
+    /// <summary>
+    /// Create and download the Excel document
+    /// </summary>
+    protected async void ExportExcel()
+    {
+        excelStream = service.CreateDocument(diagram.Nodes);
+        await JS.SaveAs("ExportDiagramDetails.xlsx", excelStream.ToArray());
+    }
+}

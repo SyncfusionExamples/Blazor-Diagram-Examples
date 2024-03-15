@@ -1,4 +1,4 @@
-#CreateSwimlane Sample
+# CreateSwimlane Sample
 
 This sample demonstrates how to add a swimlane to the diagram. To create a swimlane, define the Swimlane object and add that to the swimlanes collection of the diagram.
 

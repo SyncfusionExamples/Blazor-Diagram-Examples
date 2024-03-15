@@ -1,4 +1,4 @@
-#LaneChildren Sample
+# Lane Children Sample
 
 This sample demonstrates how to add a children to the lane area of a swimlane. To add children, define Node object and add that into Children collection of the specific lane.
 

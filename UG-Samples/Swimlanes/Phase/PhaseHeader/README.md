@@ -1,4 +1,4 @@
-#PhaseHeader Sample
+# PhaseHeader Sample
 
 This sample demonstrates how to create a custom header for the specific phases.
 

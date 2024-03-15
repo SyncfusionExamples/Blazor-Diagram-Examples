@@ -1,4 +1,4 @@
-# SwimlaneOrientation Sample
+# Swimlane Orientation Sample
 
 This sample demonstrates how to add a swimlane with specific orientations to the diagram.
 

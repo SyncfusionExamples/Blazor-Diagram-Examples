@@ -1,4 +1,4 @@
-#Symbol Palette Sample
+# Symbol Palette Sample
 
 This sample demonstrates how to add a swimlane shapes to the palette.
 

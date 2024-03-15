@@ -1,4 +1,4 @@
-#AddRemovePhase Sample
+# AddRemovePhase Sample
 
 This sample demonstrates how to add or remove phase object from the swimlane.
 

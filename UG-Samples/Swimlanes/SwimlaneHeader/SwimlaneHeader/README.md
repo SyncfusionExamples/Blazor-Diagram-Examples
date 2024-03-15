@@ -1,4 +1,4 @@
-#SwimlaneHeader Sample
+# SwimlaneHeader Sample
 
 This sample demonstrates how to add a custom header for the swimlane.
 

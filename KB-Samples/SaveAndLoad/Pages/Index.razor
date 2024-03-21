@@ -1,0 +1,81 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
+@using Microsoft.JSInterop
+@using Syncfusion.Blazor.Navigations
+@using Syncfusion.Blazor.Inputs
+@inject IJSRuntime jsRuntime
+
+<style>
+    .e-file-select-wrap {
+        display: none;
+    }
+</style>
+
+<div>
+<SfDiagramComponent Height="700px" @ref="@diagram" @bind-Nodes="@nodes"></SfDiagramComponent>
+<span id='diagramName' style="display:none">DiagramComponent</span>
+</div>
+<SfButton OnClick="@SaveDiagram" >Save</SfButton>
+<SfButton OnClick="@LoadDiagram">Load</SfButton>
+<SfUploader @ref="@uploadFiles" ID="UploadFiles" ShowFileList="false" AllowedExtensions="@ExtensionType">
+                <UploaderEvents OnUploadStart="@OnUploadFileSelected"></UploaderEvents>
+                <UploaderAsyncSettings SaveUrl="https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save" RemoveUrl="https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove"></UploaderAsyncSettings>
+            </SfUploader>  
+@code{
+    //Reference to uploder
+    SfUploader uploadFiles;
+    SfDiagramComponent diagram;
+    private string fileName;
+    DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+    protected override void OnInitialized()
+    {
+        Node node = new Node()
+            {
+                ID = "node",
+                OffsetX = 200,
+                OffsetY = 200,
+                Width = 100,
+                Height = 200
+            };
+            nodes.Add(node);
+    }
+    private string ExtensionType = ".json";
+    //Method to save the diagram
+    public async Task SaveDiagram()
+    {
+        fileName = await jsRuntime.InvokeAsync<string>("getDiagramFileName", "");
+        await DownloadDiagram(fileName);
+    }
+
+    //Method to download the diagram
+    public async Task DownloadDiagram(string fileName)
+    {
+        string data = diagram.SaveDiagram();
+        await FileUtil.SaveAs(jsRuntime, data, fileName);
+    }
+
+    //Method to load the diagram
+    public async Task LoadDiagram()
+    {
+        diagram.BeginUpdate();
+        ExtensionType = ".json";
+        await FileUtil.Click(jsRuntime);
+        await diagram.EndUpdate();
+    }
+
+    public async Task OnUploadFileSelected(UploadingEventArgs args)
+    {
+        if (args.FileData.Type == "json")
+        {
+            string json = await FileUtil.LoadFile(jsRuntime, args.FileData);
+            json = json.Replace(System.Environment.NewLine, string.Empty);
+            await diagram.LoadDiagram(json.ToString());
+            await uploadFiles.ClearAllAsync();
+        }
+    }
+
+}
+
+   

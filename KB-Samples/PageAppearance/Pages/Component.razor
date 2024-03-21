@@ -1,0 +1,318 @@
+﻿@page "/c"
+
+
+
+
+
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.DropDowns
+@using ButtonChangeArgs = Syncfusion.Blazor.Buttons.ChangeEventArgs<bool>
+@inject NavigationManager NavManager
+
+<SfDiagramComponent @ref="@Diagram" Height="100%" NodeCreating="@OnNodeCreating" ConnectorCreating="@OnConnectorCreating" InteractionController="@DiagramInteractions.ZoomPan">
+    <PageSettings><BackgroundStyle Background="blue" /></PageSettings>
+     
+    <ScrollSettings @bind-ScrollLimit="@scrollLimit"></ScrollSettings>
+    <DataSourceSettings ID="StringDocId" ParentID="ParentDocIds" DataSource="Data"></DataSourceSettings>
+    <Layout @bind-Type="@Type" @bind-VerticalSpacing="@VerticalSpacing" @bind-SamePoint="@samepoint" @bind-HorizontalSpacing="@HorizontalSpacing" @bind-Orientation="@OrientationType" HorizontalAlignment="@HorizontalAlignment" VerticalAlignment="@VerticalAlignment">
+    <LayoutMargin @bind-Top="@Top" @bind-Bottom="@Bottom" @bind-Right="@Right" @bind-Left="@Left"></LayoutMargin>
+    </Layout>
+    <SnapSettings Constraints="SnapConstraints.None"></SnapSettings>
+    <DiagramTemplates>
+        <NodeTemplate>
+            @{
+                    Node node1 = (context as Node);
+                   // RelationshipMapTreeModel data = (node1.Data as RelationshipMapTreeModel);
+                    string detail = data.NodeDetail;
+                    <div @ondblclick="() => OnDoubleClick(data.StringDocId)" style="height:100%; width:100%; overflow-y:hidden;  word-wrap: break-word; text-align:center; padding:7.5px 0px 7.5px 0px; font-weight:@((DataDocId == data.DocId) ? "bold" : "500"); background-color:@data.FilledColor; border-style:solid; border-width:5px; border-color:@data.StrokeColor; border-radius:@((DataDocId == data.DocId) ? "120px" : "20px");">
+                        <div style="padding: 0px 25px 0px 25px; overflow-wrap: break-word; word-wrap: break-word;"> @data.DocTypeName</div>
+                        <div>
+
+                            @if (data.BookingDate != null)
+                            {
+                                <img src="@($"../Images/xIcons/xPosted.svg")" alt="posted" width="25px" style="margin-left: auto;" />
+                            }
+                            @if (data.DocStatusId == "payed")
+                            {
+                                <img src="@($"../Images/xIcons/xPayed.svg")" alt="closed + Revenue" width="25px" style="margin-left: auto;" />
+                            }
+                            @if ((data.DocStatusId == "closed") && (data.WarehousingEffective == 0))
+                            {
+                                <img src="@($"../Images/xIcons/xClosed.svg")" alt="closed" width="25px" style="margin-left: auto;" />
+                            }
+                            @if ((data.DocStatusId != "closed") && (data.WarehousingEffective != 0))
+                            {
+                                <img src="@($"../Images/xIcons/xDelivered.svg")" alt="closed" width="25px" style="margin-left: auto;" />
+                            }
+                            @if ((data.DocStatusId == "closed") && (data.WarehousingEffective != 0))
+                            {
+                                <img src="@($"../Images/xIcons/xDeliveredClosed.svg")" alt="closed" width="25px" style="margin-left: auto;" />
+                            }
+                            @if (data.DocStatusId == "manually")
+                            {
+                                <img src="@($"../Images/xIcons/xManually.svg")" alt="manually" width="25px" style="margin-left: auto;" />
+                            }
+                            else if (data.DocStatusId == "open")
+                            {
+                                <img src="@($"../Images/xIcons/xOpen.svg")" alt="open" width="25px" style="margin-left: auto;" />
+                            }
+                            else if (data.DocStatusId == "partially")
+                            {
+                                <img src="@($"../Images/xIcons/xPartially.svg")" alt="partially" width="25px" style="margin-left: auto;" />
+                            }
+
+                        </div>
+                        <div style="word-wrap: break-word;"> @data.DocNumber</div>
+                        <div style="word-wrap: break-word;"> @data.DocDate.ToString("dd. MMMM yyyy")</div>
+                        <div>
+                            @if (data.Subject != null)
+                            {
+                                if (data.Subject.Length > 20)
+                                {
+                                    @data.Subject.Substring(0, 20) @("...")
+                                }
+                                else
+                                {
+                                    @data.Subject
+                                }
+                            }
+                        </div>
+                        <div> @string.Concat(data.Currency, " ", string.Format("{0}", Math.Round(data.TotalAmount, 2))) </div>
+                    </div>
+                }
+            </NodeTemplate>
+        </DiagramTemplates>
+    </SfDiagramComponent>
+    @code {
+    [Parameter]
+    public IEnumerable<RelationshipMapTreeModel> Data { get; set; }
+    [Parameter]
+    public int DataDocId { get; set; }
+    [Parameter]
+    public EventCallback<bool> ClosedMapRelation { get; set; }
+
+    
+    //public LayoutType Type = LayoutType.HierarchicalTree;
+    //public int horizontalSpacing = 15;
+    //public int verticalSpacing = 50;
+    //public double Left = 10;
+    //public double Right = 10;
+    //public double Top = 10;
+
+    public async Task OnDoubleClick(string id)
+    {
+        var docDetails = await DocService.GetByValue(nameof(Doc.Id), id); // dataService ist Ihr Datenzugriffsservice
+        var categoryId = docDetails.DocCategoryId;
+        var subcategoryId = docDetails.DocSubcategoryId;
+        NavManager.NavigateTo($"/DocEdit/{id}/{categoryId}/{subcategoryId}");
+        ClosedMapRelation.InvokeAsync(true);
+    }
+    private const string selecteditem = "image-pattern-style  e-selected-orientation-style";
+    private const string unselecteditem = "image-pattern-style";
+    private const string selectedPattenitem = "image-pattern-style  e-selected-pattern-style";
+    ScrollLimitMode scrollLimit { get; set; } = ScrollLimitMode.Diagram;
+    private Syncfusion.Blazor.Diagram.Orientation subTreeOrientation = Syncfusion.Blazor.Diagram.Orientation.Vertical;
+    private bool samepoint = true;
+    private SubTreeAlignmentType subTreeAlignment = SubTreeAlignmentType.Right;
+    private int rows = 0;
+    private string pattern;
+    private double offset = 25;
+    private Dictionary<string, string> dict = new Dictionary<string, string>() {
+        { "topToBottom", selecteditem },
+        { "bottomToTop", unselecteditem },
+        { "leftToRight", unselecteditem },
+        { "rightToLeft", unselecteditem }
+    };
+    bool checkBoxValue = true;
+    public SfDiagramComponent Diagram;
+    public LayoutOrientation OrientationType = LayoutOrientation.TopToBottom;
+    public int? HorizontalValue { get; set; } = 10;
+    public int? VerticalValue { get; set; } = 10;
+    public int? MaginXValue { get; set; } = 0;
+    public int? MaginYValue { get; set; } = 0;
+    public LayoutType Type = LayoutType.ComplexHierarchicalTree;
+    public Syncfusion.Blazor.Diagram.HorizontalAlignment HorizontalAlignment = Syncfusion.Blazor.Diagram.HorizontalAlignment.Left;
+    public Syncfusion.Blazor.Diagram.VerticalAlignment VerticalAlignment = Syncfusion.Blazor.Diagram.VerticalAlignment.Top;
+    public int HorizontalSpacing = 50;
+    public int VerticalSpacing = 40;
+    public double Top = 0;
+    public double Bottom = 0;
+    public double Right = 0;
+    public double Left = 650;
+    public int TopValue = 50;
+    public int LeftValue = 650;
+
+
+    // Defines default values for Node object
+    private void OnNodeCreating(IDiagramObject obj)
+    {
+        Node node = obj as Node;
+
+        node.Width = 200;
+        node.Height = 145;
+        node.OffsetX = 650;
+        node.OffsetY = 0;
+        node.Shape = new Shape()
+            { Type = Syncfusion.Blazor.Diagram.NodeShapes.HTML };
+        //node.Width = 175; node.Height = 100;
+        ////Initialize shape
+        ////HierarchicalDetails hierarchicalDetails = node.Data as HierarchicalDetails;
+        //DocPositionTreeModel data = node.Data as DocPositionTreeModel;
+        //node.Shape = new BasicShape()
+        //    {
+        //        Type = Syncfusion.Blazor.Diagram.NodeShapes.Basic,
+        //        Shape = NodeBasicShapes.Rectangle,
+        //        CornerRadius = ((DataDocId == data.DocId) ? 35 : 7)
+
+        //    };
+        //node.Style = new ShapeStyle() { Fill = data.FilledColor, StrokeWidth = 5, StrokeColor = data.StrokeColor };
+
+        //node.Annotations = new DiagramArticleCollection<ShapeAnnotation>()
+        //{
+        //    new ShapeAnnotation()
+        //    {
+        //        ID = "label1",
+        //        Content = data.NodeDetail,
+        //        Style = new TextStyle() { Color =  "Black", Bold = (DataDocId == data.DocId) ? true : false, Fill="Transparent" }
+        //    }
+        //};
+        //node.ExpandIcon = new DiagramExpandIcon()
+        //    {
+        //        Shape = DiagramExpandIcons.Minus,
+        //        Height = 15,
+        //        Width = 15,
+        //        CornerRadius = 10
+        //    };
+        //node.CollapseIcon = new DiagramCollapseIcon()
+        //    {
+        //        Shape = DiagramCollapseIcons.Plus,
+        //        Height = 15,
+        //        Width = 15,
+        //        CornerRadius = 10
+        //    };
+    }
+    // Defines default values for Connector object
+    private void OnConnectorCreating(IDiagramObject connector1)
+    {
+        Connector connector = (connector1 as Connector);
+        connector.Type = ConnectorSegmentType.Orthogonal;
+        connector.CornerRadius = 7;
+        connector.Style = new ShapeStyle()
+            {
+                StrokeColor = "#6d6d6d",
+            };
+        connector.TargetDecorator.Height = 7;
+        connector.TargetDecorator.Width = 7;
+    }
+
+    private TreeInfo GetLayoutInfo(IDiagramObject obj, TreeInfo options)
+    {
+        if (rows == 0)
+        {
+            if (rows == 0 && options.Rows != null)
+                options.Rows = null;
+            Node node = obj as Node;
+            if (pattern == "LeftOrientationVertical50" || pattern == "RightOrientationVertical50")
+            {
+                options.Offset = 0.5;
+            }
+            if (!options.HasSubTree)
+            {
+                options.AlignmentType = subTreeAlignment;
+                options.Orientation = subTreeOrientation;
+                options.AlignmentType = subTreeAlignment;
+            }
+        }
+        else
+        {
+            if (!options.HasSubTree)
+            {
+                options.AlignmentType = subTreeAlignment;
+                options.Orientation = subTreeOrientation;
+                options.Offset = offset;
+            }
+        }
+        return options;
+    }
+    public void LeftToRight()
+    {
+        OrientationType = LayoutOrientation.LeftToRight;
+    }
+    public class ImageFields
+    {
+        public string Text { get; set; }
+    }
+    private void HSpacingChange(Syncfusion.Blazor.Inputs.ChangeEventArgs<int?> args)
+    {
+        HorizontalValue = (int)args.Value;
+        HorizontalSpacing = int.Parse(args.Value.ToString());
+    }
+    private void VSpacingChange(Syncfusion.Blazor.Inputs.ChangeEventArgs<int?> args)
+    {
+        VerticalValue = (int)args.Value;
+        VerticalSpacing = int.Parse(args.Value.ToString());
+    }
+    private void MarginLeftChange(Syncfusion.Blazor.Inputs.ChangeEventArgs<int?> args)
+    {
+        LeftValue = (int)args.Value;
+        Left = (double)args.Value;
+    }
+    private void MarginTopChange(Syncfusion.Blazor.Inputs.ChangeEventArgs<int?> args)
+    {
+        TopValue = (int)args.Value;
+        Top = (double)args.Value; ;
+    }
+    private void ToptoBottomClick()
+    {
+        OrientationType = LayoutOrientation.TopToBottom;
+        UpdateSelection("topToBottom");
+    }
+    private void LefttoRightClick()
+    {
+        OrientationType = LayoutOrientation.LeftToRight;
+        UpdateSelection("leftToRight");
+    }
+    private void RighttoLeftClick()
+    {
+        OrientationType = LayoutOrientation.RightToLeft;
+        UpdateSelection("rightToLeft");
+    }
+    private void BottomtoTopClick()
+    {
+        OrientationType = LayoutOrientation.BottomToTop;
+        UpdateSelection("bottomToTop");
+    }
+    private void LinearChange(ButtonChangeArgs args)
+    {
+        checkBoxValue = args.Checked;
+        if (checkBoxValue)
+        {
+            samepoint = false;
+        }
+        else
+        {
+            samepoint = true;
+        }
+    }
+    // Method is used to apply the selection to the prroperty panel.
+    private void UpdateSelection(string id)
+    {
+        for (int i = 0; i < dict.Count; i++)
+        {
+            var value = dict.Values.ElementAt(i);
+            var key = dict.Keys.ElementAt(i);
+            if (dict.ContainsKey(id) && key == id)
+            {
+                value = selectedPattenitem;
+            }
+            else
+            {
+                value = unselecteditem;
+            }
+            dict.Remove(key);
+            dict.Add(key, value);
+        }
+    }
+}

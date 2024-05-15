@@ -9,10 +9,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.0" PrivateAssets="all" />
-        <PackageReference Include="Syncfusion.Blazor.Diagram" Version="24.2.9" />
-    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="24.2.9" />
-    <PackageReference Include="Syncfusion.Blazor.Themes" Version="24.2.9" />
-	  <PackageReference Include="Syncfusion.PdfExport.Net.Core" Version="25.1.35" />
+        <PackageReference Include="Syncfusion.Blazor.Diagram" Version="*" />
+    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="*" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="*" />
+	  <PackageReference Include="Syncfusion.PdfExport.Net.Core" Version="*" />
   </ItemGroup>
 
   

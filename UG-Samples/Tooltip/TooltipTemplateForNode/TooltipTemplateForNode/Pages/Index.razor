@@ -5,7 +5,18 @@
 @using Syncfusion.Blazor.Buttons
 
 <SfButton Content="Node Template" OnClick="@TemplateChange" />
-<SfDiagramComponent Width="1000px" Height="500px" Nodes="@nodes" />
+<SfDiagramComponent Width="1000px" Height="500px" Nodes="@nodes" >
+    <DiagramTemplates>
+        <DiagramTooltipTemplate>
+            @{
+                if (context is Node)
+                {
+                    <div><p>Product Name : Diagram</p><p>Element: Node</p><p>Content: Node Tooltip </p></div>
+                }
+            }
+        </DiagramTooltipTemplate>
+    </DiagramTemplates>
+</SfDiagramComponent>
 @code
 {
     //Define diagram's nodes collection
@@ -27,20 +38,9 @@
                     Fill = "#6495ED",
                     StrokeColor = "white"
                 },
-                Tooltip = new DiagramTooltip() {  Template = getContent() },
+                Tooltip = new DiagramTooltip(),
                 Constraints = NodeConstraints.Default | NodeConstraints.Tooltip,
             };
         nodes.Add(node);
-    }
-    //Method to getcontent
-    private string getContent()
-    {
-        string content = "<div><p>Product Name : Diagram</p><p>Element: Node</p><p>Content: Node Tooltip <p></p></div>";
-        return content;
-    }
-    //Change the Template at run time.
-    private void TemplateChange()
-    {
-        nodes[0].Tooltip.Template = "<p>TemplateUpdate</p>";
     }
 }

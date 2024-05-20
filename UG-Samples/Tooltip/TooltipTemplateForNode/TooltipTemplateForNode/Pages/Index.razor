@@ -7,14 +7,14 @@
 <SfButton Content="Node Template" OnClick="@TemplateChange" />
 <SfDiagramComponent Width="1000px" Height="500px" Nodes="@nodes" >
     <DiagramTemplates>
-        <DiagramTooltipTemplate>
+        <TooltipTemplate>
             @{
                 if (context is Node)
                 {
                     <div><p>Product Name : Diagram</p><p>Element: Node</p><p>Content: Node Tooltip </p></div>
                 }
             }
-        </DiagramTooltipTemplate>
+        </TooltipTemplate>
     </DiagramTemplates>
 </SfDiagramComponent>
 @code

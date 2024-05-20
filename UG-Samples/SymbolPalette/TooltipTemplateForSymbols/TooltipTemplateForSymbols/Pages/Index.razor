@@ -137,7 +137,7 @@
             <SfSymbolPaletteComponent @ref="@SymbolPalette" Height="700px"
                                       Palettes="@Palettes" SymbolHeight="60" SymbolWidth="60" SymbolMargin="@SymbolMargin">
                 <SymbolPaletteTemplates>
-                    <SymbolTooltipTemplate>
+                    <TooltipTemplate>
                         @{
                             if (context is Node node)
                             {
@@ -149,7 +149,7 @@
                                 <div><p>Product Name : Diagram</p><p>Element: Connector</p><p>Content: connector Tooltip</p><p>ID:@connector.ID</p></div>
                             }
                         }
-                    </SymbolTooltipTemplate>
+                    </TooltipTemplate>
                 </SymbolPaletteTemplates>
             </SfSymbolPaletteComponent>
         </div>
@@ -157,7 +157,7 @@
             <div class="content-wrapper" style="border: 1px solid #D7D7D7">
                 <SfDiagramComponent @ref="@diagram" Height="700px" Connectors="@connectors" Nodes="@nodes">
                     <DiagramTemplates>
-                        <DiagramTooltipTemplate>
+                        <TooltipTemplate>
                             @{
                                 if (context is Node node)
                                 {                                     
@@ -168,7 +168,7 @@
                                     <div><p>Product Name : Diagram</p><p>Element: Connector</p><p>Content: connector Tooltip</p><p>ID:@connector.ID</p></div>
                                 }
                             }
-                        </DiagramTooltipTemplate>
+                        </TooltipTemplate>
                     </DiagramTemplates>
                 </SfDiagramComponent>
             </div>

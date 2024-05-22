@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchTag", "SearchTag.csproj", "{C9C6CFD6-F0C1-448C-9240-544D086BDED4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnimationSupport", "AnimationSupport.csproj", "{C9C6CFD6-F0C1-448C-9240-544D086BDED4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

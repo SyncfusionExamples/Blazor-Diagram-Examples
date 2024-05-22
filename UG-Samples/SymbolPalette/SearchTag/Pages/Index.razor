@@ -6,7 +6,7 @@
 <div class="control-section">   
     <div style="width: 100%">  
         <div id="palette-space" class="sb-mobile-palette" style="border: 2px solid #b200ff">
-            <SfSymbolPaletteComponent @ref="@SymbolPalette" Height="300px" Width="200px" 
+            <SfSymbolPaletteComponent @ref="@SymbolPalette" ShowSearchTextBox="true" Height="300px" Width="200px" 
                                       Palettes="@Palettes" SymbolHeight="60" SymbolWidth="120" SymbolMargin="@SymbolMargin">
             </SfSymbolPaletteComponent>
         </div>
@@ -49,7 +49,7 @@
         Node node = new Node()
         {
             ID = id,
-           //SearchTags = new List<string>() { "Basic" },
+           SearchTags = new List<string>() { "Basic" },
             Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = basicShape },
             Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "#6495ED" },
         };

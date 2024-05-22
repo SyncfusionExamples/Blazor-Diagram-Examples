@@ -1,6 +1,6 @@
-#SearchOption Sample
+#Search Tag Sample
 
-This sample demonstrates how to include the search option in symbol palette.
+This sample demonstrates how to add search tasg for symbols.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/symbolpalette?theme=fluent

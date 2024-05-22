@@ -1,6 +1,6 @@
-#SearchOption Sample
+#Animation Sample
 
-This sample demonstrates how to include the search option in symbol palette.
+This sample demonstrates how to enable animation in symbol palette.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/symbolpalette?theme=fluent

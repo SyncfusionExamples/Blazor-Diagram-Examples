@@ -1,9 +1,8 @@
 # Event sample
 
-This sample demonstrate how to invoke TextChanged and TextChanging event at sample. While editing the node’s or connector’s annotation, TextChanged and TextChangingnt can be used to do the customization. We have demo application for this.
+This sample demonstrates how to create a ruler and customize both the horizontal and vertical rulers.
 
-
-Demo: https://blazor.syncfusion.com/demos/diagramcomponent/events?theme=fluent
+Demo: https://sfblazor.azurewebsites.net/development/webapp/demos/diagramcomponent/rulers?theme=fluent
 
 ## Prerequisites
 

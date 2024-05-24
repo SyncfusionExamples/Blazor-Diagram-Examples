@@ -1,4 +1,4 @@
-# Event sample
+# Ruler sample
 
 This sample demonstrates how to create a ruler and customize both the horizontal and vertical rulers.
 

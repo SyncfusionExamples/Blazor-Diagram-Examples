@@ -3,7 +3,7 @@
 @using Syncfusion.Blazor.Diagram
 
 <SfDiagramComponent @ref="@diagram" Height="600px" >
-	<RulerSettings EnableDynamicGrid="@enableDynamicGrid">
+	<RulerSettings>
         <HorizontalRuler  IsVisible="true" Interval="@RulerInterval" 
                             TickAlignment="@RulerTickAlignment" MarkerColor="@RulerMarkerColor">
      </HorizontalRuler>
@@ -17,7 +17,6 @@
 {
     //Reference to diagram.
     SfDiagramComponent diagram;
-    public bool enableDynamicGrid = true;
     //Defining Ruler Interval of Rulers
     public int RulerInterval = 20;
     //Defining Tick Alignment of Rulers

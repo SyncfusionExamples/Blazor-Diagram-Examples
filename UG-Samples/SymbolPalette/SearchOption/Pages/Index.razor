@@ -6,7 +6,7 @@
 <div class="control-section">   
     <div style="width: 100%">  
         <div id="palette-space" class="sb-mobile-palette" style="border: 2px solid #b200ff">
-            <SfSymbolPaletteComponent @ref="@SymbolPalette" ShowSearchTextBox="true" Height="300px" Width="200px" 
+            <SfSymbolPaletteComponent @ref="@SymbolPalette" ShowSearchTextBox="true" Height="700px" Width="100%" 
                                       Palettes="@Palettes" SymbolHeight="60" SymbolWidth="120" SymbolMargin="@SymbolMargin">
             </SfSymbolPaletteComponent>
         </div>
@@ -26,24 +26,65 @@
     //Define palettes collection.
     DiagramObjectCollection<Palette> Palettes = new DiagramObjectCollection<Palette>();
     // Defines palette's flow-shape collection.
+    DiagramObjectCollection<NodeBase> FlowShapes = new DiagramObjectCollection<NodeBase>();
+    // Defines palette's basic-shape collection.
     DiagramObjectCollection<NodeBase> PaletteNodes = new DiagramObjectCollection<NodeBase>();
+
+    // Defines palette's connector collection.
+    DiagramObjectCollection<NodeBase> Connectors = new DiagramObjectCollection<NodeBase>();
+
 
     protected override void OnInitialized()
     {
         InitPaletteModel();
     }
-        
+
     private void InitPaletteModel()
     {
         CreatePaletteNode(NodeBasicShapes.Rectangle, "Rectangle");
         CreatePaletteNode(NodeBasicShapes.Ellipse, "Ellipse");
         CreatePaletteNode(NodeBasicShapes.Star, "Star");
+        CreatePaletteNode(NodeBasicShapes.Hexagon, "Hexagon");
+        CreatePaletteNode(NodeBasicShapes.Plus, "Plus");
+        CreatePaletteNode(NodeBasicShapes.Diamond, "Diamond");
+
+        CreateFlowShape(NodeFlowShapes.Terminator, "Terminator");
+        CreateFlowShape(NodeFlowShapes.Process, "Process");
+        CreateFlowShape(NodeFlowShapes.PreDefinedProcess, "PreDefinedProcess");
+        CreateFlowShape(NodeFlowShapes.Annotation, "Annotation");
+        CreateFlowShape(NodeFlowShapes.Card, "Card");
+
+        CreateConnector("ortho", ConnectorSegmentType.Orthogonal, DecoratorShape.Arrow);
+        CreateConnector("link2", ConnectorSegmentType.Orthogonal, DecoratorShape.None);
+        CreateConnector("link3", ConnectorSegmentType.Straight, DecoratorShape.Arrow);
+        CreateConnector("straight", ConnectorSegmentType.Straight, DecoratorShape.None);
+        CreateConnector("link5", ConnectorSegmentType.Bezier, DecoratorShape.None);
+        CreateConnector("link6", ConnectorSegmentType.Bezier, DecoratorShape.Arrow);
         Palettes = new DiagramObjectCollection<Palette>()
         {
            new Palette(){Symbols = PaletteNodes,Title = "Basic Shapes", ID = "Basic Shapes" },
+           new Palette(){Symbols = FlowShapes,Title = "Flow Shapes", ID = "Flow Shapes" },
+            new Palette(){Symbols = Connectors,Title = "Connector", ID = "Connector" },
         };
     }
-        
+    private void CreateConnector(string id, ConnectorSegmentType type, DecoratorShape shape)
+    {
+        Connector connector = new Connector()
+            {
+                ID = id,
+                Type = type,
+                SearchTags = new List<string>() { "connector" },
+                SourcePoint = new DiagramPoint() { X = 0, Y = 0 },
+                TargetPoint = new DiagramPoint() { X = 40, Y = 40 },
+                TargetDecorator = new DecoratorSettings()
+                {
+                    Shape = shape,
+                    Style = new ShapeStyle() { StrokeColor = "#757575", Fill = "#757575" }
+                },
+                Style = new ShapeStyle() { StrokeWidth = 2, StrokeColor = "#757575" }
+            };
+        Connectors.Add(connector);
+    }
     private void CreatePaletteNode(NodeBasicShapes basicShape, string id)
     {
         Node node = new Node()
@@ -54,5 +95,16 @@
             Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "#6495ED" },
         };
         PaletteNodes.Add(node);
+    }
+    private void CreateFlowShape(NodeFlowShapes flowShape, string id)
+    {
+        Node node = new Node()
+            {
+                ID = id,
+                SearchTags = new List<string>() { "Flow" },
+                Shape = new FlowShape() { Type = NodeShapes.Flow, Shape = flowShape },
+                Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "#6495ED" },
+            };
+        FlowShapes.Add(node);
     }
 }

@@ -6,12 +6,168 @@
 @inject IJSRuntime JS;
 
 <SfButton Content="ExportPDF" OnClick="@ExportPDF" />
-<SfDiagramComponent Height="600px" @ref="@diagram">
+
+<SfDiagramComponent @ref="@Diagram" Height="900px"  Connectors="@connectors"  Nodes="@nodes"  NodeCreating="OnNodeCreating" ConnectorCreating="OnConnectorCreating">
 </SfDiagramComponent>
 
+
 @code{
-    //Reference the diagram
-    SfDiagramComponent diagram;
+    int connectorCount = 0;
+
+    public SfDiagramComponent Diagram;
+    //Defines Diagram's nodes collection
+    private DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+
+    //Defines Diagram's connectors collection
+    private DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
+
+
+    protected override void OnInitialized()
+    {
+        InitDiagramModel();
+
+    }
+    // Create Nodes and Connectors for the diagram.
+    private void InitDiagramModel()
+    {
+        CreateNode("node1", 300, 80, NodeFlowShapes.Terminator, "Place order");
+        CreateNode("node2", 300, 160, NodeFlowShapes.Process, "Start transaction");
+        CreateNode("node3", 300, 240, NodeFlowShapes.Process, "Verification");
+        CreateNode("node4", 300, 330, NodeFlowShapes.Decision, "Credit card valid?");
+        CreateNode("node5", 300, 430, NodeFlowShapes.Decision, "Funds available?");
+        CreateNode("node6", 530, 330, NodeFlowShapes.Process, "Enter payment method");
+        CreateNode("node7", 300, 530, NodeFlowShapes.Process, "Complete transaction");
+        CreateNode("node8", 110, 530, NodeFlowShapes.Data, "Send e-mail");
+        CreateNode("node9", 475, 530, NodeFlowShapes.DirectData, "Customer \n database");
+        CreateNode("node10", 300, 630, NodeFlowShapes.Terminator, "Log transaction");
+        CreateNode("node11", 480, 630, NodeFlowShapes.Process, "Reconcile the entries");
+        CreateConnector("node1", "node2");
+        CreateConnector("node2", "node3");
+        CreateConnector("node3", "node4");
+        CreateConnector("node4", "node5", "Yes");
+        CreateConnector("node4", "node6", "No", false, "port3", "port1");
+        CreateConnector("node5", "node6", "No", false, "port3", "port4");
+        CreateConnector("node5", "node7", "Yes");
+        CreateConnector("node6", "node2", default(string), false, "port2", "port3");
+        CreateConnector("node7", "node8");
+        CreateConnector("node7", "node9");
+        CreateConnector("node7", "node10");
+        CreateConnector("node10", "node11", default(string), true);
+    }
+
+    private void OnNodeCreating(IDiagramObject obj)
+    {
+        Node node = obj as Node;
+        node.Style.Fill = "#357BD2";
+        if (!(node.ID.StartsWith("Annotation") || node.ID.StartsWith("Sequential Data")))
+            node.Style.StrokeColor = "White";
+        node.Style.Opacity = 1;
+    }
+    private void OnConnectorCreating(IDiagramObject obj)
+    {
+        Connector connector = obj as Connector;
+        connector.Style.Fill = "black";
+        connector.Style.StrokeColor = "black";
+        connector.Style.Opacity = 1;
+        connector.TargetDecorator.Style.Fill = "black";
+        connector.TargetDecorator.Style.StrokeColor = "black";
+    }
+
+    // used to create a Port.
+    private DiagramObjectCollection<PointPort> CreatePort()
+    {
+        DiagramObjectCollection<PointPort> defaultsPorts = new DiagramObjectCollection<PointPort>();
+        PointPort port1 = new PointPort()
+            {
+                ID = "port1",
+                Shape = PortShapes.Circle,
+                Offset = new DiagramPoint() { X = 0, Y = 0.5 }
+            };
+        PointPort port2 = new PointPort()
+            {
+                ID = "port2",
+                Shape = PortShapes.Circle,
+                Offset = new DiagramPoint() { X = 0.5, Y = 0 }
+            };
+        PointPort port3 = new PointPort()
+            {
+                ID = "port3",
+                Shape = PortShapes.Circle,
+                Offset = new DiagramPoint() { X = 1, Y = 0.5 }
+            };
+        PointPort port4 = new PointPort()
+            {
+                ID = "port4",
+                Shape = PortShapes.Circle,
+                Offset = new DiagramPoint() { X = 0.5, Y = 1 }
+            };
+        defaultsPorts.Add(port1);
+        defaultsPorts.Add(port2);
+        defaultsPorts.Add(port3);
+        defaultsPorts.Add(port4);
+        return defaultsPorts;
+    }
+    // Method is used to create a Connector for the diagram.
+    private void CreateConnector(string sourceId, string targetId, string label = default(string), bool isDashLine = false, string sport = "", string tport = "")
+    {
+        Connector diagramConnector = new Connector()
+            {
+                ID = string.Format("connector{0}", ++connectorCount),
+                SourceID = sourceId,
+                TargetID = targetId,
+                SourcePortID = sport,
+                TargetPortID = tport
+            };
+        if (isDashLine)
+        {
+            diagramConnector.Style = new ShapeStyle() { StrokeDashArray = "2,2" };
+        }
+        if (label != default(string))
+        {
+            var annotation = new PathAnnotation()
+                {
+                    Content = label,
+                    Style = new TextStyle() { Fill = "white" }
+                };
+            if ((sourceId == "node5" && targetId == "node6") || label == "Yes" || label == "No")
+            {
+                annotation.Height = 10;
+                annotation.Width = 15;
+            }
+            diagramConnector.Annotations = new DiagramObjectCollection<PathAnnotation>() { annotation };
+        }
+        diagramConnector.Type = ConnectorSegmentType.Orthogonal;
+
+        connectors.Add(diagramConnector);
+    }
+    // Method is used to create a node for the diagram.
+    private void CreateNode(string id, double x, double y, NodeFlowShapes shape, string label)
+    {
+        Node diagramNode = new Node()
+            {
+                ID = id,
+                OffsetX = x,
+                OffsetY = y,
+                Width = 145,
+                Ports = CreatePort(),
+                Height = 60,
+                Style = new ShapeStyle { Fill = "#357BD2", StrokeColor = "White" },
+
+                Shape = new FlowShape() { Type = Syncfusion.Blazor.Diagram.NodeShapes.Flow, Shape = shape },
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>
+            {
+                new ShapeAnnotation
+                {
+                    Content = label,
+                    Style = new TextStyle()
+                    {
+                        Color="White", Fill = "transparent"
+                    }
+                }
+            }
+            };
+        nodes.Add(diagramNode);
+    }
 
     private async void ExportPDF()
     {
@@ -21,10 +177,8 @@
         print.PageHeight = 800;
         print.Orientation = PageOrientation.Portrait;
         print.FitToPage = true;
-        print.Margin = new DiagramThickness() { Left = 30, Top = 20, Right = 10, Bottom = 10 };
-        print.ClipBounds = new DiagramRect() { X = 200, Y = 200, Width = 200, Height = 200 };
         //To export the diagram into base64
-        var images = await diagram.ExportAsync(DiagramExportFormat.PNG, print);
+        var images = await Diagram.ExportAsync(DiagramExportFormat.PNG, print);
         var pdforientation = PageOrientation.Portrait == PageOrientation.Landscape ? PdfPageOrientation.Landscape : PdfPageOrientation.Portrait;
         await ExportToPdf("diagram", pdforientation, true, images);        
     }

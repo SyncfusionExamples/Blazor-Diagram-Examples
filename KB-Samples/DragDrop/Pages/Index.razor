@@ -27,6 +27,13 @@
         Node node = obj as Node;
         node.Height = 50;
         node.Width = 150;
+        node.Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+        {
+            new ShapeAnnotation()
+            {
+                Content=(node.Data as OrgChartDataModel).Role,
+            }
+        };
         node.Style = new ShapeStyle() { Fill = "#6495ED", StrokeWidth = 1, StrokeColor = "Black" };
         node.Constraints = NodeConstraints.Default | NodeConstraints.AllowDrop;
     }
@@ -73,6 +80,6 @@
         new OrgChartDataModel() { Id= "3", Role= "Design Manager"},
         new OrgChartDataModel() { Id= "4", Role= "Operation Manager" },
         new OrgChartDataModel() { Id= "5", Role= "Marketing Manager" },
-        new OrgChartDataModel() { Id= "6", Role= "Team Member1" },
+        new OrgChartDataModel() { Id= "6", Role= "Team Member" },
     };
 }

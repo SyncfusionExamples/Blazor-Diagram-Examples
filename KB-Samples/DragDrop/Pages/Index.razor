@@ -2,7 +2,7 @@
 
 @using Syncfusion.Blazor.Diagram
 
-<SfDiagramComponent Height="600px" @ref="diagram" NodeCreating="@OnNodeCreating" ConnectorCreating="@OnConnectorCreating" DragDrop="OnDrop">
+<SfDiagramComponent Height="1000px" @ref="diagram" NodeCreating="@OnNodeCreating" ConnectorCreating="@OnConnectorCreating" DragDrop="OnDrop">
     <DataSourceSettings ID="Id" ParentID="Team" DataSource="@DataSource"></DataSourceSettings>
     <SnapSettings>
         <HorizontalGridLines LineColor="white" LineDashArray="2,2">

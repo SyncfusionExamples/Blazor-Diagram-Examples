@@ -1,0 +1,125 @@
+﻿@page "/"
+@using Syncfusion.Blazor.Diagram
+
+<div id="diagram-space" class="content-wrapper">
+    <SfDiagramComponent Height="400px" NodeCreating="OnNodeCreating" ConnectorCreating="OnConnectorCreating">
+        <DataSourceSettings Id="EmployeeID" ParentId="ReportsTo" DataSource="DataSource" >
+        </DataSourceSettings>
+        <SnapSettings Constraints="SnapConstraints.None"></SnapSettings>
+        <Layout @bind-Type="type"
+                @bind-HorizontalSpacing="@HorizontalSpacing"
+                @bind-Orientation="@orientation"
+                @bind-VerticalSpacing="@VerticalSpacing"
+                @bind-HorizontalAlignment="@horizontalAlignment"
+                @bind-VerticalAlignment="@verticalAlignment"
+                GetLayoutInfo="GetLayoutInfo">
+            <LayoutMargin Top="50" Bottom="50" Right="50" Left="50" />
+        </Layout>
+    </SfDiagramComponent>
+</div>
+
+@code {
+    //Reference the diagram
+    SfDiagramComponent Diagram;
+    // Specify the layout type.
+    LayoutType type = LayoutType.HierarchicalTree;
+    // Specify the orientation of the layout.
+    LayoutOrientation orientation = LayoutOrientation.TopToBottom;
+    HorizontalAlignment horizontalAlignment = HorizontalAlignment.Auto;
+    VerticalAlignment verticalAlignment = VerticalAlignment.Auto;
+    int HorizontalSpacing = 30;
+    int VerticalSpacing = 30;
+    private float x = 100;
+    private float y = 100;
+
+    public class EmployeeDetails
+    {
+        public string EmployeeID { get; set; }
+        public string FirstName { get; set; }
+        public string ReportsTo { get; set; }
+        public string Country { get; set; }
+        public string Designation { get; set; }
+    }
+
+
+    private void OnNodeCreating(IDiagramObject obj)
+    {
+        Node node = obj as Node;
+        node.OffsetX = x;
+        node.OffsetY = y;
+        node.Width = 80;
+        node.Height = 40;
+        node.Shape = new BasicShape() { Type = Syncfusion.Blazor.Diagram.NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle, CornerRadius = 8 };
+        node.Style = new ShapeStyle() { StrokeWidth = 0, Fill = "" };
+        x += 100;
+
+        EmployeeDetails data = node.Data as EmployeeDetails;
+        node.Annotations = new DiagramObjectCollection<ShapeAnnotation>() {
+            new ShapeAnnotation() {
+                Content = data.FirstName.ToString(),
+                Style = new TextStyle() { Color = "white" }
+            }
+        };
+
+        switch (data.FirstName.ToString())
+        {
+            case "Andrew":
+                node.Style.Fill = "#3A4857";
+                break;
+            case "Nancy":
+                node.Style.Fill = "#2B8C68";
+                break;
+            case "Janet":
+                node.Style.Fill = "#488CC1";
+                break;
+            case "Margaret":
+                node.Style.Fill = "#4C888F";
+                break;
+            case "Steven":
+                node.Style.Fill = "#8E4DB4";
+                break;
+            case "Laura":
+                node.Style.Fill = "#CD6A32";
+                break;
+            default:
+                node.Style.Fill = "#8E4DB4";
+                break;
+        }
+    }
+
+    private void OnConnectorCreating(IDiagramObject obj)
+    {
+        Connector connector = obj as Connector;
+        connector.Style.StrokeColor = "#048785";
+        connector.Type = ConnectorSegmentType.Orthogonal;
+        connector.TargetDecorator.Shape = DecoratorShape.None;
+        connector.SourceDecorator.Shape = DecoratorShape.None;
+        connector.Style = new ShapeStyle() { StrokeColor = "#3A4857", Fill = "#3A4857", StrokeWidth = 1, StrokeDashArray = "3,3" };
+    }
+
+    // Create the layout info.
+    private TreeInfo GetLayoutInfo(IDiagramObject obj, TreeInfo options)
+    {
+        // Enable the sub-tree.
+        options.EnableSubTree = true;
+        // Specify the subtree orientation.
+        options.Orientation = Orientation.Horizontal;
+        return options;
+    }
+
+    // Create the data source with node name and fill color values.
+    public List<EmployeeDetails> DataSource = new List<EmployeeDetails>()
+    {
+          new EmployeeDetails { EmployeeID = "1", FirstName = "Andrew", Designation = "CEO", Country = "England", ReportsTo = "" },
+          new EmployeeDetails { EmployeeID = "2", FirstName = "Nancy", Designation = "Product Manager", Country = "USA", ReportsTo = "1" },
+          new EmployeeDetails { EmployeeID = "3", FirstName = "Janet", Designation = "Product Manager", Country = "USA", ReportsTo = "1" },
+          new EmployeeDetails { EmployeeID = "4", FirstName = "Margaret", Designation = "Product Manager", Country = "USA", ReportsTo = "1" },
+          new EmployeeDetails { EmployeeID = "5", FirstName = "Steven", Designation = "Product Manager", Country = "England", ReportsTo = "1" },
+          new EmployeeDetails { EmployeeID = "7", FirstName = "Michael", Designation = "Team Lead", Country = "USA", ReportsTo = "5" },
+          new EmployeeDetails { EmployeeID = "8", FirstName = "Robert", Designation = "Developer ", Country = "England", ReportsTo = "5" },
+          new EmployeeDetails { EmployeeID = "9", FirstName = "Anne", Designation = "Developer", Country = "USA", ReportsTo = "5" },
+          new EmployeeDetails { EmployeeID = "6", FirstName = "Laura", Designation = "HR", Country = "USA", ReportsTo = "1" },
+    };
+}
+
+

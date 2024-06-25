@@ -2,10 +2,14 @@
 @using Syncfusion.Blazor.Diagram
 
 <div id="diagram-space" class="content-wrapper">
-    <SfDiagramComponent Height="400px" NodeCreating="OnNodeCreating" ConnectorCreating="OnConnectorCreating">
+    /* Initialize the diagram component */
+    <SfDiagramComponent @ref="Diagram" Height="400px" NodeCreating="OnNodeCreating" ConnectorCreating="OnConnectorCreating">
+        /* Define the data source settings */
         <DataSourceSettings Id="EmployeeID" ParentId="ReportsTo" DataSource="DataSource" >
         </DataSourceSettings>
+        /* Define the snap settings */
         <SnapSettings Constraints="SnapConstraints.None"></SnapSettings>
+        /* Define the layout settings */
         <Layout @bind-Type="type"
                 @bind-HorizontalSpacing="@HorizontalSpacing"
                 @bind-Orientation="@orientation"
@@ -25,23 +29,62 @@
     LayoutType type = LayoutType.HierarchicalTree;
     // Specify the orientation of the layout.
     LayoutOrientation orientation = LayoutOrientation.TopToBottom;
-    HorizontalAlignment horizontalAlignment = HorizontalAlignment.Auto;
-    VerticalAlignment verticalAlignment = VerticalAlignment.Auto;
-    int HorizontalSpacing = 30;
-    int VerticalSpacing = 30;
+    /// Specifies the horizontal alignment of the diagram nodes.
+    private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Auto;
+
+    // Specifies the vertical alignment of the diagram nodes.
+    private VerticalAlignment verticalAlignment = VerticalAlignment.Auto;
+
+    // The spacing between diagram nodes horizontally.
+    private int HorizontalSpacing = 30;
+
+    // The spacing between diagram nodes vertically.
+    private int VerticalSpacing = 30;
+
+    // The X-coordinate offset for the initial position of the diagram nodes.
     private float x = 100;
+
+    // The Y-coordinate offset for the initial position of the diagram nodes.
     private float y = 100;
 
+    // Represents the details of an employee.
     public class EmployeeDetails
     {
+        /// <summary>
+        /// Gets or sets the employee ID.
+        /// </summary>
         public string EmployeeID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the first name of the employee.
+        /// </summary>
         public string FirstName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ID of the employee's supervisor.
+        /// </summary>
         public string ReportsTo { get; set; }
+
+        /// <summary>
+        /// Gets or sets the country of the employee.
+        /// </summary>
         public string Country { get; set; }
+
+        /// <summary>
+        /// Gets or sets the designation of the employee.
+        /// </summary>
         public string Designation { get; set; }
     }
 
 
+    /// <summary>
+    /// Handles the creation of a diagram node with specific properties and styles based on employee details.
+    /// </summary>
+    /// <param name="obj">The diagram object that is being created.</param>
+    /// <remarks>
+    /// This method configures the node's position, size, shape, and style. It also sets the node's annotations
+    /// and applies different fill colors based on the employee's first name.
+    /// </remarks>
     private void OnNodeCreating(IDiagramObject obj)
     {
         Node node = obj as Node;
@@ -87,6 +130,14 @@
         }
     }
 
+    /// <summary>
+    /// Handles the creation of a diagram connector with specific properties and styles.
+    /// </summary>
+    /// <param name="obj">The diagram object that is being created.</param>
+    /// <remarks>
+    /// This method configures the connector's style, type, and decorators.
+    /// It sets the stroke color, segment type, and hides both source and target decorators.
+    /// </remarks>
     private void OnConnectorCreating(IDiagramObject obj)
     {
         Connector connector = obj as Connector;

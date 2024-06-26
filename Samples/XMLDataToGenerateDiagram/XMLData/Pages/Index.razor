@@ -31,7 +31,7 @@
 
 <div>
   
-    <SfDiagramComponent Height="700px" @ref="@diagram" @bind-Nodes="@nodes" NodeCreating="@OnNodeCreating" ConnectorCreating="@OnConnectorCreating">
+    <SfDiagramComponent  Height="700px" @ref="@diagram" @bind-Nodes="@nodes" NodeCreating="@OnNodeCreating" ConnectorCreating="@OnConnectorCreating">
         <DataSourceSettings ID="EmployeeID" ParentID="ManagerID" DataSource="@dataSourceDetails"></DataSourceSettings>
         <Layout Type="LayoutType.HierarchicalTree"  @bind-HorizontalSpacing="@HorizontalSpacing" @bind-VerticalSpacing="@VerticalSpacing" @bind-HorizontalAlignment="@horizontalAlignment" @bind-VerticalAlignment="@verticalAlignment">
             <LayoutMargin Left="50" Top="50"></LayoutMargin>
@@ -62,10 +62,9 @@
 
 
     @code{
-    //Reference to uploder
-    SfUploader uploadFiles;
+    
     SfDiagramComponent diagram;
-    private string fileName;
+  
     //Creates connectors with some default values.
     private void OnNodeCreating(IDiagramObject obj)
     {
@@ -124,7 +123,7 @@
             };
        // nodes.Add(node);
     }
-    private string ExtensionType = ".json";
+
     /// <summary>
     /// List to store data source details.
     /// </summary>

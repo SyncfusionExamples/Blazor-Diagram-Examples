@@ -1,0 +1,380 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+
+<SfDiagramComponent Height="900px" Nodes="@NodeCollection" Connectors="@Connectors">
+    <SnapSettings Constraints="SnapConstraints.None"></SnapSettings>
+    <DiagramTemplates>
+            <AnnotationTemplate>
+                @if (context is Annotation annotation)
+                {
+                    if (annotation.ID.Contains("Node"))
+                    {
+                        <div style=" text-align: center;text-wrap: nowrap;">
+                            <p>
+                                ISA <br>(Instrument Air Supply)
+                            </p>
+                        </div>
+                    }
+
+                    if (annotation.ID.Contains("Connector"))
+                    {
+                        <div style="height:20px;width:20px;border:solid 1px black"></div>
+                    }
+                }
+            </AnnotationTemplate>
+        </DiagramTemplates>
+    </SfDiagramComponent>
+    @code
+    {
+    DiagramObjectCollection<Node> NodeCollection = new DiagramObjectCollection<Node>();
+    DiagramObjectCollection<Connector> Connectors = new DiagramObjectCollection<Connector>();
+    protected override void OnInitialized()
+    {
+        CreateNode("node1", 132, 148, 95, 306, "M 1638.99 905.9 C 1642.78 901.62 1648.23 899.17 1653.96 899.17 C 1659.69 899.17 1665.14 901.62 1668.93 905.9 L 1668.93 995.28 C 1665.14 999.55 1659.69 1002 1653.96 1002 C 1648.23 1002 1642.78 999.55 1638.99 995.28 Z M 1778.74 935.69 C 1783.04 939.46 1785.5 944.89 1785.5 950.59 C 1785.5 956.29 1783.04 961.71 1778.74 965.48 L 1688.9 965.48 C 1684.6 961.71 1682.14 956.29 1682.14 950.59 C 1682.14 944.89 1684.6 939.46 1688.9 935.69 Z M 1688.9 935.69 L 1688.9 965.48 M 1778.74 935.69 L 1778.74 965.48 M 1653.96 899.44 L 1653.96 891 M 1643.98 891 L 1663.94 891 M 1630.5 950.59 L 1638.99 950.59 M 1630.5 940.66 L 1630.5 960.52 M 1668.93 948.6 H 1682.41 V 952.57 H 1668.93 Z");
+        CreateNode("node4", 132, 148, 100, 600, "M 1638.99 905.9 C 1642.78 901.62 1648.23 899.17 1653.96 899.17 C 1659.69 899.17 1665.14 901.62 1668.93 905.9 L 1668.93 995.28 C 1665.14 999.55 1659.69 1002 1653.96 1002 C 1648.23 1002 1642.78 999.55 1638.99 995.28 Z M 1778.74 935.69 C 1783.04 939.46 1785.5 944.89 1785.5 950.59 C 1785.5 956.29 1783.04 961.71 1778.74 965.48 L 1688.9 965.48 C 1684.6 961.71 1682.14 956.29 1682.14 950.59 C 1682.14 944.89 1684.6 939.46 1688.9 935.69 Z M 1688.9 935.69 L 1688.9 965.48 M 1778.74 935.69 L 1778.74 965.48 M 1653.96 899.44 L 1653.96 891 M 1643.98 891 L 1663.94 891 M 1630.5 950.59 L 1638.99 950.59 M 1630.5 940.66 L 1630.5 960.52 M 1668.93 948.6 H 1682.41 V 952.57 H 1668.93 Z");
+        CreateNode("node5", 36, 43, 256, 121, "M 1.17 5.07 L 20.67 16.77 L 1.17 28.47 Z M 40.17 5.07 L 20.67 16.77 L 40.17 28.47 Z M 20.67 16.77 L 32.37 36.27 L 8.97 36.27 Z");
+        CreateNode("node6", 40, 40, 256, 300, "M 1831.5 964 L 1831.5 989 M 1874.5 964 L 1874.5 989 M 1833.65 965.25 L 1872.35 987.75");
+        CreateNode("node7", 36, 43, 380, 417, "M 1.17 5.07 L 20.67 16.77 L 1.17 28.47 Z M 40.17 5.07 L 20.67 16.77 L 40.17 28.47 Z M 20.67 16.77 L 32.37 36.27 L 8.97 36.27 Z");
+        CreateNode("node8", 40, 40, 380, 600, "M 1831.5 964 L 1831.5 989 M 1874.5 964 L 1874.5 989 M 1833.65 965.25 L 1872.35 987.75");
+        Node node11 = new Node()
+            {
+                ID = "node11",
+                Height = 60,
+                Width = 120,
+                OffsetX = 730,
+                OffsetY = 300,
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+                {
+                    new ShapeAnnotation()
+                    {
+                        Content="Mixer",
+                        Offset=new DiagramPoint(){X=0.5,Y=0.4}
+                    },
+                     new ShapeAnnotation()
+                    {
+                        Content="M-08",
+                        Offset=new DiagramPoint(){X=0.5,Y=0.8}
+                    }
+                },
+                Shape = new BasicShape()
+                {
+                    Shape = NodeBasicShapes.Rectangle
+                }
+            };
+        Node node9 = new Node()
+            {
+                ID = "node9",
+                Height = 48,
+                Width = 48,
+                OffsetX = 441,
+                OffsetY = 204,
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+                {
+                    new ShapeAnnotation()
+                    {
+                        Content="FT",
+                        Offset=new DiagramPoint(){X=0.5,Y=0.4}
+                    },
+                     new ShapeAnnotation()
+                    {
+                        Content="10",
+                        Offset=new DiagramPoint(){X=0.5,Y=0.8}
+                    }
+                },
+                Shape = new BasicShape()
+                {
+                    Shape = NodeBasicShapes.Ellipse
+                }
+            };
+        Node node10 = new Node()
+            {
+                ID = "node10",
+                Height = 48,
+                Width = 48,
+                OffsetX = 499,
+                OffsetY = 517,
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+                {
+                    new ShapeAnnotation()
+                    {
+                        Content="FT",
+                        Offset=new DiagramPoint(){X=0.5,Y=0.4}
+                    },
+                     new ShapeAnnotation()
+                    {
+                        Content="10",
+                        Offset=new DiagramPoint(){X=0.5,Y=0.8}
+                    }
+                },
+                Shape = new BasicShape()
+                {
+                    Shape = NodeBasicShapes.Ellipse
+                }
+            };
+        NodeCollection.Add(node11);
+        NodeCollection.Add(node9);
+        NodeCollection.Add(node10);
+        CreateNode("node12", 39, 47, 843, 369, "M 2262.25 1010.5 L 2285.75 1010.5 L 2297.5 1030 L 2285.75 1049.5 L 2262.25 1049.5 L 2250.5 1030 Z");
+        CreateNode("node13", 95, 40, 950, 300, "M 29.11 4.37 L 29.11 37.04 C 29.11 38.77 25.44 40.18 20.91 40.18 C 16.38 40.18 12.71 38.77 12.71 37.04 L 12.71 4.37 C 12.71 2.64 16.38 1.23 20.91 1.23 C 25.44 1.23 29.11 2.64 29.11 4.37 Z M 12.71 4.37 L 29.11 4.37 M 12.71 37.04 L 29.11 37.04 M 12.71 28.87 L 29.11 28.87 M 12.71 12.54 L 29.11 12.54 M 15.99 12.54 L 12.71 15.8 M 22.55 12.54 L 12.71 22.34 M 25.83 12.54 L 12.71 25.61 M 29.11 12.54 L 12.71 28.87 M 29.11 15.8 L 15.99 28.87 M 29.11 22.34 L 22.55 28.87 M 29.11 25.61 L 25.83 28.87 M 19.27 12.54 L 12.71 19.07 M 29.11 19.07 L 19.27 28.87");
+        
+        
+        
+        CreateConnector("connector1", "node1", "node6", ConnectorSegmentType.Straight);
+        CreateConnector("connector2", "node4", "node8", ConnectorSegmentType.Straight);
+        CreateConnector("connector3", "node6", "node5", ConnectorSegmentType.Straight);
+        CreateConnector("connector4", "node8", "node7", ConnectorSegmentType.Straight);
+        CreateConnector("connector5", "node6", "node11", ConnectorSegmentType.Straight);
+        CreateConnector("connector6", "node11", "node13", ConnectorSegmentType.Straight);
+
+
+        Connector connector = new Connector()
+            {
+                ID = "connector10",
+                SourceID = "node12",
+                TargetPoint = new DiagramPoint() { X = 840, Y = 300 }
+            };
+        Connectors.Add(connector);
+        Connector connector11 = new Connector()
+            {
+                ID = "connector11",
+                SourceID = "node5",
+                SourcePortID = "port1",
+                TargetPoint = new DiagramPoint() { X = 153, Y = 118 }
+            };
+        Connectors.Add(connector11);
+        Connector connector12 = new Connector()
+            {
+                ID = "connector12",
+                SourceID = "node9",
+                TargetDecorator = new DecoratorSettings()
+                {
+                    Shape = DecoratorShape.None,
+                },
+                TargetPoint = new DiagramPoint() { X = 440, Y = 300 }
+            };
+        Connectors.Add(connector12);
+        Connector connector13 = new Connector()
+            {
+                ID = "connector13",
+                SourceID = "node8",
+                SourcePortID = "port2",
+                Segments = new DiagramObjectCollection<ConnectorSegment>()
+            {
+                new OrthogonalSegment
+                {
+                    Length = 200,
+                    Type = ConnectorSegmentType.Orthogonal,
+                    Direction = Direction.Right
+                },
+            },
+                Type = ConnectorSegmentType.Orthogonal,
+                TargetPoint = new DiagramPoint() { X = 600, Y = 300 }
+            };
+        Connectors.Add(connector13);
+        Connector connector14 = new Connector()
+            {
+                ID = "connector14",
+                SourceID = "node7",
+                SourcePortID = "port1",
+                TargetPoint = new DiagramPoint() { X = 274, Y = 415 }
+            };
+        Connectors.Add(connector14);
+        Connector connector15 = new Connector()
+            {
+                ID = "connector15",
+                TargetDecorator = new DecoratorSettings()
+                {
+                    Shape = DecoratorShape.None,
+                },
+                SourceID = "node10",
+                TargetPoint = new DiagramPoint() { X = 500, Y = 600 }
+            };
+        Connectors.Add(connector15);
+    }
+    public void CreateNode(string id, double height, double width, double offsetX, double offsetY, string data)
+    {
+        Node node = new Node()
+            {
+                ID = id,
+                Height = height,
+                Width = width,
+                OffsetX = offsetX,
+                OffsetY = offsetY,
+                Shape = new PathShape()
+                {
+                    Type = NodeShapes.Path,
+                    Data = data
+                },
+                Style = new ShapeStyle()
+                {
+                    Fill = "None"
+                }
+            };
+
+        AddPortsToNode(id, node);
+        AddAnnotationsToNode(id, node);
+
+        NodeCollection.Add(node);
+    }
+
+    private void AddPortsToNode(string id, Node node)
+    {
+        if (id == "node6" || id == "node8")
+        {
+            node.Ports = new DiagramObjectCollection<PointPort>()
+        {
+            new PointPort()
+            {
+                ID = "port1",
+                Shape = PortShapes.Circle,
+                Visibility = PortVisibility.Visible,
+                Height = 6,
+                Width = 6,
+                Style = new ShapeStyle() { Fill = "black" }
+            },
+            new PointPort()
+            {
+                ID = "port2",
+                Shape = PortShapes.Circle,
+                Offset = new DiagramPoint() { X = 1, Y = 0.5 },
+                Visibility = PortVisibility.Hidden,
+                Style = new ShapeStyle() { Fill = "black" }
+            }
+        };
+        }
+        else if (id == "node5" || id == "node7")
+        {
+            node.Ports = new DiagramObjectCollection<PointPort>()
+        {
+            new PointPort()
+            {
+                ID = "port1",
+                Shape = PortShapes.Circle,
+                Height = 6,
+                Width = 6,
+                Offset = new DiagramPoint() { X = 0, Y = 0.4 },
+                Visibility = PortVisibility.Visible,
+                Style = new ShapeStyle() { Fill = "black" }
+            }
+        };
+        }
+    }
+
+    private void AddAnnotationsToNode(string id, Node node)
+    {
+        if (id == "node12")
+        {
+            node.Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+        {
+            new ShapeAnnotation() { Content = "S" },
+            new ShapeAnnotation()
+            {
+                Content = "Sample Point",
+                Style = new TextStyle() { TextAlign = TextAlign.Justify, TextWrapping = TextWrap.NoWrap },
+                Offset = new DiagramPoint() { X = 0.5, Y = 1.5 }
+            }
+        };
+        }
+        else if (id == "node13")
+        {
+            node.Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+        {
+            new ShapeAnnotation()
+            {
+                Content = "To Reactor R-102",
+                Style = new TextStyle() { TextAlign = TextAlign.Justify, TextWrapping = TextWrap.NoWrap },
+                Offset = new DiagramPoint() { X = 0.5, Y = 1.2 }
+            }
+        };
+        }
+        else if (id == "node1" || id == "node4")
+        {
+            node.Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+        {
+            new ShapeAnnotation()
+            {
+                Content = "From Transfer Pump ",
+                Offset = new DiagramPoint() { X = 0.5, Y = 1.1 }
+            },
+            new ShapeAnnotation()
+            {
+                Content = id == "node1" ? "P-201" : "P-504",
+                Offset = new DiagramPoint() { X = 0.5, Y = 1.3 }
+            }
+        };
+        }
+        else if (id == "node5" || id == "node7")
+        {
+            node.Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+        {
+            new ShapeAnnotation()
+            {
+                ID = id == "node5" ? "NodeAnnotation2" : "NodeAnnotation1",
+                UseTemplate = true,
+                Height = 75,
+                Width = 200,
+                Offset = new DiagramPoint() { X = 0.5, Y = -0.2 }
+            }
+        };
+        }
+    }
+
+    private void CreateConnector(string id, string sourceid, string targetid, ConnectorSegmentType type)
+    {
+        Connector connector = new Connector()
+            {
+                ID = id,
+                SourceID = sourceid,
+                TargetID = targetid,
+                Type = type
+            };
+
+        AddAnnotationsToConnector(id, connector);
+
+        Connectors.Add(connector);
+    }
+
+    private void AddAnnotationsToConnector(string id, Connector connector)
+    {
+        if (id == "connector3" || id == "connector4")
+        {
+            connector.SourcePortID = "port1";
+            connector.TargetDecorator = new DecoratorSettings()
+                {
+                    Shape = DecoratorShape.None
+                };
+        }
+
+        if (id == "connector2" || id == "connector5")
+        {
+            connector.Annotations = new DiagramObjectCollection<PathAnnotation>()
+        {
+            new PathAnnotation()
+            {
+                Content = id == "connector2" ? "Fv-3-3041" : "Fv-3-3040",
+                Alignment = AnnotationAlignment.Before,
+                Offset = id == "connector5" ? 0.2 : 0
+            }
+        };
+        }
+        else if (id == "connector3" || id == "connector4")
+        {
+            connector.Annotations = new DiagramObjectCollection<PathAnnotation>()
+        {
+            new PathAnnotation()
+            {
+                ID = id == "connector3" ? "ConnectorAnnotation1" : "ConnectorAnnotation2",
+                UseTemplate = true,
+                Height = 20,
+                Width = 20,
+                Offset = 0.5,
+                Alignment = AnnotationAlignment.Center
+            }
+        };
+        }
+    }
+
+
+
+}

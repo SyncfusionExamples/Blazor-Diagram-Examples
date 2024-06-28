@@ -1,0 +1,323 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Diagram.SymbolPalette
+@using Syncfusion.Blazor.Buttons
+
+<SfButton OnClick="@SaveDiagram" >Save</SfButton>
+<SfButton OnClick="@LoadDiagram">Load</SfButton>
+
+
+<SfDiagramComponent @ref="@Diagram" @bind-Connectors="@connectors" Created="OnCreated" SelectionChanged="@OnSelectionChanged" Height="687px" GetCustomTool="@GetCustomTool" @bind-Nodes="@nodes" SelectionSettings="@selectionSettings" NodeCreating="OnNodeCreating" ConnectorCreating="OnConnectorCreating">
+</SfDiagramComponent>
+
+                
+
+@code{
+    int connectorCount = 0;
+    DiagramSelectionSettings selectionSettings = new DiagramSelectionSettings();
+    public SfDiagramComponent Diagram;
+
+    DiagramObjectCollection<UserHandle> handles = new DiagramObjectCollection<UserHandle>();
+    //Defines Diagram's nodes collection
+    private DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+
+    //Defines Diagram's connectors collection
+    private DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        if (firstRender)
+        {
+            UpdateHandle();
+        }
+    }
+
+    private void OnSelectionChanged(Syncfusion.Blazor.Diagram.SelectionChangedEventArgs args)
+    {
+        if (args.NewValue.Count>0 && args.NewValue[0] is Node)
+        {
+            Diagram.SelectionSettings.Constraints = Diagram.SelectionSettings.Constraints | SelectorConstraints.UserHandle;
+        }
+        else if(args.NewValue.Count>0)
+        {
+            Diagram.SelectionSettings.Constraints = Diagram.SelectionSettings.Constraints & ~SelectorConstraints.UserHandle;
+        }
+    }
+
+    private void OnCreated()
+    {
+        Diagram.Select(new DiagramObjectCollection<IDiagramObject>() { Diagram.Nodes[0] });
+        FitOptions options = new FitOptions() { Mode = FitMode.Both, Region = DiagramRegion.Content };
+        Diagram.FitToPage(options);
+    }
+
+    // Method to customize the tool
+    public InteractionControllerBase GetCustomTool(DiagramElementAction action, string id)
+    {
+        InteractionControllerBase tool = null;
+        if (id == "Draw")
+        {
+            tool = new DrawTool(Diagram);
+        }
+        else
+        {
+            tool = new AddDeleteTool(Diagram);
+        }
+        return tool;
+    }
+    // Custom tool to delete the node.
+    public class AddDeleteTool : InteractionControllerBase
+    {
+        SfDiagramComponent sfDiagram;
+        Node deleteObject = null;
+        public AddDeleteTool(SfDiagramComponent Diagram) : base(Diagram)
+        {
+            sfDiagram = Diagram;
+        }
+        public override void OnMouseDown(DiagramMouseEventArgs args)
+        {
+            if (sfDiagram.SelectionSettings.Nodes.Count>0 && ((sfDiagram.SelectionSettings.Nodes[0]) is Node))
+            {
+                deleteObject = (sfDiagram.SelectionSettings.Nodes[0]) as Node;
+            }
+            base.OnMouseDown(args);
+        }
+        public override void OnMouseUp(DiagramMouseEventArgs args)
+        {
+            if (deleteObject != null)
+            {
+                sfDiagram.StartGroupAction();
+                sfDiagram.BeginUpdate();
+                sfDiagram.Nodes.Remove(deleteObject);
+                _ = sfDiagram.EndUpdate();
+                sfDiagram.EndGroupAction();
+            }
+            base.OnMouseUp(args);
+            this.InAction = true;
+        }
+
+    }
+
+    public class DrawTool : ConnectorDrawingController
+    {
+        SfDiagramComponent sfDiagram;
+        Connector newConnector = null;
+        public DrawTool(SfDiagramComponent Diagram):base(Diagram, DiagramElementAction.ConnectorSourceEnd)
+        {
+            sfDiagram = Diagram;
+            newConnector = new Connector()
+            {
+                ID = "OrthogonalConnector",
+                SourceID = sfDiagram.SelectionSettings.Nodes[0].ID,
+                Type = ConnectorSegmentType.Orthogonal,
+            };
+            @*Hidden:Lines*@
+            #pragma warning disable BL0005
+            @*End:Hidden*@
+            Diagram.InteractionController = DiagramInteractions.DrawOnce;            
+            Diagram.DrawingObject = newConnector;
+            @*Hidden:Lines*@
+            #pragma warning restore BL0005
+            @*End:Hidden*@
+        }
+        public override void OnMouseDown(DiagramMouseEventArgs args)
+        {
+            base.OnMouseDown(args);
+        }
+        public override void OnMouseUp(DiagramMouseEventArgs args)
+        {
+            base.OnMouseUp(args);
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+         InitDiagramModel();
+
+    }
+    // Create Nodes and Connectors for the diagram.
+    private void InitDiagramModel()
+    {
+        CreateNode("node1", 300, 80, NodeFlowShapes.Terminator, "Place order");
+        CreateNode("node2", 300, 160, NodeFlowShapes.Process, "Start transaction");
+        CreateNode("node3", 300, 240, NodeFlowShapes.Process, "Verification");
+        CreateNode("node4", 300, 330, NodeFlowShapes.Decision, "Credit card valid?");
+        CreateNode("node5", 300, 430, NodeFlowShapes.Decision, "Funds available?");
+        CreateNode("node6", 530, 330, NodeFlowShapes.Process, "Enter payment method");
+        CreateNode("node7", 300, 530, NodeFlowShapes.Process, "Complete transaction");
+        CreateNode("node8", 110, 530, NodeFlowShapes.Data, "Send e-mail");
+        CreateNode("node9", 475, 530, NodeFlowShapes.DirectData, "Customer \n database");
+        CreateNode("node10", 300, 630, NodeFlowShapes.Terminator, "Log transaction");
+        CreateNode("node11", 480, 630, NodeFlowShapes.Process, "Reconcile the entries");     
+        CreateConnector("node1", "node2");
+        CreateConnector("node2", "node3");
+        CreateConnector("node3", "node4");
+        CreateConnector("node4", "node5", "Yes");
+        CreateConnector("node4", "node6", "No", false, "port3", "port1");
+        CreateConnector("node5", "node6", "No", false, "port3", "port4");
+        CreateConnector("node5", "node7", "Yes");
+        CreateConnector("node6", "node2", default(string), false, "port2", "port3");
+        CreateConnector("node7", "node8");
+        CreateConnector("node7", "node9");
+        CreateConnector("node7", "node10");
+        CreateConnector("node10", "node11", default(string), true);
+    }
+    
+    private void OnNodeCreating(IDiagramObject obj)
+    {
+        Node node = obj as Node;
+        node.Style.Fill = "#357BD2";
+        if (!(node.ID.StartsWith("Annotation") || node.ID.StartsWith("Sequential Data")))
+            node.Style.StrokeColor = "White";
+        node.Style.Opacity = 1;
+    }
+    private void OnConnectorCreating(IDiagramObject obj)
+    {
+        Connector connector = obj as Connector;
+        connector.Style.Fill = "black";
+        connector.Style.StrokeColor = "black";
+        connector.Style.Opacity = 1;
+        connector.TargetDecorator.Style.Fill = "black";
+        connector.TargetDecorator.Style.StrokeColor = "black";
+    }
+
+    // used to create a Port.
+    private DiagramObjectCollection<PointPort> CreatePort()
+    {
+        DiagramObjectCollection<PointPort> defaultsPorts = new DiagramObjectCollection<PointPort>();
+        PointPort port1 = new PointPort()
+        {
+            ID = "port1",
+            Shape = PortShapes.Circle,
+            Offset = new DiagramPoint() { X = 0, Y = 0.5}
+        };
+        PointPort port2 = new PointPort()
+        {
+            ID = "port2",
+            Shape = PortShapes.Circle,
+            Offset = new DiagramPoint() { X = 0.5, Y = 0 }
+        };
+        PointPort port3 = new PointPort()
+        {
+            ID = "port3",
+            Shape = PortShapes.Circle,
+            Offset = new DiagramPoint() { X = 1, Y = 0.5 }
+        };
+        PointPort port4 = new PointPort()
+        {
+            ID = "port4",
+            Shape = PortShapes.Circle,
+            Offset = new DiagramPoint() { X = 0.5, Y = 1 }
+        };
+        defaultsPorts.Add(port1);
+        defaultsPorts.Add(port2);
+        defaultsPorts.Add(port3);
+        defaultsPorts.Add(port4);
+        return defaultsPorts;
+    }
+    // Method is used to create a Connector for the diagram.
+    private void CreateConnector(string sourceId, string targetId, string label = default(string), bool isDashLine = false, string sport = "", string tport = "")
+    {
+        Connector diagramConnector = new Connector()
+        {
+            ID = string.Format("connector{0}", ++connectorCount),
+            SourceID = sourceId,
+            TargetID = targetId,
+            SourcePortID = sport,
+            TargetPortID = tport
+        };
+        if (isDashLine)
+        {
+            diagramConnector.Style = new ShapeStyle() { StrokeDashArray = "2,2" };
+        }
+        if (label != default(string))
+        {
+            var annotation = new PathAnnotation()
+            {
+                Content = label,
+                Style = new TextStyle() { Fill = "white" }
+            };
+            if ((sourceId == "node5" && targetId == "node6") || label == "Yes" || label == "No")
+            {
+                annotation.Height = 10;
+                annotation.Width = 15;
+            }
+            diagramConnector.Annotations = new DiagramObjectCollection<PathAnnotation>() { annotation };
+        }
+        diagramConnector.Type = ConnectorSegmentType.Orthogonal;
+
+        connectors.Add(diagramConnector);
+    }
+    // Method is used to create a node for the diagram.
+    private void CreateNode(string id, double x, double y, NodeFlowShapes shape, string label)
+    {
+        Node diagramNode = new Node()
+        {
+            ID = id,
+            OffsetX = x,
+            OffsetY = y,
+            Width = 145,
+            Ports = CreatePort(),
+            Height = 60,
+            Style = new ShapeStyle { Fill = "#357BD2", StrokeColor = "White" },
+
+            Shape = new FlowShape() { Type = Syncfusion.Blazor.Diagram.NodeShapes.Flow, Shape = shape },
+            Annotations = new DiagramObjectCollection<ShapeAnnotation>
+            {
+                new ShapeAnnotation
+                {
+                    Content = label,
+                    Style = new TextStyle()
+                    {
+                        Color="White", Fill = "transparent"
+                    }
+                }
+            }
+        };
+        nodes.Add(diagramNode);
+    }
+    private void UpdateHandle()
+    {
+        UserHandle deleteHandle = AddHandle("Delete", "delete", Direction.Bottom, 0.5);
+        UserHandle drawHandle = AddHandle("Draw", "draw", Direction.Right,0.5);
+        handles.Add(deleteHandle);
+        handles.Add(drawHandle);
+        selectionSettings.UserHandles = handles;
+    }
+
+    private UserHandle AddHandle(string name, string path, Direction direction, double offset)
+    {
+        UserHandle handle = new UserHandle()
+        {
+            Name = name,
+            Visible = true,
+            Offset = offset,
+            Side = direction,
+            Margin = new DiagramThickness() { Top = 0, Bottom = 0, Left = 0, Right = 0 }
+        };
+        if (path == "delete")
+        {
+            handle.PathData = "M0.54700077,2.2130003 L7.2129992,2.2130003 7.2129992,8.8800011 C7.2129992,9.1920013 7.1049975,9.4570007 6.8879985,9.6739998 6.6709994,9.8910007 6.406,10 6.0939997,10 L1.6659999,10 C1.3539997,10 1.0890004,9.8910007 0.87200136,9.6739998 0.65500242,9.4570007 0.54700071,9.1920013 0.54700077,8.8800011 z M2.4999992,0 L5.2600006,0 5.8329986,0.54600048 7.7599996,0.54600048 7.7599996,1.6660004 0,1.6660004 0,0.54600048 1.9270014,0.54600048 z";
+        }
+        else
+        {
+            handle.PathData = "M3.9730001,0 L8.9730001,5.0000007 3.9730001,10.000001 3.9730001,7.0090005 0,7.0090005 0,2.9910006 3.9730001,2.9910006 z";
+        }
+        return handle;
+    }
+    string data;
+    //Method to save the diagram
+    public async Task SaveDiagram()
+    {
+        data = Diagram.SaveDiagram();
+    }
+
+    //Method to load the diagram
+    public async Task LoadDiagram()
+    {
+        await Diagram.LoadDiagram(data);
+    }
+
+}

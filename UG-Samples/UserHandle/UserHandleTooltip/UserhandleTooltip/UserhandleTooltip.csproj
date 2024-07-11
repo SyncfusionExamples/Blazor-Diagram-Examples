@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="26.1.41" />
+    <PackageReference Include="Syncfusion.Licensing" Version="26.1.41" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="D:\source\ej2-blazor-source\Syncfusion.Blazor\Syncfusion.Blazor.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -5,10 +5,6 @@
 <SfDiagramComponent Height="600px"
                     Nodes="@nodes"
                     SelectionSettings="@SelectedModel">
-    <SnapSettings>
-        <HorizontalGridLines LineColor="White" LineDashArray="2,2" />
-        <VerticalGridLines LineColor="White" LineDashArray="2,2" />
-    </SnapSettings>
 </SfDiagramComponent>
 
 @code
@@ -32,11 +28,7 @@
         {
             cloneHandle
         };
-        SelectedModel = new DiagramSelectionSettings()
-        {
-            Constraints = SelectorConstraints.UserHandle,
-            UserHandles = this.UserHandles
-        };
+        SelectedModel.UserHandles = UserHandles;
         nodes = new DiagramObjectCollection<Node>();
         Node diagramNode = new Node()
         {

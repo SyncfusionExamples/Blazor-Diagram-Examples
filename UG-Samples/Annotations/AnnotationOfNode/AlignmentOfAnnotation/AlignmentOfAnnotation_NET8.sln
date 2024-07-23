@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlignmentOfAnnotation_NET8", "AlignmentOfAnnotation_NET8.csproj", "{911475E3-9EDC-4B04-B2C9-17837B6CFB7F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{911475E3-9EDC-4B04-B2C9-17837B6CFB7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{911475E3-9EDC-4B04-B2C9-17837B6CFB7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{911475E3-9EDC-4B04-B2C9-17837B6CFB7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{911475E3-9EDC-4B04-B2C9-17837B6CFB7F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7D4FEF60-95F4-42FA-8085-998F6805E467}
+	EndGlobalSection
+EndGlobal

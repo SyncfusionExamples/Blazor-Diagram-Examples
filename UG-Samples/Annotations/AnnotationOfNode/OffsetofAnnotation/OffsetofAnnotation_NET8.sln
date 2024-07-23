@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OffsetofAnnotation_NET8", "OffsetofAnnotation_NET8.csproj", "{2A5CAE89-93F5-409A-AE56-7E550523323C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2A5CAE89-93F5-409A-AE56-7E550523323C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A5CAE89-93F5-409A-AE56-7E550523323C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A5CAE89-93F5-409A-AE56-7E550523323C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A5CAE89-93F5-409A-AE56-7E550523323C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CF7D59A8-79D8-4FCF-84DD-0DF77E5880AA}
+	EndGlobalSection
+EndGlobal

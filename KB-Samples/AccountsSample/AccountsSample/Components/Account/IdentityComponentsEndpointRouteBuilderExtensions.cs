@@ -1,6 +1,6 @@
-using AccountsSample.Components.Account.Pages;
-using AccountsSample.Components.Account.Pages.Manage;
-using AccountsSample.Data;
+using AccountsSample_NET8.Components.Account.Pages;
+using AccountsSample_NET8.Components.Account.Pages.Manage;
+using AccountsSample_NET8.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;

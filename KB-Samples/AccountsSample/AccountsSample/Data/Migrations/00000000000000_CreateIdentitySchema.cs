@@ -3,7 +3,7 @@ using System;
 
 #nullable disable
 
-namespace AccountsSample.Migrations
+namespace AccountsSample_NET8.Migrations
 {
     /// <inheritdoc />
     public partial class CreateIdentitySchema : Migration

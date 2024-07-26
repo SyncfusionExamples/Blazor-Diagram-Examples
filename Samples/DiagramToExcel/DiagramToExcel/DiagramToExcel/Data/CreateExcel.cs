@@ -8,7 +8,7 @@ using System.IO;
 using System.Data;
 using Syncfusion.Blazor.Diagram;
 using System.Drawing;
-using static DiagramToExcel.Pages.Index;
+using static DiagramToExcel.Index;
 
 namespace DiagramToExcel.Data
 {

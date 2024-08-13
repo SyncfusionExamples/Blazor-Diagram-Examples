@@ -1,0 +1,143 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\SriRamTamilVanan\\source\\repos\\OrthogonalThumbShape\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F5EBC057-3383-446A-8334-9E6FF7063E1F}|OrthogonalThumbShape\\OrthogonalThumbShape.csproj|c:\\users\\sriramtamilvanan\\source\\repos\\orthogonalthumbshape\\orthogonalthumbshape\\orthogonalthumbshape.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{F5EBC057-3383-446A-8334-9E6FF7063E1F}|OrthogonalThumbShape\\OrthogonalThumbShape.csproj|solutionrelative:orthogonalthumbshape\\orthogonalthumbshape.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5EBC057-3383-446A-8334-9E6FF7063E1F}|OrthogonalThumbShape\\OrthogonalThumbShape.csproj|c:\\users\\sriramtamilvanan\\source\\repos\\orthogonalthumbshape\\orthogonalthumbshape\\shared\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F5EBC057-3383-446A-8334-9E6FF7063E1F}|OrthogonalThumbShape\\OrthogonalThumbShape.csproj|solutionrelative:orthogonalthumbshape\\shared\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5EBC057-3383-446A-8334-9E6FF7063E1F}|OrthogonalThumbShape\\OrthogonalThumbShape.csproj|c:\\users\\sriramtamilvanan\\source\\repos\\orthogonalthumbshape\\orthogonalthumbshape\\pages\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F5EBC057-3383-446A-8334-9E6FF7063E1F}|OrthogonalThumbShape\\OrthogonalThumbShape.csproj|solutionrelative:orthogonalthumbshape\\pages\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5EBC057-3383-446A-8334-9E6FF7063E1F}|OrthogonalThumbShape\\OrthogonalThumbShape.csproj|c:\\users\\sriramtamilvanan\\source\\repos\\orthogonalthumbshape\\orthogonalthumbshape\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F5EBC057-3383-446A-8334-9E6FF7063E1F}|OrthogonalThumbShape\\OrthogonalThumbShape.csproj|solutionrelative:orthogonalthumbshape\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5EBC057-3383-446A-8334-9E6FF7063E1F}|OrthogonalThumbShape\\OrthogonalThumbShape.csproj|c:\\users\\sriramtamilvanan\\source\\repos\\orthogonalthumbshape\\orthogonalthumbshape\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5EBC057-3383-446A-8334-9E6FF7063E1F}|OrthogonalThumbShape\\OrthogonalThumbShape.csproj|solutionrelative:orthogonalthumbshape\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5EBC057-3383-446A-8334-9E6FF7063E1F}|OrthogonalThumbShape\\OrthogonalThumbShape.csproj|c:\\users\\sriramtamilvanan\\source\\repos\\orthogonalthumbshape\\orthogonalthumbshape\\pages\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F5EBC057-3383-446A-8334-9E6FF7063E1F}|OrthogonalThumbShape\\OrthogonalThumbShape.csproj|solutionrelative:orthogonalthumbshape\\pages\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5EBC057-3383-446A-8334-9E6FF7063E1F}|OrthogonalThumbShape\\OrthogonalThumbShape.csproj|c:\\users\\sriramtamilvanan\\source\\repos\\orthogonalthumbshape\\orthogonalthumbshape\\pages\\_host.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F5EBC057-3383-446A-8334-9E6FF7063E1F}|OrthogonalThumbShape\\OrthogonalThumbShape.csproj|solutionrelative:orthogonalthumbshape\\pages\\_host.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "OrthogonalThumbShape",
+              "DocumentMoniker": "C:\\Users\\SriRamTamilVanan\\source\\repos\\OrthogonalThumbShape\\OrthogonalThumbShape\\OrthogonalThumbShape.csproj",
+              "RelativeDocumentMoniker": "OrthogonalThumbShape\\OrthogonalThumbShape.csproj",
+              "ToolTip": "C:\\Users\\SriRamTamilVanan\\source\\repos\\OrthogonalThumbShape\\OrthogonalThumbShape\\OrthogonalThumbShape.csproj",
+              "RelativeToolTip": "OrthogonalThumbShape\\OrthogonalThumbShape.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-08-13T10:45:56.015Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "App.razor",
+              "DocumentMoniker": "C:\\Users\\SriRamTamilVanan\\source\\repos\\OrthogonalThumbShape\\OrthogonalThumbShape\\App.razor",
+              "RelativeDocumentMoniker": "OrthogonalThumbShape\\App.razor",
+              "ToolTip": "C:\\Users\\SriRamTamilVanan\\source\\repos\\OrthogonalThumbShape\\OrthogonalThumbShape\\App.razor",
+              "RelativeToolTip": "OrthogonalThumbShape\\App.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-13T10:11:37.078Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainLayout.razor",
+              "DocumentMoniker": "C:\\Users\\SriRamTamilVanan\\source\\repos\\OrthogonalThumbShape\\OrthogonalThumbShape\\Shared\\MainLayout.razor",
+              "RelativeDocumentMoniker": "OrthogonalThumbShape\\Shared\\MainLayout.razor",
+              "ToolTip": "C:\\Users\\SriRamTamilVanan\\source\\repos\\OrthogonalThumbShape\\OrthogonalThumbShape\\Shared\\MainLayout.razor",
+              "RelativeToolTip": "OrthogonalThumbShape\\Shared\\MainLayout.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-13T10:11:21.496Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\SriRamTamilVanan\\source\\repos\\OrthogonalThumbShape\\OrthogonalThumbShape\\Pages\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "OrthogonalThumbShape\\Pages\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\SriRamTamilVanan\\source\\repos\\OrthogonalThumbShape\\OrthogonalThumbShape\\Pages\\_Layout.cshtml",
+              "RelativeToolTip": "OrthogonalThumbShape\\Pages\\_Layout.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACAAAAAHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-13T10:04:02.695Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\SriRamTamilVanan\\source\\repos\\OrthogonalThumbShape\\OrthogonalThumbShape\\Program.cs",
+              "RelativeDocumentMoniker": "OrthogonalThumbShape\\Program.cs",
+              "ToolTip": "C:\\Users\\SriRamTamilVanan\\source\\repos\\OrthogonalThumbShape\\OrthogonalThumbShape\\Program.cs",
+              "RelativeToolTip": "OrthogonalThumbShape\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-13T10:03:26.662Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "_Host.cshtml",
+              "DocumentMoniker": "C:\\Users\\SriRamTamilVanan\\source\\repos\\OrthogonalThumbShape\\OrthogonalThumbShape\\Pages\\_Host.cshtml",
+              "RelativeDocumentMoniker": "OrthogonalThumbShape\\Pages\\_Host.cshtml",
+              "ToolTip": "C:\\Users\\SriRamTamilVanan\\source\\repos\\OrthogonalThumbShape\\OrthogonalThumbShape\\Pages\\_Host.cshtml",
+              "RelativeToolTip": "OrthogonalThumbShape\\Pages\\_Host.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-13T10:02:54.314Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.razor",
+              "DocumentMoniker": "C:\\Users\\SriRamTamilVanan\\source\\repos\\OrthogonalThumbShape\\OrthogonalThumbShape\\Pages\\Index.razor",
+              "RelativeDocumentMoniker": "OrthogonalThumbShape\\Pages\\Index.razor",
+              "ToolTip": "C:\\Users\\SriRamTamilVanan\\source\\repos\\OrthogonalThumbShape\\OrthogonalThumbShape\\Pages\\Index.razor",
+              "RelativeToolTip": "OrthogonalThumbShape\\Pages\\Index.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAABAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-13T10:01:19.982Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

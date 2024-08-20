@@ -1,6 +1,6 @@
-using AccountsSample.Components;
-using AccountsSample.Components.Account;
-using AccountsSample.Data;
+using AccountsSample_NET8.Components;
+using AccountsSample_NET8.Components.Account;
+using AccountsSample_NET8.Data;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

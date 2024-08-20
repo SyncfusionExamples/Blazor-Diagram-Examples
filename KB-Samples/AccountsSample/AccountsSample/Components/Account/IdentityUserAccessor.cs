@@ -1,7 +1,7 @@
-using AccountsSample.Data;
+using AccountsSample_NET8.Data;
 using Microsoft.AspNetCore.Identity;
 
-namespace AccountsSample.Components.Account
+namespace AccountsSample_NET8.Components.Account
 {
     internal sealed class IdentityUserAccessor(UserManager<ApplicationUser> userManager, IdentityRedirectManager redirectManager)
     {

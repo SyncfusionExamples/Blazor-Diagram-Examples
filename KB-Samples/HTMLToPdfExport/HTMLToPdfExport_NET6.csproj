@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\images\diagram\overview\himage1.png" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="*" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\images\diagram\overview\himage1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Syncfusion.Blazor" Version="*" />
+    <PackageReference Include="Syncfusion.HtmlToPdfConverter.Net.Windows" Version="*" />
+  </ItemGroup>
+</Project>

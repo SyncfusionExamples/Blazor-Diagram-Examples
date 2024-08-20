@@ -5,7 +5,7 @@
 @inject Microsoft.JSInterop.IJSRuntime JS
 @using Syncfusion.Blazor.Diagram
 
-
+@namespace DiagramToExcel
 <button class="btn btn-primary" @onclick="@ExportExcel">ExportExcel</button>
 
 <SfDiagramComponent Height="900px" @ref="diagram"  NodeCreating="@OnNodeCreating" ConnectorCreating="@OnConnectorCreating">

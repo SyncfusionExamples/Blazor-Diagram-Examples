@@ -32,7 +32,7 @@
         connectors.Add(Connector);
     }
 
-    public void OnConnectorCreating(IDiagramObject args)
+    public void OnConnectorCreating(IDiagramObject obj)
     { 
         Connector connector = obj as Connector;
         connector.Style.Fill = "black";
@@ -40,4 +40,5 @@
         connector.Style.Opacity = 1;
         connector.TargetDecorator.Style.Fill = "black";
         connector.TargetDecorator.Style.StrokeColor = "black";
+    }
     }

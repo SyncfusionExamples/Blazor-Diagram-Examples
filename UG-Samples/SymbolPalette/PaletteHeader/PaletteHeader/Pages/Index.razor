@@ -58,17 +58,17 @@
     //Method to update heading
     private void UpdateHeading()
     {
-        Node decision = new Node()
+        Node Star = new Node()
             {
-                ID = "Decision",
-                Shape = new FlowShape() { Type = NodeShapes.Flow, Shape = NodeFlowShapes.Decision }
+                ID = "Star",
+                Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Star }
             };
-        symbolpalette.AddPaletteItem("Flow Shapes", decision, false);
+        symbolpalette.AddPaletteItem("Basic Shapes", Star, false);
     }
     //Method to update heading
     private void UpdateHeading1()
     {
-        symbolpalette.RemovePaletteItem("Flow Shapes", "Decision");
+        symbolpalette.RemovePaletteItem("Basic Shapes", "Star");
     }
     //Method to update heading
     private void UpdateHeading2()
@@ -86,7 +86,7 @@
     }
     private void UpdateHeading3()
     {
-        symbolpalette.RemovePalettes("Flow Shapes");
+        symbolpalette.RemovePalettes("FlowShapes");
     }
 
 }

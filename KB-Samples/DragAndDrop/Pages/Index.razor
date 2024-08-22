@@ -1,0 +1,27 @@
+﻿@page "/"
+
+<div>
+    <div style="float:left">
+        <CustomSymbolPalette @ref="@symbolpalette">
+
+        </CustomSymbolPalette>
+    </div>
+    <div>
+        <CustomDiagram @ref="@diagram">
+
+        </CustomDiagram>
+    </div>
+</div>
+
+
+
+@code {
+    internal CustomDiagram diagram;
+    internal CustomSymbolPalette symbolpalette;
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        symbolpalette.diagram = diagram;
+        await base.OnAfterRenderAsync(firstRender);
+
+    }
+}

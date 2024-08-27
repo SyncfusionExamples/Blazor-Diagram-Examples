@@ -1,0 +1,46 @@
+﻿@page "/"
+@using Syncfusion.Blazor.Diagram
+@using System.Collections.ObjectModel
+
+<SfDiagramComponent @ref="@Diagram"
+                    Width="100%"
+                    Height="700px"
+                    Nodes="nodes"
+                    Connectors="@connectors"
+                    Click="OnClick">
+</SfDiagramComponent>
+
+@code {
+    //Reference the diagram
+    SfDiagramComponent Diagram;
+    IDiagramObject actualObject;
+    //Initialize the diagram's nodes collection
+    DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+    //Defines diagram's connector collection.
+    DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
+    protected override void OnInitialized()
+    {
+        Node node = new Node()
+            {
+                OffsetX = 250,
+                OffsetY = 250,
+                Width = 100,
+                Height = 100
+            };
+        nodes.Add(node);
+        Connector Connector = new Connector()
+            {
+                ID = "connector1",
+                // Set the source and target point of the connector.
+                SourcePoint = new DiagramPoint() { X = 100, Y = 100 },
+                TargetPoint = new DiagramPoint() { X = 200, Y = 200 },
+                // Type of the connector segments.
+                Type = ConnectorSegmentType.Straight
+            };
+        connectors.Add(Connector);
+    }
+    private void OnClick(ClickEventArgs args)
+    {
+        actualObject = args.ActualObject;
+    }
+}

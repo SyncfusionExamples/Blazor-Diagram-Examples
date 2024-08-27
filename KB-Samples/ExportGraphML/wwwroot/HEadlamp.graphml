@@ -1,0 +1,451 @@
+<?xml version="1.0"?>
+<graphml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:yed="http://www.yworks.com/xml/yed/3" xmlns:y="http://www.yworks.com/xml/graphml" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://www.yworks.com/xml/schema/graphml/1.1/ygraphml.xsd" xmlns="http://graphml.graphdrawing.org/xmlns">
+  <key id="d0" for="node" yfiles.type="nodegraphics"/>
+<key id="d1" for="edge" yfiles.type="edgegraphics"/>
+<key id="d2" for="graphml" yfiles.type="resources"/>
+<key id="d10" for="node" attr.type="string" attr.name="url"/>
+<key id="d11" for="node" attr.type="string" attr.name="elementType"/>
+<key id="d12" for="edge" attr.type="string" attr.name="url"/>
+<key id="d13" for="edge" attr.type="string" attr.name="elementType"/>
+
+  <graph edgedefault="directed">
+    <node id="x0400000000000C10_0">
+      <data key="d10">x0400000000000C10_0</data>
+      <data key="d0">
+        <y:ProxyAutoBoundsNode>
+          <y:Realizers active="0">
+            <y:GroupNode>
+              <y:Geometry x="307.2" y="-530" width="1381.8" height="507.000396825397" />
+              <y:Fill hasColor="true" color="#FFFFFF" color2="#FFFFFF" />
+              <y:BorderStyle color="#000000" hasColor="true" type="line" width="1" />
+              <y:NodeLabel visible="true" hasText="true" fontSize="12" iconData="2" horizontalTextPosition="right" verticalTextPosition="top" iconTextGap="4" modelName="internal" modelPosition="t">Item Boundary</y:NodeLabel>
+              <y:NodePorts />
+              <y:Shape type="roundrectangle" />
+              <y:DropShadow />
+              <y:State />
+              <y:NodeBounds />
+              <y:Insets topF="20" bottomF="20" leftF="20" rightF="20" />
+              <y:BorderInsets topF="20" bottomF="20" leftF="20" rightF="20" />
+            </y:GroupNode>
+          </y:Realizers>
+        </y:ProxyAutoBoundsNode>
+      </data>
+      <graph edgedefault="directed">
+        <node id="x0400000000000C7B_1">
+          <data key="d10">x0400000000000C7B_1</data>
+          <data key="d0">
+            <y:ShapeNode>
+              <y:Geometry x="696.4" y="-462.999801587302" width="174.4" height="80" />
+              <y:Fill hasColor="true" color="#F5DEB3" color2="#FFFFFF" />
+              <y:BorderStyle color="#000000" hasColor="true" type="line" width="1" />
+              <y:NodeLabel visible="true" hasText="true" fontSize="12" iconData="4" horizontalTextPosition="right" verticalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c">Body control ECU</y:NodeLabel>
+              <y:NodePorts />
+              <y:Shape type="roundrectangle" />
+              <y:DropShadow />
+            </y:ShapeNode>
+          </data>
+        </node>
+        <node id="x0400000000000C13_2">
+          <data key="d10">x0400000000000C13_2</data>
+          <data key="d0">
+            <y:ShapeNode>
+              <y:Geometry x="1513.4" y="-480" width="137.6" height="80" />
+              <y:Fill hasColor="true" color="#F5DEB3" color2="#FFFFFF" />
+              <y:BorderStyle color="#000000" hasColor="true" type="line" width="1" />
+              <y:NodeLabel visible="true" hasText="true" fontSize="12" iconData="6" horizontalTextPosition="right" verticalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c">Camera ECU</y:NodeLabel>
+              <y:NodePorts />
+              <y:Shape type="roundrectangle" />
+              <y:DropShadow />
+            </y:ShapeNode>
+          </data>
+        </node>
+        <node id="x0400000000000C16_3">
+          <data key="d10">x0400000000000C16_3</data>
+          <data key="d0">
+            <y:ShapeNode>
+              <y:Geometry x="1132.6" y="-350" width="144" height="80" />
+              <y:Fill hasColor="true" color="#F5DEB3" color2="#FFFFFF" />
+              <y:BorderStyle color="#000000" hasColor="true" type="line" width="1" />
+              <y:NodeLabel visible="true" hasText="true" fontSize="12" iconData="8" horizontalTextPosition="right" verticalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c">Gateway ECU</y:NodeLabel>
+              <y:NodePorts />
+              <y:Shape type="roundrectangle" />
+              <y:DropShadow />
+            </y:ShapeNode>
+          </data>
+        </node>
+        <node id="x04000000000007F3_4">
+          <data key="d10">x04000000000007F3_4</data>
+          <data key="d0">
+            <y:ShapeNode>
+              <y:Geometry x="327.2" y="-462.999801587302" width="171.2" height="80" />
+              <y:Fill hasColor="true" color="#F5DEB3" color2="#FFFFFF" />
+              <y:BorderStyle color="#000000" hasColor="true" type="line" width="1" />
+              <y:NodeLabel visible="true" hasText="true" fontSize="12" iconData="10" horizontalTextPosition="right" verticalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c">Headlamp switch</y:NodeLabel>
+              <y:NodePorts />
+              <y:Shape type="roundrectangle" />
+              <y:DropShadow />
+            </y:ShapeNode>
+          </data>
+        </node>
+        <node id="x040000000000082C_5">
+          <data key="d10">x040000000000082C_5</data>
+          <data key="d0">
+            <y:ShapeNode>
+              <y:Geometry x="1501.4" y="-220" width="161.6" height="80" />
+              <y:Fill hasColor="true" color="#F5DEB3" color2="#FFFFFF" />
+              <y:BorderStyle color="#000000" hasColor="true" type="line" width="1" />
+              <y:NodeLabel visible="true" hasText="true" fontSize="12" iconData="12" horizontalTextPosition="right" verticalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c">Navigation ECU</y:NodeLabel>
+              <y:NodePorts />
+              <y:Shape type="roundrectangle" />
+              <y:DropShadow />
+            </y:ShapeNode>
+          </data>
+        </node>
+        <node id="x04000000000007E3_6">
+          <data key="d10">x04000000000007E3_6</data>
+          <data key="d0">
+            <y:ShapeNode>
+              <y:Geometry x="1495.4" y="-350" width="173.6" height="80" />
+              <y:Fill hasColor="true" color="#F5DEB3" color2="#FFFFFF" />
+              <y:BorderStyle color="#000000" hasColor="true" type="line" width="1" />
+              <y:NodeLabel visible="true" hasText="true" fontSize="12" iconData="14" horizontalTextPosition="right" verticalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c">OBD-II connector</y:NodeLabel>
+              <y:NodePorts />
+              <y:Shape type="roundrectangle" />
+              <y:DropShadow />
+            </y:ShapeNode>
+          </data>
+        </node>
+        <node id="x0400000000000C7F_7">
+          <data key="d10">x0400000000000C7F_7</data>
+          <data key="d0">
+            <y:ShapeNode>
+              <y:Geometry x="1101.8" y="-480" width="205.6" height="80" />
+              <y:Fill hasColor="true" color="#F5DEB3" color2="#FFFFFF" />
+              <y:BorderStyle color="#000000" hasColor="true" type="line" width="1" />
+              <y:NodeLabel visible="true" hasText="true" fontSize="12" iconData="16" horizontalTextPosition="right" verticalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c">Power switch actuator</y:NodeLabel>
+              <y:NodePorts />
+              <y:Shape type="roundrectangle" />
+              <y:DropShadow />
+            </y:ShapeNode>
+          </data>
+        </node>
+      </graph>
+    </node>
+    <node id="x04000000000007DB_8">
+      <data key="d10">x04000000000007DB_8</data>
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry x="183" y="-90" width="119.2" height="80" />
+          <y:Fill hasColor="true" color="#F5DEB3" color2="#FFFFFF" />
+          <y:BorderStyle color="#000000" hasColor="true" type="line" width="1" />
+          <y:NodeLabel visible="true" hasText="true" fontSize="12" iconData="18" horizontalTextPosition="right" verticalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c">Bluetooth</y:NodeLabel>
+          <y:NodePorts />
+          <y:Shape type="roundrectangle" />
+          <y:DropShadow />
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="x04000000000007CA_9">
+      <data key="d10">x04000000000007CA_9</data>
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry x="191" y="-220" width="103.2" height="80" />
+          <y:Fill hasColor="true" color="#F5DEB3" color2="#FFFFFF" />
+          <y:BorderStyle color="#000000" hasColor="true" type="line" width="1" />
+          <y:NodeLabel visible="true" hasText="true" fontSize="12" iconData="20" horizontalTextPosition="right" verticalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c">Cellular</y:NodeLabel>
+          <y:NodePorts />
+          <y:Shape type="roundrectangle" />
+          <y:DropShadow />
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="x04000000000007EE_10">
+      <data key="d10">x04000000000007EE_10</data>
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry x="1759" y="-451.25" width="131.2" height="80" />
+          <y:Fill hasColor="true" color="#F5DEB3" color2="#FFFFFF" />
+          <y:BorderStyle color="#000000" hasColor="true" type="line" width="1" />
+          <y:NodeLabel visible="true" hasText="true" fontSize="12" iconData="22" horizontalTextPosition="right" verticalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c">Other ECUs</y:NodeLabel>
+          <y:NodePorts />
+          <y:Shape type="roundrectangle" />
+          <y:DropShadow />
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="x040000000000083B_11">
+      <data key="d10">x040000000000083B_11</data>
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry x="0" y="-217.5" width="37" height="75" />
+          <y:Fill hasColor="true" color="#FFFF00" color2="#FFFFFF" />
+          <y:BorderStyle color="#000000" hasColor="true" type="line" width="1" />
+          <y:NodeLabel visible="true" hasText="true" fontSize="12" iconData="24" horizontalTextPosition="right" verticalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c">Remote operator</y:NodeLabel>
+          <y:NodePorts />
+          <y:Shape type="roundrectangle" />
+          <y:DropShadow />
+        </y:ShapeNode>
+      </data>
+    </node>
+    <node id="x040000000000083E_12">
+      <data key="d10">x040000000000083E_12</data>
+      <data key="d0">
+        <y:ShapeNode>
+          <y:Geometry x="1806.1" y="-321.25" width="37" height="75" />
+          <y:Fill hasColor="true" color="#FFFF00" color2="#FFFFFF" />
+          <y:BorderStyle color="#000000" hasColor="true" type="line" width="1" />
+          <y:NodeLabel visible="true" hasText="true" fontSize="12" iconData="26" horizontalTextPosition="right" verticalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c">Service engineer</y:NodeLabel>
+          <y:NodePorts />
+          <y:Shape type="roundrectangle" />
+          <y:DropShadow />
+        </y:ShapeNode>
+      </data>
+    </node>
+    <edge id="x04000000000007F3_x0400000000000C7B_0" source="x04000000000007F3_4" target="x0400000000000C7B_1">
+      <data key="d12">x04000000000007F3_x0400000000000C7B_0</data>
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:Path>
+            <y:Point x="498.4" y="-422.999801587302" />
+            <y:Point x="696.4" y="-422.999801587302" />
+          </y:Path>
+          <y:LineStyle color="#000000" hasColor="true" type="line" width="1" />
+          <y:Arrows source="none" target="none" />
+          <y:EdgeLabel hasText="true" fontSize="12">Headlamp switch command</y:EdgeLabel>
+          <y:SourcePort type="InterfacePort" />
+          <y:TargetPort type="InterfacePort" />
+          <y:BendStyle />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="x0400000000000C7B_x0400000000000C7F_1" source="x0400000000000C7B_1" target="x0400000000000C7F_7">
+      <data key="d12">x0400000000000C7B_x0400000000000C7F_1</data>
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:Path>
+            <y:Point x="870.8" y="-412.999801587302" />
+            <y:Point x="880.8" y="-412.999801587302" />
+            <y:Point x="930.8" y="-405.999603174603" />
+            <y:Point x="1036.8" y="-405.999603174603" />
+            <y:Point x="1086.8" y="-413.333333333333" />
+            <y:Point x="1101.8" y="-413.333333333333" />
+          </y:Path>
+          <y:LineStyle color="#000000" hasColor="true" type="line" width="1" />
+          <y:Arrows source="none" target="none" />
+          <y:EdgeLabel hasText="true" fontSize="12">Switch off request</y:EdgeLabel>
+          <y:SourcePort type="InterfacePort" />
+          <y:TargetPort type="InterfacePort" />
+          <y:BendStyle />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="x0400000000000C7B_x0400000000000C7F_2" source="x0400000000000C7B_1" target="x0400000000000C7F_7">
+      <data key="d12">x0400000000000C7B_x0400000000000C7F_2</data>
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:Path>
+            <y:Point x="870.8" y="-432.999801587302" />
+            <y:Point x="880.8" y="-432.999801587302" />
+            <y:Point x="930.8" y="-440" />
+            <y:Point x="1101.8" y="-440" />
+          </y:Path>
+          <y:LineStyle color="#000000" hasColor="true" type="line" width="1" />
+          <y:Arrows source="none" target="none" />
+          <y:EdgeLabel hasText="true" fontSize="12">Switch on request</y:EdgeLabel>
+          <y:SourcePort type="InterfacePort" />
+          <y:TargetPort type="InterfacePort" />
+          <y:BendStyle />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="x0400000000000C13_x0400000000000C7F_3" source="x0400000000000C13_2" target="x0400000000000C7F_7">
+      <data key="d12">x0400000000000C13_x0400000000000C7F_3</data>
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:Path>
+            <y:Point x="1513.4" y="-420" />
+            <y:Point x="1307.4" y="-420" />
+          </y:Path>
+          <y:LineStyle color="#000000" hasColor="true" type="line" width="1" />
+          <y:Arrows source="none" target="none" />
+          <y:EdgeLabel hasText="true" fontSize="12">Oncoming car information</y:EdgeLabel>
+          <y:SourcePort type="InterfacePort" />
+          <y:TargetPort type="InterfacePort" />
+          <y:BendStyle />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="x04000000000007DB_x040000000000082C_4" source="x04000000000007DB_8" target="x040000000000082C_5">
+      <data key="d12">x04000000000007DB_x040000000000082C_4</data>
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:Path>
+            <y:Point x="302.2" y="-50" />
+            <y:Point x="1401.4" y="-50" />
+            <y:Point x="1486.4" y="-153.333333333333" />
+            <y:Point x="1501.4" y="-153.333333333333" />
+          </y:Path>
+          <y:LineStyle color="#000000" hasColor="true" type="line" width="1" />
+          <y:Arrows source="none" target="none" />
+          <y:EdgeLabel hasText="true" fontSize="12">Bluetooth data</y:EdgeLabel>
+          <y:SourcePort type="InterfacePort" />
+          <y:TargetPort type="InterfacePort" />
+          <y:BendStyle />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="x04000000000007CA_x040000000000082C_5" source="x04000000000007CA_9" target="x040000000000082C_5">
+      <data key="d12">x04000000000007CA_x040000000000082C_5</data>
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:Path>
+            <y:Point x="294.2" y="-180" />
+            <y:Point x="1501.4" y="-180" />
+          </y:Path>
+          <y:LineStyle color="#000000" hasColor="true" type="line" width="1" />
+          <y:Arrows source="none" target="none" />
+          <y:EdgeLabel hasText="true" fontSize="12">Cellular data</y:EdgeLabel>
+          <y:SourcePort type="InterfacePort" />
+          <y:TargetPort type="InterfacePort" />
+          <y:BendStyle />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="x040000000000083B_x04000000000007CA_6" source="x040000000000083B_11" target="x04000000000007CA_9">
+      <data key="d12">x040000000000083B_x04000000000007CA_6</data>
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:Path>
+            <y:Point x="19.55" y="-180" />
+            <y:Point x="191" y="-180" />
+          </y:Path>
+          <y:LineStyle color="#000000" hasColor="true" type="line" width="1" />
+          <y:Arrows source="none" target="none" />
+          <y:EdgeLabel hasText="true" fontSize="12">Remote operation</y:EdgeLabel>
+          <y:SourcePort type="InterfacePort" />
+          <y:TargetPort type="InterfacePort" />
+          <y:BendStyle />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="x0400000000000C7B_x0400000000000C16_7" source="x0400000000000C7B_1" target="x0400000000000C16_3">
+      <data key="d12">x0400000000000C7B_x0400000000000C16_7</data>
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:Path>
+            <y:Point x="780" y="-383" />
+            <y:Point x="780" y="-300" />
+            <y:Point x="1132.6" y="-300" />
+          </y:Path>
+          <y:LineStyle color="#000000" hasColor="true" type="line" width="5" />
+          <y:Arrows source="none" target="none" />
+          <y:SourcePort type="InterfacePort" />
+          <y:TargetPort type="InterfacePort" />
+          <y:BendStyle />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="x0400000000000C7B_x0400000000000C7F_8" source="x0400000000000C7B_1" target="x0400000000000C7F_7">
+      <data key="d12">x0400000000000C7B_x0400000000000C7F_8</data>
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:Path>
+            <y:Point x="780" y="-383" />
+            <y:Point x="780" y="-300" />
+            <y:Point x="900" y="-300" />
+            <y:Point x="900" y="-460" />
+            <y:Point x="1101.8" y="-460" />
+          </y:Path>
+          <y:LineStyle color="#000000" hasColor="true" type="line" width="5" />
+          <y:Arrows source="none" target="none" />
+          <y:SourcePort type="InterfacePort" />
+          <y:TargetPort type="InterfacePort" />
+          <y:BendStyle />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="x0400000000000C7F_x0400000000000C13_9" source="x0400000000000C7F_7" target="x0400000000000C13_2">
+      <data key="d12">x0400000000000C7F_x0400000000000C13_9</data>
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:Path>
+            <y:Point x="1307.4" y="-460" />
+            <y:Point x="1513.4" y="-460" />
+          </y:Path>
+          <y:LineStyle color="#800000" hasColor="true" type="line" width="5" />
+          <y:Arrows source="none" target="none" />
+          <y:SourcePort type="InterfacePort" />
+          <y:TargetPort type="InterfacePort" />
+          <y:BendStyle />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="x0400000000000C16_x040000000000082C_10" source="x0400000000000C16_3" target="x040000000000082C_5">
+      <data key="d12">x0400000000000C16_x040000000000082C_10</data>
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:Path>
+            <y:Point x="1200" y="-270" />
+            <y:Point x="1200" y="-200" />
+            <y:Point x="1501.4" y="-200" />
+          </y:Path>
+          <y:LineStyle color="#008000" hasColor="true" type="line" width="5" />
+          <y:Arrows source="none" target="none" />
+          <y:SourcePort type="InterfacePort" />
+          <y:TargetPort type="InterfacePort" />
+          <y:BendStyle />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="x0400000000000C16_x04000000000007E3_11" source="x0400000000000C16_3" target="x04000000000007E3_6">
+      <data key="d12">x0400000000000C16_x04000000000007E3_11</data>
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:Path>
+            <y:Point x="1276.6" y="-320" />
+            <y:Point x="1495.4" y="-320" />
+          </y:Path>
+          <y:LineStyle color="#808000" hasColor="true" type="line" width="5" />
+          <y:Arrows source="none" target="none" />
+          <y:SourcePort type="InterfacePort" />
+          <y:TargetPort type="InterfacePort" />
+          <y:BendStyle />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="x0400000000000C16_x04000000000007EE_12" source="x0400000000000C16_3" target="x04000000000007EE_10">
+      <data key="d12">x0400000000000C16_x04000000000007EE_12</data>
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:Path>
+            <y:Point x="1200" y="-350" />
+            <y:Point x="1200" y="-380" />
+            <y:Point x="1759" y="-380" />
+          </y:Path>
+          <y:LineStyle color="#000080" hasColor="true" type="line" width="5" />
+          <y:Arrows source="none" target="none" />
+          <y:SourcePort type="InterfacePort" />
+          <y:TargetPort type="InterfacePort" />
+          <y:BendStyle />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="x04000000000007E3_x040000000000083E_13" source="x04000000000007E3_6" target="x040000000000083E_12">
+      <data key="d12">x04000000000007E3_x040000000000083E_13</data>
+      <data key="d1">
+        <y:PolyLineEdge>
+          <y:Path>
+            <y:Point x="1669" y="-300" />
+            <y:Point x="1823.55" y="-300" />
+          </y:Path>
+          <y:LineStyle color="#800080" hasColor="true" type="line" width="5" />
+          <y:Arrows source="none" target="none" />
+          <y:SourcePort type="InterfacePort" />
+          <y:TargetPort type="InterfacePort" />
+          <y:BendStyle />
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+  </graph>
+  <data key="d2"><y:Resources><y:Resource id="1" type="image">iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAACBSURBVDhPnZKBDoAgCESlL/fPaYgsRM5hb3MjxOs6owZhbo3mvtQ5iUAcFhEv5tmEfQPVHuZnVgu9ozfulIawgyGAN4su8PfNIrD20wwyNJcP93zjQHq2lB8ZyHzthkoEpUy97FAGbXmQgPbHLax/HlFM/ILs4NlBkqYdMEcnN0QvClNQ3D0FuBsAAAAASUVORK5CYII=</y:Resource><y:Resource id="2"><yed:ScaledIcon xScale="1.0" yScale="1.0"><yed:ImageIcon image="1" /></yed:ScaledIcon></y:Resource><y:Resource id="3" type="image">iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAABqSURBVDhP7ZDRDYAwCETBZXQkt3FOp0HKYZUI+uGnvoQckCuB0s972PWEiCcFHN4MEFk0RuQYkcVB9CutMJtpBTzRr+vE2Y1rB8TlgZ5g7Qll1xui3/+AZg1t8oryke5PlqoO2MkO+TJEG9NLQRT+PtiXAAAAAElFTkSuQmCC</y:Resource><y:Resource id="4"><yed:ScaledIcon xScale="1.0" yScale="1.0"><yed:ImageIcon image="3" /></yed:ScaledIcon></y:Resource><y:Resource id="5" type="image">iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAABqSURBVDhP7ZDRDYAwCETBZXQkt3FOp0HKYZUI+uGnvoQckCuB0s972PWEiCcFHN4MEFk0RuQYkcVB9CutMJtpBTzRr+vE2Y1rB8TlgZ5g7Qll1xui3/+AZg1t8oryke5PlqoO2MkO+TJEG9NLQRT+PtiXAAAAAElFTkSuQmCC</y:Resource><y:Resource id="6"><yed:ScaledIcon xScale="1.0" yScale="1.0"><yed:ImageIcon image="5" /></yed:ScaledIcon></y:Resource><y:Resource id="7" type="image">iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAABqSURBVDhP7ZDRDYAwCETBZXQkt3FOp0HKYZUI+uGnvoQckCuB0s972PWEiCcFHN4MEFk0RuQYkcVB9CutMJtpBTzRr+vE2Y1rB8TlgZ5g7Qll1xui3/+AZg1t8oryke5PlqoO2MkO+TJEG9NLQRT+PtiXAAAAAElFTkSuQmCC</y:Resource><y:Resource id="8"><yed:ScaledIcon xScale="1.0" yScale="1.0"><yed:ImageIcon image="7" /></yed:ScaledIcon></y:Resource><y:Resource id="9" type="image">iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAABqSURBVDhP7ZDRDYAwCETBZXQkt3FOp0HKYZUI+uGnvoQckCuB0s972PWEiCcFHN4MEFk0RuQYkcVB9CutMJtpBTzRr+vE2Y1rB8TlgZ5g7Qll1xui3/+AZg1t8oryke5PlqoO2MkO+TJEG9NLQRT+PtiXAAAAAElFTkSuQmCC</y:Resource><y:Resource id="10"><yed:ScaledIcon xScale="1.0" yScale="1.0"><yed:ImageIcon image="9" /></yed:ScaledIcon></y:Resource><y:Resource id="11" type="image">iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAABqSURBVDhP7ZDRDYAwCETBZXQkt3FOp0HKYZUI+uGnvoQckCuB0s972PWEiCcFHN4MEFk0RuQYkcVB9CutMJtpBTzRr+vE2Y1rB8TlgZ5g7Qll1xui3/+AZg1t8oryke5PlqoO2MkO+TJEG9NLQRT+PtiXAAAAAElFTkSuQmCC</y:Resource><y:Resource id="12"><yed:ScaledIcon xScale="1.0" yScale="1.0"><yed:ImageIcon image="11" /></yed:ScaledIcon></y:Resource><y:Resource id="13" type="image">iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAABqSURBVDhP7ZDRDYAwCETBZXQkt3FOp0HKYZUI+uGnvoQckCuB0s972PWEiCcFHN4MEFk0RuQYkcVB9CutMJtpBTzRr+vE2Y1rB8TlgZ5g7Qll1xui3/+AZg1t8oryke5PlqoO2MkO+TJEG9NLQRT+PtiXAAAAAElFTkSuQmCC</y:Resource><y:Resource id="14"><yed:ScaledIcon xScale="1.0" yScale="1.0"><yed:ImageIcon image="13" /></yed:ScaledIcon></y:Resource><y:Resource id="15" type="image">iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAABqSURBVDhP7ZDRDYAwCETBZXQkt3FOp0HKYZUI+uGnvoQckCuB0s972PWEiCcFHN4MEFk0RuQYkcVB9CutMJtpBTzRr+vE2Y1rB8TlgZ5g7Qll1xui3/+AZg1t8oryke5PlqoO2MkO+TJEG9NLQRT+PtiXAAAAAElFTkSuQmCC</y:Resource><y:Resource id="16"><yed:ScaledIcon xScale="1.0" yScale="1.0"><yed:ImageIcon image="15" /></yed:ScaledIcon></y:Resource><y:Resource id="17" type="image">iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAABqSURBVDhP7ZDRDYAwCETBZXQkt3FOp0HKYZUI+uGnvoQckCuB0s972PWEiCcFHN4MEFk0RuQYkcVB9CutMJtpBTzRr+vE2Y1rB8TlgZ5g7Qll1xui3/+AZg1t8oryke5PlqoO2MkO+TJEG9NLQRT+PtiXAAAAAElFTkSuQmCC</y:Resource><y:Resource id="18"><yed:ScaledIcon xScale="1.0" yScale="1.0"><yed:ImageIcon image="17" /></yed:ScaledIcon></y:Resource><y:Resource id="19" type="image">iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAABqSURBVDhP7ZDRDYAwCETBZXQkt3FOp0HKYZUI+uGnvoQckCuB0s972PWEiCcFHN4MEFk0RuQYkcVB9CutMJtpBTzRr+vE2Y1rB8TlgZ5g7Qll1xui3/+AZg1t8oryke5PlqoO2MkO+TJEG9NLQRT+PtiXAAAAAElFTkSuQmCC</y:Resource><y:Resource id="20"><yed:ScaledIcon xScale="1.0" yScale="1.0"><yed:ImageIcon image="19" /></yed:ScaledIcon></y:Resource><y:Resource id="21" type="image">iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAABqSURBVDhP7ZDRDYAwCETBZXQkt3FOp0HKYZUI+uGnvoQckCuB0s972PWEiCcFHN4MEFk0RuQYkcVB9CutMJtpBTzRr+vE2Y1rB8TlgZ5g7Qll1xui3/+AZg1t8oryke5PlqoO2MkO+TJEG9NLQRT+PtiXAAAAAElFTkSuQmCC</y:Resource><y:Resource id="22"><yed:ScaledIcon xScale="1.0" yScale="1.0"><yed:ImageIcon image="21" /></yed:ScaledIcon></y:Resource><y:Resource id="23" type="image">iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAACNSURBVDhPpZMBDoAgCEWhk9nJ4mjdzETBKZGlvY39Sr4oJowgopgkirqgqEvyZSNRTnNzN1GfE+GAHSjI+yyRQt6C6Bqp+pqZ95+8NbQfE7ChmPVZBjrcJpZqaLqOOLGKmsiqwfI+Qd9xNmgU7ImM/4P/aOUPS7fYhi0eY8vUBE/J9+/2hrUJ3u0z4wAX0e9XzPoszzgAAAAASUVORK5CYII=</y:Resource><y:Resource id="24"><yed:ScaledIcon xScale="1.0" yScale="1.0"><yed:ImageIcon image="23" /></yed:ScaledIcon></y:Resource><y:Resource id="25" type="image">iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAACNSURBVDhPpZMBDoAgCEWhk9nJ4mjdzETBKZGlvY39Sr4oJowgopgkirqgqEvyZSNRTnNzN1GfE+GAHSjI+yyRQt6C6Bqp+pqZ95+8NbQfE7ChmPVZBjrcJpZqaLqOOLGKmsiqwfI+Qd9xNmgU7ImM/4P/aOUPS7fYhi0eY8vUBE/J9+/2hrUJ3u0z4wAX0e9XzPoszzgAAAAASUVORK5CYII=</y:Resource><y:Resource id="26"><yed:ScaledIcon xScale="1.0" yScale="1.0"><yed:ImageIcon image="25" /></yed:ScaledIcon></y:Resource></y:Resources></data>
+</graphml>

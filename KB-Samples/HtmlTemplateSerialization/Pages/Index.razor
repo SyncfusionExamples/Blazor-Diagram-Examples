@@ -1,0 +1,86 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
+@using System.Text.Json
+
+<SfDiagramComponent @ref="diagram" Height="600px" @bind-Nodes="@nodes">
+    <DiagramTemplates>
+        <NodeTemplate>
+            @{
+                    Node node = context as Node;
+                    if (node.AdditionalInfo.ContainsKey("HtmlTemplate"))
+                    {
+                        object htmlTemplate = node.AdditionalInfo["HtmlTemplate"];
+                        string htmlContent;
+
+                        if (htmlTemplate is JsonElement jsonElement)
+                        {
+                            // If it's a JsonElement, extract the string
+                            htmlContent = jsonElement.GetString();
+                        }
+                        else if (htmlTemplate is string stringContent)
+                        {
+                            // If it's already a string, use it directly
+                            htmlContent = stringContent;
+                        }
+                        else
+                        {
+                            // Handle unexpected types or nulls, if necessary
+                            htmlContent = string.Empty;
+                        }
+
+                        // Convert the string HTML content to a MarkupString
+                        var markupContent = new MarkupString(htmlContent);
+                        @markupContent
+                    }
+                }
+            </NodeTemplate>
+        </DiagramTemplates>
+    </SfDiagramComponent>
+
+
+
+
+    <SfButton Content="Save" OnClick="@Save" />
+    <SfButton Content="Load" OnClick="@Load" />
+
+    @code {
+    private SfDiagramComponent diagram;
+    private DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+    private string savedData;
+
+    protected override void OnInitialized()
+    {
+        Node node = new Node()
+            {
+                ID = "node1",
+                Width = 210,
+                Height = 95,
+                OffsetX = 400,
+                OffsetY = 300,
+                Shape = new Shape()
+                {
+                    Type = NodeShapes.HTML,
+                },
+                AdditionalInfo = new Dictionary<string, object>()
+            {
+                { "HtmlTemplate", "<div><h3 style=\"color:blue;\">Hello, Syncfusion!</h3><p>This is an HTML shape node</p></div>" }
+            }
+            };
+
+        nodes.Add(node);
+    }
+
+    private void Save()
+    {
+        savedData = diagram.SaveDiagram();
+    }
+
+    private void Load()
+    {
+        // Deserialize the diagram data and restore the HTML content
+        diagram.LoadDiagram(savedData);
+
+    }
+}

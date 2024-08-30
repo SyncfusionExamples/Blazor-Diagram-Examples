@@ -4,7 +4,7 @@
 
 <SfDiagramComponent @ref="Diagram" Width="100%" Height="900px" ConnectorCreating="@OnConnectorCreating" NodeCreating="@OnNodeCreating" DataLoaded="@OnDataLoaded">
     <DataSourceSettings ID="Id" ParentID="ParentId" DataSource="DataSource"> </DataSourceSettings>
-    <Layout Type="LayoutType.Flowchart" HorizontalSpacing="50" Orientation="LayoutOrientation.TopToBottom" VerticalSpacing="50" FlowchartLayoutSettings="@flowchartSettings">
+    <Layout Type="LayoutType.Flowchart" HorizontalSpacing="50" Orientation="LayoutOrientation.LeftToRight" VerticalSpacing="50" FlowchartLayoutSettings="@flowchartSettings">
     </Layout>
     <SnapSettings Constraints="SnapConstraints.None"></SnapSettings>
 </SfDiagramComponent>

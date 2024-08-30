@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeirarchicalLayout_NET8", "HeirarchicalLayout_NET8.csproj", "{50E0B1AC-BF35-4CCA-8746-B696A661C53B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlowchartLayout_NET8", "FlowchartLayout_NET8.csproj", "{50E0B1AC-BF35-4CCA-8746-B696A661C53B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Syncfusion.Blazor", "..\..\..\..\..\ej2-blazor-source\Syncfusion.Blazor\Syncfusion.Blazor.csproj", "{3570FE73-5901-4C38-BE1C-8B5B38054BC7}"
 EndProject

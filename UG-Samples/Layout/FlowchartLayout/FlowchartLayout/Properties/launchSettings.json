@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "HeirarchicalLayout": {
+    "FlowchartLayout": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

@@ -6,10 +6,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Syncfusion.Blazor.Diagram" Version="*" />
     <PackageReference Include="Syncfusion.Blazor.Themes" Version="*" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\ej2-blazor-source\Syncfusion.Blazor\Syncfusion.Blazor.csproj" />
   </ItemGroup>
 </Project>

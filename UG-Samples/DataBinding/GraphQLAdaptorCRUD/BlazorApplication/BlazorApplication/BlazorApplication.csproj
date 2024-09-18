@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\..\Playwright\ej2-blazor-source\Syncfusion.Blazor\Syncfusion.Blazor.csproj" />
+    <PackageReference Include="Syncfusion.Blazor" Version="*" />
   </ItemGroup>
 
 </Project>

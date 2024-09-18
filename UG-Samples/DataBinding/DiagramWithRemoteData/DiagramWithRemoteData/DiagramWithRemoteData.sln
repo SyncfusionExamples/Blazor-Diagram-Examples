@@ -5,8 +5,6 @@ VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiagramWithRemoteData", "DiagramWithRemoteData.csproj", "{BF3A1242-6CE7-4A58-8AE4-087F31FD3722}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Syncfusion.Blazor", "..\..\..\..\Playwright\ej2-blazor-source\Syncfusion.Blazor\Syncfusion.Blazor.csproj", "{7E9C8784-CDBD-4ED9-9A7A-20BCE5FDDDFC}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{BF3A1242-6CE7-4A58-8AE4-087F31FD3722}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF3A1242-6CE7-4A58-8AE4-087F31FD3722}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF3A1242-6CE7-4A58-8AE4-087F31FD3722}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7E9C8784-CDBD-4ED9-9A7A-20BCE5FDDDFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E9C8784-CDBD-4ED9-9A7A-20BCE5FDDDFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7E9C8784-CDBD-4ED9-9A7A-20BCE5FDDDFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7E9C8784-CDBD-4ED9-9A7A-20BCE5FDDDFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

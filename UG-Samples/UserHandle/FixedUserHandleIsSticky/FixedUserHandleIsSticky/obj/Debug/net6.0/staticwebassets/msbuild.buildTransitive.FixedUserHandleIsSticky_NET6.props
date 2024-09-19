@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\FixedUserHandleIsSticky_NET6.props" />
-</Project>

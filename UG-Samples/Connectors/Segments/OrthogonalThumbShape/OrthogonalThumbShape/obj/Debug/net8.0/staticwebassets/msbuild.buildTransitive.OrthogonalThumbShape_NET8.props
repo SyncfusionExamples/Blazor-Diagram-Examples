@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\OrthogonalThumbShape_NET8.props" />
-</Project>

@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\FixedUserHandleTooltip_NET6.props" />
-</Project>

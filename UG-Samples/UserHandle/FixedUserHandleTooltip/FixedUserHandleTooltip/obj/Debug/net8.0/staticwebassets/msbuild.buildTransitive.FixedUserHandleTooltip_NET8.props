@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\FixedUserHandleTooltip_NET8.props" />
-</Project>

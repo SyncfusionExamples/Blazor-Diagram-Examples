@@ -1,4 +1,5 @@
 ﻿@page "/"
+
 @page "/Diagram"
 @rendermode InteractiveServer
 @using Syncfusion.Blazor.Data
@@ -29,13 +30,16 @@
     <SfDiagramComponent @ref="@diagram" Width="100%" Height="690px" ConnectorCreating="@ConnectorCreating" NodeCreating="@NodeCreating">
         <DataSourceSettings ID="EmployeeID" ParentID="ReportsTo">
             <SfDataManager Url="api/Data" Adaptor="Syncfusion.Blazor.Adaptors.WebApiAdaptor"></SfDataManager>
+
+
         </DataSourceSettings>
+
         <Layout Type="Syncfusion.Blazor.Diagram.LayoutType.HierarchicalTree" VerticalSpacing="75" HorizontalSpacing="75" GetLayoutInfo="GetLayoutInfo"></Layout>
     </SfDiagramComponent>
 
 </div>
 @functions{
-    SfDiagramComponent? diagram;
+        SfDiagramComponent? diagram;
     public static List<EmployeeDetails> employeeDetails { get; set; }
 
 
@@ -87,15 +91,22 @@
         public string Colour { get; set; }
     }
 
-    //CRUD operations 
-    //To fetch data from the remote service
+
     public async void Read()
     {
         var data = await diagram.ReadDataAsync();
     }
-    //To update data in the remote service
+
     public async void Update()
     {
+        EmployeeDetails employeeDetails1 = new EmployeeDetails()
+        {
+            EmployeeID = 6,
+            Name = "Michael",
+            Designation = "Team Lead",
+            ReportsTo = "1",
+            Colour = "Orange"
+        };
         EmployeeDetails employeeDetails = new EmployeeDetails()
         {
             EmployeeID = 6,
@@ -104,10 +115,16 @@
             ReportsTo = "1",
             Colour = "Green"
         };
-
-        await diagram.UpdateDataAsync("EmployeeID", employeeDetails);
+        Dictionary<string, object> propoerties = new Dictionary<string, object>()
+{
+            {"Designation","Product Manager" },
+                        {"Colour","Green" },
+            {"ReportsTo", "1" }
+        };
+        await diagram.UpdateDataAsync("EmployeeID", employeeDetails, "Employees");
     }
-    //To push data to the remote service
+
+
     public async void Insert()
     {
         EmployeeDetails employeeDetails = new EmployeeDetails()
@@ -118,11 +135,15 @@
             ReportsTo = "9",
             Colour = "Gray"
         };
-        await diagram.InsertDataAsync(employeeDetails);
+        await diagram.InsertDataAsync(employeeDetails, "Employees");
+
     }
-    //To delete data in the remote service
+
     public async void Delete()
     {
         await diagram.DeleteDataAsync("EmployeeID", 5);
     }
+
+
 }
+

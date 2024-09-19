@@ -9,7 +9,4 @@
     <PackageReference Include="Syncfusion.Blazor.Themes" Version="*" />
     <PackageReference Include="Syncfusion.Blazor" Version="*" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
 </Project>

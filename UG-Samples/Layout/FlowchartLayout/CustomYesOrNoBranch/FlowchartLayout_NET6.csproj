@@ -7,9 +7,11 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Syncfusion.Blazor.Themes" Version="*" />
-    <PackageReference Include="Syncfusion.Blazor" Version="*" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\ej2-blazor-source\Syncfusion.Blazor\Syncfusion.Blazor.csproj" />
   </ItemGroup>
 </Project>

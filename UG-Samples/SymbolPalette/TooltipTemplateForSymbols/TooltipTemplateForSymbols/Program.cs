@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor;
-using Syncfusion.Blazor.Diagram;
 
 var builder = WebApplication.CreateBuilder(args);
 

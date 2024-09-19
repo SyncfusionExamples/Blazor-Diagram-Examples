@@ -24,7 +24,7 @@
         connector.ID = RandomId();
         connector.SourcePoint = new DiagramPoint { X = 100, Y = 100 };
         connector.TargetPoint = new DiagramPoint { X = 200, Y = 100 };
-        await diagram.AddDiagramElements(new DiagramObjectCollection<NodeBase>() { connector });
+        await diagram.AddDiagramElementsAsync(new DiagramObjectCollection<NodeBase>() { connector });
 
     }
     internal string RandomId()

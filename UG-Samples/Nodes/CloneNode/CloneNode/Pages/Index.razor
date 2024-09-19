@@ -39,7 +39,7 @@
         node.ID = RandomId();
         node.OffsetX += 25;
         node.OffsetY += 25;
-        await diagram.AddDiagramElements(new DiagramObjectCollection<NodeBase>() { node });
+        await diagram.AddDiagramElementsAsync(new DiagramObjectCollection<NodeBase>() { node });
     }
 
     internal string RandomId()

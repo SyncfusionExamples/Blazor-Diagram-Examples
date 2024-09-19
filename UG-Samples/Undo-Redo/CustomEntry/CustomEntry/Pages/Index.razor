@@ -7,7 +7,7 @@
 <SfButton Content="CustomEntry" OnClick="@OnCustomEntry" />
 
 <SfDiagramComponent @ref="@diagram" Height="600px" Nodes="@nodes">
-    <DiagramHistoryManager StackLimit="@stackLimit" HistoryAdding="@OnHistoryAdding" Undo="@onCustomUndo" Redo="@onCustomRedo" />
+    <DiagramHistoryManager StackLimit="@stackLimit" />
 </SfDiagramComponent>
 
 @code
@@ -48,24 +48,4 @@
         diagram.AddHistoryEntry(entry);
     }
 
-    private void OnHistoryAdding(HistoryAddingEventArgs entry)
-    {
-        // Sets true to cancel undo/redo action.
-        entry.Cancel = false;
-    }
-
-    private void onCustomUndo(HistoryEntryBase entry)
-    {
-        (entry.RedoObject) = entry.UndoObject.Clone() as Node;
-        (entry.UndoObject as Node).AdditionalInfo[(entry.UndoObject as Node).ID] = "Start";
-        EventValue += "UndoObject:" + (entry.UndoObject as Node).AdditionalInfo[(entry.UndoObject as Node).ID];
-    }
-
-    private void onCustomRedo(HistoryEntryBase entry)
-    {
-        EventValue += "RedoObject:" + (entry.RedoObject as Node).AdditionalInfo[(entry.RedoObject as Node).ID];
-        var current = entry.UndoObject.Clone() as Node;
-        (entry.UndoObject as Node).AdditionalInfo[(entry.UndoObject as Node).ID] = "Description";
-        entry.RedoObject = current;
-    }
 }

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\SnapLineStyle_NET8.props" />
+</Project>

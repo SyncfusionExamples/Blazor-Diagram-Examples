@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\FixedUserHandleIsSticky_NET8.props" />
+</Project>

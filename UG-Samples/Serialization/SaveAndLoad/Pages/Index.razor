@@ -63,7 +63,7 @@
         diagram.BeginUpdate();
         ExtensionType = ".json";
         await FileUtil.Click(jsRuntime);
-        await diagram.EndUpdate();
+        await diagram.EndUpdateAsync();
     }
 
     public async Task OnUploadFileSelected(UploadingEventArgs args)

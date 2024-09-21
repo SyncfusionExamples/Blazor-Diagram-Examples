@@ -91,7 +91,7 @@
                 sfDiagram.StartGroupAction();
                 sfDiagram.BeginUpdate();
                 sfDiagram.Nodes.Remove(deleteObject);
-                _ = sfDiagram.EndUpdate();
+                _ = sfDiagram.EndUpdateAsync();
                 sfDiagram.EndGroupAction();
             }
             base.OnMouseUp(args);
@@ -317,7 +317,7 @@
     //Method to load the diagram
     public async Task LoadDiagram()
     {
-        await Diagram.LoadDiagram(data);
+        await Diagram.LoadDiagramAsync(data);
     }
 
 }

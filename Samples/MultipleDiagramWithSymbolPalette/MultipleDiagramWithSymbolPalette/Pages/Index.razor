@@ -235,7 +235,7 @@
     {
         ActivePage.Diagram = DInstance.SaveDiagram();
         ActivePage.PageSwitch = false;
-        await DInstance.LoadDiagram(page.Diagram.ToString());
+        await DInstance.LoadDiagramAsync(page.Diagram.ToString());
         page.PageSwitch = true;
         if (ActivePage != page)
         {

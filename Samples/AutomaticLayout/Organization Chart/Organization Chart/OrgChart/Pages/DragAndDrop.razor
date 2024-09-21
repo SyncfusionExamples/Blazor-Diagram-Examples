@@ -33,7 +33,7 @@
             EmployeeData drogNodeData = DataSource.Find(data => data.ID == (selector.Nodes[0].Data as EmployeeData).ID);
             drogNodeData.Manager = targetNodeData.ID;
             diagram.ClearSelection();
-            await diagram.RefreshDataSource();
+            await diagram.RefreshDataSourceAsync();
         }
     }
     public List<EmployeeData> DataSource = new List<EmployeeData>()

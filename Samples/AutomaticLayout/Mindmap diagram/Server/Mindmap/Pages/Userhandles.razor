@@ -288,7 +288,7 @@
                 };
             diagram.BeginUpdate();
             await UpdatePortConnection(childNode, diagram);
-            await diagram.EndUpdate();
+            await diagram.EndUpdateAsync();
             mindmapData.Add(childNode);
             diagram.ClearSelection();
             base.OnMouseDown(args);
@@ -308,7 +308,7 @@
                 TargetID = node.ID,
                 SourceID = diagram.SelectionSettings.Nodes[0].ID
             };
-        await diagram.AddDiagramElements(new DiagramObjectCollection<NodeBase>() { node, connector });
+        await diagram.AddDiagramElementsAsync(new DiagramObjectCollection<NodeBase>() { node, connector });
         Node sourceNode = diagram.GetObject(connector.SourceID) as Node;
         Node targetNode = diagram.GetObject(connector.TargetID) as Node;
         if (targetNode != null && targetNode.Data != null)
@@ -325,7 +325,7 @@
                 connector.TargetPortID = targetNode.Ports[0].ID;
             }
         }
-        await diagram.DoLayout();
+        await diagram.DoLayoutAsync();
     }
 
     // Custom tool to add the node.
@@ -373,7 +373,7 @@
                 };
             diagram.BeginUpdate();
             await UpdatePortConnection(childNode, diagram);
-            await diagram.EndUpdate();
+            await diagram.EndUpdateAsync();
             mindmapData.Add(childNode);
             diagram.ClearSelection();
             base.OnMouseDown(args);
@@ -402,8 +402,8 @@
                 sfDiagram.BeginUpdate();
                 RemoveData(deleteObject, sfDiagram);
                 sfDiagram.Nodes.Remove(deleteObject);
-                _ = sfDiagram.EndUpdate();
-                _ = sfDiagram.RefreshDataSource();
+                _ = sfDiagram.EndUpdateAsync();
+                _ = sfDiagram.RefreshDataSourceAsync();
             }
             base.OnMouseUp(args);
             this.InAction = true;

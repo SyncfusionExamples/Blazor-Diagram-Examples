@@ -473,7 +473,7 @@
                 Children = Child.ToArray(),
                 Style = new ShapeStyle() { Fill = fill },
             };
-            await diagram.AddDiagramElements(new DiagramObjectCollection<NodeBase>() { group });
+            await diagram.AddDiagramElementsAsync(new DiagramObjectCollection<NodeBase>() { group });
         }
     }
     private async void GetChild(Node parent, List<string> child)

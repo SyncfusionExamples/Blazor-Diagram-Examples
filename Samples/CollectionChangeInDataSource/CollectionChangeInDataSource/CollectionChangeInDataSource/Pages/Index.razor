@@ -67,12 +67,12 @@
     {
         DataSource.Add(new MindMapDetails() { Id = "12", Label = "Trial", ParentId = "5", Branch = "subRight" });
 
-        Diagram.RefreshDataSource();
+        Diagram.RefreshDataSourceAsync();
     }
     private void RemoveData()
     {
         DataSource.RemoveAt(6);
 
-        Diagram.RefreshDataSource();
+        Diagram.RefreshDataSourceAsync();
     }
 }

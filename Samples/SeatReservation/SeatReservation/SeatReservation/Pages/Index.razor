@@ -386,14 +386,14 @@
                     CurrentSelection.Remove(node);
                     CurrentSelectedSeatsNo.Remove(node.ID);
                     AvailableSeats.Add(node);
-                    Diagram.RefreshDataSource();
+                    Diagram.RefreshDataSourceAsync();
                 }
                 else if(AvailableSeats.Contains(node))
                 {
                     CurrentSelection.Add(node);
                     CurrentSelectedSeatsNo.Add(node.ID);
                     AvailableSeats.Remove(node);
-                    Diagram.RefreshDataSource();
+                    Diagram.RefreshDataSourceAsync();
                 }
             }
             BookedSeatsNo.Clear();

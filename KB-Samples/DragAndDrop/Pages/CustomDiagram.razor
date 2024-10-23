@@ -1,0 +1,93 @@
+﻿@using Syncfusion.Blazor.Diagram
+@using System.Collections.ObjectModel
+
+@using Node = Syncfusion.Blazor.Diagram.Node
+<div id="diagram-space">
+    <SfDiagramComponent @ref="diagram" Width="1000px" ID="diagram" Height="700px" @bind-Nodes="@nodes" @bind-Connectors="@connectors"></SfDiagramComponent>
+</div>
+@code {
+
+    DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
+    public SfDiagramComponent diagram { get; set; }
+    
+    DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+  
+
+    protected override void OnInitialized()
+    {
+        nodes.Add(
+            new Node()
+                {
+                    ID = "node1",
+                    OffsetX = 300,
+                    OffsetY = 100,
+                    Width = 100,
+                    Height = 100,
+                    Ports = new DiagramObjectCollection<PointPort>()
+                                    {
+                    new PointPort()
+                    {
+                        ID="Port1",
+                        Visibility = PortVisibility.Visible,
+                        Offset = new DiagramPoint() { X = 0.5, Y = 0 },
+                    },
+                    new PointPort()
+                    {
+                        ID="Port2",
+                        Visibility = PortVisibility.Visible,
+                        Offset = new DiagramPoint() { X = 0, Y = 0.5 },
+                    },
+                    new PointPort()
+                    {
+                        ID="Port3",
+                        Visibility = PortVisibility.Visible,
+                        Constraints = PortConstraints.Default | PortConstraints.Draw,
+                        Offset = new DiagramPoint() { X = 1, Y = 0.5 },
+                    },
+                    new PointPort()
+                    {
+                        ID="Port4",
+                        Visibility = PortVisibility.Visible,
+                        Offset = new DiagramPoint() { X = 0.5, Y = 1 },
+                    },
+                                    }
+                });
+        nodes.Add(new Node()
+            {
+                ID = "node2",
+                OffsetX = 300,
+                OffsetY = 350,
+                Width = 100,
+                Height = 100,
+                Ports = new DiagramObjectCollection<PointPort>()
+                {
+                    new PointPort()
+                    {
+                        ID="Port31",
+                        Visibility = PortVisibility.Visible,
+                        Offset = new DiagramPoint() { X = 1, Y = 0.5 },
+                    },
+                    new PointPort()
+                    {
+                        ID="Port41",
+                        Visibility = PortVisibility.Visible,
+                        Offset = new DiagramPoint() { X = 0.5, Y = 1 },
+                    },
+                }
+            });
+    }
+    public int value;
+    public int index;
+  
+
+    string data;
+    private void Save()
+    {
+        data = diagram.SaveDiagram();
+    }
+    private async Task Load()
+    {
+        await diagram.LoadDiagram(data);
+    }
+
+}

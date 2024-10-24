@@ -1,0 +1,366 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Navigations
+@*Hidden:Lines*@
+
+<style>
+    #diagram {
+        display: block;
+    }
+
+    .image-pattern-style {
+        background-color: white;
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 75px;
+        width: calc((100% - 18px) / 3);
+        cursor: pointer;
+        border: 1px solid #D5D5D5;
+        background-position: center;
+        float: left;
+    }
+
+        .image-pattern-style:hover {
+            border-color: gray;
+            border-width: 2px;
+        }
+
+    .row {
+        margin-left: 0px;
+        margin-right: 0px;
+        display: block;
+    }
+
+    .property-panel-header {
+        padding-top: 15px;
+        padding-bottom: 5px;
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .row-header {
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .row-header1 {
+        font-size: 12px;
+        padding-left: 2px;
+        font-weight: 400;
+    }
+
+    .e-selected-orientation-style {
+        border-color: #006CE6;
+        border-width: 2px;
+    }
+
+
+    .e-selected-pattern-style {
+        border-color: #006CE6;
+        border-width: 2px;
+    }
+
+    .textboxstyle {
+        padding-left: 0px;
+        padding-right: 0px;
+        float: left;
+        width: 120px;
+    }
+
+    .e-checkbox-wrapper .e-label {
+        font-size: 12px;
+    }
+
+    .col-xs-6 {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .sb-property-border {
+        border-right: 1px solid #D7D7D7;
+    }
+
+    .e-orgchart-template-div-style {
+        position: absolute;
+        width: 177px;
+        height: 54px;
+        border: 1px solid #EEEEEE;
+        background: #FFFFFF;
+        box-sizing: border-box;
+        border-radius: 5px;
+    }
+
+    .e-orgchart-template-image-style {
+        width: 52px;
+        height: 52px;
+        left: 552px;
+        top: 154px;
+        float: left;
+        background-size: 100% 100%;
+    }
+
+    .e-orgchart-template-name-style {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 14px;
+        letter-spacing: 0.1px;
+        color: #363636;
+        margin-top: 8px;
+        height: 8px
+    }
+
+    .e-orgchart-template-role-style {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 14px;
+        letter-spacing: 0.1px;
+        color: #7A7A7A;
+    }
+</style>
+@*End:Hidden*@
+
+
+
+<SfTab>
+    <TabItems>
+        <TabItem>
+            <HeaderTemplate>Diagram</HeaderTemplate>
+            <ContentTemplate>
+                <div class="col-lg-9 control-section sb-property-border">
+                    <div id="diagram-space" class="content-wrapper">
+                        <SfDiagramComponent DragDrop="@OnDrop" @ref="@Diagram" Height="690px" NodeCreating="@OnNodeCreating" ConnectorCreating="@OnConnectorCreating">
+
+                            <ScrollSettings EnableAutoScroll=true>
+                            </ScrollSettings>
+
+                            <Layout @bind-Type="Type" @bind-HorizontalSpacing="@HorizontalSpacing" @bind-VerticalSpacing="@VerticalSpacing">
+
+                                @* @bind-Orientation="@OrientationType"  @bind-HorizontalAlignment="@HorizontalAlignment" @bind-VerticalAlignment="@VerticalAlignment" GetLayoutInfo="GetLayoutInfo" *@
+
+                                <LayoutMargin @bind-Top="@Top" @bind-Bottom="@Bottom" @bind-Right="@Right" @bind-Left="@Left"></LayoutMargin>
+                            </Layout>
+
+                            <SnapSettings Constraints="@SnapConstraints.None"></SnapSettings>
+                            <ScrollSettings @bind-ScrollLimit="@scrollLimit"></ScrollSettings>
+                            <DataSourceSettings ID="ContactID" ParentID="ReportsTo" DataSource="OrgDataSource"></DataSourceSettings>
+                            <Layout @bind-Type="@Type" @bind-HorizontalSpacing="@HorizontalSpacing" @bind-Orientation="@OrientationType" @bind-VerticalSpacing="@VerticalSpacing" @bind-HorizontalAlignment="@HorizontalAlignment" @bind-VerticalAlignment="@VerticalAlignment" GetLayoutInfo="GetLayoutInfo">
+                                <LayoutMargin @bind-Top="@Top" @bind-Bottom="@Bottom" @bind-Right="@Right" @bind-Left="@Left"></LayoutMargin>
+                            </Layout>
+                            <SnapSettings Constraints="SnapConstraints.None"></SnapSettings>
+                            <DiagramTemplates>
+                                <NodeTemplate>
+                                    @{
+                                            Node node1 = (context as Node);
+                                            string Name = (node1.Data as OrganizationalDetails).TeamName;
+                                            string Role = (node1.Data as OrganizationalDetails).Designation;
+                                            string Imageurl = (node1.Data as OrganizationalDetails).BG;
+                                            <div class="e-orgchart-template-div-style">
+                                                <div id="image" class="e-orgchart-template-image-style" style="background-image: url(@(@Imageurl));">
+                                                </div>
+                                                <div style="height:75%;float: right;margin-right: 20px">
+                                                    <p class="e-orgchart-template-name-style">@Name</p>
+                                                    <p class="e-orgchart-template-role-style">@Role</p>
+                                                </div>
+                                            </div>
+                                        }
+                                    </NodeTemplate>
+                                </DiagramTemplates>
+                            </SfDiagramComponent>
+                        </div>
+                    </div>
+            </ContentTemplate>
+        </TabItem>
+           
+    </TabItems>
+</SfTab>
+
+@code
+    {
+
+    ScrollLimitMode scrollLimit { get; set; } = ScrollLimitMode.Diagram;
+    private Syncfusion.Blazor.Diagram.Orientation subTreeOrientation = Syncfusion.Blazor.Diagram.Orientation.Vertical;
+    private SubTreeAlignmentType subTreeAlignment = SubTreeAlignmentType.Right;
+    private int rows = 0;
+    private string pattern;
+    private double offset = 20;
+    public SfDiagramComponent Diagram;
+    public LayoutOrientation OrientationType = LayoutOrientation.TopToBottom;
+    public int? HorizontalValue { get; set; } = 30;
+    public int? VerticalValue { get; set; } = 30;
+    public LayoutType Type = LayoutType.OrganizationalChart;
+    public HorizontalAlignment HorizontalAlignment = HorizontalAlignment.Auto;
+    public VerticalAlignment VerticalAlignment = VerticalAlignment.Auto;
+    public int HorizontalSpacing = 30;
+    public int VerticalSpacing = 30;
+    public double Top = 50;
+    public double Bottom = 50;
+    public double Right = 50;
+    public double Left = 50;
+    protected async void OnDrop(DropEventArgs args)
+        {
+            if (args.Element is DiagramSelectionSettings)
+            {
+                Node draggingNode = (args.Element as DiagramSelectionSettings).Nodes[0] as Node;
+                if (draggingNode.InEdges.Count > 0)
+                {
+                    Connector connector = Diagram.GetObject(draggingNode.InEdges[0]) as Connector;
+                    //Represents the source node id of the connector
+                    connector.SourceID = (args.Target as Node).ID;
+                    //Save to DB
+                    var contact = draggingNode;
+                    var parent = (args.Target as Node);
+                    //await SaveRelationship(contact, parent);
+                }
+                else
+                {
+                    args.Cancel = true;
+                }
+                await Diagram.DoLayout();
+
+            }
+        }
+    // Defines default values for Node object
+    private void OnNodeCreating(IDiagramObject obj)
+    {
+        Node node = obj as Node;
+        if (node.Data is System.Text.Json.JsonElement)
+        {
+            node.Data = System.Text.Json.JsonSerializer.Deserialize<OrganizationalDetails>(node.Data.ToString());
+        }
+        OrganizationalDetails organizationData = node.Data as OrganizationalDetails;
+        node.Width = 177;
+        node.Height = 54;
+        node.Constraints = NodeConstraints.Default | NodeConstraints.AllowDrop;
+        node.Shape = new Shape()
+        {
+            Type = Syncfusion.Blazor.Diagram.NodeShapes.HTML,
+        };
+
+    }
+    // Defines default values for Connector object
+    private void OnConnectorCreating(IDiagramObject connector1)
+    {
+        Connector connector = (connector1 as Connector);
+        connector.Type = ConnectorSegmentType.Orthogonal;
+        connector.CornerRadius = 10;
+        connector.Style = new ShapeStyle()
+        {
+            StrokeWidth = 1,
+            StrokeDashArray = "1,1"
+        };
+        connector.TargetDecorator.Shape = DecoratorShape.None;
+        connector.SourceDecorator.Shape = DecoratorShape.None;
+    }
+
+    public class OrganizationalDetails
+    {
+        public string Name { get; set; }
+        public string Designation { get; set; }
+        public string ContactID { get; set; }
+        public string TeamName { get; set; }
+        public string TeamSize { get; set; }
+        public string ReportsTo { get; set; }
+        public string BG { get; set; }
+    }
+    //DataSource Items.
+    public List<OrganizationalDetails> OrgDataSource = new List<OrganizationalDetails>()
+    {
+         new OrganizationalDetails(){ Name="Maria Anders", Designation="Managing Director", ContactID="SF10001", TeamName="Web-Diagram", TeamSize="10", ReportsTo = "", BG= "images/diagram/people/people-circle14.png"  },
+            new OrganizationalDetails(){ Name="Ana Trujillo", Designation="Project Manager ", ContactID="SF10002", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF10001", BG= "images/diagram/people/people-circle12.png"  },
+            new OrganizationalDetails(){ Name="Patricio Simpson" ,Designation="Project Lead", ContactID="SF10003", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF10002", BG= "images/diagram/people/people-circle18.png"  },
+            new OrganizationalDetails(){ Name="Aria Cruz" ,Designation="Project Lead", ContactID="SF10004", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF10003", BG= "images/diagram/people/people-circle0.png"  },
+            new OrganizationalDetails(){ Name="Antonio Moreno", Designation="Project Lead", ContactID="SF10005", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF10004", BG= "images/diagram/people/people-circle17.png"  },
+            new OrganizationalDetails(){ Name="Thomas Hardy", Designation="Senior S/w Engg", ContactID="SF10006", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF10005", BG= "images/diagram/people/people-circle29.png"  },
+            new OrganizationalDetails(){ Name="Christina Berglund" ,Designation="S/w Engg", ContactID="SF10007", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF10006", BG= "images/diagram/people/people-circle12.png"  },
+            new OrganizationalDetails(){ Name="Hanna Moos", Designation="Project Trainee", ContactID="SF10008", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF10007", BG= "images/diagram/people/people-circle27.png"  },
+            new OrganizationalDetails(){ Name="Frédérique Citeaux", Designation="Project Trainee", ContactID="SF100050", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF10007", BG= "images/diagram/people/people-circle1.png"  },
+            new OrganizationalDetails(){ Name="Martín Sommer" ,Designation="Senior S/w Engg",ContactID="SF10009", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF10006", BG= "images/diagram/people/people-circle25.png"  },
+            new OrganizationalDetails(){ Name="Maria Larsson" ,Designation="Senior S/w Engg", ContactID="SF100010", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF10004", BG= "images/diagram/people/people-circle11.png"  },
+            new OrganizationalDetails(){ Name="Isabel de Castro", Designation="Project Manager", ContactID="SF100011", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF10001", BG= "images/diagram/people/people-circle1.png"  },
+            new OrganizationalDetails(){ Name="Horst Batista", Designation="Project Lead", ContactID="SF100012", TeamName="Web-Diagram", TeamSize="10", ReportsTo = "SF100021", BG= "images/diagram/people/people-circle17.png"  },
+            new OrganizationalDetails(){ Name="Lúcia Carvalho" ,Designation="Senior S/w Engg", ContactID="SF100013", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100012", BG= "images/diagram/people/people-circle27.png"  },
+            new OrganizationalDetails(){ Name="José Pedro Freyre" ,Designation="Senior S/w Engg", ContactID="SF100014", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100013", BG= "images/diagram/people/people-circle21.png"  },
+            new OrganizationalDetails(){  Name="André Fonseca", Designation="Senior S/w Engg", ContactID="SF100015", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100014", BG= "images/diagram/people/people-circle5.png"  },
+            new OrganizationalDetails(){ Name="Paula Wilson", Designation="S/w Engg", ContactID="SF100016", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100015", BG= "images/diagram/people/people-circle0.png"  },
+            new OrganizationalDetails(){ Name="John Bergulfsen", Designation="Project Trainee", ContactID="SF100017", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100015", BG= "images/diagram/people/people-circle17.png"  },
+            new OrganizationalDetails(){ Name="Jose Pavarotti", Designation="S/w Engg", ContactID="SF100018", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100015", BG= "images/diagram/people/people-circle17.png"  },
+            new OrganizationalDetails(){ Name="Miguel Angel Paolino" ,Designation="Project Trainee", ContactID="SF100019", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100015", BG= "images/diagram/people/people-circle14.png"  },
+            new OrganizationalDetails(){  Name="Horst Kloss", Designation="Project Trainee",ContactID="SF100020", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100015", BG= "images/diagram/people/people-circle1.png"  },
+            new OrganizationalDetails(){  Name="Wilson Holz" ,Designation="Project Lead", ContactID="SF100021", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100011", BG= "images/diagram/people/people-circle12.png"  },
+            new OrganizationalDetails(){ Name="Jytte Petersen" ,Designation="Project Manager", ContactID="SF100022", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF10001", BG= "images/diagram/people/people-circle2.png"  },
+            new OrganizationalDetails(){ Name="Liz Nixon" ,Designation="Project Lead", ContactID="SF100023", TeamName="Web-Diagram", TeamSize="10", ReportsTo = "SF100022", BG= "images/diagram/people/people-circle26.png"  },
+            new OrganizationalDetails(){Name="Liu Wong" ,Designation="Senior S/w Engg", ContactID="SF100024", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100023", BG= "images/diagram/people/people-circle29.png"  },
+            new OrganizationalDetails(){  Name="Dominique Perrier" ,Designation="Project Lead", ContactID="SF100025", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100023", BG= "images/diagram/people/people-circle10.png"  },
+            new OrganizationalDetails(){  Name="Annette Roulet" ,Designation="Senior S/w Engg", ContactID="SF100026", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100025", BG= "images/diagram/people/people-circle4.png"  },
+            new OrganizationalDetails(){ Name="Carlos González", Designation="SR", ContactID="SF100027", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100026", BG= "images/diagram/people/people-circle1.png"  },
+            new OrganizationalDetails(){Name="Felipe Izquierdo" ,Designation="SR", ContactID="SF100028", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100027", BG= "images/diagram/people/people-circle21.png"  },
+            new OrganizationalDetails(){Name="Yoshi Tannamuri", Designation="S/w Engg", ContactID="SF100029", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100028", BG= "images/diagram/people/people-circle5.png"  },
+            new OrganizationalDetails(){ Name="Fran Wilson", Designation="SR", ContactID="SF100030", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100028", BG= "images/diagram/people/people-circle17.png"  },
+            new OrganizationalDetails(){  Name="Jean Fresnière", Designation="S/w Engg", ContactID="SF100031", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100028", BG= "images/diagram/people/people-circle27.png"  },
+            new OrganizationalDetails(){  Name="Giovanni Rovelli", Designation="SR", ContactID="SF100032", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100028", BG= "images/diagram/people/people-circle26.png"  },
+            new OrganizationalDetails(){ Name="Renate Messner", Designation="Project Trainee", ContactID="SF100033", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100028", BG= "images/diagram/people/people-circle11.png"  },
+            new OrganizationalDetails(){Name="Jaime Yorres" ,Designation="Project Trainee", ContactID="SF100034", TeamName="Web-Diagram", TeamSize="10", ReportsTo = "SF100028", BG= "images/diagram/people/people-circle27.png"  },
+            new OrganizationalDetails(){Name="John Steel", Designation="Project Trainee", ContactID="SF100035", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100027", BG= "images/diagram/people/people-circle17.png"  },
+            new OrganizationalDetails(){   Name="Yvonne Moncada", Designation="Project Trainee", ContactID="SF100036", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100037", BG= "images/diagram/people/people-circle17.png"  },
+            new OrganizationalDetails(){ Name="Michael Suyama", Designation="S/w Engg", ContactID="SF100037", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100024", BG= "images/diagram/people/people-circle27.png"  },
+            new OrganizationalDetails(){ Name="Alexander Feuer", Designation="Project Trainee", ContactID="SF100038", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100037", BG= "images/diagram/people/people-circle1.png"  },
+            new OrganizationalDetails(){Name="Art Braunschweiger" ,Designation="Project Trainee", ContactID="SF100039", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100037", BG= "images/diagram/people/people-circle21.png"  },
+            new OrganizationalDetails(){Name="Pascale Cartrain", Designation="Project Trainee", ContactID="SF100040", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100037", BG= "images/diagram/people/people-circle10.png"  },
+            new OrganizationalDetails(){  Name="Mary Saveley", Designation="Project Manager" , ContactID="SF100041", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF10001", BG= "images/diagram/people/people-circle25.png"  },
+            new OrganizationalDetails(){  Name="Paul Henriot", Designation="Project Lead",ContactID="SF100042", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100041", BG= "images/diagram/people/people-circle21.png"  },
+            new OrganizationalDetails(){  Name="Rita Müller" ,Designation="Project Trainee", ContactID="SF100043", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100044", BG= "images/diagram/people/people-circle23.png"  },
+            new OrganizationalDetails(){ Name="Pirkko Koskitalo", Designation="Senior S/w Engg", ContactID="SF100044", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100042", BG= "images/diagram/people/people-circle8.png"  },
+            new OrganizationalDetails(){ Name="Karl Jablonski", Designation="Senior S/w Engg" , ContactID="SF100045", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100044", BG= "images/diagram/people/people-circle17.png"  },
+            new OrganizationalDetails(){  Name="Paula Parente" ,Designation="Project Lead", ContactID="SF100046",TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100048", BG= "images/diagram/people/people-circle5.png"  },
+            new OrganizationalDetails(){  Name="John Camino" ,Designation="Senior S/w Engg", ContactID="SF100047", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100013", BG= "images/diagram/people/people-circle21.png"  },
+            new OrganizationalDetails(){ Name="Matti Karttunen", Designation="Project Lead", ContactID="SF100048", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100041", BG= "images/diagram/people/people-circle0.png"  },
+            new OrganizationalDetails(){  Name="Nancy" ,Designation="Senior S/w Engg", ContactID="SF100049", TeamName="Web-Diagram", TeamSize="10", ReportsTo ="SF100044", BG= "images/diagram/people/people-circle29.png"  },
+
+    };
+    private TreeInfo GetLayoutInfo(IDiagramObject obj, TreeInfo options)
+    {
+        if (rows == 0)
+        {
+            if (rows == 0 && options.Rows != null)
+                options.Rows = null;
+            Node node = obj as Node;
+            if (pattern == "LeftOrientationVertical50" || pattern == "RightOrientationVertical50")
+            {
+                options.Offset = -50;
+            }
+
+            if (!options.HasSubTree)
+            {
+                options.AlignmentType = subTreeAlignment;
+                options.Orientation = subTreeOrientation;
+                options.AlignmentType = subTreeAlignment;
+            }
+        }
+        else
+        {
+            if (!options.HasSubTree)
+            {
+                options.AlignmentType = subTreeAlignment;
+                options.Orientation = subTreeOrientation;
+                options.Offset = offset;
+            }
+        }
+        return options;
+    }
+
+    @*Hidden:Lines*@
+    public void Dispose()
+    {
+       
+        Diagram = null;
+        pattern = null;
+    }
+    @*End:Hidden*@
+}

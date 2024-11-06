@@ -1,0 +1,116 @@
+﻿@page "/"
+@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Diagram
+@using System.Text.Json
+﻿@using Microsoft.JSInterop;
+@inject IJSRuntime jsRuntime;
+@using Microsoft.AspNetCore.Components;
+
+<div class="source content-container position-relative">
+    <div class="row">
+        <!-- ListBox Section -->
+        <div class="col-md-3" id="listbox" style="padding-left: 2rem;">
+            <div>
+                <div class="source-scrollable-list">
+                    <!-- Add the scrollable-list class here -->
+                    <div class="list-group">
+                        <SfListBox @ref="ListBoxObj" DataSource="@filteredData" Scope="Diagram" TItem="ExtractorUI" AllowDragAndDrop="true" TValue="string[]">
+                            <ListBoxFieldSettings Text="Extractor" Value="yamlfile">
+                            </ListBoxFieldSettings>
+                            <ListBoxEvents TValue="string[]" TItem="ExtractorUI" DragStart="DragSrart" OnDrop="OnDrop"></ListBoxEvents>
+                        </SfListBox>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Diagram Section -->
+        <div class="col-md-9" style="padding-left:1rem;">
+            <div class="form-group">
+                <div>
+                    <SfDiagramComponent ID="Diagram" @ref="Diagram" Height="700px"></SfDiagramComponent>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    public SfDiagramComponent Diagram;
+    SfListBox<string[], ExtractorUI> ListBoxObj;
+    private List<ExtractorUI> filteredData = new List<ExtractorUI>();
+    private string sampleData = "[{\"Extractor\":\"Facebook Ads\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"FileSystem\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"GitHub\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Google Analytics\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Google Sheets\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"HubSpot\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Jira\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Matomo\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"MongoDB\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"MSSQL\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Mux\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"MySQL\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Notion\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"OpenAPI\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Oracle\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Pipedrive\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"PostgreSQL\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n extractors:\"},{\"Extractor\":\"Salesforce\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Slack\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Strapi\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Stripe\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Web\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Workable\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"ZendeskChat\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"ZendeskSupport\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"ZendeskTalk\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"}]";
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Deserialize sample data into ListBox items
+        filteredData = System.Text.Json.JsonSerializer.Deserialize<List<ExtractorUI>>(sampleData);
+    }
+
+    private readonly string scope = "combined-list";
+    private List<ListItem> groupA = new List<ListItem> {
+        new ListItem { Name = "Australia", Code = "AU" },
+        new ListItem { Name = "Bermuda", Code = "BM" },
+        new ListItem { Name = "Canada", Code = "CA" },
+        new ListItem { Name = "Cameroon", Code = "CM" },
+        new ListItem { Name = "Denmark", Code = "DK" },
+        new ListItem { Name = "France", Code = "FR" },
+        new ListItem { Name = "Finland", Code = "FI" },
+        new ListItem { Name = "Germany", Code = "DE" },
+        new ListItem { Name = "Hong Kong", Code = "HK" }
+    };
+
+    public class ListItem
+    {
+        public string Name { get; set; }
+        public string Code { get; set; }
+    }
+    public class ExtractorUI
+    {
+        public string Extractor { get; set; }
+        public string yamlfile { get; set; }
+        public bool IsEdited { get; set; }
+        public bool IsCustom { get; set; }
+    }
+}
+
+@code {
+    DiagramPoint currentPosition;
+    bool isDragging;
+    // Sets dragging state when drag begins
+    public void DragSrart(DragEventArgs<ExtractorUI> args)
+    {
+        isDragging = true;
+    }
+    // Handles drop event to add ListBox items as nodes in the Diagram
+    public async void OnDrop(DropEventArgs<ExtractorUI> args)
+    {
+        ExtractorUI item = args.Items.First<ExtractorUI>();
+        if (isDragging)
+        {
+            // Fetch ListBox width to adjust positioning
+            string listViewWith = await jsRuntime.InvokeAsync<string>("getlistViewWidth", "listbox");
+            double listViewWithDoubleValue = Double.Parse(listViewWith);
+            // Add a new node to Diagram based on ListBox item details
+            await Diagram.AddDiagramElements(new DiagramObjectCollection<NodeBase>()
+            {
+                new Node()
+                {
+                    Height = 100,
+                    Width = 100,
+                    OffsetX = args.Left-listViewWithDoubleValue,
+                    OffsetY = args.Top,
+                    Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+                    {
+                        new ShapeAnnotation()
+                        {
+                            Content = filteredData[args.DropIndex].Extractor,
+                        }
+                    }
+                }
+            });
+            isDragging = false;
+        }
+        currentPosition = null;
+    }
+}

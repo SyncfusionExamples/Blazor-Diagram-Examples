@@ -6,16 +6,19 @@
 @inject IJSRuntime jsRuntime;
 @using Microsoft.AspNetCore.Components;
 
+
 <div class="source content-container position-relative">
     <div class="row">
-        <!-- ListBox Section -->
         <div class="col-md-3" id="listbox" style="padding-left: 2rem;">
+            <div class="d-flex align-items-baseline justify-content-between">
+                <h4>Connectors</h4>
+            </div>
             <div>
                 <div class="source-scrollable-list">
                     <!-- Add the scrollable-list class here -->
                     <div class="list-group">
                         <SfListBox @ref="ListBoxObj" DataSource="@filteredData" Scope="Diagram" TItem="ExtractorUI" AllowDragAndDrop="true" TValue="string[]">
-                            <ListBoxFieldSettings Text="Extractor" Value="yamlfile">
+                            <ListBoxFieldSettings Text="Extractor" Value="Extractor">
                             </ListBoxFieldSettings>
                             <ListBoxEvents TValue="string[]" TItem="ExtractorUI" DragStart="DragSrart" OnDrop="OnDrop"></ListBoxEvents>
                         </SfListBox>
@@ -23,7 +26,6 @@
                 </div>
             </div>
         </div>
-        <!-- Diagram Section -->
         <div class="col-md-9" style="padding-left:1rem;">
             <div class="form-group">
                 <div>
@@ -104,7 +106,7 @@
                     {
                         new ShapeAnnotation()
                         {
-                            Content = filteredData[args.DropIndex].Extractor,
+                            Content = (args.Items.FirstOrDefault() as ExtractorUI)?.Extractor,
                         }
                     }
                 }

@@ -7,8 +7,7 @@
 <div class="control-section">
    
     <div style="width: 100%">
-        <div id="palette-space" class="sb-mobile-palette" style="float:left"
-
+        <div id="palette-space" class="sb-mobile-palette" style="float:left">
             <SfSymbolPaletteComponent @ref="@PaletteInstance"  Width="@paletteWidth" Height="@paletteHeight"
                                       Palettes="@Palettes"  SelectionChanged="@OnSelectionChanged" SymbolDragPreviewSize="@SymbolDragPreviewSize" SymbolHeight="@symbolSizeHeight" SymbolWidth="@symbolSizeWidth" SymbolMargin="@SymbolMargin">
          
@@ -16,20 +15,15 @@
         </div>
         <div id="diagram-space" class="sb-mobile-diagram">
             <div class="content-wrapper" style="border: 1px solid #D7D7D7">
-                <SfDiagramComponent @ref="@Diagram" Click="click"  Height="1000px" Width="500px" Nodes="@Dnodes" Connectors="@Dconnectors" >
-                  
-
+                <SfDiagramComponent @ref="@Diagram" Click="click"  Height="1000px" Width="1200px">
                 </SfDiagramComponent>
             </div>
         </div>
-        @*Hidden:Lines*@
     </div>
 </div>
-@*End:Hidden*@
 
 @code{
     NodeBase Addednodes = new NodeBase();
-    DiagramSize SymbolDragPreviewSize;
     private void OnSelectionChanged( PaletteSelectionChangedEventArgs args)
     {
         Addednodes = null;
@@ -47,7 +41,7 @@
                             {
                                 Addednodes = node.Clone() as NodeBase;
                             }
-                        }  
+                        }
                     }
                 }
             }
@@ -62,46 +56,34 @@
             Node node = Addednodes as Node;
             node.OffsetX = args.Position.X;
             node.OffsetY = args.Position.Y;
-            Diagram.Nodes.Add(node);
+            Diagram.AddDiagramElementsAsync(new DiagramObjectCollection<NodeBase>() { node});
         }
         else if(Addednodes is Connector)
         {
             Connector connector = Addednodes as Connector;
             connector.SourcePoint = new DiagramPoint() { X = args.Position.X, Y = args.Position.Y };
             connector.TargetPoint = new DiagramPoint() { X = args.Position.X + 50, Y = args.Position.Y + 50 }; // Example target point
-            Diagram.Connectors.Add(connector);
-            
+            Diagram.AddDiagramElementsAsync(new DiagramObjectCollection<NodeBase>() { connector });
+
         }
+        Addednodes = null;
 
     }
-    SymbolMargin SymbolMargin = new SymbolMargin { Left = 10, Right = 10, Top = 10, Bottom = 10 };
-    double symbolSizeWidth;
-    double symbolSizeHeight;
 
-    private void NodeCreating(NodeBase obj)
-    {
-        (obj as Node).Style.Fill = "green";
-
-    }
     SfDiagramComponent Diagram;
-    DiagramObjectCollection<Node> Dnodes = new DiagramObjectCollection<Node>();
-    DiagramObjectCollection<Connector> Dconnectors = new DiagramObjectCollection<Connector>();
-
+    DiagramSize SymbolDragPreviewSize;
     SfSymbolPaletteComponent PaletteInstance;
     DiagramObjectCollection<Palette> Palettes = new DiagramObjectCollection<Palette>();
 
-    DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
     string paletteWidth;
     string paletteHeight;
+    double symbolSizeWidth;
+    double symbolSizeHeight;
+    SymbolMargin SymbolMargin = new SymbolMargin { Left = 10, Right = 10, Top = 10, Bottom = 10 };
+
     DiagramObjectCollection<NodeBase> Tnodes = new DiagramObjectCollection<NodeBase>();
-    DiagramObjectCollection<NodeBase> T6nodes = new DiagramObjectCollection<NodeBase>();//T4nodes
     DiagramObjectCollection<NodeBase> T2nodes = new DiagramObjectCollection<NodeBase>();//T3nodes
-    DiagramObjectCollection<NodeBase> T3nodes = new DiagramObjectCollection<NodeBase>();//T4nodes
-    DiagramObjectCollection<NodeBase> T4nodes = new DiagramObjectCollection<NodeBase>();//T4nodes
-    DiagramObjectCollection<NodeBase> T5nodes = new DiagramObjectCollection<NodeBase>();//T4nodes
-    DiagramObjectCollection<NodeBase> Gnodes = new DiagramObjectCollection<NodeBase>();
-    //DiagramObjectCollection<NodeBase> T6nodes = new DiagramObjectCollection<NodeBase>();//T4nodes
-    DiagramObjectCollection<NodeBase> T7nodes = new DiagramObjectCollection<NodeBase>();//T4nodes
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         PaletteInstance.Targets = new DiagramObjectCollection<SfDiagramComponent>() { };
@@ -114,18 +96,13 @@
         SymbolDragPreviewSize = new DiagramSize();
         SymbolDragPreviewSize.Width = 80;
         SymbolDragPreviewSize.Height = 80;
-        //SymbolMargin.lef
         symbolSizeWidth = 80;
         symbolSizeHeight = 80;
 
         Tnodes = new DiagramObjectCollection<NodeBase>();
-
-
-
         Node Tnode2 = new Node()
         { ID = "node1", Shape = new FlowShape() { Type = NodeShapes.Flow, Shape = NodeFlowShapes.Decision } };
         Tnodes.Add(Tnode2);
-
         Node Tnode3 = new Node()
         { Shape = new FlowShape() { Type = NodeShapes.Flow, Shape = NodeFlowShapes.Document } };
         Tnodes.Add(Tnode3);
@@ -145,11 +122,7 @@
         { Shape = new FlowShape() { Type = NodeShapes.Flow, Shape = NodeFlowShapes.SequentialData } };
         Tnodes.Add(Tnode8);
 
-
-
         T2nodes = new DiagramObjectCollection<NodeBase>();
-
-
 
         Connector connector = new Connector
         {
@@ -164,7 +137,7 @@
 
         Connector connector1 = new Connector
         {
-            ID = "connector0",
+            ID = "connector01",
             Type = ConnectorSegmentType.Orthogonal,
             Style = new ShapeStyle() { StrokeWidth = 2 },
             SourcePoint = new DiagramPoint() { X = 0, Y = 0 },
@@ -175,7 +148,7 @@
 
         Connector connector2 = new Connector
         {
-            ID = "connector1",
+            ID = "connector02",
             Type = ConnectorSegmentType.Orthogonal,
             Style = new ShapeStyle() { StrokeWidth = 2, StrokeColor = "red" },
             //TargetID = targetNodes[i],
@@ -185,10 +158,9 @@
         };
         T2nodes.Add(connector2 as NodeBase);
 
-
         Connector connector3 = new Connector
         {
-            ID = "connector3",
+            ID = "connector03",
             Type = ConnectorSegmentType.Bezier,
             Style = new ShapeStyle() { StrokeWidth = 2, StrokeColor = "red" },
             //TargetID = targetNodes[i],
@@ -197,112 +169,11 @@
         };
         T2nodes.Add(connector3 as NodeBase);
 
-       
-
-        int offsetX = 100; int offsetY = 100; int width = 50; int height = 50; double count = 1;
-        for (int i = 1; i <= Tnodes.Count; i++)
-        {
-            (Tnodes[i - 1] as Node).ID = "node" + i;
-            (Tnodes[i - 1] as Node).Width = width;
-            (Tnodes[i - 1] as Node).Height = height;
-            //nodes[i - 1].OffsetX = count * offsetX;
-            //nodes[i - 1].OffsetY = offsetY;
-
-            count += 1.5;
-            if (i % 6 == 0)
-            {
-                count = 1;
-                offsetX = 100;
-                offsetY = offsetY + 200;
-            }
-
-
-
-            (Tnodes[i - 1] as Node).Style.Fill = "#19aa8d";
-
-            string value = (Tnodes[i - 1] as Node).Style.GetType().ToString();
-        }
-
-        T4nodes = new DiagramObjectCollection<NodeBase>();
-        Node T4node = new Node() { Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle } };
-        T4nodes.Add(T4node as NodeBase);
-
-        T4nodes = new DiagramObjectCollection<NodeBase>();
-        Node T4node1 = new Node() { Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Ellipse } };
-        T4nodes.Add(T4node1 as NodeBase);
-        Node T4node2 = new Node() { Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Hexagon } };
-        T4nodes.Add(T4node2 as NodeBase);
-        Node T4node3 = new Node() { Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Parallelogram } };
-        T4nodes.Add(T4node3 as NodeBase);
-        Node T4node4 = new Node() { Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Triangle } };
-        T4nodes.Add(T4node4 as NodeBase);
-        Node T4node5 = new Node() { Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Plus } };
-        T4nodes.Add(T4node5 as NodeBase);
-        Node T4node6 = new Node() { Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Star } };
-        T4nodes.Add(T4node6 as NodeBase);
-        Node T4aanode7 = new Node() { Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Pentagon } };
-        T4nodes.Add(T4aanode7 as NodeBase);
-        Node T4node8 = new Node() { Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Heptagon } };
-        T4nodes.Add(T4node8 as NodeBase);
-
-
-
-
-        T5nodes = new DiagramObjectCollection<NodeBase>();
-        Node T5node = new Node() { Shape = new ImageShape() { Type = NodeShapes.Image, Source = "https://www.w3schools.com/images/w3schools_green.jpg" } };
-        T5nodes.Add(T5node as NodeBase);
-
-        T5nodes = new DiagramObjectCollection<NodeBase>();
-        Node T51node = new Node() { Shape = new ImageShape() { Type = NodeShapes.Image, Source = "https://i.imgur.com/Rr1jAAn.jpg" } };
-        T5nodes.Add(T51node as NodeBase);
-        T5nodes = new DiagramObjectCollection<NodeBase>();
-        Node T52node = new Node() { Shape = new ImageShape() { Type = NodeShapes.Image, Source = "https://i.imgur.com/kvuSM04.jpg" } };
-        T5nodes.Add(T52node as NodeBase);
-        Node T53node = new Node() { Shape = new ImageShape() { Type = NodeShapes.Image, Source = "http://codeskulptor-demos.commondatastorage.googleapis.com/pang/FDqGDmc.png" } };
-        T5nodes.Add(T53node as NodeBase);
-
-
-        T6nodes = new DiagramObjectCollection<NodeBase>();
-        Node NativeT5node = new Node()
-        {
-            ID = "Nativenode1",
-
-            Shape = new Shape() { Type = NodeShapes.SVG },
-        };
-        T6nodes.Add(NativeT5node as NodeBase);
-        Node NativeT6node = new Node()
-        {
-            ID = "Nativenode2",
-
-            Shape = new Shape() { Type = NodeShapes.SVG },
-        };
-        T6nodes.Add(NativeT6node as NodeBase);
-
-        T7nodes = new DiagramObjectCollection<NodeBase>();
-        Node HTML1node = new Node()
-        {
-            ID = "node1checknode",
-
-            Shape = new Shape() { Type = NodeShapes.HTML },
-        };
-        T7nodes.Add(HTML1node as NodeBase);
-        Node HTML2node = new Node()
-        {
-            ID = "node2checknode",
-            Shape = new Shape() { Type = NodeShapes.HTML },
-        };
-        T7nodes.Add(HTML2node as NodeBase);
-        T7nodes.Add(new Node() { ID = "NodeTextBox", Shape = new Shape() { Type = NodeShapes.HTML }}as NodeBase);
-        
-
-
-
-
-      
         Palettes = new DiagramObjectCollection<Palette>()
         {
             new Palette(){Symbols =Tnodes,Title="Flow Shapes",ID="FlowShapes" },
             new Palette(){Symbols =T2nodes,Title="Connectors" ,IsExpanded = false},
         };
     }
-    }
+    
+}

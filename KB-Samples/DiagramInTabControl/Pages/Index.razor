@@ -17,9 +17,9 @@
                         <div style="width:900px;height: 500px; float:left">
                             <SfDiagramComponent @ref="@Diagram" ID="element" Width="900px" Height="500px"  ConnectorCreating="@ConnectorCreating" NodeCreating="@NodeCreating">
                                 <DataSourceSettings ID="Name" ParentID="Category" DataSource="DataSource"> </DataSourceSettings>
-            <Layout Type="LayoutType.HierarchicalTree" HorizontalSpacing="30" Orientation="LayoutOrientation.TopToBottom" VerticalSpacing="30" HorizontalAlignment="HorizontalAlignment.Auto" VerticalAlignment="VerticalAlignment.Auto" GetLayoutInfo="GetLayoutInfo">
-                <LayoutMargin Top="50" Bottom="50" Right="50" Left="50"></LayoutMargin>
-            </Layout>
+                                    <Layout Type="LayoutType.HierarchicalTree" HorizontalSpacing="30" Orientation="LayoutOrientation.TopToBottom" VerticalSpacing="30" HorizontalAlignment="HorizontalAlignment.Auto" VerticalAlignment="VerticalAlignment.Auto" GetLayoutInfo="GetLayoutInfo">
+                                        <LayoutMargin Top="50" Bottom="50" Right="50" Left="50"></LayoutMargin>
+                                    </Layout>
                                 <ScrollSettings ScrollLimit="ScrollLimitMode.Infinity"></ScrollSettings>
                             </SfDiagramComponent>
                         </div>

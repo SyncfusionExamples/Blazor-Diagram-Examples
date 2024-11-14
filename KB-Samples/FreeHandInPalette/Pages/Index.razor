@@ -8,12 +8,12 @@
 
         <div id="palette-space" class="sb-mobile-palette" style="float:left">
             <SfSymbolPaletteComponent @ref="@SymbolPalette" Width="200px" Height="700px"
-                                      Palettes="@Palettes" SymbolHeight="60" SymbolWidth="60" SymbolMargin="@SymbolMargin" AllowDrag="true">
+                                      Palettes="@Palettes" SymbolHeight="60" SymbolWidth="60" SymbolDragPreviewSize="SymbolPreviewSize" SymbolMargin="@SymbolMargin" AllowDrag="true">
             </SfSymbolPaletteComponent>
         </div>
         <div id="diagram-space" class="sb-mobile-diagram">
             <div class="content-wrapper" style="border: 1px solid #D7D7D7;">
-                <SfDiagramComponent @ref="@diagram" Width="700px" Height="700px" Connectors="@connectors" Nodes="@nodes" DragDrop="DragDropEvent">
+                <SfDiagramComponent @ref="@diagram" Width="1500px" Height="700px" DragDrop="DragDropEvent">
                 </SfDiagramComponent>
             </div>
         </div>
@@ -23,12 +23,12 @@
 @code
 {
     SymbolMargin SymbolMargin = new SymbolMargin
-        {
-            Left = 15,
-            Right = 15,
-            Top = 15,
-            Bottom = 15
-        };
+    {
+        Left = 15,
+        Right = 15,
+        Top = 15,
+        Bottom = 15
+    };
     SfDiagramComponent diagram;
     SfSymbolPaletteComponent SymbolPalette;
     //Define nodes collection.
@@ -44,6 +44,7 @@
     // Defines palette's connector collection.
     DiagramObjectCollection<NodeBase> PaletteConnectors = new DiagramObjectCollection<NodeBase>();
 
+    DiagramSize SymbolPreviewSize = new DiagramSize() { Height = 50, Width = 50 };
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         SymbolPalette.Targets = new DiagramObjectCollection<SfDiagramComponent>() { };
@@ -60,65 +61,18 @@
             diagram.InteractionController = DiagramInteractions.DrawOnce;
 
             diagram.DrawingObject = new Connector()
-                {
-                    ID = "connector1",
-                    Type = ConnectorSegmentType.Freehand,
-                   
-                };
+            {
+                ID = "connector1",
+                Type = ConnectorSegmentType.Freehand,
+
+            };
 
         }
 
     }
-    
+
     protected override void OnInitialized()
     {
-        nodes = new DiagramObjectCollection<Node>();
-        // A node is created and stored in nodes collection.
-        Node node1 = new Node()
-            {
-                ID = "node1",
-                // Position of the node
-                OffsetX = 250,
-                OffsetY = 250,
-                // Size of the node
-                Width = 100,
-                Height = 100,
-                Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "white" }
-            };
-        // Add node
-        nodes.Add(node1);
-        Node node2 = new Node()
-            {
-                ID = "node2",
-                // Position o
-                // Position of the node
-                OffsetX = 250,
-                OffsetY = 250,
-                // Size of the node
-                Width = 100,
-                Height = 100,
-                Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "white" }
-            };
-        // Add node
-        nodes.Add(node2);
-        Connector Connector = new Connector()
-            {
-                ID = "connector",
-                // Set the source and target point of the connector.
-                SourcePoint = new DiagramPoint() { X = 100, Y = 100 },
-                TargetPoint = new DiagramPoint() { X = 200, Y = 200 },
-                // Type of the connector segments.
-                Type = ConnectorSegmentType.Straight
-            };
-        connectors.Add(Connector);
-        Connector Connector1 = new Connector()
-            {
-                ID = "connector1",
-                SourcePoint = new DiagramPoint() { X = 400, Y = 100 },
-                TargetPoint = new DiagramPoint() { X = 400, Y = 200 },
-                Type = ConnectorSegmentType.Straight
-            };
-        connectors.Add(Connector1);
         InitPaletteModel();
     }
 
@@ -138,66 +92,68 @@
     private void CreatePaletteNode(NodeFlowShapes flowShape, string id)
     {
         Node node = new Node()
-            {
-                ID = id,
-                Shape = new FlowShape() { Type = NodeShapes.Flow, Shape = flowShape },
-                Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "#6495ED" },
-            };
+        {
+            ID = id,
+            Width = 50,
+            Height = 50,
+            Shape = new FlowShape() { Type = NodeShapes.Flow, Shape = flowShape },
+            Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "#6495ED" },
+        };
         PaletteNodes.Add(node);
     }
 
     private void CreatePaletteConnector()
     {
         Connector connector1 = new Connector()
-            {
-                ID = "connector1",
-                SourcePoint = new DiagramPoint() { X = 700, Y = 200 },
-                TargetPoint = new DiagramPoint() { X = 1000, Y = 400 },
-                Segments = new DiagramObjectCollection<ConnectorSegment>()
-            {
-                new BezierSegment(){Type = ConnectorSegmentType.Bezier, Point = new DiagramPoint(){X = 750, Y = 250}},
-                new BezierSegment(){Type = ConnectorSegmentType.Bezier, Point = new DiagramPoint(){X = 900, Y = 350}}
-            },
-                Type = ConnectorSegmentType.Bezier,
-                BezierConnectorSettings = new BezierConnectorSettings()
+        {
+            ID = "connector1",
+            SourcePoint = new DiagramPoint() { X = 700, Y = 200 },
+            TargetPoint = new DiagramPoint() { X = 1000, Y = 400 },
+            Segments = new DiagramObjectCollection<ConnectorSegment>()
                 {
-                    //Define the visibility of the control points.
-                    AllowSegmentsReset = false,
+                    new BezierSegment(){Type = ConnectorSegmentType.Bezier, Point = new DiagramPoint(){X = 750, Y = 250}},
+                    new BezierSegment(){Type = ConnectorSegmentType.Bezier, Point = new DiagramPoint(){X = 900, Y = 350}}
                 },
+            Type = ConnectorSegmentType.Bezier,
+            BezierConnectorSettings = new BezierConnectorSettings()
+            {
+                //Define the visibility of the control points.
+                AllowSegmentsReset = false,
+            },
 
-            };
+        };
         PaletteConnectors.Add(connector1);
     }
 
     private void CreatePaletteGroup()
     {
         Node node1 = new Node()
-            {
-                ID = "node1",
-                Width = 50,
-                Height = 50,
-                OffsetX = 100,
-                OffsetY = 100,
-                Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle },
-                Style = new ShapeStyle() { Fill = "#6495ed" },
-            };
+        {
+            ID = "node1",
+            Width = 50,
+            Height = 50,
+            OffsetX = 100,
+            OffsetY = 100,
+            Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle },
+            Style = new ShapeStyle() { Fill = "#6495ed" },
+        };
         Node node2 = new Node()
-            {
-                ID = "node2",
-                Width = 50,
-                Height = 50,
-                OffsetX = 100,
-                OffsetY = 200,
-                Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Ellipse },
-                Style = new ShapeStyle() { Fill = "#6495ed" },
-            };
+        {
+            ID = "node2",
+            Width = 50,
+            Height = 50,
+            OffsetX = 100,
+            OffsetY = 200,
+            Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Ellipse },
+            Style = new ShapeStyle() { Fill = "#6495ed" },
+        };
         PaletteGroup.Add(node1);
         PaletteGroup.Add(node2);
         NodeGroup group = new NodeGroup()
-            {
-                ID = "group1",
-                Children = new string[] { "node1", "node2" }
-            };
+        {
+            ID = "group1",
+            Children = new string[] { "node1", "node2" }
+        };
         PaletteGroup.Add(group);
     }
 }

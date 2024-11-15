@@ -133,17 +133,14 @@
         <TabItem>
             <HeaderTemplate>Diagram</HeaderTemplate>
             <ContentTemplate>
-                <div class="col-lg-9 control-section sb-property-border">
+                <div class=" control-section sb-property-border" style="width:1900px">
                     <div id="diagram-space" class="content-wrapper">
-                        <SfDiagramComponent DragDrop="@OnDrop" @ref="@Diagram" Height="690px" NodeCreating="@OnNodeCreating" ConnectorCreating="@OnConnectorCreating">
+                        <SfDiagramComponent DragDrop="@OnDrop" @ref="@Diagram" Height="690px" Width="1900px" NodeCreating="@OnNodeCreating" ConnectorCreating="@OnConnectorCreating">
 
                             <ScrollSettings EnableAutoScroll=true>
                             </ScrollSettings>
 
                             <Layout @bind-Type="Type" @bind-HorizontalSpacing="@HorizontalSpacing" @bind-VerticalSpacing="@VerticalSpacing">
-
-                                @* @bind-Orientation="@OrientationType"  @bind-HorizontalAlignment="@HorizontalAlignment" @bind-VerticalAlignment="@VerticalAlignment" GetLayoutInfo="GetLayoutInfo" *@
-
                                 <LayoutMargin @bind-Top="@Top" @bind-Bottom="@Bottom" @bind-Right="@Right" @bind-Left="@Left"></LayoutMargin>
                             </Layout>
 

@@ -1,0 +1,185 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Diagram.Internal
+@using System.Collections.ObjectModel
+@using System.Xml
+@using Microsoft.AspNetCore.Components
+@using Node = Syncfusion.Blazor.Diagram.Node
+@using System.Xml.Linq
+@using System.Text.Json
+@using Microsoft.AspNetCore.Hosting
+@inject IWebHostEnvironment WebHostEnvironment
+<style>
+    #diagram-space {
+        width: 70%;
+        float: left;
+    }
+
+</style>
+
+
+<div id="diagram-space">
+    <br />
+    <SfDiagramComponent @ref="diagram" Width="1200px" Height="800px" @bind-Nodes="@nodes"  @bind-Connectors="@connectors"  NodeCreating="NodeCreating" ConnectorCreating="ConnectorCreating">
+    </SfDiagramComponent>
+  
+    <SfButton Content="Convert GraphML to JSON" OnClick="@ConvertGraphMLToJson" />
+</div>
+
+@code {
+    private SfDiagramComponent diagram;
+    private string JsonData { get; set; }
+    private GraphData Graph { get; set; }
+
+    public class Nodes
+    {
+        public string Id { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
+    }
+
+    public class Edge
+    {
+        public string Source { get; set; }
+        public string Target { get; set; }
+    }
+
+    public class GraphData
+    {
+        public List<Nodes> Nodes { get; set; }
+        public List<Edge> Edges { get; set; }
+    }
+
+    private double GetAttributeValueAsDouble(XmlNode node, string attributeName, XmlNamespaceManager namespaceManager)
+    {
+        var geometryElement = node.SelectSingleNode(".//y:Geometry", namespaceManager);
+        if (geometryElement?.Attributes[attributeName] != null)
+        {
+            return double.Parse(geometryElement.Attributes[attributeName].Value);
+        }
+        return 0;
+    }
+
+    private async Task ConvertGraphMLToJson()
+    {
+        // Path to the GraphML file in the wwwroot directory
+        string graphmlFilePath = Path.Combine(WebHostEnvironment.WebRootPath, "HEadlamp.graphml");
+
+        if (File.Exists(graphmlFilePath))
+        {
+            // Read and convert the GraphML file
+            string graphmlContent = await File.ReadAllTextAsync(graphmlFilePath);
+            JsonData = ConvertGraphMLToJsonString(graphmlContent);
+            Graph = JsonSerializer.Deserialize<GraphData>(JsonData);
+            diagram.Clear();
+
+            var addedNodes = new DiagramObjectCollection<NodeBase>();
+
+            foreach (var graphNode in Graph.Nodes)
+            {
+                Node node = new Node()
+                    {
+                        ID = graphNode.Id,
+                        OffsetX = graphNode.X,
+                        OffsetY = graphNode.Y,
+                    };
+                addedNodes.Add(node);
+            }
+
+            foreach (var graphEdge in Graph.Edges)
+            {
+                Connector connector = new Connector()
+                    {
+                        ID = $"connector{Graph.Edges.IndexOf(graphEdge)}",
+                        SourceID = graphEdge.Source,
+                        TargetID = graphEdge.Target,
+                    };
+                addedNodes.Add(connector);
+            }
+
+            await diagram.AddDiagramElements(addedNodes);
+
+            FitOptions fitOptions = new FitOptions() { Mode = FitMode.Both, Region = DiagramRegion.Content };
+            diagram.FitToPage(fitOptions);
+        }
+        else
+        {
+            JsonData = "GraphML file not found.";
+        }
+    }
+
+    private string ConvertGraphMLToJsonString(string graphmlContent)
+    {
+        var xmlDoc = new XmlDocument();
+        xmlDoc.LoadXml(graphmlContent);
+
+        var namespaceManager = new XmlNamespaceManager(xmlDoc.NameTable);
+        namespaceManager.AddNamespace("y", "http://www.yworks.com/xml/graphml");
+
+        var nodes = xmlDoc.GetElementsByTagName("node");
+        var edges = xmlDoc.GetElementsByTagName("edge");
+
+        var graphData = new GraphData
+            {
+                Nodes = nodes.Cast<XmlNode>().Select(node => new Nodes
+                {
+                    Id = node.Attributes["id"]?.Value,
+                    X = GetAttributeValueAsDouble(node, "x", namespaceManager),
+                    Y = GetAttributeValueAsDouble(node, "y", namespaceManager),
+                    Width = GetAttributeValueAsDouble(node, "width", namespaceManager),
+                    Height = GetAttributeValueAsDouble(node, "height", namespaceManager)
+                }).ToList(),
+                Edges = edges.Cast<XmlNode>().Select(edge => new Edge
+                {
+                    Source = edge.Attributes["source"]?.Value,
+                    Target = edge.Attributes["target"]?.Value
+                }).ToList()
+            };
+
+        return JsonSerializer.Serialize(graphData, new JsonSerializerOptions { WriteIndented = true });
+    }
+
+    DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
+    DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+
+    protected override void OnInitialized()
+    {
+        Node node1 = new Node()
+            {
+                ID = "node0",
+                Width = 70,
+                Height = 70,
+                OffsetX = 400,
+                OffsetY = 500
+            };
+        nodes.Add(node1);
+    }
+
+    private void NodeCreating(IDiagramObject obj)
+    {
+        Node node = obj as Node;
+        node.Shape = new BasicShape()
+            {
+                Type = NodeShapes.Basic,
+                Shape = NodeBasicShapes.Ellipse,
+                CornerRadius = 10
+            };
+        node.Width = 50;
+        node.Height = 50;
+        ShapeAnnotation annotation = new ShapeAnnotation() { Content = node.ID, Style = new TextStyle() { Color = "black" } };
+        node.Annotations = new DiagramObjectCollection<ShapeAnnotation>() { annotation };
+    }
+
+    private void ConnectorCreating(IDiagramObject connector)
+    {
+        (connector as Connector).Type = ConnectorSegmentType.Straight;
+        (connector as Connector).TargetDecorator = new DecoratorSettings
+            {
+                Shape = DecoratorShape.Arrow,
+            };
+    }
+}

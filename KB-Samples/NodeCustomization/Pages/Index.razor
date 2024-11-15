@@ -1,0 +1,61 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Diagram
+
+<SfDiagramComponent @ref="@diagram" Height="500px" Nodes="@nodes" />
+
+@code
+{
+    //Reference the diagram
+    SfDiagramComponent diagram;
+    //Initialize the diagram's nodes collection
+    DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+
+
+    protected override void OnInitialized()
+    {        
+        Node node = new Node()
+        {
+            ID = "polygonNode",
+            OffsetX = 500,
+            OffsetY = 200,
+            Style = new ShapeStyle() { Fill = "#6495ED" },
+            Shape = new BasicShape()
+            {
+                Type = NodeShapes.Basic,
+                Points = new DiagramPoint[]{
+                    new DiagramPoint() { X=35},
+                    new DiagramPoint() { X=65 },
+                    new DiagramPoint() { X = 100, Y=35 },
+                    new DiagramPoint() { X = 100, Y = 65 },
+                    new DiagramPoint() { X = 65, Y=100 },
+                    new DiagramPoint() { X = 35, Y=100 },
+                    new DiagramPoint() { Y=65 },
+                    new DiagramPoint{ Y=35 }
+                },
+                Shape = NodeBasicShapes.Polygon
+            },
+
+        };
+        nodes.Add(node);
+
+        Node circleNode = new Node()
+        {
+            ID = "circleNode",
+            OffsetX = 600,
+            OffsetY = 100,
+            Height = 100,
+            Width = 100,
+            Style = new ShapeStyle() { Fill = "yellow", StrokeWidth = 3, StrokeColor = "Black" },
+            Shape = new BasicShape()
+            {
+                Type = NodeShapes.Basic,
+
+                Shape = NodeBasicShapes.Ellipse
+            },
+
+        };
+        nodes.Add(circleNode);
+    }
+}

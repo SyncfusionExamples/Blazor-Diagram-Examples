@@ -1,0 +1,110 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Navigations
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Diagram.SymbolPalette
+@using Syncfusion.Blazor.Diagram.Overview
+
+<SfTab LoadOn="ContentLoad.Demand">
+    <TabItems>
+        <TabItem>
+            <HeaderTemplate>Diagram</HeaderTemplate>
+            <ContentTemplate>
+                @if (canRender)
+                {
+                    <div id="overviewdiagram" style="width: 1200px;height: 500px;">
+                        <div style="width:900px;height: 500px; float:left">
+                            <SfDiagramComponent @ref="@Diagram" ID="element" Width="900px" Height="500px"  ConnectorCreating="@ConnectorCreating" NodeCreating="@NodeCreating">
+                                <DataSourceSettings ID="Name" ParentID="Category" DataSource="DataSource"> </DataSourceSettings>
+                                    <Layout Type="LayoutType.HierarchicalTree" HorizontalSpacing="30" Orientation="LayoutOrientation.TopToBottom" VerticalSpacing="30" HorizontalAlignment="HorizontalAlignment.Auto" VerticalAlignment="VerticalAlignment.Auto" GetLayoutInfo="GetLayoutInfo">
+                                        <LayoutMargin Top="50" Bottom="50" Right="50" Left="50"></LayoutMargin>
+                                    </Layout>
+                                <ScrollSettings ScrollLimit="ScrollLimitMode.Infinity"></ScrollSettings>
+                            </SfDiagramComponent>
+                        </div>
+                        <div style="width:300px;height:200px;float:left; border-color:lightgray;border-style:solid;">
+                            <SfDiagramOverviewComponent Height="300" Width="300" SourceID="element"></SfDiagramOverviewComponent>
+                        </div>
+                    </div>
+                }
+            </ContentTemplate>
+        </TabItem>
+        <TabItem Content="C# is intended to be a simple, modern, general-purpose, object-oriented programming language. Its development team is led by Anders Hejlsberg. The most recent version is C# 5.0, which was released on August 15, 2012.">
+            <ChildContent>
+                <TabHeader Text="C Sharp(C#)"></TabHeader>
+            </ChildContent>
+        </TabItem>
+    </TabItems>
+    <TabEvents Created="@tabCreated"></TabEvents>
+</SfTab>
+
+
+@code {
+    SfDiagramComponent Diagram;
+    string width="800px";
+    string height = "500px";
+    bool canRender = false;
+
+    private void tabCreated()
+    {
+        canRender = true;
+    }
+    private void ConnectorCreating(IDiagramObject connector)
+    {
+        (connector as Connector).Type = ConnectorSegmentType.Orthogonal;
+        (connector as Connector).TargetDecorator.Shape = DecoratorShape.None;
+        (connector as Connector).Style = new ShapeStyle() { StrokeColor = "#6d6d6d" };
+        (connector as Connector).Constraints = 0;
+        (connector as Connector).CornerRadius = 5;
+    }
+    private TreeInfo GetLayoutInfo(IDiagramObject obj, TreeInfo options)
+    {
+        options.EnableSubTree = true;
+        options.Orientation = Syncfusion.Blazor.Diagram.Orientation.Horizontal;
+        return options;
+    }
+    private void NodeCreating(IDiagramObject obj)
+    {
+        Node node = obj as Node;
+        if (node.Data is System.Text.Json.JsonElement)
+        {
+            node.Data = System.Text.Json.JsonSerializer.Deserialize<HierarchicalDetails>(node.Data.ToString());
+        }
+        HierarchicalDetails hierarchicalData = node.Data as HierarchicalDetails;
+        node.Style = new ShapeStyle() { Fill = "#659be5", StrokeColor = "none", StrokeWidth = 2, };
+        node.BackgroundColor = "#659be5";
+        node.Width = 150;
+        node.Height = 50;
+        node.Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+        {
+            new ShapeAnnotation()
+            {
+                Content = hierarchicalData.Name,
+                Style =new TextStyle(){Color = "white"}
+            }
+        };
+    }
+    public class HierarchicalDetails
+    {
+        public string Name { get; set; }
+        public string FillColor { get; set; }
+        public string Category { get; set; }
+
+    }
+    public List<HierarchicalDetails> DataSource = new List<HierarchicalDetails>()
+    {
+        new HierarchicalDetails(){ Name ="Diagram", Category="",FillColor="#659be5"},
+        new HierarchicalDetails(){ Name ="Layout", Category="Diagram",FillColor="#659be5"},
+        new HierarchicalDetails(){ Name ="Tree layout", Category="Layout",FillColor="#659be5"},
+        new HierarchicalDetails(){ Name ="Organizational chart", Category="Layout",FillColor="#659be5"},
+        new HierarchicalDetails(){ Name ="Hierarchical tree", Category="Tree layout",FillColor="#659be5"},
+        new HierarchicalDetails(){ Name ="Radial tree", Category="Tree layout",FillColor="#659be5"},
+        new HierarchicalDetails(){ Name ="Mind map", Category="Hierarchical tree",FillColor="#659be5"},
+        new HierarchicalDetails(){ Name ="Family tree", Category="Hierarchical tree",FillColor="#659be5"},
+        new HierarchicalDetails(){ Name ="Management", Category="Organizational chart",FillColor="#659be5"},
+        new HierarchicalDetails(){ Name ="Human resources", Category="Management",FillColor="#659be5"},
+        new HierarchicalDetails(){ Name ="University", Category="Management",FillColor="#659be5"},
+        new HierarchicalDetails(){ Name ="Business", Category="#Management",FillColor="#659be5"}
+    };
+}

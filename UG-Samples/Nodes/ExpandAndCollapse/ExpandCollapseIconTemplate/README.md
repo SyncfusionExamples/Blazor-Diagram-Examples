@@ -1,4 +1,4 @@
-#IsExpanded Property
+# Template support for Expand/Collapse Icons
 
 This sample demonstrates how to set template for expand and collapse icons.
 

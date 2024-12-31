@@ -1,0 +1,43 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+
+<SfDiagramComponent Height="600px" Nodes="@nodes"  />
+
+@code
+{
+
+    // Defines diagram's node collection.
+    DiagramObjectCollection<Node> nodes;
+
+    protected override void OnInitialized()
+    {
+        nodes = new DiagramObjectCollection<Node>();
+        Node node = new Node()
+        {
+                Width = 100,
+                Height = 100,
+                OffsetX = 100,
+                OffsetY = 100,
+                Tooltip = new DiagramTooltip() { Content = "YourExcessContent" },  // Display excess content
+                Constraints = NodeConstraints.Default | NodeConstraints.Tooltip, // Enable tooltip
+                Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "white" },
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+                {
+                    new ShapeAnnotation() {
+                       Content = "Your Annotations Content is here",
+                       Style = new TextStyle() {
+                           Bold = true,
+                           Color = "Black",
+                           FontFamily = "Arial",
+                           FontSize = 12,
+                           TextOverflow = TextOverflow.Clip,   // Hides the overflow
+                           TextWrapping = TextWrap.Wrap        // Wraps the text within the node
+                       }
+                    }
+                }
+        };
+        nodes.Add(node);
+       
+    }
+}

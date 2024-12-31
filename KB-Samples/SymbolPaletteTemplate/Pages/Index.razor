@@ -1,0 +1,84 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Diagram.SymbolPalette
+@using Syncfusion.Blazor.CircularGauge
+
+<SfSymbolPaletteComponent Width="200px" Height="300px" SymbolWidth="100" SymbolHeight="100" Palettes="@Palettes">
+    <SymbolPaletteTemplates>
+        <NodeTemplate>
+            @{
+                <SfCircularGauge Width="100px" Height="100px">
+                    <CircularGaugeAxes>
+                        <CircularGaugeAxis StartAngle="210" EndAngle="150" Minimum="0" Maximum="120" Radius="80%">
+                            <CircularGaugeAxisLineStyle Width="10" Color="transparent">
+                            </CircularGaugeAxisLineStyle>
+                            <CircularGaugeAxisLabelStyle UseRangeColor="false">
+                                <CircularGaugeAxisLabelFont Size="6px" FontFamily="Roboto" FontStyle="Regular">
+                                </CircularGaugeAxisLabelFont>
+                            </CircularGaugeAxisLabelStyle>
+                            <CircularGaugeAxisMajorTicks Height="10" Offset="5" UseRangeColor="false">
+                            </CircularGaugeAxisMajorTicks>
+                            <CircularGaugeAxisMinorTicks Height="0" Width="0" UseRangeColor="false">
+                            </CircularGaugeAxisMinorTicks>
+                            <CircularGaugeAnnotations>
+                                <CircularGaugeAnnotation Radius="30%" Angle="0" ZIndex="1" Content="Speedometer">
+                                    <ContentTemplate>
+                                        <div><span style="font-size:6px; color:#9E9E9E; font-family:Regular; margin-left: -33px">Speedometer</span></div>
+                                    </ContentTemplate>
+                                </CircularGaugeAnnotation>
+                                <CircularGaugeAnnotation Radius="40%" Angle="180" ZIndex="1" Content="65 MPH">
+                                    <ContentTemplate>
+                                        <div><span style="font-size:6px; color:#424242; font-family:Regular; margin-left: -33px">65 MPH</span></div>
+                                    </ContentTemplate>
+                                </CircularGaugeAnnotation>
+                            </CircularGaugeAnnotations>
+                            <CircularGaugeRanges>
+                                <CircularGaugeRange Start="0" End="40" Color="#30B32D" StartWidth="10" EndWidth="10" RoundedCornerRadius="0">
+                                </CircularGaugeRange>
+                                <CircularGaugeRange Start="40" End="80" Color="#FFDD00" StartWidth="10" EndWidth="10" RoundedCornerRadius="0">
+                                </CircularGaugeRange>
+                                <CircularGaugeRange Start="80" End="120" Color="#F03E3E" StartWidth="10" EndWidth="10" RoundedCornerRadius="0">
+                                </CircularGaugeRange>
+                            </CircularGaugeRanges>
+                            <CircularGaugePointers>
+                                <CircularGaugePointer Value="65" Radius="60%" PointerWidth="8">
+                                    <CircularGaugePointerAnimation Enable="true"></CircularGaugePointerAnimation>
+                                    <CircularGaugeCap Radius="7">
+                                    </CircularGaugeCap>
+                                    <CircularGaugeNeedleTail Length="18%">
+                                    </CircularGaugeNeedleTail>
+                                </CircularGaugePointer>
+                            </CircularGaugePointers>
+                        </CircularGaugeAxis>
+                    </CircularGaugeAxes>
+                </SfCircularGauge>
+            }
+        </NodeTemplate>
+    </SymbolPaletteTemplates>
+</SfSymbolPaletteComponent>
+
+@code {
+    DiagramObjectCollection<NodeBase> Symbols = new DiagramObjectCollection<NodeBase>();
+    DiagramObjectCollection<Palette> Palettes = new DiagramObjectCollection<Palette>();
+
+    protected override void OnInitialized()
+    {
+        Symbols = new DiagramObjectCollection<NodeBase>();
+        Node node = new Node()
+        {
+            ID = "CustomNode",
+            //sets the type of the shape as HTML
+            Shape = new Shape()
+            {
+                Type = NodeShapes.HTML,
+            }
+        };
+        Symbols.Add(node as NodeBase);
+
+        Palettes = new DiagramObjectCollection<Palette>()
+    {
+            new Palette(){Symbols =Symbols,Title="Template Shape" },
+        };
+    }
+}

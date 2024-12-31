@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNetCore.Components
+@using Microsoft.JSInterop
+@using System.Threading.Tasks
+@using ChangeEventArgs = Microsoft.AspNetCore.Components.ChangeEventArgs
+@using Node = Syncfusion.Blazor.Diagram.Node
+@inject IJSRuntime JSRuntime
+
+<div class="my-auto mx-auto rounded-3 border border-dark border border-2" style="width:100%;height:100%;">
+
+    <textarea id="@Id" style="width: 100%; height: 100%; overflow-x: auto; resize: none; " @oninput="AdjustTextAreaHeight">   @StringToHtml(textboxValue);</textarea>
+
+</div>
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    [Parameter]
+    public Node Parent { get; set; }
+
+    private string textboxValue = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>Duis rhoncus facilisis mi non finibus.</strong> Donec dictum ac sapien sed auctor. Nulla nec efficitur purus. In ac lacus eros. Donec et.";
+
+    RenderFragment StringToHtml(string htmlString)
+    {
+        return new RenderFragment(b => b.AddMarkupContent(0, htmlString));
+    }
+    private async Task AdjustTextAreaHeight(ChangeEventArgs e)
+    {
+        var result = await JSRuntime.InvokeAsync<Dictionary<string, double>>(
+            "textAreaResize", Id);
+
+        if (result != null && result.ContainsKey("height") && result.ContainsKey("width"))
+        {
+            var height = result["height"];
+            var width = result["width"];
+            Parent.Height = Convert.ToDouble(height);
+
+        }
+    }
+}

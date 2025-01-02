@@ -1,0 +1,54 @@
+﻿@page "/"
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
+
+
+<SfButton Content="Export Png" OnClick="@ExportPng" />
+<SfDiagramComponent Height="600px" @ref="@diagram" @bind-Nodes="@NodeCollection">
+
+</SfDiagramComponent>
+
+@code {
+    SfDiagramComponent diagram;
+    public DiagramObjectCollection<Node> NodeCollection
+    {
+        get;
+        set;
+    }
+    protected override void OnInitialized()
+    {
+
+        NodeCollection = new DiagramObjectCollection<Node>();
+        Node sourceNode1 = new Node()
+            {
+                OffsetX = 200,
+                OffsetY = 200,
+                Height = 200,
+                Width = 200,
+                ID = "sourceNode1",
+                Style = new ShapeStyle() { StrokeColor = "transparent", StrokeWidth = 0 },
+                Shape = new ImageShape()
+                {
+                    Type = NodeShapes.Image,
+                    //Sets the source to the image shape
+                    Source = ConvertToBase64("wwwroot/people.png"),
+                }
+            };
+        NodeCollection.Add(sourceNode1);
+
+    }
+
+
+    //To export the diagram as png.
+    private async Task ExportPng()
+    {
+        DiagramExportSettings export = new DiagramExportSettings();
+        await diagram.ExportAsync("diagram", DiagramExportFormat.PNG, export);
+    }
+    private string ConvertToBase64(string filePath)
+    {
+        var bytes = File.ReadAllBytes(filePath);
+        return $"data:image/png;base64,{Convert.ToBase64String(bytes)}";
+    }
+
+}

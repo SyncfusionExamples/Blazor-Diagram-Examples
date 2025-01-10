@@ -1,0 +1,147 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\RamyaSubramani\\Downloads\\Blazor\\SegmentShapeWithoutConstraints\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7501D0B1-B5DB-4CBA-BD63-FEF463EA2239}|SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints.csproj|c:\\users\\ramyasubramani\\downloads\\blazor\\segmentshapewithoutconstraints\\segmentshapewithoutconstraints\\segmentshapewithoutconstraints.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{7501D0B1-B5DB-4CBA-BD63-FEF463EA2239}|SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints.csproj|solutionrelative:segmentshapewithoutconstraints\\segmentshapewithoutconstraints.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7501D0B1-B5DB-4CBA-BD63-FEF463EA2239}|SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints.csproj|c:\\users\\ramyasubramani\\downloads\\blazor\\segmentshapewithoutconstraints\\segmentshapewithoutconstraints\\shared\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7501D0B1-B5DB-4CBA-BD63-FEF463EA2239}|SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints.csproj|solutionrelative:segmentshapewithoutconstraints\\shared\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7501D0B1-B5DB-4CBA-BD63-FEF463EA2239}|SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints.csproj|c:\\users\\ramyasubramani\\downloads\\blazor\\segmentshapewithoutconstraints\\segmentshapewithoutconstraints\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7501D0B1-B5DB-4CBA-BD63-FEF463EA2239}|SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints.csproj|solutionrelative:segmentshapewithoutconstraints\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7501D0B1-B5DB-4CBA-BD63-FEF463EA2239}|SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints.csproj|c:\\users\\ramyasubramani\\downloads\\blazor\\segmentshapewithoutconstraints\\segmentshapewithoutconstraints\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7501D0B1-B5DB-4CBA-BD63-FEF463EA2239}|SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints.csproj|solutionrelative:segmentshapewithoutconstraints\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7501D0B1-B5DB-4CBA-BD63-FEF463EA2239}|SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints.csproj|c:\\users\\ramyasubramani\\downloads\\blazor\\segmentshapewithoutconstraints\\segmentshapewithoutconstraints\\pages\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7501D0B1-B5DB-4CBA-BD63-FEF463EA2239}|SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints.csproj|solutionrelative:segmentshapewithoutconstraints\\pages\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7501D0B1-B5DB-4CBA-BD63-FEF463EA2239}|SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints.csproj|c:\\users\\ramyasubramani\\downloads\\blazor\\segmentshapewithoutconstraints\\segmentshapewithoutconstraints\\pages\\_host.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7501D0B1-B5DB-4CBA-BD63-FEF463EA2239}|SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints.csproj|solutionrelative:segmentshapewithoutconstraints\\pages\\_host.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7501D0B1-B5DB-4CBA-BD63-FEF463EA2239}|SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints.csproj|c:\\users\\ramyasubramani\\downloads\\blazor\\segmentshapewithoutconstraints\\segmentshapewithoutconstraints\\pages\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7501D0B1-B5DB-4CBA-BD63-FEF463EA2239}|SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints.csproj|solutionrelative:segmentshapewithoutconstraints\\pages\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SegmentShapeWithoutConstraints",
+              "DocumentMoniker": "C:\\Users\\RamyaSubramani\\Downloads\\Blazor\\SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints.csproj",
+              "RelativeDocumentMoniker": "SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints.csproj",
+              "ToolTip": "C:\\Users\\RamyaSubramani\\Downloads\\Blazor\\SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints.csproj",
+              "RelativeToolTip": "SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAABEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-08-12T08:36:42.688Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainLayout.razor",
+              "DocumentMoniker": "C:\\Users\\RamyaSubramani\\Downloads\\Blazor\\SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints\\Shared\\MainLayout.razor",
+              "RelativeDocumentMoniker": "SegmentShapeWithoutConstraints\\Shared\\MainLayout.razor",
+              "ToolTip": "C:\\Users\\RamyaSubramani\\Downloads\\Blazor\\SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints\\Shared\\MainLayout.razor",
+              "RelativeToolTip": "SegmentShapeWithoutConstraints\\Shared\\MainLayout.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-12T08:28:44.914Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "_Host.cshtml",
+              "DocumentMoniker": "C:\\Users\\RamyaSubramani\\Downloads\\Blazor\\SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints\\Pages\\_Host.cshtml",
+              "RelativeDocumentMoniker": "SegmentShapeWithoutConstraints\\Pages\\_Host.cshtml",
+              "ToolTip": "C:\\Users\\RamyaSubramani\\Downloads\\Blazor\\SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints\\Pages\\_Host.cshtml",
+              "RelativeToolTip": "SegmentShapeWithoutConstraints\\Pages\\_Host.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-12T08:03:33.816Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Index.razor",
+              "DocumentMoniker": "C:\\Users\\RamyaSubramani\\Downloads\\Blazor\\SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints\\Pages\\Index.razor",
+              "RelativeDocumentMoniker": "SegmentShapeWithoutConstraints\\Pages\\Index.razor",
+              "ToolTip": "C:\\Users\\RamyaSubramani\\Downloads\\Blazor\\SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints\\Pages\\Index.razor",
+              "RelativeToolTip": "SegmentShapeWithoutConstraints\\Pages\\Index.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAABKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-12T07:59:16.482Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\RamyaSubramani\\Downloads\\Blazor\\SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints\\Pages\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "SegmentShapeWithoutConstraints\\Pages\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\RamyaSubramani\\Downloads\\Blazor\\SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints\\Pages\\_Layout.cshtml",
+              "RelativeToolTip": "SegmentShapeWithoutConstraints\\Pages\\_Layout.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-12T07:55:27.829Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\RamyaSubramani\\Downloads\\Blazor\\SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints\\Program.cs",
+              "RelativeDocumentMoniker": "SegmentShapeWithoutConstraints\\Program.cs",
+              "ToolTip": "C:\\Users\\RamyaSubramani\\Downloads\\Blazor\\SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints\\Program.cs",
+              "RelativeToolTip": "SegmentShapeWithoutConstraints\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-12T07:54:44.097Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "_Imports.razor",
+              "DocumentMoniker": "C:\\Users\\RamyaSubramani\\Downloads\\Blazor\\SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints\\_Imports.razor",
+              "RelativeDocumentMoniker": "SegmentShapeWithoutConstraints\\_Imports.razor",
+              "ToolTip": "C:\\Users\\RamyaSubramani\\Downloads\\Blazor\\SegmentShapeWithoutConstraints\\SegmentShapeWithoutConstraints\\_Imports.razor",
+              "RelativeToolTip": "SegmentShapeWithoutConstraints\\_Imports.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-12T07:54:12.343Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

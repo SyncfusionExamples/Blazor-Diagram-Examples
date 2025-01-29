@@ -1,0 +1,71 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Popups
+@using Syncfusion.Blazor.Diagram
+@inject IJSRuntime jsRuntime;
+
+<SfDiagramComponent @ref="@diagram" ID="diagram" Created="created" Height="600px" Nodes="@nodes">
+</SfDiagramComponent>
+<div id="diagramTooltip" style="
+    position: absolute;
+    background: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 3px;
+    pointer-events: none;
+    z-index: 1000;">
+</div>
+
+
+
+@code
+{
+    //Reference to diagram
+    static SfDiagramComponent diagram;
+    // Initialize diagram's node collection
+    DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+    [JSInvokable]
+    public static void InvokeEvent(DiagramRect DiagramCanvasScrollBounds, DiagramRect BoundingRect, double clientx, double clienty)
+    {
+        DiagramPoint mousePosition = GetMousePosition(DiagramCanvasScrollBounds, BoundingRect, clientx, clienty);
+    }
+    string CONTENT = "_content";
+    private async Task created()
+    {
+        var id = diagram.ID + CONTENT;
+        await JSRuntimeExtensions.InvokeAsync<string>(jsRuntime, "WiredEvent", id);
+    }
+    internal static DiagramPoint GetMousePosition(DiagramRect DiagramCanvasScrollBounds, DiagramRect BoundingRect, double clientx, double clienty)
+    {
+        double offsetX = 0;
+        double offsetY = 0;
+        DiagramPoint mousePoint = new DiagramPoint();
+        DiagramRect boundingRect = BoundingRect;
+        {
+            offsetX = clientx + DiagramCanvasScrollBounds.Left - boundingRect.Left;
+            offsetY = clienty + DiagramCanvasScrollBounds.Top - boundingRect.Top;
+        }
+        offsetX /= diagram.ScrollSettings.CurrentZoom;
+        offsetY /= diagram.ScrollSettings.CurrentZoom;
+        mousePoint.X = offsetX;
+        mousePoint.Y = offsetY;
+        return mousePoint;
+    }
+    protected override void OnInitialized()
+    {
+        Node node1 = new Node()
+        {
+            ID = "node1",
+            Width = 50,
+            Height = 30,
+            OffsetX = 500,
+            OffsetY = 100,
+            Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle },
+            Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "#6495ED" }
+        };
+        nodes.Add(node1);
+    }
+
+
+}
+

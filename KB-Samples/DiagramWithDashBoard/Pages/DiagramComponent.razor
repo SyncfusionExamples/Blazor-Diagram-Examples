@@ -1,11 +1,11 @@
 ﻿@using System.Text.Json
 @using Syncfusion.Blazor.Diagram
 
-<SfDiagramComponent @ref="DInstance" Width="@PanelWidth.ToString()" InteractionController="DiagramInteractions.ZoomPan"
+<SfDiagramComponent @ref="DInstance" Width="@PanelWidth.ToString()" InteractionController="DiagramInteractions.ZoomPan" Created="Created"
 NodeCreating="@OnNodeCreating" ConnectorCreating="@OnConnectorCreating">
     <SnapSettings Constraints="SnapConstraints.None"/> 
     <DataSourceSettings Id="@nameof(DataModel.Id)" ParentId="@nameof(DataModel.ParentId)" DataSource="@DataSource" />
-    <Layout @bind-Type="@Type" @bind-HorizontalSpacing="@horizontalSpacing" @bind-VerticalSpacing="@verticalSpacing">
+    <Layout @bind-Type="@Layout" @bind-HorizontalSpacing="@horizontalSpacing" @bind-VerticalSpacing="@verticalSpacing">
         <LayoutMargin @bind-Left="@Left" @bind-Right="@Right" @bind-Top="@Top"></LayoutMargin>
     </Layout>
     <ScrollSettings ScrollLimit="ScrollLimitMode.Infinity"></ScrollSettings>
@@ -17,18 +17,23 @@ NodeCreating="@OnNodeCreating" ConnectorCreating="@OnConnectorCreating">
 @code {
     [Parameter] public object DataSource { get; set; }
     [Parameter] public double PanelWidth { get; set; }
+    [Parameter] public LayoutType Layout { get; set; }
 
-    private LayoutType Type = LayoutType.HierarchicalTree;
     private int horizontalSpacing = 15;
     private int verticalSpacing = 50;
     private double Left = 10;
     private double Right = 10;
     private double Top = 10;
-    private double PageWidth = 250;
+    private double PageWidth = 400;
     private double PageHeight = 300;
 
     SfDiagramComponent DInstance;
-    
+
+    private void Created()
+    {
+        DInstance.FitToPage(new FitOptions() { Mode = FitMode.Both, Region = DiagramRegion.PageSettings,  });
+    }
+
     // Defines default values for Node object
     private void OnNodeCreating(IDiagramObject obj)
     {
@@ -38,13 +43,48 @@ NodeCreating="@OnNodeCreating" ConnectorCreating="@OnConnectorCreating">
         {
             node.Data = jsonElement.Deserialize<DataModel>();
         }
-
         var data = node.Data as DataModel;
-
         node.MinWidth = 95;
         node.MinHeight = 30;
         node.MaxWidth = 195;
-        node.Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle };
+        if(Layout == LayoutType.RadialTree)
+        {
+            if (data.Content.Contains("Managing Director"))
+            {
+                node.Shape = new BasicShape()
+                {
+                    Type = NodeShapes.Basic,
+                    Shape = NodeBasicShapes.Ellipse,
+                    CornerRadius = 10
+                };
+                node.Width = 150;
+                node.Height = 150;
+                node.Style.Fill = "black";
+            }
+            else if (data.Content.Contains("Project Manager"))
+            {
+                node.Width = 65;
+                node.Height = 65;
+                node.Style.Fill = "#f8ab52";
+            }
+            else
+            {
+                node.Shape = new BasicShape()
+                {
+                    Type = NodeShapes.Basic,
+                    Shape = NodeBasicShapes.Ellipse,
+                    CornerRadius = 10
+                };
+                node.Style.Fill = "#afeeee";
+                node.Width = 50;
+                node.Height = 50;
+            }
+        }
+        else
+        {
+            node.Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle };
+        }
+
         node.Style = new ShapeStyle() { StrokeWidth = 1, Fill = "#6A51CB", StrokeColor = "#433285" };
         node.Tooltip = new DiagramTooltip() { Content = "Prueba tooltip", OpensOn = "Hover" };
 

@@ -151,7 +151,7 @@
                         {
                             if (diagram.Nodes[i].Ports[j].ID == PortID)
                             {
-                                diagram.Nodes[i].Ports[j].Style.StrokeColor = "blue";
+                                diagram.Nodes[i].Ports[j].Style.StrokeColor = "#6495ED";
                                 diagram.Nodes[i].Ports[j].Style.StrokeWidth = 3;
                             }
 
@@ -203,7 +203,7 @@
             Height = height,
             OffsetX = offsetX,
             OffsetY = offsetY,
-            Style = new ShapeStyle { Fill = "#6A51CB", StrokeColor = "White" },
+            Style = new ShapeStyle { Fill = "#6495ED", StrokeColor = "White" },
             Annotations = new DiagramObjectCollection<ShapeAnnotation>
         {
                 new ShapeAnnotation { Content = id }

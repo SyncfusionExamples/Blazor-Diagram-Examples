@@ -203,7 +203,7 @@
             Height = height,
             OffsetX = offsetX,
             OffsetY = offsetY,
-            Style = new ShapeStyle { Fill = "#FFDDC1", StrokeColor = "black" },
+            Style = new ShapeStyle { Fill = "#6A51CB", StrokeColor = "White" },
             Annotations = new DiagramObjectCollection<ShapeAnnotation>
         {
                 new ShapeAnnotation { Content = id }
@@ -213,7 +213,7 @@
     }
 
     // Create a port with custom shape
-    PointPort CreatePort(string id, double offsetX, double offsetY, string pathData)
+    PointPort CreatePort(string id, double offsetX, double offsetY)
     {
         return new PointPort
         {
@@ -221,10 +221,9 @@
             Offset = new DiagramPoint { X = offsetX, Y = offsetY },
             Visibility = PortVisibility.Visible,
             Style = new ShapeStyle { Fill = "white", StrokeColor = "black" },
-            Shape = PortShapes.Custom,
+            Shape = PortShapes.Square,
             Width = 30,
             Height = 20,
-            PathData = pathData
         };
     }
     protected override void OnInitialized()
@@ -242,17 +241,17 @@
 
         // Add nodes with ports
         nodes.Add(CreateNode("Comp A", 150, 200, 150, 280,
-            CreatePort("portA", 1, 0.3, "M10,30 L40,30 L40,10 L60,30 L40,50 L40,30 Z M120,30 L90,30 L90,10 L70,30 L90,50 L90,30 Z"),
-            CreatePort("portB", 1, 0.5, "M10,30 L40,30 L40,10 L60,30 L40,50 L40,30 Z M120,30 L90,30 L90,10 L70,30 L90,50 L90,30 Z"),
-            CreatePort("portC", 1, 0.7, "M10 10 H 90 V 90 H 10 Z"),
-            CreatePort("portD", 1, 0.9, "M10,30 L40,30 L40,10 L60,30 L40,50 L40,30 Z M50,30 L20,30 L20,10 L0,30 L20,50 L20,30 Z"),
-            CreatePort("portE", 1, 0.1, "M10,30 L40,30 L40,10 L60,30 L40,50 L40,30 Z M50,30 L20,30 L20,10 L0,30 L20,50 L20,30 Z")
+            CreatePort("portA", 1, 0.3),
+            CreatePort("portB", 1, 0.5),
+            CreatePort("portC", 1, 0.7),
+            CreatePort("portD", 1, 0.9),
+            CreatePort("portE", 1, 0.1)
         ));
 
-        nodes.Add(CreateNode("Comp B", 100, 70, 450, 100, CreatePort("portBA", 1, 0.5, "M10,30 L40,30 L40,10 L60,30 L40,50 L40,30 Z M120,30 L90,30 L90,10 L70,30 L90,50 L90,30 Z")));
-        nodes.Add(CreateNode("Comp C", 100, 70, 450, 200, CreatePort("portCA", 1, 0.5, "M10,30 L40,30 L40,10 L60,30 L40,50 L40,30 Z M120,30 L90,30 L90,10 L70,30 L90,50 L90,30 Z")));
-        nodes.Add(CreateNode("Comp D", 100, 70, 450, 300, CreatePort("portDA", 1, 0.5, "M10,30 L40,30 L40,10 L60,30 L40,50 L40,30 Z M120,30 L90,30 L90,10 L70,30 L90,50 L90,30 Z")));
-        nodes.Add(CreateNode("Comp E", 100, 70, 450, 400, CreatePort("portEA", 1, 0.5, "M10,30 L40,30 L40,10 L60,30 L40,50 L40,30 Z M120,30 L90,30 L90,10 L70,30 L90,50 L90,30 Z")));
+        nodes.Add(CreateNode("Comp B", 100, 70, 450, 100, CreatePort("portBA", 1, 0.5)));
+        nodes.Add(CreateNode("Comp C", 100, 70, 450, 200, CreatePort("portCA", 1, 0.5)));
+        nodes.Add(CreateNode("Comp D", 100, 70, 450, 300, CreatePort("portDA", 1, 0.5)));
+        nodes.Add(CreateNode("Comp E", 100, 70, 450, 400, CreatePort("portEA", 1, 0.5)));
 
     }
 

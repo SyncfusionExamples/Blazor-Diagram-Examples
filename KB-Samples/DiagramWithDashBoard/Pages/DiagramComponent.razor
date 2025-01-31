@@ -59,13 +59,13 @@ NodeCreating="@OnNodeCreating" ConnectorCreating="@OnConnectorCreating">
                 };
                 node.Width = 150;
                 node.Height = 150;
-                node.Style.Fill = "black";
+                node.Style.Fill = "6495ED";
             }
             else if (data.Content.Contains("Project Manager"))
             {
                 node.Width = 65;
                 node.Height = 65;
-                node.Style.Fill = "#f8ab52";
+                node.Style.Fill = "#6495ED";
             }
             else
             {
@@ -75,7 +75,7 @@ NodeCreating="@OnNodeCreating" ConnectorCreating="@OnConnectorCreating">
                     Shape = NodeBasicShapes.Ellipse,
                     CornerRadius = 10
                 };
-                node.Style.Fill = "#afeeee";
+                node.Style.Fill = "#6495ED";
                 node.Width = 50;
                 node.Height = 50;
             }
@@ -85,7 +85,7 @@ NodeCreating="@OnNodeCreating" ConnectorCreating="@OnConnectorCreating">
             node.Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle };
         }
 
-        node.Style = new ShapeStyle() { StrokeWidth = 1, Fill = "#6A51CB", StrokeColor = "#433285" };
+        node.Style = new ShapeStyle() { StrokeWidth = 1, Fill = "#6495ED", StrokeColor = "White" };
         node.Tooltip = new DiagramTooltip() { Content = "Prueba tooltip", OpensOn = "Hover" };
 
         node.Annotations = new DiagramObjectCollection<ShapeAnnotation>()

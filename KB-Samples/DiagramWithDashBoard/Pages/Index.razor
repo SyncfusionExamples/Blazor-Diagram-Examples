@@ -1,0 +1,98 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Layouts
+@inject IJSRuntime JS
+
+<div id="component-container">
+    <SfDashboardLayout Columns="4" DraggableHandle=".e-panel-header">
+        <DashboardLayoutPanels>
+            <DashboardLayoutPanel Row="0" Column="0" SizeX="1" SizeY="1">
+                <HeaderTemplate>
+                    <div>BusinessProcessFlow</div>
+                </HeaderTemplate>
+                <ContentTemplate>
+                    <DiagramComponent DataSource="@BusinessProcessFlow" Layout="LayoutType.HierarchicalTree" PanelWidth="@PanelWidth"/>
+                </ContentTemplate>
+            </DashboardLayoutPanel>
+            <DashboardLayoutPanel Row="0" Column="1" SizeX="1" SizeY="1">
+                <HeaderTemplate>
+                    <div>MindMapSource</div>
+                </HeaderTemplate>
+                <ContentTemplate>
+                    <DiagramComponent DataSource="@MindMapSource" Layout="LayoutType.MindMap" PanelWidth="@PanelWidth" />
+                </ContentTemplate>
+            </DashboardLayoutPanel>
+            <DashboardLayoutPanel Row="0" Column="2" SizeX="1" SizeY="1">
+                <HeaderTemplate>
+                    <div>RadialSource</div>
+                </HeaderTemplate>
+                <ContentTemplate>
+                    <DiagramComponent DataSource="@RadialSource" Layout="LayoutType.RadialTree" PanelWidth="@PanelWidth" />
+                </ContentTemplate>
+            </DashboardLayoutPanel>
+        </DashboardLayoutPanels>
+    </SfDashboardLayout>
+</div>
+
+<style>
+    .e-panel-header {
+    background-color: rgba(0, 0, 0, .1);
+    text-align: center;
+    }
+
+    .e-panel-content {
+    text-align: center;
+    margin-top: 10px;
+    }
+</style>
+
+
+@code {
+    double PanelWidth;
+    // 1. Business Process Flow - Order Processing
+    private List<DiagramComponent.DataModel> BusinessProcessFlow = new List<DiagramComponent.DataModel>()
+    {
+        new DiagramComponent.DataModel() { Id = "1", Content = "Board" },
+        new DiagramComponent.DataModel() { Id = "2", ParentId = "1", Content = "General Manager" },
+        new DiagramComponent.DataModel() { Id = "3", ParentId = "1", Content = "Human Resource Manager" },
+        new DiagramComponent.DataModel() { Id = "4", ParentId = "2", Content = "Design Manager" },
+        new DiagramComponent.DataModel() { Id = "5", ParentId = "3", Content = "Recruiting Team" },
+        new DiagramComponent.DataModel() { Id = "6", ParentId = "3", Content = "Trainers" }
+    };
+    public List<DiagramComponent.DataModel> MindMapSource = new List<DiagramComponent.DataModel>()
+    {
+        new DiagramComponent.DataModel() { Id = "1", Content = "Creativity" },
+        new DiagramComponent.DataModel() { Id = "2", ParentId = "1", Content = "Brainstorming" },
+        new DiagramComponent.DataModel() { Id = "3", ParentId = "1", Content = "Complementing" },
+        new DiagramComponent.DataModel() { Id = "4", ParentId = "2", Content = "Sessions" },
+        new DiagramComponent.DataModel() { Id = "5", ParentId = "2", Content = "Complementing" },
+        new DiagramComponent.DataModel() { Id = "6", ParentId = "3", Content = "Local" },
+        new DiagramComponent.DataModel() { Id = "7", ParentId = "3", Content = "Remote" },
+        new DiagramComponent.DataModel() { Id = "8", ParentId = "3", Content = "Individual" },
+        new DiagramComponent.DataModel() { Id = "9", ParentId = "3", Content = "Teams" },
+        new DiagramComponent.DataModel() { Id = "10", ParentId = "5", Content = "Ideas" },
+        new DiagramComponent.DataModel() { Id = "11", ParentId = "5", Content = "Engagement" }
+    };
+    public List<DiagramComponent.DataModel> RadialSource = new List<DiagramComponent.DataModel>()
+    {
+        new DiagramComponent.DataModel() { Id = "1", Content = "Maria Anders (Managing Director)" },
+        new DiagramComponent.DataModel() { Id = "2", ParentId = "1", Content = "Ana Trujillo (Project Manager)" },
+        new DiagramComponent.DataModel() { Id = "3", ParentId = "1", Content = "Lino Rodri (Project Manager)" },
+        new DiagramComponent.DataModel() { Id = "4", ParentId = "1", Content = "Philip Cramer (Project Manager)" },
+        new DiagramComponent.DataModel() { Id = "5", ParentId = "2", Content = "Anto Moreno (Project Lead)" },
+        new DiagramComponent.DataModel() { Id = "6", ParentId = "2", Content = "Elizabeth Roel (Project Lead)" },
+        new DiagramComponent.DataModel() { Id = "7", ParentId = "3", Content = "Aria Cruz (Project Lead)" },
+        new DiagramComponent.DataModel() { Id = "8", ParentId = "3", Content = "Eduardo Roel (Project Lead)" },
+        new DiagramComponent.DataModel() { Id = "9", ParentId = "4", Content = "Daniel Tonini (Project Lead)" },
+        new DiagramComponent.DataModel() { Id = "10", ParentId = "4", Content = "Liz Nixon (Project Lead)" }
+    };
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            PanelWidth = await JS.InvokeAsync<double>("getPanelWidth", "component-container");
+        }
+    }
+}

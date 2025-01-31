@@ -1,0 +1,267 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using System.Collections.ObjectModel
+@using Syncfusion.Blazor.Buttons
+@using System.Reflection
+@using SelectionChangedEventArgs=Syncfusion.Blazor.Diagram.SelectionChangedEventArgs
+
+
+
+<SfDiagramComponent @ref="@Diagram" Width="1200px" Height="600px" KeyUp="Keyup" KeyDown="@Keydown" Click="@ClickHandler" Nodes="@nodes"  GetCustomTool="@GetCustomTool" @bind-InteractionController="@DiagramTool" @bind-DrawingObject="@DiagramDrawingObject" Connectors="@connectors" SelectionChanged="@SelectionChanged" SelectionSettings="@selectionSettings">
+</SfDiagramComponent>
+
+
+@code
+{
+    ObservableCollection<IDiagramObject> selectedChildNodes = new ObservableCollection<IDiagramObject>();
+
+    private bool isCtrlKeyPressed = false;
+
+    // Handle Key Down event for detecting Ctrl key
+    private void Keydown(KeyEventArgs args)
+    {
+        if (args.KeyModifiers == ModifierKeys.Control)
+        {
+            isCtrlKeyPressed = true;
+
+            // Check if any node is selected and add it to the collection
+            if (Diagram.SelectionSettings.Nodes?.Count > 0)
+            {
+                var selectedNode = Diagram.SelectionSettings.Nodes[0] as IDiagramObject;
+
+                if (selectedNode != null && !selectedChildNodes.Contains(selectedNode))
+                {
+                    selectedChildNodes.Add(selectedNode);
+                }
+            }
+        }
+    }
+
+    // Handle Key Up event for detecting when Ctrl is released
+    private void Keyup(KeyEventArgs args)
+    {
+        if (args.Key == "Control")
+        {
+            isCtrlKeyPressed = false;
+            selectedChildNodes.Clear(); // Clear selected child nodes when Ctrl is released
+        }
+    }
+
+    // Handle Click event
+    private void ClickHandler(ClickEventArgs args)
+    {
+        var clickedObject = args.ActualObject as IDiagramObject;
+
+        // If the clicked object is a NodeGroup, unselect the group node
+        if (clickedObject is NodeGroup)
+        {
+            Diagram.UnSelect(clickedObject);
+        }
+        // Handle Ctrl + Click for multi-selection
+        else if (isCtrlKeyPressed && clickedObject != null)
+        {
+            // Add the clicked object to the selected collection if it's not already selected
+            if (!selectedChildNodes.Contains(clickedObject))
+            {
+                selectedChildNodes.Add(clickedObject);
+            }
+            Diagram.Select(selectedChildNodes, false); // False to avoid clearing other selections
+        }
+        // Clear selection if clicked outside any object
+        else if (clickedObject == null)
+        {
+            Diagram.ClearSelection();
+            selectedChildNodes.Clear();
+        }
+        // If no Ctrl key is pressed, select the clicked object
+        else
+        {
+            Diagram.ClearSelection(); // Clear previous selections
+            Diagram.Select(new ObservableCollection<IDiagramObject> { clickedObject });
+        }
+    }
+   
+  
+    private IDiagramObject DiagramDrawingObject;
+    private DiagramInteractions DiagramTool;
+    //Reference the diagram
+    public SfDiagramComponent Diagram;
+    //Intialize diagram's nodes collection
+    DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+    NodeGroup groupNode = new NodeGroup();
+    //Intialize diagram's nodes collection
+    DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
+    //Intialize diagram's selectionsettings
+    DiagramSelectionSettings selectionSettings = new DiagramSelectionSettings();
+    //Intialize diagram's userhandle
+    DiagramObjectCollection<UserHandle> handles = new DiagramObjectCollection<UserHandle>();
+    private void SelectionChanged(SelectionChangedEventArgs args)
+    {
+        bool isGroupNodeSelected = Diagram.SelectionSettings.Nodes.Count > 0 && Diagram.SelectionSettings.Nodes[0] is NodeGroup;
+        foreach (UserHandle userHandle in handles)
+        {
+            userHandle.Visible = !isGroupNodeSelected;
+        }
+    }
+    
+
+    // Method to customize the tool
+    public InteractionControllerBase GetCustomTool(DiagramElementAction action, string id)
+    {
+        InteractionControllerBase tool = null;
+        if (id == "Draw")
+        {
+            tool = new DrawTool(Diagram);
+        }
+        else
+        {
+            tool = new AddDeleteTool(Diagram);
+        }
+        return tool;
+    }
+    // Custom tool to delete the node.
+    public class AddDeleteTool : InteractionControllerBase
+    {
+        SfDiagramComponent sfDiagram;
+        Node deleteObject = null;
+        public AddDeleteTool(SfDiagramComponent Diagram) : base(Diagram)
+        {
+            sfDiagram = Diagram;
+        }
+        public override void OnMouseDown(DiagramMouseEventArgs args)
+        {
+            if (sfDiagram.SelectionSettings.Nodes.Count > 0 && ((sfDiagram.SelectionSettings.Nodes[0]) is Node))
+            {
+                deleteObject = (sfDiagram.SelectionSettings.Nodes[0]) as Node;
+            }
+            base.OnMouseDown(args);
+        }
+        public override void OnMouseUp(DiagramMouseEventArgs args)
+        {
+            if (deleteObject != null)
+            {
+                sfDiagram.StartGroupAction();
+                sfDiagram.BeginUpdate();
+                sfDiagram.Nodes.Remove(deleteObject);
+                _ = sfDiagram.EndUpdate();
+                sfDiagram.EndGroupAction();
+            }
+            base.OnMouseUp(args);
+            this.InAction = true;
+        }
+    }
+
+    public class DrawTool : ConnectorDrawingController
+    {
+        SfDiagramComponent sfDiagram;
+        Connector newConnector = null;
+        public DrawTool(SfDiagramComponent Diagram) : base(Diagram, DiagramElementAction.ConnectorSourceEnd)
+        {
+            sfDiagram = Diagram;
+            newConnector = new Connector()
+                {
+                    ID = "OrthogonalConnector",
+                    SourceID = sfDiagram.SelectionSettings.Nodes[0].ID,
+                    Type = ConnectorSegmentType.Orthogonal,
+                };
+            @*Hidden:Lines*@
+#pragma warning disable BL0005
+            @*End:Hidden*@
+            Diagram.InteractionController = DiagramInteractions.DrawOnce;
+            Diagram.DrawingObject = newConnector;
+            @*Hidden:Lines*@
+#pragma warning restore BL0005
+            @*End:Hidden*@
+        }
+        public override void OnMouseDown(DiagramMouseEventArgs args)
+        {
+            base.OnMouseDown(args);
+        }
+        public override void OnMouseUp(DiagramMouseEventArgs args)
+        {
+            base.OnMouseUp(args);
+        }
+    }
+    private UserHandle AddHandle(string name, string path, Direction direction, double offset)
+    {
+        UserHandle handle = new UserHandle()
+            {
+                Name = name,
+                Visible = true,
+                Offset = offset,
+                Side = direction,
+                Margin = new DiagramThickness() { Top = 0, Bottom = 0, Left = 0, Right = 0 }
+            };
+        if (path == "delete")
+        {
+            handle.PathData = "M0.54700077,2.2130003 L7.2129992,2.2130003 7.2129992,8.8800011 C7.2129992,9.1920013 7.1049975,9.4570007 6.8879985,9.6739998 6.6709994,9.8910007 6.406,10 6.0939997,10 L1.6659999,10 C1.3539997,10 1.0890004,9.8910007 0.87200136,9.6739998 0.65500242,9.4570007 0.54700071,9.1920013 0.54700077,8.8800011 z M2.4999992,0 L5.2600006,0 5.8329986,0.54600048 7.7599996,0.54600048 7.7599996,1.6660004 0,1.6660004 0,0.54600048 1.9270014,0.54600048 z";
+        }
+        else
+        {
+            handle.PathData = "M3.9730001,0 L8.9730001,5.0000007 3.9730001,10.000001 3.9730001,7.0090005 0,7.0090005 0,2.9910006 3.9730001,2.9910006 z";
+        }
+        return handle;
+    }
+    protected override void OnInitialized()
+    {
+
+        UserHandle deleteHandle = AddHandle("Delete", "delete", Direction.Bottom, 0.5);
+        UserHandle drawHandle = AddHandle("Draw", "draw", Direction.Right, 0.5);
+        handles.Add(deleteHandle);
+        handles.Add(drawHandle);
+        selectionSettings.UserHandles = handles;
+        nodes = new DiagramObjectCollection<Node>();
+        Node DiagramNode = new Node()
+            {
+                ID = "node1",
+                OffsetX = 700,
+                OffsetY = 500,
+                Width = 100,
+                Height = 100,
+                Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "black" },
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>() { new ShapeAnnotation { Content = "NodeB" } }
+            };
+        nodes.Add(DiagramNode);
+        Node DiagramNode1 = new Node()
+            {
+                ID = "node2",
+                OffsetX = 700,
+                OffsetY = 700,
+                Width = 100,
+                Height = 100,
+                Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "black" },
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>() { new ShapeAnnotation { Content = "NodeB" } }
+            };
+        nodes.Add(DiagramNode1);
+        Node DiagramNode2 = new Node()
+            {
+                ID = "node3",
+                OffsetX = 900,
+                OffsetY = 700,
+                Width = 100,
+                Height = 100,
+                Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "black" },
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>() { new ShapeAnnotation { Content = "NodeB" } }
+            };
+        nodes.Add(DiagramNode2);
+        NodeGroup group1 = new NodeGroup()
+            {
+                ID = "group1",
+                Children = new string[] { "node1", "node2", "node3" },
+                Padding = new DiagramThickness() { Left = 20, Right = 20, Top = 20, Bottom = 20 },
+                OffsetX = 300,
+                OffsetY = 300,
+                Style = new ShapeStyle() { Fill = "white", StrokeColor = "black" },
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+                        {
+                            new ShapeAnnotation()
+                            {
+                            Content = "Group1"
+                            }
+                        },
+            };
+        nodes.Add(group1);
+    }
+
+}

@@ -1,0 +1,63 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
+@inject IJSRuntime JS;
+
+<SfDiagramComponent @ref="@diagram" Created="created" Click="MouseEvent" Height="600px" InteractionController="@tool" Nodes="@nodes">
+</SfDiagramComponent>
+
+@code
+{
+    public DiagramInteractions tool = DiagramInteractions.Default;
+    private void MouseEvent(ClickEventArgs args)
+    {
+        if (args.Button == MouseButtons.Right)
+        {
+            tool = DiagramInteractions.ZoomPan;
+        }
+    }
+    [JSInvokable]
+    public void OnMouseWheel(double delta)
+    {
+        // Handle zoom in or out based on delta
+        if (delta > 0)
+        {
+            diagram.Zoom(1 / 1.2, new DiagramPoint() { X = 100, Y = 100 });
+        }
+        else
+        {
+            diagram.Zoom(1.2, new DiagramPoint() { X = 100, Y = 100 });
+        }
+    }
+    //Reference to diagram
+    static SfDiagramComponent diagram;
+    // Initialize diagram's node collection
+    DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+    [JSInvokable]
+    public static void InvokeEvent(object e)
+    {
+        diagram.Zoom(1.2, new DiagramPoint() { X = 100, Y = 100 });
+    }
+    private async Task created()
+    {
+        var id = diagram.ID;
+        var dotNetRef = DotNetObjectReference.Create(this);
+        await JSRuntimeExtensions.InvokeAsync<string>(JS, "WiredEvent", id, dotNetRef);
+    }
+    protected override void OnInitialized()
+    {
+        Node node1 = new Node()
+        {
+            ID = "node1",
+            Width = 50,
+            Height = 30,
+            OffsetX = 500,
+            OffsetY = 100,
+            Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle },
+            Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "#6495ED" }
+        };
+        nodes.Add(node1);
+    }
+
+}

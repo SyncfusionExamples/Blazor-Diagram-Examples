@@ -1,0 +1,76 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Layouts
+@inject IJSRuntime JS
+
+<div id="component-container">
+    <SfDashboardLayout Columns="4" DraggableHandle=".e-panel-header">
+        <DashboardLayoutPanels>
+            <DashboardLayoutPanel Row="0" Column="0" SizeX="1" SizeY="1">
+                <HeaderTemplate>
+                    <div>Pane 1</div>
+                </HeaderTemplate>
+                <ContentTemplate>
+                    <DiagramComponent DataSource="@Data" PanelWidth="@PanelWidth"/>
+                </ContentTemplate>
+            </DashboardLayoutPanel>
+            <DashboardLayoutPanel Row="0" Column="1" SizeX="1" SizeY="1">
+                <HeaderTemplate>
+                    <div>Pane 1</div>
+                </HeaderTemplate>
+                <ContentTemplate>
+                    <DiagramComponent DataSource="@Data" PanelWidth="@PanelWidth" />
+                </ContentTemplate>
+            </DashboardLayoutPanel>
+            <DashboardLayoutPanel Row="0" Column="2" SizeX="1" SizeY="1">
+                <HeaderTemplate>
+                    <div>Pane 1</div>
+                </HeaderTemplate>
+                <ContentTemplate>
+                    <DiagramComponent DataSource="@Data" PanelWidth="@PanelWidth" />
+                </ContentTemplate>
+            </DashboardLayoutPanel>
+            <DashboardLayoutPanel Row="0" Column="3" SizeX="1" SizeY="1">
+                <HeaderTemplate>
+                    <div>Pane 1</div>
+                </HeaderTemplate>
+                <ContentTemplate>
+                    <DiagramComponent DataSource="@Data" PanelWidth="@PanelWidth"/>
+                </ContentTemplate>
+            </DashboardLayoutPanel>
+        </DashboardLayoutPanels>
+    </SfDashboardLayout>
+</div>
+
+<style>
+    .e-panel-header {
+    background-color: rgba(0, 0, 0, .1);
+    text-align: center;
+    }
+
+    .e-panel-content {
+    text-align: center;
+    margin-top: 10px;
+    }
+</style>
+
+
+@code {
+    double PanelWidth;
+    private List<DiagramComponent.DataModel> Data = new List<DiagramComponent.DataModel>()
+        {
+            new DiagramComponent.DataModel() { Id = "1", Content = "Content 1" },
+            new DiagramComponent.DataModel() { Id = "2", ParentId = "1", Content = "Content 2" },
+            new DiagramComponent.DataModel() { Id = "3", ParentId = "1", Content = "Content 3" },
+            new DiagramComponent.DataModel() { Id = "4", ParentId = "1", Content = "Content 4" }
+        };
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            PanelWidth = await JS.InvokeAsync<double>("getPanelWidth", "component-container");
+        }
+    }
+}

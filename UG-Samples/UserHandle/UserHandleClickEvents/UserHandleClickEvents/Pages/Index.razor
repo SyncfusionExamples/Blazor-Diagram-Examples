@@ -9,6 +9,7 @@
                         Connectors="@connectors"
                         SelectionSettings="@SelectedModel"
                         GetCustomTool="GetCustomTool">
+        <SnapSettings Constraints="SnapConstraints.None"></SnapSettings>
     </SfDiagramComponent>
 </div>
 
@@ -65,7 +66,7 @@
             OffsetY = 200,
             Width = 100,
             Height = 100,
-            Style = new ShapeStyle() { Fill = "#009EDF", StrokeColor = "#009FE5" },
+            Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "none" },
             Annotations = new DiagramObjectCollection<ShapeAnnotation>()
             {
                 new ShapeAnnotation() { Content = "Node" }

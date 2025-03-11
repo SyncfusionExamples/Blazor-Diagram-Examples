@@ -1,6 +1,6 @@
 # ContainerHeader Sample
 
-This sample demonstrates how to create and customize header for container.
+This sample demonstrates how to create and customize the header for container.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/container?theme=fluent

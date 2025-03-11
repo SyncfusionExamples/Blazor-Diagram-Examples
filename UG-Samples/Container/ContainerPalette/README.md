@@ -1,6 +1,6 @@
-# Container Sample
+# ContainerPalette Sample
 
-This sample demonstrates how to add a container to the diagram. To create a container, define the Container object and add that to the nodes collection of the diagram.
+This sample demonstrates how to create and add container shapes into symbol palette.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/container?theme=fluent

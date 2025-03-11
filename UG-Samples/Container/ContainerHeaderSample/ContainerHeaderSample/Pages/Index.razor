@@ -21,9 +21,10 @@
                 Width = 100,
                 OffsetX = 400,
                 OffsetY = 300,
-                Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+                Style = new ShapeStyle()
                 {
-                    new ShapeAnnotation(){ Content = "Process"}
+                    Fill = "CornflowerBlue", 
+                    StrokeColor = "transparent"
                 }
             };
         Node node2 = new Node()
@@ -33,9 +34,10 @@
                 Width = 100,
                 OffsetX = 600,
                 OffsetY = 300,
-                Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+                Style = new ShapeStyle()
                 {
-                    new ShapeAnnotation(){ Content = "Process"}
+                    Fill = "CornflowerBlue",
+                    StrokeColor = "transparent"
                 }
             };
         Container container = new Container()

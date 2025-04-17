@@ -1,10 +1,9 @@
-# Create Connector Ports
+# Connector Port Connection
 
-This sample demonstrates how to add ports when initializing the connector.
+This sample demonstrates how to connect one connector to a port on another connector.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/ports?theme=fluent
-
 
 
 ## Prerequisites

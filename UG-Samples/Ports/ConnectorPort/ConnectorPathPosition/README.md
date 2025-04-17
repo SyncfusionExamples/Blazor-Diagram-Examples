@@ -1,10 +1,9 @@
-# Create Connector Ports
+# Connector Port PathPosition
 
-This sample demonstrates how to add ports when initializing the connector.
+This sample demonstrates how to set the PathPosition for a connector port.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/ports?theme=fluent
-
 
 
 ## Prerequisites

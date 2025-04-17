@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "ConnectorPathPosition": {
+    "ConnectorPortPathPosition": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

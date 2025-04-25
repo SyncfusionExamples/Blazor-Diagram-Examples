@@ -1,0 +1,62 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Diagram
+@inject IJSRuntime jsRuntime;
+
+<style>
+
+    .parent {
+    display: flex;
+    height: 600px;
+    width: 1000px;
+    border: 1px solid #ccc;
+    }
+
+
+    .sideBar {
+    width: 200px;
+    height: 100%;
+    background-color: #f0f0f0;
+    }
+
+    .hidden {
+    display: none
+    }
+</style>
+
+<div class="parent">
+    <SfDiagramComponent @ref="diagram" Width="100%" Height="100%">
+        <RulerSettings>
+            <HorizontalRuler></HorizontalRuler>
+            <VerticalRuler></VerticalRuler>
+        </RulerSettings>
+    </SfDiagramComponent>
+
+    @if (sidebarVisible)
+    {
+        <div class="sideBar"></div>
+    }
+
+</div>
+<div>
+    <SfButton @onclick="ToggleSidebar" Content="ToggleButton">
+    </SfButton>
+</div>
+
+
+@code {
+
+
+
+    private SfDiagramComponent? diagram;
+
+    private bool sidebarVisible = false;
+    object bounds;
+
+    private async Task ToggleSidebar()
+    {
+        sidebarVisible = !sidebarVisible;
+        await jsRuntime.InvokeAsync<object>("UpdateWindow").ConfigureAwait(true);
+    }
+}

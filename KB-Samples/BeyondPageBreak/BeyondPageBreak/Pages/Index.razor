@@ -1,0 +1,144 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using System.Text.Json;
+@using System.Text.Json.Serialization;
+@inject IJSRuntime jsRuntime;
+
+<style>
+
+    .e-diagram-page-break {
+        stroke: blue;
+        stroke-width: 3;
+        stroke-dasharray: 20,20;
+    }
+</style>
+
+<SfDiagramComponent ID="diagram" @ref="@diagram" Height="600px" Nodes="@nodes" Created="@OnCreated">
+    <SnapSettings></SnapSettings>
+    <PageSettings Height="@pageHeight" Width="@pageHeight" ShowPageBreaks="true" MultiplePage="true">
+        <PageMargin Left="@mLeft" Right="@mRight" Top="@mTop" Bottom="@mBottom">
+
+        </PageMargin>
+    </PageSettings>
+</SfDiagramComponent>
+<button onclick="@OnCreated">Check Nodes</button>
+
+@code
+{
+    double mLeft = 50;
+    double mRight = 50;
+    double mTop = 50;
+    double mBottom = 50;
+    double pageHeight = 500;
+    double pageWidth = 500;
+    SfDiagramComponent diagram;
+    DiagramObjectCollection<Node> nodes;
+    protected override void OnInitialized()
+    {
+        nodes = new DiagramObjectCollection<Node>();
+        Node node = new Node()
+            {
+                ID = "node",
+                OffsetX = 250,
+                OffsetY = 250,
+                Width = 100,
+                Height = 100,
+                Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "white" }
+            };
+        nodes.Add(node);
+        Node node1 = new Node()
+            {
+                ID = "node1",
+                OffsetX = 50,
+                OffsetY = 100,
+                Width = 100,
+                Height = 100,
+                Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "white" }
+            };
+        nodes.Add(node1);
+        Node node2 = new Node()
+            {
+                ID = "node2",
+                OffsetX = 50,
+                OffsetY = 300,
+                Width = 100,
+                Height = 100,
+                Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "white" }
+            };
+        nodes.Add(node2);
+        Node node3 = new Node()
+            {
+                ID = "node3",
+                OffsetX = 400,
+                OffsetY = 200,
+                Width = 100,
+                Height = 100,
+                Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "white" }
+            };
+        nodes.Add(node3);
+        Node node4 = new Node()
+            {
+                ID = "node4",
+                OffsetX = 300,
+                OffsetY = 50,
+                Width = 100,
+                Height = 100,
+                Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "white" }
+            };
+        nodes.Add(node4);
+        Node node5 = new Node()
+            {
+                ID = "node5",
+                OffsetX = 300,
+                OffsetY = 400,
+                Width = 100,
+                Height = 100,
+                Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "white" }
+            };
+        nodes.Add(node5);
+        Node node6 = new Node()
+            {
+                ID = "node6",
+                OffsetX = 600,
+                OffsetY = 400,
+                Width = 100,
+                Height = 100,
+                Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "white" }
+            };
+        nodes.Add(node6);
+    }
+
+    object bounds;
+
+    private async Task OnCreated()
+    {
+        await Task.Delay(1000);
+        bounds = await jsRuntime.InvokeAsync<object>("getViewportBounds").ConfigureAwait(true);
+        List<string> outOfBoundsNodes = new List<string>();
+
+        if (bounds != null)
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                };
+            DiagramRect dataObj = System.Text.Json.JsonSerializer.Deserialize<DiagramRect>(bounds.ToString(), options);
+            if (dataObj != null)
+            {
+                foreach (Node node in diagram.Nodes)
+                {
+                    double? nodeLeft = node.OffsetX - (node.Width / 2);
+                    double? nodeRight = node.OffsetX + (node.Width / 2);
+                    double? nodeTop = node.OffsetY - (node.Height / 2);
+                    double? nodeBottom = node.OffsetY + (node.Height / 2);
+                    if (nodeRight > dataObj.Width - mRight || nodeBottom > dataObj.Height - mBottom || nodeLeft < dataObj.X + mLeft || nodeTop < dataObj.Y + mTop)
+                    {
+                        outOfBoundsNodes.Add(node.ID);
+                    }
+                }
+            }
+        }
+    }
+}

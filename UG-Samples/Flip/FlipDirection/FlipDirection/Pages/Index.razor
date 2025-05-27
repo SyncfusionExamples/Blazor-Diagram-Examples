@@ -3,11 +3,24 @@
 @using Syncfusion.Blazor.Diagram
 @using Syncfusion.Blazor.Buttons
 
-<SfButton Content="HorizontalPort" OnClick="@HorizontalPort" />
-<SfButton Content="HorizontalContent" OnClick="@HorizontalContent" />
-<SfButton Content="HorizontalAll" OnClick="@HorizontalAll" />
-<SfButton Content="HorizontalNone" OnClick="@HorizontalNone" />
-
+<select id="flip" @onchange="@FlipDirectionChange">
+     <option disabled selected>Flip</option>
+     <option value="None">None</option>
+     <option value="Horizontal">Horizontal</option>
+     <option value="Vertical">Vertical</option>
+     <option value="Both">Both</option>
+ </select>
+ <select id="flipmode" @onchange="@FlipModeChange">
+     <option disabled selected>FlipMode</option>
+     <option value="None">None</option>
+     <option value="Content">Content</option>
+     <option value="Port">Port</option>
+     <option value="Text">Text</option>
+     <option value="PortAndContent">PortAndContent</option>
+     <option value="PortWithLabelText">PortWithLabelText</option>
+     <option value="LabelOnly">LabelOnly</option>
+     <option value="All">All</option>
+ </select>
 <SfDiagramComponent @ref="diagram" Width="1000px" Height="1000px" Nodes="@NodeCollection" Connectors="@connectors">
 </SfDiagramComponent>
 @code
@@ -114,61 +127,40 @@
             }
         }
     }
-    //Method to flip the content horizontally
-    public void HorizontalContent()
-    {
-        if (diagram.SelectionSettings.Nodes.Count > 0)
-        {
-            for (int i = 0; i < diagram.SelectionSettings.Nodes.Count; i++)
-            {
-                diagram.SelectionSettings.Nodes[i].FlipMode = DiagramFlipMode.Content;
-                if (diagram.SelectionSettings.Nodes[i].Flip.HasFlag(FlipDirection.Horizontal))
-                {
-                    diagram.SelectionSettings.Nodes[i].Flip &= ~FlipDirection.Horizontal;
-                }
-                else
-                {
-                    diagram.SelectionSettings.Nodes[i].Flip |= FlipDirection.Horizontal;
-                }
-            }
-        }
-    }
-    //Method to flip the content and port horizontally
-    public void HorizontalAll()
-    {
-        if (diagram.SelectionSettings.Nodes.Count > 0)
-        {
-            for (int i = 0; i < diagram.SelectionSettings.Nodes.Count; i++)
-            {
-                diagram.SelectionSettings.Nodes[i].FlipMode = DiagramFlipMode.All;
-                if (diagram.SelectionSettings.Nodes[i].Flip.HasFlag(FlipDirection.Horizontal))
-                {
-                    diagram.SelectionSettings.Nodes[i].Flip &= ~FlipDirection.Horizontal;
-                }
-                else
-                {
-                    diagram.SelectionSettings.Nodes[i].Flip |= FlipDirection.Horizontal;
-                }
-            }
-        }
-    }
-    //Method to disable the flip operation
-    public void HorizontalNone()
-    {
-        if (diagram.SelectionSettings.Nodes.Count > 0)
-        {
-            for (int i = 0; i < diagram.SelectionSettings.Nodes.Count; i++)
-            {
-                diagram.SelectionSettings.Nodes[i].FlipMode = DiagramFlipMode.None;
-                if (diagram.SelectionSettings.Nodes[i].Flip.HasFlag(FlipDirection.Horizontal))
-                {
-                    diagram.SelectionSettings.Nodes[i].Flip &= ~FlipDirection.Horizontal;
-                }
-                else
-                {
-                    diagram.SelectionSettings.Nodes[i].Flip |= FlipDirection.Horizontal;
-                }
-            }
-        }
-    }
+ // This method applys flipDirection to the selected node's
+ public void FlipDirectionChange(ChangeEventArgs args)
+ {
+     diagram.StartGroupAction();
+
+     if (diagram.SelectionSettings.Nodes.Count > 0)
+     {
+         for (int i = 0; i < diagram.SelectionSettings.Nodes.Count; i++)
+         {
+             diagram.SelectionSettings.Nodes[i].Flip = (FlipDirection)Enum.Parse(typeof(FlipDirection), args.Value.ToString());
+         }
+     }
+     for (int i = 0; i < diagram.SelectionSettings.Connectors.Count; i++)
+     {
+         diagram.SelectionSettings.Connectors[i].Flip = (FlipDirection)Enum.Parse(typeof(FlipDirection), args.Value.ToString());
+     }
+     diagram.EndGroupAction();
+
+ }
+
+ //This method apply's diagramFLipMode to the selected node's
+ public void FlipModeChange(ChangeEventArgs args)
+ {
+     diagram.StartGroupAction();
+
+     if (diagram.SelectionSettings.Nodes.Count > 0)
+     {
+         for (int i = 0; i < diagram.SelectionSettings.Nodes.Count; i++)
+         {
+             diagram.SelectionSettings.Nodes[i].FlipMode = (DiagramFlipMode)Enum.Parse(typeof(DiagramFlipMode), args.Value.ToString());
+         }
+     }
+
+     diagram.EndGroupAction();
+
+ }
 }

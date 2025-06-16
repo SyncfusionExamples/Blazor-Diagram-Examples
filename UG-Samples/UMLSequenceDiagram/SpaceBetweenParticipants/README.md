@@ -1,10 +1,9 @@
-# Container Sample
+# UML Sequence Diagram - SpaceBetweenParticipants Sample
 
-This sample demonstrates how to add child nodes to a container.
+This sample demonstrates how to customize the spacing between participants in a UML Sequence Diagram.
 
 Demo link:
-https://blazor.syncfusion.com/demos/diagramcomponent/container?theme=fluent
-
+https://blazor.syncfusion.com/demos/diagramcomponent/uml-sequence
 
 ## Prerequisites
 

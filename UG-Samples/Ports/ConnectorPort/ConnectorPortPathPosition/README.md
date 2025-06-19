@@ -1,11 +1,9 @@
-# Draw Constraints Sample
+# Connector Port PathPosition
 
-This sample demonstrates how to draw the connector by using the port constraints.
+This sample demonstrates how to set the PathPosition for a connector port.
 
-Demo link: 
+Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/ports?theme=fluent
-
-
 
 
 ## Prerequisites

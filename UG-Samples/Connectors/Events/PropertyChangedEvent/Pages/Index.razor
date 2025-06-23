@@ -1,33 +1,40 @@
 ﻿@page "/"
 
 @using Syncfusion.Blazor.Diagram
-@using System.Collections.ObjectModel
-
-<SfDiagramComponent @ref="@Diagram"
+<SfDiagramComponent @ref="@diagram"
                     Width="100%"
                     Height="700px"
-                    Nodes="nodes"
-                    PropertyChanged="OnPropertyChanged">
-                    </SfDiagramComponent>
+                    Connectors="@connectors"
+                    PropertyChanged="OnNodePropertyChanged">
+</SfDiagramComponent>
 
+@code {
+    SfDiagramComponent diagram;
+    //Defines diagram's connector collection.
+    DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
 
-@code{
-    SfDiagramComponent Diagram;
-    DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
     protected override void OnInitialized()
     {
-        Node node = new Node()
-        {
-            OffsetX = 250,
-            OffsetY = 250,
-            Width = 100,
-            Height = 100
-        };
-        nodes.Add(node);
+        Connector Connector = new Connector()
+            {
+                ID = "connector1",
+                // Set the source and target point of the connector.
+                SourcePoint = new DiagramPoint() { X = 100, Y = 100 },
+                TargetPoint = new DiagramPoint() { X = 200, Y = 200 },
+                // Type of the connector segments.
+                Type = ConnectorSegmentType.Straight
+            };
+        connectors.Add(Connector);
     }
-     // Notify the property changed event while the change property is at run time.
-    private void OnPropertyChanged(PropertyChangedEventArgs args)
+
+    // Method to handle Property Changed event
+    private void OnNodePropertyChanged(PropertyChangedEventArgs args)
     {
-        //Action to be performed.
+        if (args.Element is Connector changedNode)
+        {
+            // Logic to handle the property change for the specific connector
+            Console.WriteLine($"Node ID: {changedNode.ID} property changed.");
+            // Additional logic to handle updates
+        }
     }
 }

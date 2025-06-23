@@ -1,6 +1,6 @@
-#Resize
+# Expand Collapse Margin
 
-This sample demonstrates how to resize the node by using the Scale method.
+This sample demonstrates how to update the margin for the expand/collapse icon.
 
 
 ## Prerequisites

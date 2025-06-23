@@ -1,6 +1,6 @@
-#Resize
+# Rotation Angle Property
 
-This sample demonstrates how to resize the node by using the Scale method.
+This sample demonstrates how to update the rottation angle property for a node.
 
 
 ## Prerequisites

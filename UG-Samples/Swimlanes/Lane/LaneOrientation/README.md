@@ -1,6 +1,6 @@
-#Resize
+# Lane Orientation
 
-This sample demonstrates how to resize the node by using the Scale method.
+This sample demonstrates how to update the orientation property for a lane.
 
 
 ## Prerequisites

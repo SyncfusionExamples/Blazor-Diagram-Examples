@@ -1,6 +1,7 @@
-#Resize
+# Border Width
 
-This sample demonstrates how to resize the node by using the Scale method.
+
+This sample demonstrates how to update the border width for a node.
 
 
 ## Prerequisites

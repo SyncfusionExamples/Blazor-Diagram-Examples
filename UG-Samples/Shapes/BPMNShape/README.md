@@ -1,6 +1,6 @@
-#Resize
+# BPMN shape
 
-This sample demonstrates how to resize the node by using the Scale method.
+This sample demonstrates how to update the BPMN shape.
 
 
 ## Prerequisites

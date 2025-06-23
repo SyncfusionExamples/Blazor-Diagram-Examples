@@ -1,6 +1,6 @@
-#Resize
+# Children Spacing Property
 
-This sample demonstrates how to resize the node by using the Scale method.
+This sample demonstrates how to update the spacing property for children in swimlanes.
 
 
 ## Prerequisites

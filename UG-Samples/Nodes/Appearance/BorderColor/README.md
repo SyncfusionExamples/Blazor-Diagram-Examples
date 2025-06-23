@@ -1,6 +1,6 @@
-#Resize
+# Border Color
 
-This sample demonstrates how to resize the node by using the Scale method.
+This sample demonstrates how to update the border color for a node.
 
 
 ## Prerequisites

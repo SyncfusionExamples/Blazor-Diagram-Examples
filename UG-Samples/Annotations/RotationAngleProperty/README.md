@@ -1,6 +1,6 @@
-#Resize
+# Rotation Angle
 
-This sample demonstrates how to resize the node by using the Scale method.
+This sample demonstrates how to add rotation angle for annotation.
 
 
 ## Prerequisites

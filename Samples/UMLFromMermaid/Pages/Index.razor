@@ -1,0 +1,66 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+
+<div style="display: flex; height: 800px;">
+    
+    <div style="width: 75%; padding-right: 1rem;">
+        <SfDiagramComponent @ref="@diagramComponent" ID="diagram" Height="100%" Model="@umlModel">
+        </SfDiagramComponent>
+    </div>
+
+    
+    <div style="width: 25%; display: flex; flex-direction: column;">
+        <textarea style="flex: 1; resize: none;" placeholder="Mermaid data goes here...">@mermaidData</textarea>
+        <div style="margin-top: 1rem;">
+            <button @onclick="save" style="margin-bottom: 0.5rem; width: 100%;">Save</button>
+            <button @onclick="LoadFromMermaid" style="width: 100%;margin-bottom: 0.5rem;">Load from mermaid</button>
+            <button @onclick="ClearDiagram" style="width: 100%;">Clear</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    UMLFromMermaidModel umlModel;
+    SfDiagramComponent diagramComponent;
+    string mermaidData = "";
+
+    private void save()
+    {
+        mermaidData = diagramComponent.SaveDiagramAsMermaid();
+        StateHasChanged();
+    }
+
+    private async Task LoadFromMermaid()
+    {
+        await diagramComponent.LoadDiagramFromMermaidAsync(mermaidData);
+    }
+
+    private void ClearDiagram()
+    {
+        diagramComponent.Clear();
+    }
+
+    protected override void OnInitialized()
+    {
+        umlModel = new UMLFromMermaidModel()
+            {
+            // Participants Collection
+                Participants = new List<UmlSequenceParticipant>
+                {
+                    new UmlSequenceParticipant { ID = "User", Content = "User", IsActor = false, },
+                    new UmlSequenceParticipant { ID = "Application", Content = "Application", IsActor = false, },
+                    new UmlSequenceParticipant { ID = "Database", Content = "Database", IsActor = false, ShowDestructionMarker = true}
+                },
+
+            // Sequence Messages
+                Messages = new List<UmlSequenceMessage>
+                {
+                    new UmlSequenceMessage { ID = "MSG1", Content = "Database initiates delete process.", FromParticipantID = "Database", ToParticipantID = "Application"},
+                    new UmlSequenceMessage { ID = "MSG2", Content = "Application deletes User.", FromParticipantID = "Application", ToParticipantID = "User", MessageType = UmlSequenceMessageType.Delete },
+                    new UmlSequenceMessage { ID = "MSG3", Content = "Database deletes Application.", FromParticipantID = "Database", ToParticipantID = "Application", MessageType = UmlSequenceMessageType.Delete },
+
+                }
+            };
+    }
+}

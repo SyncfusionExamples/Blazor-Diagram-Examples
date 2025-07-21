@@ -21,7 +21,7 @@
 </div>
 
 @code {
-    UMLFromMermaidModel umlModel;
+    UmlSequenceDiagramModel umlModel;
     SfDiagramComponent diagramComponent;
     string mermaidData = "";
 
@@ -43,7 +43,7 @@
 
     protected override void OnInitialized()
     {
-        umlModel = new UMLFromMermaidModel()
+        umlModel = new UmlSequenceDiagramModel()
             {
             // Participants Collection
                 Participants = new List<UmlSequenceParticipant>

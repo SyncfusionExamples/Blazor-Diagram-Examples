@@ -71,7 +71,7 @@
     </SfToolbar>
     <div id="diagram-space" class="sb-mobile-diagram">
         <div class="content-wrapper" style="border: 1px solid #D7D7D7">
-            <SfDiagramComponent @ref="DiagramInstance" Height="700px" EnableChunkMessages="true" Model="@DiagramModel" @bind-InteractionController="@DiagramTool" SelectionChanged="@SelectionChanged">
+            <SfDiagramComponent @ref="DiagramInstance" Height="700px" EnableChunkMessages="true" Model="@DiagramModel" NodeCreating="@NodeCreating"  ConnectorCreating="OnConnectorCreating" @bind-InteractionController="@DiagramTool" SelectionChanged="@SelectionChanged">
                 <SnapSettings Constraints="SnapConstraints.None" />
             </SfDiagramComponent>
         </div>
@@ -181,6 +181,22 @@
             Messages = messages,
             Fragments = fragments
         };
+    }
+    //Method to define nodecreating event
+    private void NodeCreating(IDiagramObject obj)
+    {
+        Node node = obj as Node;
+        node.Style = new ShapeStyle() { Fill = "#6495ED" };
+    }
+
+    public void OnConnectorCreating(IDiagramObject args)
+    {
+        Connector connector = args as Connector;
+        connector.Style.Fill = "black";
+        connector.Style.StrokeColor = "black";
+        connector.Style.Opacity = 1;
+        connector.TargetDecorator.Style.Fill = "black";
+        connector.TargetDecorator.Style.StrokeColor = "black";
     }
 
     private void SelectedItem(Syncfusion.Blazor.SplitButtons.MenuEventArgs args)

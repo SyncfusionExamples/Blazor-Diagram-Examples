@@ -1,0 +1,388 @@
+﻿@page "/"
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.SplitButtons
+@using Syncfusion.Blazor.Navigations
+@using Syncfusion.Blazor.Notifications
+@using Syncfusion.Blazor.Inputs
+@using SelectionChangedEventArgs = Syncfusion.Blazor.Diagram.SelectionChangedEventArgs
+
+@inject IJSRuntime jsRuntime
+
+<style>
+    .e-file-select-wrap {
+        display: none;
+    }
+</style>
+
+
+<div style="width: 100%">
+    <SfToolbar>
+        <ToolbarEvents Clicked="@ToolbarEditorClick"></ToolbarEvents>
+        <ToolbarItems>
+            <ToolbarItem TooltipText="New Diagram" PrefixIcon="e-icons e-circle-add"></ToolbarItem>
+            <ToolbarItem TooltipText="Open Diagram" PrefixIcon="e-icons e-folder-open"></ToolbarItem>
+            <ToolbarItem TooltipText="Save Diagram" PrefixIcon="e-icons e-save"></ToolbarItem>
+            <ToolbarItem TooltipText="Print Diagram" PrefixIcon="e-icons e-print"></ToolbarItem>
+            <ToolbarItem>
+                <Template>
+                    <SfDropDownButton IconCss="e-icons e-export">
+                        <DropDownButtonEvents ItemSelected="@SelectedItem"></DropDownButtonEvents>
+                        <DropDownMenuItems>
+                            <DropDownMenuItem Text="JPG"></DropDownMenuItem>
+                            <DropDownMenuItem Text="PNG"></DropDownMenuItem>
+                            <DropDownMenuItem Text="SVG"></DropDownMenuItem>
+                        </DropDownMenuItems>
+                    </SfDropDownButton>
+                </Template>
+            </ToolbarItem>
+            <ToolbarItem Type="ItemType.Separator"></ToolbarItem>
+            <ToolbarItem>
+                <Template>
+                    <SfColorPicker @bind-Disabled="@disableNodePicker" ValueChange="OnFillColorChange" @bind-Value="@fillColor"></SfColorPicker>
+                </Template>
+            </ToolbarItem>
+            <ToolbarItem>
+                <Template>
+                    <SfColorPicker @bind-Disabled="@disableConnectorPicker" ValueChange="OnBorderChange" @bind-Value="@strokeColor"></SfColorPicker>
+                </Template>
+            </ToolbarItem>
+            <ToolbarItem Type="ItemType.Separator"></ToolbarItem>
+            <ToolbarItem PrefixIcon="e-icons e-pan" TooltipText="Pan"> </ToolbarItem>
+            <ToolbarItem PrefixIcon="e-icons e-mouse-pointer" TooltipText="Select"></ToolbarItem>
+
+            <ToolbarItem>
+                <Template>
+                    <SfDropDownButton Content="@ZoomItemDropdownContent">
+                        <DropDownButtonEvents ItemSelected="@SelectedZoomItem"></DropDownButtonEvents>
+                        <DropDownMenuItems>
+                            <DropDownMenuItem Text="Zoom In"></DropDownMenuItem>
+                            <DropDownMenuItem Text="Zoom Out"></DropDownMenuItem>
+                            <DropDownMenuItem Text="Zoom to Fit"></DropDownMenuItem>
+                            <DropDownMenuItem Text="Zoom to 50%"></DropDownMenuItem>
+                            <DropDownMenuItem Text="Zoom to 100%"></DropDownMenuItem>
+                            <DropDownMenuItem Text="Zoom to 200%"></DropDownMenuItem>
+                        </DropDownMenuItems>
+                    </SfDropDownButton>
+                </Template>
+            </ToolbarItem>
+        </ToolbarItems>
+    </SfToolbar>
+    <div id="diagram-space" class="sb-mobile-diagram">
+        <div class="content-wrapper" style="border: 1px solid #D7D7D7">
+            <SfDiagramComponent @ref="DiagramInstance" Height="700px" EnableChunkMessages="true" Model="@DiagramModel" NodeCreating="@NodeCreating"  ConnectorCreating="OnConnectorCreating" @bind-InteractionController="@DiagramTool" SelectionChanged="@SelectionChanged">
+                <SnapSettings Constraints="SnapConstraints.None" />
+            </SfDiagramComponent>
+        </div>
+    </div>
+
+</div>
+
+<div style="display: none;visibility: hidden;">
+    <SfUploader @ref="@UploadFiles" ID="UploadFiles" ShowFileList="false" AllowedExtensions="@ExtensionType">
+        <UploaderEvents OnUploadStart="@OnUploadFileSelected"></UploaderEvents>
+        <UploaderAsyncSettings SaveUrl="https://blazor.syncfusion.com/services/production/api/FileUploader/Save"
+                               RemoveUrl="https://blazor.syncfusion.com/services/production/api/FileUploader/Remove"></UploaderAsyncSettings>
+    </SfUploader>
+</div>
+
+@code {
+    private SfDiagramComponent DiagramInstance;
+    private UmlSequenceDiagramModel DiagramModel;
+    private DiagramInteractions DiagramTool { get; set; } = DiagramInteractions.Default;
+    bool disableNodePicker = true;
+    bool disableConnectorPicker = true;
+    string fillColor = "#1916C1";
+    string strokeColor = "#000";
+    public string ZoomItemDropdownContent { get; set; } = "100 %";
+    public string ExtensionType { get; set; } = ".json";
+    public SfUploader UploadFiles { get; set; }
+
+    protected override void OnInitialized()
+    {
+        // Participants
+        List<UmlSequenceParticipant> participants = new List<UmlSequenceParticipant>()
+{
+            new UmlSequenceParticipant() { ID = "Customer", Content = "Customer", IsActor = true,
+            ActivationBoxes = new List<UmlSequenceActivationBox>()
+            {
+                new UmlSequenceActivationBox() { ID = "act2", StartMessageID = "MSG1", EndMessageID = "MSG3", }
+            }
+            },
+            new UmlSequenceParticipant() { ID = "OrderSystem", Content = "Order System", IsActor = false },
+            new UmlSequenceParticipant() { ID = "PaymentGateway", Content = "Payment Gateway", IsActor = false }
+        };
+
+        // Messages
+        List<UmlSequenceMessage> messages = new List<UmlSequenceMessage>()
+            {
+            new UmlSequenceMessage() { ID = "MSG1", Content = "Place Order", FromParticipantID = "Customer", ToParticipantID = "OrderSystem", MessageType = UmlSequenceMessageType.Synchronous },
+            new UmlSequenceMessage() { ID = "MSG2", Content = "Check Stock Availability", FromParticipantID = "OrderSystem", ToParticipantID = "OrderSystem", MessageType = UmlSequenceMessageType.Synchronous },
+            new UmlSequenceMessage() { ID = "MSG3", Content = "Stock Available", FromParticipantID = "OrderSystem", ToParticipantID = "Customer", MessageType = UmlSequenceMessageType.Reply },
+            new UmlSequenceMessage() { ID = "MSG4", Content = "Process Payment", FromParticipantID = "OrderSystem", ToParticipantID = "PaymentGateway", MessageType = UmlSequenceMessageType.Synchronous },
+            new UmlSequenceMessage() { ID = "MSG5", Content = "Payment Successful", FromParticipantID = "PaymentGateway", ToParticipantID = "OrderSystem", MessageType = UmlSequenceMessageType.Reply },
+            new UmlSequenceMessage() { ID = "MSG6", Content = "Order Confirmed and Shipped", FromParticipantID = "OrderSystem", ToParticipantID = "Customer", MessageType = UmlSequenceMessageType.Reply },
+            new UmlSequenceMessage() { ID = "MSG7", Content = "Payment Failed", FromParticipantID = "PaymentGateway", ToParticipantID = "OrderSystem", MessageType = UmlSequenceMessageType.Reply },
+            new UmlSequenceMessage() { ID = "MSG8", Content = "Retry Payment", FromParticipantID = "OrderSystem", ToParticipantID = "Customer", MessageType = UmlSequenceMessageType.Reply }
+        };
+
+        // Fragments
+        List<UmlSequenceFragment> fragments = new List<UmlSequenceFragment>()
+        {
+            new UmlSequenceFragment()
+            {
+                ID = "Frag3",
+                FragmentType = UmlSequenceFragmentType.Loop,
+                Conditions = new List<UmlSequenceFragmentCondition>
+                {
+                    new UmlSequenceFragmentCondition()
+                    {
+                        Content = "while attempts less than 3",
+                        Fragments = new List<UmlSequenceFragment>()
+                        {
+                            new UmlSequenceFragment()
+                            {
+                                ID = "Frag1",
+                                FragmentType = UmlSequenceFragmentType.Optional,
+                                Conditions = new List<UmlSequenceFragmentCondition>()
+                                {
+                                    new UmlSequenceFragmentCondition()
+                                    {
+                                        Content = "if item is in stock",
+                                        MessageIds = new List<string> { "MSG4" }
+                                    }
+                                }
+                            },
+                            new UmlSequenceFragment()
+                            {
+                                ID = "Frag2",
+                                FragmentType = UmlSequenceFragmentType.Alternative,
+                                Conditions = new List<UmlSequenceFragmentCondition>()
+                            {
+                                    new UmlSequenceFragmentCondition()
+                                    {
+                                        Content = "if payment is successful",
+                                        MessageIds = new List<string>() { "MSG5", "MSG6" }
+                                    },
+                                    new UmlSequenceFragmentCondition()
+                                    {
+                                        Content = "if payment fails",
+                                        MessageIds = new List<string>() { "MSG7", "MSG8" }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        // Assign model
+        DiagramModel = new UmlSequenceDiagramModel()
+        {
+            SpaceBetweenParticipants = 300,
+            Participants = participants,
+            Messages = messages,
+            Fragments = fragments
+        };
+    }
+    //Method to define nodecreating event
+    private void NodeCreating(IDiagramObject obj)
+    {
+        Node node = obj as Node;
+        if(node.Data is UmlSequenceActivationBox activationBox)
+        {
+            node.Style = new ShapeStyle() { Fill = "orange", StrokeColor = "orange" };
+        };
+    }
+
+    public void OnConnectorCreating(IDiagramObject args)
+    {
+        Connector connector = args as Connector;
+        connector.Style.Fill = "black";
+        connector.Style.StrokeColor = "black";
+        connector.Style.Opacity = 1;
+        connector.TargetDecorator.Style.Fill = "black";
+        connector.TargetDecorator.Style.StrokeColor = "black";
+    }
+
+    private void SelectedItem(Syncfusion.Blazor.SplitButtons.MenuEventArgs args)
+    {
+        var value = args.Item.Text;
+        switch (value)
+        {
+            case "JPG":
+            case "PNG":
+            case "SVG":
+                Export(value);
+                break;
+
+        }
+    }
+
+    private async Task ToolbarEditorClick(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        var value = args.Item.TooltipText;
+        switch (value)
+        {
+            case "New Diagram":
+                DiagramInstance.Clear();
+                SetElements();
+                break;
+            case "Open Diagram":
+                LoadDiagram();
+                break;
+            case "Save Diagram":
+                string fileName = "Flow Chart";
+                await Download(fileName);
+                break;
+            case "Print Diagram":
+                DiagramPrintSettings print = new DiagramPrintSettings();
+                print.PageWidth = 700;
+                print.PageHeight = 1200;
+                await DiagramInstance.PrintAsync(print);
+                break;
+            case "Pan":
+                DiagramTool = DiagramInteractions.ZoomPan;
+                break;
+            case "Select":
+                DiagramTool = DiagramInteractions.SingleSelect | DiagramInteractions.MultipleSelect;
+                break;
+        }
+    }
+
+    public async void SetElements()
+    {
+        DiagramInstance.ClearHistory();
+        DiagramInstance.ResetZoom();
+        StateHasChanged();
+    }
+    public async Task LoadDiagram()
+    {
+        DiagramInstance.BeginUpdate();
+        ExtensionType = ".json";
+        await FileUtil.Click(jsRuntime);
+        await DiagramInstance.EndUpdateAsync();
+    }
+    public async Task OnUploadFileSelected(UploadingEventArgs args)
+    {
+        if (args.FileData.Type == "json")
+        {
+            string json = await FileUtil.LoadFile(jsRuntime, args.FileData);
+            json = json.Replace(System.Environment.NewLine, string.Empty);
+            await DiagramInstance.LoadDiagramAsync(json.ToString());
+            FitOptions options = new FitOptions() { Mode = FitMode.Both, Region = DiagramRegion.Content };
+            DiagramInstance.FitToPage(options);
+            await UploadFiles.ClearAllAsync();
+        }
+    }
+    public async Task Download(string fileName)
+    {
+        string data = DiagramInstance.SaveDiagram();
+        await FileUtil.SaveAs(jsRuntime, data, fileName);
+    }
+    private async Task Export(string value)
+    {
+        DiagramExportSettings export = new DiagramExportSettings();
+        export.FitToPage = true;
+        if (value == "JPG")
+            await DiagramInstance.ExportAsync("Diagram", DiagramExportFormat.JPEG, export);
+        else if (value == "PNG")
+            await DiagramInstance.ExportAsync("DiagramInstance", DiagramExportFormat.PNG, export);
+        else if (value == "SVG")
+            await DiagramInstance.ExportAsync("Diagram", DiagramExportFormat.SVG, export);
+    }
+    private void SelectedZoomItem(Syncfusion.Blazor.SplitButtons.MenuEventArgs args)
+    {
+        var value = args.Item.Text;
+        var currentZoom = DiagramInstance.ScrollSettings.CurrentZoom;
+        switch (value)
+        {
+            case "Zoom In":
+            case "Zoom Out":
+                var ZoomFactor = 0.2;
+                ZoomFactor = value == "Zoom Out" ? 1 / (1 + ZoomFactor) : (1 + ZoomFactor);
+                DiagramInstance.Zoom(ZoomFactor, null);
+                break;
+            case "Zoom to Fit":
+                FitOptions fitoption = new FitOptions()
+                {
+                    Mode = FitMode.Both,
+                    Region = DiagramRegion.PageSettings,
+                };
+                DiagramInstance.FitToPage(fitoption);
+                break;
+            case "Zoom to 50%":
+                ZoomFactor = 0.5 / currentZoom;
+                DiagramInstance.Zoom(ZoomFactor, null);
+                break;
+            case "Zoom to 100%":
+                ZoomFactor = 1 / currentZoom;
+                DiagramInstance.Zoom(ZoomFactor, null);
+                break;
+            case "Zoom to 200%":
+                ZoomFactor = 2 / currentZoom;
+                DiagramInstance.Zoom(ZoomFactor, null);
+                break;
+        }
+        ZoomItemDropdownContent = FormattableString.Invariant($"{Math.Round(DiagramInstance.ScrollSettings.CurrentZoom * 100)}") + "%";
+    }
+
+    public async Task OnFillColorChange(ColorPickerEventArgs args)
+    {
+        await ApplyStyle("fill", args.CurrentValue.Hex);
+    }
+    public async Task OnBorderChange(ColorPickerEventArgs args)
+    {
+        await ApplyStyle("strokecolor", args.CurrentValue.Hex);
+    }
+
+    // Method to update the style for the selected node's port.
+    private void SelectionChanged(SelectionChangedEventArgs arg)
+    {
+        if (arg.NewValue != null && arg.NewValue.Count > 0)
+        {
+            if (arg.NewValue[0] is Node)
+            {
+                disableNodePicker = false;
+            }
+            else if (arg.NewValue[0] is Connector)
+            {
+
+                disableConnectorPicker = false;
+            }
+        }
+        else
+        {
+            disableConnectorPicker = true;
+        }
+    }
+
+    private async Task ApplyStyle(string propertyName, Object propertyValue)
+    {
+        DiagramInstance.StartGroupAction();
+        DiagramInstance.BeginUpdate();
+        if (DiagramInstance.SelectionSettings != null)
+        {
+            if (DiagramInstance.SelectionSettings.Nodes != null && DiagramInstance.SelectionSettings.Nodes.Count > 0)
+            {
+                Node node = DiagramInstance.SelectionSettings.Nodes[0];
+                node.Style.Fill = propertyValue.ToString();
+
+            }
+            else if (DiagramInstance.SelectionSettings.Connectors != null && DiagramInstance.SelectionSettings.Connectors.Count > 0)
+            {
+                Connector connector = DiagramInstance.SelectionSettings.Connectors[0];
+                connector.Style.StrokeColor = propertyValue.ToString();
+                connector.TargetDecorator.Style.StrokeColor = propertyValue.ToString();
+                connector.TargetDecorator.Style.Fill = propertyValue.ToString();
+
+            }
+
+        }
+        await DiagramInstance.EndUpdateAsync();
+        DiagramInstance.EndGroupAction();
+    }
+
+}

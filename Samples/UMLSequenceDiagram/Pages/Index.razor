@@ -104,7 +104,12 @@
         // Participants
         List<UmlSequenceParticipant> participants = new List<UmlSequenceParticipant>()
 {
-            new UmlSequenceParticipant() { ID = "Customer", Content = "Customer", IsActor = true },
+            new UmlSequenceParticipant() { ID = "Customer", Content = "Customer", IsActor = true,
+            ActivationBoxes = new List<UmlSequenceActivationBox>()
+            {
+                new UmlSequenceActivationBox() { ID = "act2", StartMessageID = "MSG1", EndMessageID = "MSG3", }
+            }
+            },
             new UmlSequenceParticipant() { ID = "OrderSystem", Content = "Order System", IsActor = false },
             new UmlSequenceParticipant() { ID = "PaymentGateway", Content = "Payment Gateway", IsActor = false }
         };
@@ -186,7 +191,10 @@
     private void NodeCreating(IDiagramObject obj)
     {
         Node node = obj as Node;
-        node.Style = new ShapeStyle() { Fill = "#6495ED" };
+        if(node.Data is UmlSequenceActivationBox activationBox)
+        {
+            node.Style = new ShapeStyle() { Fill = "orange", StrokeColor = "orange" };
+        };
     }
 
     public void OnConnectorCreating(IDiagramObject args)

@@ -1,0 +1,127 @@
+﻿@page "/"
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Diagram.SymbolPalette
+@using Shape = Syncfusion.Blazor.Diagram.Shape
+
+<SfButton Content="Load Graph" OnClick="@Load" />
+<SfDiagramComponent @ref="diagram" Width="1000px" Height="500px" Nodes="@nodes" Connectors="@connectors">
+
+</SfDiagramComponent>
+
+@code {
+    SfDiagramComponent diagram;
+    SnapConstraints snapConstraints = SnapConstraints.None;
+    DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
+    DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+    DiagramObjectCollection<NodeBase> nodeBase = new DiagramObjectCollection<NodeBase>();
+
+    // Common styles for nodes and ports
+    ShapeStyle nodeStyle = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "#6495ED" };
+    ShapeStyle portStyle = new ShapeStyle() { Fill = "yellow", StrokeColor = "yellow" };
+
+    protected override void OnInitialized()
+    {
+        nodes = new DiagramObjectCollection<Node>
+        {
+            CreateNode("node1", 100, 100, "port1", 1, 0.5),
+            CreateNode("node2", 300, 300, "port2", 0, 0.5)
+        };
+
+        connectors.Add(CreateConnector("connector1", "node1", "port1", "node2", "port2"));
+    }
+
+    // Helper method to create a node
+    private Node CreateNode(string id, double offsetX, double offsetY, string portId, double portOffsetX, double portOffsetY)
+    {
+        return new Node
+        {
+            ID = id,
+            OffsetX = offsetX,
+            OffsetY = offsetY,
+            Height = 50,
+            Width = 100,
+            Style = nodeStyle,
+            Shape = new BasicShape { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle },
+            Ports = new DiagramObjectCollection<PointPort>
+            {
+                new PointPort
+                {
+                    ID = portId,
+                    Visibility = PortVisibility.Visible,
+                    Offset = new DiagramPoint { X = portOffsetX, Y = portOffsetY },
+                    Height = 10,
+                    Width = 10,
+                    Style = portStyle
+                }
+            },
+            Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+            {
+                new ShapeAnnotation()
+                {
+                    Content = id,
+                    Style = new TextStyle()
+                    {
+                        Color = "white",
+                    }
+                }
+            }
+        };
+    }
+
+    // Helper method to create a connector
+    private Connector CreateConnector(string id, string sourceId, string sourcePortId, string targetId, string targetPortId)
+    {
+        return new Connector
+        {
+            ID = id,
+            SourceID = sourceId,
+            SourcePortID = sourcePortId,
+            TargetID = targetId,
+            TargetPortID = targetPortId,
+            TargetDecorator = new DecoratorSettings
+            {
+                Style = new ShapeStyle { Fill = "#6495ED", StrokeColor = "#6495ED" }
+            },
+            Style = new ShapeStyle { Fill = "#6495ED", StrokeColor = "#6495ED" },
+            Type = ConnectorSegmentType.Straight
+        };
+    }
+
+    public async void Load()
+    {
+        diagram.Clear();
+
+
+        var root = CreateNode("Root", 400, 50, "PortRoot", 0.5, 1);
+        var nodeA = CreateNode("NodeA", 250, 150, "PortA", 0.5, 1);
+        var nodeB = CreateNode("NodeB", 550, 150, "PortB", 0.5, 1);
+        var nodeC = CreateNode("NodeC", 150, 250, "PortC", 0.5, 1);
+        var nodeD = CreateNode("NodeD", 350, 250, "PortD", 0.5, 1);
+        var nodeE = CreateNode("NodeE", 450, 250, "PortE", 0.5, 1);
+        var nodeF = CreateNode("NodeF", 650, 250, "PortF", 0.5, 1);
+
+        var connector1 = CreateConnector("connector1", "Root", "PortRoot", "NodeA", "PortA");
+        var connector2 = CreateConnector("connector2", "Root", "PortRoot", "NodeB", "PortB");
+        var connector3 = CreateConnector("connector3", "NodeA", "PortA", "NodeC", "PortC");
+        var connector4 = CreateConnector("connector4", "NodeA", "PortA", "NodeD", "PortD");
+        var connector5 = CreateConnector("connector5", "NodeB", "PortB", "NodeE", "PortE");
+        var connector6 = CreateConnector("connector6", "NodeB", "PortB", "NodeF", "PortF");
+
+        nodeBase.Add(root);
+        nodeBase.Add(nodeA);
+        nodeBase.Add(nodeB);
+        nodeBase.Add(nodeC);
+        nodeBase.Add(nodeD);
+        nodeBase.Add(nodeE);
+        nodeBase.Add(nodeF);
+        nodeBase.Add(connector1);
+        nodeBase.Add(connector2);
+        nodeBase.Add(connector3);
+        nodeBase.Add(connector4);
+        nodeBase.Add(connector5);
+        nodeBase.Add(connector6);
+
+        await diagram.AddDiagramElementsAsync(nodeBase);
+    }
+}

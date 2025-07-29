@@ -1,0 +1,179 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Diagram.SymbolPalette
+@using Shape= Syncfusion.Blazor.Diagram.Shape
+
+<div class="control-section">
+   
+    <div style="width: 100%">
+        <div id="palette-space" class="sb-mobile-palette" style="float:left">
+            <SfSymbolPaletteComponent @ref="@PaletteInstance"  Width="@paletteWidth" Height="@paletteHeight"
+                                      Palettes="@Palettes"  SelectionChanged="@OnSelectionChanged" SymbolDragPreviewSize="@SymbolDragPreviewSize" SymbolHeight="@symbolSizeHeight" SymbolWidth="@symbolSizeWidth" SymbolMargin="@SymbolMargin">
+         
+            </SfSymbolPaletteComponent>
+        </div>
+        <div id="diagram-space" class="sb-mobile-diagram">
+            <div class="content-wrapper" style="border: 1px solid #D7D7D7">
+                <SfDiagramComponent @ref="@Diagram" Click="click"  Height="1000px" Width="1200px">
+                </SfDiagramComponent>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code{
+    NodeBase Addednodes = new NodeBase();
+    private void OnSelectionChanged( PaletteSelectionChangedEventArgs args)
+    {
+        Addednodes = null;
+        if(PaletteInstance.Palettes is DiagramObjectCollection<Palette> palette && palette.Count > 0)
+        {
+            for(int i = 0; i < palette.Count; i++)
+            {
+                if(palette[i] is Palette paletteSymbol && paletteSymbol.Symbols.Count > 0)
+                {
+                    if(paletteSymbol.Symbols is DiagramObjectCollection<NodeBase> symbol && symbol.Count > 0)
+                    {
+                        for (int j = 0; j < symbol.Count; j++)
+                        {
+                            if ((symbol[j] is NodeBase node)&&args.NewValue.Contains(node.ID))
+                            {
+                                Addednodes = node.Clone() as NodeBase;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    private void click(Syncfusion.Blazor.Diagram.ClickEventArgs args)
+    {
+        if(Addednodes is Node)
+        {
+            Node node = Addednodes as Node;
+            node.OffsetX = args.Position.X;
+            node.OffsetY = args.Position.Y;
+            Diagram.AddDiagramElementsAsync(new DiagramObjectCollection<NodeBase>() { node});
+        }
+        else if(Addednodes is Connector)
+        {
+            Connector connector = Addednodes as Connector;
+            connector.SourcePoint = new DiagramPoint() { X = args.Position.X, Y = args.Position.Y };
+            connector.TargetPoint = new DiagramPoint() { X = args.Position.X + 50, Y = args.Position.Y + 50 }; // Example target point
+            Diagram.AddDiagramElementsAsync(new DiagramObjectCollection<NodeBase>() { connector });
+
+        }
+        Addednodes = null;
+
+    }
+
+    SfDiagramComponent Diagram;
+    DiagramSize SymbolDragPreviewSize;
+    SfSymbolPaletteComponent PaletteInstance;
+    DiagramObjectCollection<Palette> Palettes = new DiagramObjectCollection<Palette>();
+
+    string paletteWidth;
+    string paletteHeight;
+    double symbolSizeWidth;
+    double symbolSizeHeight;
+    SymbolMargin SymbolMargin = new SymbolMargin { Left = 10, Right = 10, Top = 10, Bottom = 10 };
+
+    DiagramObjectCollection<NodeBase> Tnodes = new DiagramObjectCollection<NodeBase>();
+    DiagramObjectCollection<NodeBase> T2nodes = new DiagramObjectCollection<NodeBase>();//T3nodes
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        PaletteInstance.Targets = new DiagramObjectCollection<SfDiagramComponent>() { };
+        PaletteInstance.Targets.Add(Diagram);
+    }
+    protected override void OnInitialized()
+    {
+        paletteWidth = "100%";
+        paletteHeight = "1000px";
+        SymbolDragPreviewSize = new DiagramSize();
+        SymbolDragPreviewSize.Width = 80;
+        SymbolDragPreviewSize.Height = 80;
+        symbolSizeWidth = 80;
+        symbolSizeHeight = 80;
+
+        Tnodes = new DiagramObjectCollection<NodeBase>();
+        Node Tnode2 = new Node()
+        { ID = "node1", Shape = new FlowShape() { Type = NodeShapes.Flow, Shape = NodeFlowShapes.Decision } };
+        Tnodes.Add(Tnode2);
+        Node Tnode3 = new Node()
+        { Shape = new FlowShape() { Type = NodeShapes.Flow, Shape = NodeFlowShapes.Document } };
+        Tnodes.Add(Tnode3);
+        Node Tnode4 = new Node()
+        { Shape = new FlowShape() { Type = NodeShapes.Flow, Shape = NodeFlowShapes.PreDefinedProcess } };
+        Tnodes.Add(Tnode4);
+        Node Tnode5 = new Node()
+        { Shape = new FlowShape() { Type = NodeShapes.Flow, Shape = NodeFlowShapes.Terminator } };
+        Tnodes.Add(Tnode5);
+        Node Tnode6 = new Node()
+        { Shape = new FlowShape() { Type = NodeShapes.Flow, Shape = NodeFlowShapes.PaperTap } };
+        Tnodes.Add(Tnode6);
+        Node Tnode7 = new Node()
+        { Shape = new FlowShape() { Type = NodeShapes.Flow, Shape = NodeFlowShapes.DirectData } };
+        Tnodes.Add(Tnode7);
+        Node Tnode8 = new Node()
+        { Shape = new FlowShape() { Type = NodeShapes.Flow, Shape = NodeFlowShapes.SequentialData } };
+        Tnodes.Add(Tnode8);
+
+        T2nodes = new DiagramObjectCollection<NodeBase>();
+
+        Connector connector = new Connector
+        {
+            ID = "connector00",
+            Type = ConnectorSegmentType.Straight,
+            //TargetID = targetNodes[i],
+            SourcePoint = new DiagramPoint() { X = 0, Y = 0 },
+            TargetPoint = new DiagramPoint() { X = 20, Y = 20 }
+
+        };
+        T2nodes.Add(connector as NodeBase);
+
+        Connector connector1 = new Connector
+        {
+            ID = "connector01",
+            Type = ConnectorSegmentType.Orthogonal,
+            Style = new ShapeStyle() { StrokeWidth = 2 },
+            SourcePoint = new DiagramPoint() { X = 0, Y = 0 },
+            TargetPoint = new DiagramPoint() { X = 40, Y = 40 }
+
+        };
+        T2nodes.Add(connector1 as NodeBase);
+
+        Connector connector2 = new Connector
+        {
+            ID = "connector02",
+            Type = ConnectorSegmentType.Orthogonal,
+            Style = new ShapeStyle() { StrokeWidth = 2, StrokeColor = "red" },
+            //TargetID = targetNodes[i],
+            SourcePoint = new DiagramPoint() { X = 0, Y = 0 },
+            TargetPoint = new DiagramPoint() { X = 40, Y = 40 }
+
+        };
+        T2nodes.Add(connector2 as NodeBase);
+
+        Connector connector3 = new Connector
+        {
+            ID = "connector03",
+            Type = ConnectorSegmentType.Bezier,
+            Style = new ShapeStyle() { StrokeWidth = 2, StrokeColor = "red" },
+            //TargetID = targetNodes[i],
+            SourcePoint = new DiagramPoint() { X = 0, Y = 0 },
+            TargetPoint = new DiagramPoint() { X = 40, Y = 40 },
+        };
+        T2nodes.Add(connector3 as NodeBase);
+
+        Palettes = new DiagramObjectCollection<Palette>()
+        {
+            new Palette(){Symbols =Tnodes,Title="Flow Shapes",ID="FlowShapes" },
+            new Palette(){Symbols =T2nodes,Title="Connectors" ,IsExpanded = false},
+        };
+    }
+    
+}

@@ -1,0 +1,60 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
+@using System.Collections.ObjectModel
+@using Newtonsoft.Json
+@using SelectionChangedEventArgs = Syncfusion.Blazor.Diagram.SelectionChangedEventArgs
+
+
+<SfDiagramComponent @ref="diagramComponent"
+Width="700px"
+Height="300px"
+Nodes="nodes"
+
+>
+</SfDiagramComponent>
+<SfButton Content="Save" OnClick="OnSave"></SfButton>
+<SfButton Content="Load" OnClick="OnLoad"></SfButton>
+@code {
+    SfDiagramComponent diagramComponent;
+    JsonSerializerSettings settings;
+    string output;
+    Node node;
+    DiagramObjectCollection<Node> nodes = new Syncfusion.Blazor.Diagram.DiagramObjectCollection<Node>();
+    protected override void OnInitialized()
+    {
+        node = new Node()
+            {
+                ID = "node1",
+                Height = 100,
+                Width = 100,
+                OffsetX = 100,
+                OffsetY = 100,
+                Shape = new BpmnActivity()
+                {
+                    ActivityType = BpmnActivityType.Task,
+                    TaskType = BpmnTaskType.None
+                }
+            };
+
+        nodes.Add(node);
+
+        settings = new JsonSerializerSettings()
+            {
+                TypeNameHandling = TypeNameHandling.All
+            };
+    }
+
+    public void OnSave()
+    {
+        output = JsonConvert.SerializeObject(node, settings);
+    }
+
+    public void OnLoad()
+    {
+        diagramComponent.Clear();
+        Node deserializedNode = JsonConvert.DeserializeObject<Node>(output, settings);
+        nodes.Add(deserializedNode);
+    }
+}

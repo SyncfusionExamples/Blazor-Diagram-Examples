@@ -1,13 +1,22 @@
 ﻿@page "/"
-
 @using Syncfusion.Blazor.Diagram
 @using Syncfusion.Blazor.Popups
 @using Syncfusion.Blazor.Buttons
 
-<SfButton Content="Connector Template" OnClick="@TemplateChange" />
-<SfDiagramComponent Width="1000px" Height="500px" Connectors="connector" />
-@code
-{
+<SfDiagramComponent Width="1000px" Height="500px" Connectors="connector">
+    <DiagramTemplates>
+        <TooltipTemplate>
+            @{
+                    if (context is Connector)
+                    {
+                        <div><p>Product Name : Diagram</p><p>Element: Node</p><p>Content: Node Tooltip </p></div>
+                    }
+                }
+            </TooltipTemplate>
+        </DiagramTemplates>
+    </SfDiagramComponent>
+    @code
+    {
     //Define diagram's connectors collection
     DiagramObjectCollection<Connector> connector;
 
@@ -21,20 +30,9 @@
                 ID = "Connector1",
                 SourcePoint = new DiagramPoint() { X = 500, Y = 500 },
                 TargetPoint = new DiagramPoint() { X = 600, Y = 400 },
-                Tooltip = new DiagramTooltip() { Template = getContent() },
+                Tooltip = new DiagramTooltip(),
                 Constraints = ConnectorConstraints.Default | ConnectorConstraints.Tooltip,
             };
         connector.Add(connectors);
-    }
-    //Method to getcontent
-    private string getContent()
-    {
-        string content = "<div><p>Product Name : Diagram</p><p>Element: Connector</p><p>Content: Connector Tooltip <p></p></div>";
-        return content;
-    }
-    //Change the Template at run time.
-    private void TemplateChange()
-    {
-        connector[0].Tooltip.Template = "<p>TemplateUpdate</p>";
     }
 }

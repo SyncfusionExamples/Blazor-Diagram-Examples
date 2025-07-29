@@ -1,0 +1,40 @@
+﻿.texstyle {
+    display: table;
+    height: 35px;
+    padding-right: 4px;
+    padding-left: 0px;
+    width: 50%;
+    padding-top: 10px;
+    float: left;
+    position: relative;
+    min-height: 1px;
+}
+
+.textboxstyle {
+    padding-left: 0px;
+    padding-right: 0px;
+    float: left;
+    width: 50%;
+}
+
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+    display: block;
+}
+
+.e-bigger .e-btn.e-small.e-icon-btn {
+    padding: 0px;
+}
+
+.sb-mobile-diagram {
+    border: 1px solid #d9dedd;
+}
+
+.control-section {
+    float: left;
+}
+
+.property-section {
+    float: right;
+}

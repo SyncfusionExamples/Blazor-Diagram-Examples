@@ -3,9 +3,10 @@
 @using Syncfusion.Blazor.Diagram
 
 <SfDiagramComponent Height="600px" Nodes="nodes">
+    <SnapSettings Constraints="SnapConstraints.None"></SnapSettings>
     @*Initialize the page settings with multiple page, page orientation and break lines*@
-    <PageSettings Height="300"
-                  Width="300"
+    <PageSettings Height="200"
+                  Width="200"
                   MultiplePage="true"
                   Orientation="@orientation"
                   ShowPageBreaks="true">
@@ -24,8 +25,8 @@
                 ID = "node6",
                 Width = 50,
                 Height = 50,
-                OffsetX = 150,
-                OffsetY = 100,
+                OffsetX = 200,
+                OffsetY = 200,
                 Style = new ShapeStyle()
                 {
                     Fill = "#6495ED",

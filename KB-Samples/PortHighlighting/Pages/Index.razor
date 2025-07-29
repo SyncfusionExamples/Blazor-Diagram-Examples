@@ -1,0 +1,259 @@
+﻿@page "/"
+@using Syncfusion.Blazor.Diagram
+@using System.Reflection
+<SfDiagramComponent @ref="diagram" Height="600px" Nodes="nodes" Click="OnClick">
+    <ContextMenuSettings @bind-Show="show"
+                         @bind-ShowCustomMenuOnly="customMenuOnly"
+                         @bind-Items="Items"
+                         ContextMenuItemClicked="ContextMenuItemClickHandler" ContextMenuOpening="@OnContextMenuOpen">
+    </ContextMenuSettings>
+</SfDiagramComponent>
+
+@code {
+    private List<ContextMenuItem> Items { get; set; }
+    private bool customMenuOnly = true;
+    private bool show = true;
+    private SfDiagramComponent diagram;
+    string PortID;
+    private DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+    private DiagramObjectCollection<NodeBase> connectors = new DiagramObjectCollection<NodeBase>();
+    public void OnContextMenuOpen(DiagramMenuOpeningEventArgs arg)
+    {
+        for (int i = 0; i < connectors.Count; i++)
+        {
+            if ((connectors[i] as Connector).SourcePortID == "portC")
+            {
+                arg.Cancel = true;
+                connectors.RemoveAt(i);
+            }
+        }
+
+    }
+
+    private async void ContextMenuItemClickHandler(DiagramMenuClickEventArgs arg)
+    {
+
+        if (arg.Item.Text == "Delete")
+        {
+            PortID = elementUnderMouse is PathElement && elementUnderMouse.ID.Contains('_')
+        ? elementUnderMouse.ID.Split('_')[1]
+        : null;
+            if (diagram.Nodes.Count > 0)
+            {
+                for (int i = 0; i < diagram.Nodes.Count; i++)
+                {
+                    if (diagram.Nodes[i].Ports.Count > 0)
+                    {
+                        for (int j = 0; j < diagram.Nodes[i].Ports.Count; j++)
+                        {
+                            if (diagram.Nodes[i].Ports[j].ID == PortID)
+                            {
+                                diagram.Nodes[i].Ports.RemoveAt(j);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (diagram.Nodes.Count > 0)
+            {
+                for (int i = 0; i < diagram.Nodes.Count; i++)
+                {
+                    if (diagram.Nodes[i].Ports.Count > 0)
+                    {
+                        for (int j = 0; j < diagram.Nodes[i].Ports.Count; j++)
+                        {
+                            diagram.Nodes[i].Ports[j].Style.StrokeColor = "black";
+                            diagram.Nodes[i].Ports[j].Style.StrokeWidth = 1;
+                        }
+                    }
+                }
+            }
+            await diagram.AddDiagramElements(connectors);
+            connectors.Clear();
+            diagram.ClearSelection();
+        }
+
+    }
+    private CommonElement FindElementUnderMouse(IDiagramObject obj, DiagramPoint position)
+    {
+        var wrapper = GetWrapper(obj as DiagramObject);
+        return DiagramHelper.FindTargetElement(wrapper as DiagramContainer, position);
+    }
+
+    private CommonElement GetWrapper(DiagramObject parent)
+    {
+        if (parent != null)
+        {
+            var propertyInfo = parent.GetType().GetProperty("Wrapper", BindingFlags.Instance | BindingFlags.NonPublic);
+            return propertyInfo?.GetValue(parent) as CommonElement;
+        }
+        return null;
+    }
+
+    public static class DiagramHelper
+    {
+        public static bool ContainsPoint(DiagramRect rect, DiagramPoint point, double padding = 0) =>
+            rect.X - padding <= point.X && rect.X + rect.Width + padding >= point.X &&
+            rect.Y - padding <= point.Y && rect.Y + rect.Height + padding >= point.Y;
+
+        public static CommonElement FindTargetElement(DiagramContainer container, DiagramPoint position, double padding = 0)
+        {
+            if (container != null)
+            {
+                for (int i = container.Children.Count - 1; i >= 0; i--)
+                {
+                    var element = container.Children[i];
+                    if (element is null) continue;
+
+                    if (element is DiagramContainer childContainer && ContainsPoint(element.OuterBounds, position, padding))
+                    {
+                        var target = FindTargetElement(childContainer, position, padding);
+                        if (target is not null)
+                        {
+                            return target;
+                        }
+                    }
+
+                    if (ContainsPoint(element.Bounds, position, padding))
+                    {
+                        return element;
+                    }
+                }
+
+                return ContainsPoint(container.Bounds, position, padding) && container.Style.Fill != "none"
+                    ? container
+                    : null;
+            }
+            return null;
+        }
+    }
+    CommonElement elementUnderMouse;
+    private void OnClick(ClickEventArgs args)
+    {
+        elementUnderMouse = FindElementUnderMouse(args.ActualObject, args.Position);
+
+        if (elementUnderMouse != null && elementUnderMouse is PathElement)
+        {
+            PortID = elementUnderMouse is PathElement && elementUnderMouse.ID.Contains('_')
+       ? elementUnderMouse.ID.Split('_')[1]
+       : null;
+
+            if (diagram.Nodes.Count > 0)
+            {
+                for (int i = 0; i < diagram.Nodes.Count; i++)
+                {
+                    if (diagram.Nodes[i].Ports.Count > 0)
+                    {
+                        for (int j = 0; j < diagram.Nodes[i].Ports.Count; j++)
+                        {
+                            if (diagram.Nodes[i].Ports[j].ID == PortID)
+                            {
+                                diagram.Nodes[i].Ports[j].Style.StrokeColor = "#6495ED";
+                                diagram.Nodes[i].Ports[j].Style.StrokeWidth = 3;
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+        if (args.ActualObject is Node node)
+        {
+            if (args.Button == MouseButtons.Right)
+            {
+                // Manually remove connectors associated with the node
+                for (int i = connectors.Count - 1; i >= 0; i--)
+                {
+                    if ((connectors[i] as Connector).SourceID == node.ID)
+                    {
+                        connectors.RemoveAt(i);
+                    }
+                }
+
+                // Update target properties if necessary
+                foreach (Connector connector in connectors.OfType<Connector>())
+                {
+                    connector.TargetID = node.ID;
+                    connector.TargetPortID = PortID;
+                }
+            }
+            else
+            {
+
+                // Add a new connector
+                connectors.Add(new Connector
+                {
+                    SourceID = node.ID,
+                    SourcePortID = PortID,
+                });
+            }
+        }
+
+    }
+    // Create a node with ports
+    Node CreateNode(string id, double width, double height, double offsetX, double offsetY, params PointPort[] ports)
+    {
+        return new Node
+        {
+            ID = id,
+            Width = width,
+            Height = height,
+            OffsetX = offsetX,
+            OffsetY = offsetY,
+            Style = new ShapeStyle { Fill = "#6495ED", StrokeColor = "White" },
+            Annotations = new DiagramObjectCollection<ShapeAnnotation>
+        {
+                new ShapeAnnotation { Content = id }
+            },
+            Ports = new DiagramObjectCollection<PointPort>(ports)
+        };
+    }
+
+    // Create a port with custom shape
+    PointPort CreatePort(string id, double offsetX, double offsetY)
+    {
+        return new PointPort
+        {
+            ID = id,
+            Offset = new DiagramPoint { X = offsetX, Y = offsetY },
+            Visibility = PortVisibility.Visible,
+            Style = new ShapeStyle { Fill = "white", StrokeColor = "black" },
+            Shape = PortShapes.Square,
+            Width = 30,
+            Height = 20,
+        };
+    }
+    protected override void OnInitialized()
+    {
+        // Initialize context menu items
+        Items = new List<ContextMenuItem>
+{
+        new ContextMenuItem
+        {
+            Text = "Connect Ports",
+            ID = "ConnectPorts"
+        },
+        new ContextMenuItem { Text = "Delete", ID = "delete", IconCss = "e-delete" },
+    };
+
+        // Add nodes with ports
+        nodes.Add(CreateNode("Comp A", 150, 200, 150, 280,
+            CreatePort("portA", 1, 0.3),
+            CreatePort("portB", 1, 0.5),
+            CreatePort("portC", 1, 0.7),
+            CreatePort("portD", 1, 0.9),
+            CreatePort("portE", 1, 0.1)
+        ));
+
+        nodes.Add(CreateNode("Comp B", 100, 70, 450, 100, CreatePort("portBA", 1, 0.5)));
+        nodes.Add(CreateNode("Comp C", 100, 70, 450, 200, CreatePort("portCA", 1, 0.5)));
+        nodes.Add(CreateNode("Comp D", 100, 70, 450, 300, CreatePort("portDA", 1, 0.5)));
+        nodes.Add(CreateNode("Comp E", 100, 70, 450, 400, CreatePort("portEA", 1, 0.5)));
+
+    }
+
+
+}

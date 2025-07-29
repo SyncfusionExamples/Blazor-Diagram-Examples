@@ -1,0 +1,167 @@
+﻿@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Diagram
+
+<div class="h-100 w-100">
+
+    <SfDiagramComponent Width="100%" Height="100%" ConnectorCreating="@OnConnectorCreating" NodeCreating="@OnNodeCreating" InteractionController="@DiagramInteractions.ZoomPan">
+        <ScrollSettings @bind-ScrollLimit="@scrollLimit"></ScrollSettings>
+        <DataSourceSettings ID="EmployeeID" ParentID="ParentID" DataSource="DataSource"> </DataSourceSettings>
+        <Layout @bind-Type="Type" @bind-HorizontalSpacing="@HorizontalSpacing" @bind-Orientation="@OrientationType" @bind-VerticalSpacing="@VerticalSpacing" @bind-HorizontalAlignment="@HorizontalAlignment" @bind-VerticalAlignment="@VerticalAlignment" GetLayoutInfo="GetLayoutInfo">
+            <LayoutMargin @bind-Top="@Top" @bind-Bottom="@Bottom" @bind-Right="@Right" @bind-Left="@Left"></LayoutMargin>
+        </Layout>
+        <SnapSettings Constraints="@SnapConstraints.None"></SnapSettings>
+        <DiagramTemplates>
+            <NodeTemplate>
+                @{
+                    Node node1 = (context as Node);
+            
+                    Syncfusion.Blazor.Diagram.NodeShapes type = (context as Node).Shape.Type;
+                    string textAreaId = node1.ID + "_myTextArea";
+                    if (type == Syncfusion.Blazor.Diagram.NodeShapes.HTML)
+                    {
+                        <HtmlNodeComponent Id="@textAreaId" Parent="@node1"></HtmlNodeComponent>
+                    }
+                }
+            </NodeTemplate>
+        </DiagramTemplates>
+    </SfDiagramComponent>
+
+</div>
+@code
+    {
+
+
+    private const string selecteditem = "image-pattern-style e-selected-style";
+    private const string unselecteditem = "image-pattern-style";
+    ScrollLimitMode scrollLimit { get; set; } = ScrollLimitMode.Diagram;
+    public SfDiagramComponent Diagram;
+    public int? HValue { get; set; } = 60;
+    public int? VValue { get; set; } = 60;
+    public LayoutType Type = LayoutType.HierarchicalTree;
+    public LayoutOrientation OrientationType = LayoutOrientation.TopToBottom;
+    public HorizontalAlignment HorizontalAlignment = HorizontalAlignment.Auto;
+    public VerticalAlignment VerticalAlignment = VerticalAlignment.Auto;
+    public int HorizontalSpacing = 60;
+    public int VerticalSpacing = 60;
+    public double Top = 50;
+    public double Bottom = 50;
+    public double Right = 50;
+    public double Left = 50;
+
+
+
+    Dictionary<string, string> dict = new Dictionary<string, string>() { { "topToBottom", selecteditem }, { "bottomToTop", unselecteditem }, { "leftToRight", unselecteditem }, { "rightToLeft", unselecteditem } };
+    private void OnConnectorCreating(IDiagramObject connector)
+    {
+        (connector as Connector).Type = ConnectorSegmentType.Orthogonal;
+        (connector as Connector).TargetDecorator.Shape = DecoratorShape.None;
+        (connector as Connector).Style = new ShapeStyle() { StrokeColor = "#F16256", StrokeWidth = 1, StrokeDashArray = "3,3" };
+        (connector as Connector).Constraints = 0;
+        (connector as Connector).TargetDecorator = new DecoratorSettings()
+        {
+            Shape = DecoratorShape.Arrow,
+            Style = new ShapeStyle()
+            {
+                StrokeColor = "#F16256",
+                Fill = "#F16256",
+                StrokeWidth = 1,
+            }
+        };
+    }
+    private TreeInfo GetLayoutInfo(IDiagramObject obj, TreeInfo options)
+    {
+        options.EnableSubTree = true;
+        options.Orientation = Syncfusion.Blazor.Diagram.Orientation.Horizontal;
+        return options;
+    }
+    private void OnNodeCreating(IDiagramObject obj)
+    {
+
+        Node node = obj as Node;
+
+        node.Width = 280;
+        node.Height = 72;
+        node.Constraints = NodeConstraints.Default & ~NodeConstraints.Drag;
+        node.Shape = new Shape()
+        { Type = Syncfusion.Blazor.Diagram.NodeShapes.HTML };
+    }
+    public class HierarchicalDetails
+    {
+        public string Name { get; set; }
+        public string Designation { get; set; }
+        public string EmployeeID { get; set; }
+        public string TeamName { get; set; }
+        public string TeamSize { get; set; }
+        public string ParentID { get; set; }
+        public string BG { get; set; }
+        public string ConnetColor { get; set; }
+    }
+    public List<HierarchicalDetails> DataSource = new List<HierarchicalDetails>()
+{
+        new HierarchicalDetails(){ Name = "Liam James", Designation="President", EmployeeID="SF10001", TeamName="Web-Diagram", TeamSize="10", ParentID = "", BG= "images/diagram/overview/himage1.png", ConnetColor="Blue" },
+        new HierarchicalDetails(){ Name = "Diana", Designation="Vice President", EmployeeID="SF10002", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF10001", BG= "images/diagram/overview/himage2.png", ConnetColor="Blue" },
+        new HierarchicalDetails(){ Name = "Kale Nate", Designation="Vice President", EmployeeID="SF10003", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF10001", BG= "images/diagram/overview/himage3.png", ConnetColor="Blue" },
+  new HierarchicalDetails(){ Name = "Sam", Designation="Manager", EmployeeID="SF10004", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF10002", BG= "images/diagram/overview/himage4.png", ConnetColor="Blue" },
+    new HierarchicalDetails(){ Name = "Stan West", Designation="Manager", EmployeeID="SF10005", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF10002", BG= "images/diagram/overview/himage5.png", ConnetColor="Blue" },
+     new HierarchicalDetails(){ Name = "Paul", Designation="Manager", EmployeeID="SF10006", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF10003", BG= "images/diagram/overview/himage6.png", ConnetColor="Blue" },
+    new HierarchicalDetails(){ Name = "Rick", Designation="Manager", EmployeeID="SF10007", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF10003", BG= "images/diagram/overview/himage7.png", ConnetColor="Blue" },
+    new HierarchicalDetails(){ Name = "Renly Dent", Designation="Employee", EmployeeID="SF10008", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF10004", BG= "images/diagram/overview/himage8.png", ConnetColor="Blue" },
+    new HierarchicalDetails(){ Name = "Christi", Designation="Employee", EmployeeID="SF10009", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF10008", BG= "images/diagram/overview/himage9.png", ConnetColor="Blue" },
+    new HierarchicalDetails(){ Name = "Scharlet", Designation="Employee", EmployeeID="SF100010", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF10006", BG= "images/diagram/overview/himage10.png", ConnetColor="Blue" },
+    new HierarchicalDetails(){ Name = "Rob Wayne", Designation="Employee", EmployeeID="SF100011", TeamName="Web-Diagram", TeamSize="10", ParentID ="SF100010", BG= "images/diagram/overview/himage11.png", ConnetColor="Blue" },
+    };
+    //Update the section to the property panel
+    private void UpdateSelection(string id)
+    {
+        for (int i = 0; i < dict.Count; i++)
+        {
+            var value = dict.Values.ElementAt(i);
+            var key = dict.Keys.ElementAt(i);
+            if (dict.ContainsKey(id) && key == id)
+            {
+                value = selecteditem;
+            }
+            else
+            {
+                value = unselecteditem;
+            }
+            dict.Remove(key);
+            dict.Add(key, value);
+        }
+    }
+    public class ImageFields
+    {
+        public string Text { get; set; }
+    }
+    private void HSpacingChange(Syncfusion.Blazor.Inputs.ChangeEventArgs<int?> args)
+    {
+        HValue = (int)args.Value;
+        HorizontalSpacing = int.Parse(args.Value.ToString());
+    }
+    private void VSpacingChange(Syncfusion.Blazor.Inputs.ChangeEventArgs<int?> args)
+    {
+        VValue = (int)args.Value;
+        VerticalSpacing = int.Parse(args.Value.ToString());
+    }
+    private void ToptoBottomClick()
+    {
+        UpdateSelection("topToBottom");
+        OrientationType = LayoutOrientation.TopToBottom;
+    }
+    private void LefttoRightClick()
+    {
+        UpdateSelection("leftToRight");
+        OrientationType = LayoutOrientation.LeftToRight;
+    }
+    private void RighttoLeftClick()
+    {
+        UpdateSelection("rightToLeft");
+        OrientationType = LayoutOrientation.RightToLeft;
+    }
+    private void BottomtoTopClick()
+    {
+        UpdateSelection("bottomToTop");
+        OrientationType = LayoutOrientation.BottomToTop;
+    }
+
+}

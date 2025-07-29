@@ -1,0 +1,80 @@
+﻿@page "/"
+@using Syncfusion.PdfExport
+@using Syncfusion.Blazor.BarcodeGenerator
+@inject IJSRuntime JS
+
+
+<SfQRCodeGenerator Width="200px" Height="150px" Value="@QRcodeValue" @ref="QRcode">
+   
+</SfQRCodeGenerator>
+<input type="button" value="Export" @onclick="@OnExport" />
+@code {
+    string QRcodeValue = string.Empty;
+    private SfQRCodeGenerator QRcode;
+
+    private async void OnExport()
+    {
+        QRcodeValue = "Syncfusion";
+        await Task.Delay(100);
+        var images = await QRcode.ExportAsBase64Image(BarcodeExportType.JPG);
+        var pdforientation = PdfPageOrientation.Portrait;
+        await ExportToPdf("QRcode", pdforientation, true, images);
+    }
+
+    private async Task<string> ExportToPdf(string fileName, PdfPageOrientation orientation, bool allowDownload, string images)
+    {
+        PdfDocument document = new PdfDocument();
+        document.PageSettings.Orientation = orientation;
+        document.PageSettings.Margins = new PdfMargins() { Left = 0, Right = 0, Top = 0, Bottom = 0 };
+        string base64String = images;
+        using (MemoryStream initialStream = new MemoryStream(Convert.FromBase64String(base64String.Split("base64,")[1])))
+        {
+            Stream stream = initialStream as Stream;
+            PdfPage page = document.Pages.Add();
+            PdfGraphics graphics = page.Graphics;
+            PdfBitmap image = new PdfBitmap(stream);
+            graphics.DrawImage(image, 0, 0);
+        }
+        using (MemoryStream memoryStream = new MemoryStream())
+        {
+            document.Save(memoryStream);
+            memoryStream.Position = 0;
+            base64String = Convert.ToBase64String(memoryStream.ToArray());
+
+            if (allowDownload)
+            {
+                string directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Tickets", "QRCodes");
+                string filePath = Path.Combine(directoryPath, fileName + ".pdf");
+
+                // Ensure the directory exists
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
+                // Rename the file if it already exists
+                int fileIndex = 1;
+                string originalFilePath = filePath;
+                while (File.Exists(filePath))
+                {
+                    filePath = Path.Combine(directoryPath, $"{fileName} ({fileIndex}).pdf");
+                    fileIndex++;
+                }
+
+                // Save the PDF file to the specified path
+                await File.WriteAllBytesAsync(filePath, memoryStream.ToArray());
+
+                Console.WriteLine($"File saved at: {filePath}");
+                base64String = string.Empty;
+            }
+            else
+            {
+                base64String = "data:application/pdf;base64," + base64String;
+            }
+
+            document.Dispose();
+        }
+
+        return base64String;
+    }
+}

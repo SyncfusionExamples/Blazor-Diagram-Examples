@@ -1,0 +1,140 @@
+﻿@using System.Text.Json
+@using Syncfusion.Blazor.Diagram
+
+<SfDiagramComponent @ref="DInstance" Width="@PanelWidth.ToString()" InteractionController="DiagramInteractions.ZoomPan" Created="Created"
+NodeCreating="@OnNodeCreating" ConnectorCreating="@OnConnectorCreating">
+    <SnapSettings Constraints="SnapConstraints.None"/> 
+    <DataSourceSettings Id="@nameof(DataModel.Id)" ParentId="@nameof(DataModel.ParentId)" DataSource="@DataSource" />
+    <Layout @bind-Type="@Layout" @bind-HorizontalSpacing="@horizontalSpacing" @bind-VerticalSpacing="@verticalSpacing">
+        <LayoutMargin @bind-Left="@Left" @bind-Right="@Right" @bind-Top="@Top"></LayoutMargin>
+    </Layout>
+    <ScrollSettings ScrollLimit="ScrollLimitMode.Infinity"></ScrollSettings>
+    <PageSettings Width="@PageWidth" Height="@PageHeight" Orientation="PageOrientation.Portrait">
+        <PageMargin Top="0" Bottom="0" Left="0" Right="0" />
+    </PageSettings>
+</SfDiagramComponent>
+
+@code {
+    [Parameter] public object DataSource { get; set; }
+    [Parameter] public double PanelWidth { get; set; }
+    [Parameter] public LayoutType Layout { get; set; }
+
+    private int horizontalSpacing = 15;
+    private int verticalSpacing = 50;
+    private double Left = 10;
+    private double Right = 10;
+    private double Top = 10;
+    private double PageWidth = 400;
+    private double PageHeight = 300;
+
+    SfDiagramComponent DInstance;
+
+    private void Created()
+    {
+        DInstance.FitToPage(new FitOptions() { Mode = FitMode.Both, Region = DiagramRegion.Content,  });
+    }
+
+    // Defines default values for Node object
+    private void OnNodeCreating(IDiagramObject obj)
+    {
+        var node = obj as Node;
+
+        if (node.Data is JsonElement jsonElement)
+        {
+            node.Data = jsonElement.Deserialize<DataModel>();
+        }
+        var data = node.Data as DataModel;
+        node.MinWidth = 95;
+        node.MinHeight = 30;
+        node.MaxWidth = 195;
+        if(Layout == LayoutType.RadialTree)
+        {
+            if (data.Content.Contains("Managing Director"))
+            {
+                node.Shape = new BasicShape()
+                {
+                    Type = NodeShapes.Basic,
+                    Shape = NodeBasicShapes.Ellipse,
+                    CornerRadius = 10
+                };
+                node.Width = 150;
+                node.Height = 150;
+                node.Style.Fill = "6495ED";
+            }
+            else if (data.Content.Contains("Project Manager"))
+            {
+                node.Width = 65;
+                node.Height = 65;
+                node.Style.Fill = "#6495ED";
+            }
+            else
+            {
+                node.Shape = new BasicShape()
+                {
+                    Type = NodeShapes.Basic,
+                    Shape = NodeBasicShapes.Ellipse,
+                    CornerRadius = 10
+                };
+                node.Style.Fill = "#6495ED";
+                node.Width = 50;
+                node.Height = 50;
+            }
+        }
+        else
+        {
+            node.Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = NodeBasicShapes.Rectangle };
+        }
+
+        node.Style = new ShapeStyle() { StrokeWidth = 1, Fill = "#6495ED", StrokeColor = "White" };
+        node.Tooltip = new DiagramTooltip() { Content = "Prueba tooltip", OpensOn = "Hover" };
+
+        node.Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+        {
+            new()
+            {
+                ID = "label1",
+                Content = data.Content,
+                Style = new TextStyle() { Color = "White", Fill = "Transparent", FontSize = 12, FontFamily = "Segoe UI" }
+            }
+        };
+
+        node.Ports = new DiagramObjectCollection<PointPort>()
+        {
+            new()
+            {
+                ID = "port1",
+                Offset = new DiagramPoint() { X = 0, Y = 0.5 },
+                Width = 10,
+                Height = 10,
+                Visibility = PortVisibility.Hidden,
+                Style = new ShapeStyle() { Fill = "Black" }
+            },
+            new()
+            {
+                ID = "port2",
+                Offset = new DiagramPoint() { X = 1, Y = 0.5 },
+                Width = 10,
+                Height = 10,
+                Visibility = PortVisibility.Hidden,
+                Style = new ShapeStyle() { Fill = "Black" }
+            }
+        };
+    }
+
+    // Defines default values for Connector object
+    private void OnConnectorCreating(IDiagramObject obj)
+    {
+        if (obj is not Connector connector) return;
+        connector.Type = ConnectorSegmentType.Orthogonal;
+        connector.TargetDecorator.Shape = DecoratorShape.None;
+        connector.SourceDecorator.Shape = DecoratorShape.None;
+        connector.Style = new ShapeStyle() { StrokeColor = "#4d4d4d" };
+    }
+
+    public class DataModel
+    {
+        public string Id { get; set; }
+        public string ParentId { get; set; }
+        public string Content { get; set; }
+    }
+}

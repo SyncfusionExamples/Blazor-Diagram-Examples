@@ -1,0 +1,111 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@inject IJSRuntime jsRuntime;
+
+<SfDiagramComponent @ref="Diagram" Height="900px" NodeCreating="@OnNodeCreating" ConnectorCreating="@OnConnectorCreating">
+    <Syncfusion.Blazor.Diagram.DiagramTemplates>
+        <NodeTemplate>
+            @{
+                Node node1 = (context as Node);
+                string NameId = (node1.Data as HierarchicalDetails).Id;
+                string TeamName = (node1.Data as HierarchicalDetails).Role;
+                string EmpId = (node1.Data as HierarchicalDetails).Manager;
+                string place = (node1.Data as HierarchicalDetails).Place;
+                string designation = (node1.Data as HierarchicalDetails).Designation;
+                string divID = node1.ID + "HTML";
+                <div id="@divID" style="position: absolute;
+                border: 1px solid #E0E0E0;
+                background: #FFFFFF;
+                box-sizing: border-box;
+                border-radius: 8px;
+                padding-top: 5px;">
+                    <p>@NameId</p>
+                    <p>@TeamName</p>
+                    <p>@EmpId</p>
+                    <p>@place</p>
+                    <p>@designation</p>
+                </div>
+            }
+        </NodeTemplate>
+    </Syncfusion.Blazor.Diagram.DiagramTemplates>
+    <DataSourceSettings ID="Id" ParentID="Manager" DataSource="DataSource"> </DataSourceSettings>
+    <Layout Type="LayoutType.HierarchicalTree" HorizontalSpacing="@HorizontalSpacing" VerticalSpacing="@VerticalSpacing">
+    </Layout>
+    <SnapSettings>
+        <HorizontalGridLines LineColor="white" LineDashArray="2,2">
+        </HorizontalGridLines>
+        <VerticalGridLines LineColor="white" LineDashArray="2,2">
+        </VerticalGridLines>
+    </SnapSettings>
+</SfDiagramComponent>
+
+@code
+{
+    SfDiagramComponent Diagram;
+    int left = 40;
+    int top = 50;
+    DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+    DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
+    int HorizontalSpacing = 40;
+    int VerticalSpacing = 40;
+
+    private async Task OnNodeCreating(IDiagramObject obj)
+    {
+        Node node = obj as Node;
+        node.ID = (node.Data as HierarchicalDetails).Id;
+        node.Shape = new Shape()
+        { Type = Syncfusion.Blazor.Diagram.NodeShapes.HTML };
+        node.Style = new ShapeStyle() { Fill = "darkcyan", StrokeWidth = 3, StrokeColor = "Black" };
+    }
+    bool isrender = true;
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+
+        if (!firstRender && Diagram.Nodes != null && Diagram.Nodes.Count > 0 && isrender)
+        {
+            foreach (Node node in Diagram.Nodes)
+            {
+                string id = node.ID + "HTML";
+                //We need sometime to render HTML elements in the view. After that only we can get height and width of the div element.
+                await Task.Delay(1);
+                var heightWidth = await JSRuntimeExtensions.InvokeAsync<string>(jsRuntime, "GetHeightWidth", id);
+                if (heightWidth != null)
+                {
+                    var split = heightWidth.Split("values");
+                    var NodeWidth = Convert.ToDouble(split[1]);
+                    node.Width = NodeWidth;
+                    var NodeHeight = Convert.ToDouble(split[0]);
+                    node.Height = NodeHeight;
+                }
+
+            }
+            await Diagram.DoLayout();
+            isrender = false;
+        }
+    }
+
+    private void OnConnectorCreating(IDiagramObject connector)
+    {
+        (connector as Connector).Type = ConnectorSegmentType.Orthogonal;
+    }
+
+    public class HierarchicalDetails
+    {
+        public string Id { get; set; }
+        public string Role { get; set; }
+        public string Manager { get; set; }
+        public string Designation { get; set; }
+        public string Place { get; set; }
+    }
+    public List<HierarchicalDetails> DataSource = new List<HierarchicalDetails>()
+{
+        new HierarchicalDetails()   { Id= "Node1", Role= "Board ", Designation= "",Place="" },
+        new HierarchicalDetails()   { Id= "Node2", Role= "General Manager", Manager= "Node1",Designation= "",Place="" },
+        new HierarchicalDetails()   { Id= "Node3", Role= "Assistant Manager", Manager= "Node2", Designation= "",Place="Chennai" },
+        new HierarchicalDetails()   { Id= "Node4", Role= "HumanResourceManager", Manager= "Node2", Designation= "Software Developer",Place="Chennai" },
+        new HierarchicalDetails()   { Id= "Node5", Role= "Trainerskqihdliqwglwieguq", Manager= "Node2", Designation= "SoftwareDeveloper",Place="Chennai" },
+        new HierarchicalDetails()   { Id= "Node6", Role= "Recruiting Team memberssss", Manager= "Node4", Designation= "SoftwareDeveloper",Place="Chennai" },
+
+    };
+}

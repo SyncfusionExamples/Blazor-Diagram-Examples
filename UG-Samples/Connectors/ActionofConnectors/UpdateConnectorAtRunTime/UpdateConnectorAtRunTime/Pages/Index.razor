@@ -35,6 +35,6 @@
         Diagram.BeginUpdate();
         Diagram.Connectors[0].SourcePoint.X = 50;
         Diagram.Connectors[0].SourcePoint.Y = 50;
-        Diagram.EndUpdate();
+        _ = Diagram.EndUpdateAsync();
     }
 }

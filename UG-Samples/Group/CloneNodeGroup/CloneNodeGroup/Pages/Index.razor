@@ -64,7 +64,7 @@
         (node4 as NodeGroup).Children = array;
         node4.OffsetX += 25;
         node4.OffsetY += 25;
-        await diagram.AddDiagramElements(new DiagramObjectCollection<NodeBase>() { node2, node3, node4 });
+        await diagram.AddDiagramElementsAsync(new DiagramObjectCollection<NodeBase>() { node2, node3, node4 });
     }
 
     internal string RandomId()

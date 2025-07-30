@@ -72,7 +72,7 @@
         {
             string json = await FileUtil.LoadFile(jsRuntime, args.FileData);
             json = json.Replace(System.Environment.NewLine, string.Empty);
-            await diagram.LoadDiagram(json.ToString());
+            await diagram.LoadDiagramAsync(json.ToString());
             await uploadFiles.ClearAllAsync();
         }
     }

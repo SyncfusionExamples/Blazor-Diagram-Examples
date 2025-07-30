@@ -80,7 +80,7 @@
     private void Load()
     {
         // Deserialize the diagram data and restore the HTML content
-        diagram.LoadDiagram(savedData);
+        _ = diagram.LoadDiagramAsync(savedData);
 
     }
 }

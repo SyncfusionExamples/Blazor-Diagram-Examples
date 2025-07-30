@@ -101,7 +101,7 @@
                 addedNodes.Add(connector);
             }
 
-            await diagram.AddDiagramElements(addedNodes);
+            await diagram.AddDiagramElementsAsync(addedNodes);
 
             FitOptions fitOptions = new FitOptions() { Mode = FitMode.Both, Region = DiagramRegion.Content };
             diagram.FitToPage(fitOptions);

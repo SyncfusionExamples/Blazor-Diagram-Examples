@@ -133,7 +133,7 @@
             {
                 sfDiagram.BeginUpdate();
                 sfDiagram.Nodes.Remove(deleteObject);
-                _ = sfDiagram.EndUpdate();
+                _ = sfDiagram.EndUpdateAsync();
             }
             base.OnMouseUp(args);
             this.InAction = true;

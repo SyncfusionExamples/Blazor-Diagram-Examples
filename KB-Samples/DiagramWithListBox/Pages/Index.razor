@@ -94,7 +94,7 @@
             string listViewWith = await jsRuntime.InvokeAsync<string>("getlistViewWidth", "listbox");
             double listViewWithDoubleValue = Double.Parse(listViewWith);
             // Add a new node to Diagram based on ListBox item details
-            await Diagram.AddDiagramElements(new DiagramObjectCollection<NodeBase>()
+            await Diagram.AddDiagramElementsAsync(new DiagramObjectCollection<NodeBase>()
             {
                 new Node()
                 {

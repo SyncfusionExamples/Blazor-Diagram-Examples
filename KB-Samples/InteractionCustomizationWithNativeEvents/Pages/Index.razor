@@ -1,0 +1,84 @@
+﻿@page "/"
+@using Syncfusion.Blazor.Diagram
+
+<div style="width: 100%; height: 600px;" @onmousedown="OnMouseDown" @onmouseup="OnMouseUp">
+    <SfDiagramComponent @ref="@diagram"
+                        PositionChanging="OnPositionChanging"
+                        Height="600px"
+                        Width="100%"
+                        Nodes="@nodes">
+        <ContextMenuSettings Show="true"></ContextMenuSettings>
+    </SfDiagramComponent>
+</div>
+
+@code {
+    @code {
+        SfDiagramComponent diagram;
+        DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+        bool isLeftMouseButton = false;
+
+        protected override void OnInitialized()
+        {
+            InitializeNodes();
+        }
+
+        // Captures mouse button press events
+        private void OnMouseDown(MouseEventArgs args)
+        {
+            if (args.Button == 0) // 0 = Left button, 1 = Middle button, 2 = Right button
+                isLeftMouseButton = true;
+        }
+
+        // Captures mouse button release events
+        private void OnMouseUp(MouseEventArgs args)
+        {
+            isLeftMouseButton = false;
+        }
+
+        // Controls drag operations based on mouse button state
+        private void OnPositionChanging(PositionChangingEventArgs args)
+        {
+            if (!isLeftMouseButton)
+            {
+                args.Cancel = true; // Prevents dragging for non-left clicks
+            }
+        }
+
+        private void InitializeNodes()
+        {
+            Node node = new Node()
+            {
+                ID = "node1",
+                Width = 100,
+                Height = 100,
+                OffsetX = 300,
+                OffsetY = 200,
+                Style = new ShapeStyle()
+                {
+                    Fill = "#6495ED",
+                    StrokeColor = "#4169E1",
+                    StrokeWidth = 2
+                },
+                Shape = new BasicShape()
+                {
+                    Type = NodeShapes.Basic,
+                    Shape = NodeBasicShapes.Rectangle
+                },
+                Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+           {
+               new ShapeAnnotation
+               {
+                   Content = "Node",
+                   Style = new TextStyle()
+                   {
+                       Color = "white",
+                       FontSize = 12,
+                       FontFamily = "Arial"
+                   }
+               }
+           }
+            };
+            nodes.Add(node);
+        }
+    }
+}

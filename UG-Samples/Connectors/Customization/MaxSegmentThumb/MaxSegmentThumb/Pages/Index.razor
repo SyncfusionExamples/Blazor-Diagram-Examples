@@ -1,0 +1,49 @@
+﻿ @page "/orthogonal/maxSegmentThumb"
+ @using Syncfusion.Blazor.Diagram 
+
+<SfDiagramComponent @ref="Diagram"   id="diagram" Width="1400px" Height="600px"  Connectors="@connectors"> 
+</SfDiagramComponent> 
+   
+@code {
+    SfDiagramComponent Diagram; 
+    // Initialize the diagram's connectors collection 
+    DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>(); 
+  
+
+     protected override void OnInitialized() 
+     { 
+        
+         Connector orthogonalconnector = new Connector() 
+         { 
+             ID = "orthogonal", 
+             SourcePoint = new DiagramPoint() { X = 550, Y = 200 }, 
+             TargetPoint = new DiagramPoint() { X = 650, Y = 300 }, 
+             Style = new ShapeStyle() { StrokeColor = "#6495ED" }, 
+             Constraints = ConnectorConstraints.Default | ConnectorConstraints.DragSegmentThumb, 
+             TargetDecorator = new DecoratorSettings() 
+             { 
+                 Shape = DecoratorShape.Arrow, 
+                 Style = new ShapeStyle() { StrokeColor = "#6495ED", Fill = "#6495ED" } 
+             }, 
+             Type = ConnectorSegmentType.Orthogonal, 
+                 Segments = new DiagramObjectCollection<ConnectorSegment>() 
+             { 
+                 new OrthogonalSegment 
+                 { 
+                     Length = 60, 
+                     Type = ConnectorSegmentType.Orthogonal, 
+                     Direction = Direction.Right 
+                 }, 
+                 new OrthogonalSegment 
+                 { 
+                     Length = 60, 
+                     Type = ConnectorSegmentType.Orthogonal, 
+                     Direction = Direction.Bottom, 
+                 }, 
+                
+             }, 
+             MaxSegmentThumbs = 4, 
+         }; 
+         connectors.Add(orthogonalconnector); 
+     } 
+ }  

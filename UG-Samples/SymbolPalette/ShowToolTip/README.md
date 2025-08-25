@@ -1,6 +1,6 @@
 #Symbol Palette Sample
 
-This sample demonstrates how to to get notification when a symbol is selected.
+This sample demonstrates How to enable or disable the default tooltip for shapes in the Symbol Palette.
 
 Demo link:
 https://blazor.syncfusion.com/demos/diagramcomponent/symbolpalette?theme=fluent

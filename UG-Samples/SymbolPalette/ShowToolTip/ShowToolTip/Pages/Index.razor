@@ -1,0 +1,166 @@
+﻿@page "/symbolPalette/showTooltip"
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Diagram.SymbolPalette
+@using Syncfusion.Blazor.Popups
+<div style="display:flex;gap:20px;">
+    <div style="width:20%">
+
+        <div>
+            <label>
+                <input type="checkbox" @bind="ShowTooltip" id="ShowIDTooltip" />
+                Show Symbol ID as Tooltip
+            </label>
+        </div>
+
+        <div id="palette-space" class="sb-mobile-palette" style="border: 2px solid #b200ff">
+            <SfSymbolPaletteComponent @ref="@SymbolPalette" Height="1000px" Width="300px"
+            GetSymbolInfo="GetSymbolInfo"
+            Palettes="@Palettes" SymbolHeight="60" SymbolWidth="60" SymbolMargin="@SymbolMargin">
+            </SfSymbolPaletteComponent>
+        </div>
+    </div>
+    <div>
+        <SfDiagramComponent @ref="@diagram" Height="1000px" Width="1000px" />
+
+    </div>
+
+</div>
+
+@code
+{
+    private bool ShowTooltip = false;
+    SfSymbolPaletteComponent SymbolPalette;
+    SfDiagramComponent diagram;
+    SymbolMargin SymbolMargin = new SymbolMargin
+        {
+            Left = 15,
+            Right = 15,
+            Top = 15,
+            Bottom = 15
+        };
+  
+    private SymbolInfo GetSymbolInfo(IDiagramObject symbol)
+    {
+
+        //Disable showing the symbol's ID as a tooltip.
+        // Default value is true, but here it's explicitly set to false.
+        SymbolInfo symbolInfo = new SymbolInfo();
+        symbolInfo.ShowTooltip = ShowTooltip;
+
+        return symbolInfo;
+    }
+ 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        SymbolPalette.Targets = new DiagramObjectCollection<SfDiagramComponent>() { };
+        SymbolPalette.Targets.Add(diagram);
+    }
+    
+
+    //Define palettes collection.
+    DiagramObjectCollection<Palette> Palettes = new DiagramObjectCollection<Palette>();
+    DiagramObjectCollection<NodeBase> FlowShapesPalette = new DiagramObjectCollection<NodeBase>();
+    DiagramObjectCollection<NodeBase> BasicShapesPalette = new DiagramObjectCollection<NodeBase>();
+    DiagramObjectCollection<NodeBase> ConnectorsPalette = new DiagramObjectCollection<NodeBase>();
+
+
+
+    protected override void OnInitialized()
+    {
+        InitPaletteModel();
+
+    }
+  
+    private void InitPaletteModel()
+    {
+        AddFlowShape(NodeFlowShapes.Terminator, "Terminator", 0);
+        AddFlowShape(NodeFlowShapes.Decision, "Decision", 1);
+        AddFlowShape(NodeFlowShapes.Process, "Process", 2);
+        AddFlowShape(NodeFlowShapes.Document, "Document", 3);
+
+        AddBasicShape(NodeBasicShapes.Rectangle, "Rectangle", 0);
+        AddBasicShape(NodeBasicShapes.Ellipse, "Ellipse", 1);
+        AddBasicShape(NodeBasicShapes.Pentagon, "Pentagon", 2);
+        AddBasicShape(NodeBasicShapes.Hexagon, "Hexagon", 3);
+
+        AddConnector("Orthogonal", ConnectorSegmentType.Orthogonal, DecoratorShape.Arrow, 0);
+        AddConnector("Straight", ConnectorSegmentType.Straight, DecoratorShape.Arrow, 1);
+        AddConnector("Bezier", ConnectorSegmentType.Bezier, DecoratorShape.Arrow, 2);
+        AddConnector("StraightOpp", ConnectorSegmentType.Straight, DecoratorShape.None, 3);
+
+        Palettes = new DiagramObjectCollection<Palette>()
+        {
+            new Palette(){Symbols = FlowShapesPalette,Title = "Flow Shapes", ID="FlowShapes", IsExpanded = true},
+            new Palette(){Symbols = BasicShapesPalette,Title = "Basic Shapes", ID="BasicShapes", IsExpanded = true},
+            new Palette(){Symbols = ConnectorsPalette,Title = "Connectors", ID="Connectors", IsExpanded = true},
+        };
+
+    }
+
+    private void AddFlowShape(NodeFlowShapes shape, string id, int index)
+    {
+        var node = new Node()
+            {
+                ID = id,
+                Shape = new FlowShape() { Type = NodeShapes.Flow, Shape = shape },
+                Width = 60,
+                Height = 60,
+                Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "#6495ED" },
+                Constraints = NodeConstraints.Default | NodeConstraints.Tooltip
+            };
+        if (index % 2 == 0)
+        {
+            node.Tooltip = new DiagramTooltip() { Content = $"This is {id} (Flow)", ShowTipPointer = true, Position = Position.RightCenter };
+        }
+        FlowShapesPalette.Add(node);
+    }
+
+    private void AddBasicShape(NodeBasicShapes shapeType, string id, int index)
+    {
+        var node = new Node()
+            {
+                ID = id,
+                Width = 60,
+                Height = 60,
+                //Sets the type of the shape as basic.
+                Shape = new BasicShape()
+                {
+                    Type = NodeShapes.Basic,
+                    Shape = shapeType,
+                    //Sets the corner radius to the node shape.
+                    CornerRadius = 10
+                },
+                Style = new ShapeStyle() { Fill = "#9CCC65", StrokeColor = "#558B2F" },
+                Constraints = NodeConstraints.Default | NodeConstraints.Tooltip
+            };
+        if (index % 2 == 0)
+        {
+            node.Tooltip = new DiagramTooltip() { Content = $"This is {id} (Basic)", ShowTipPointer = true, Position = Position.RightCenter };
+        }
+        BasicShapesPalette.Add(node);
+    }
+
+    private void AddConnector(string id, ConnectorSegmentType type, DecoratorShape decoratorShape, int index)
+    {
+        var connector = new Connector()
+            {
+                ID = id,
+                Type = type,
+                SourcePoint = new DiagramPoint() { X = 0, Y = 0 },
+                TargetPoint = new DiagramPoint() { X = 60, Y = 60 },
+                Style = new ShapeStyle() { StrokeWidth = 2, StrokeColor = "#757575" },
+                TargetDecorator = new DecoratorSettings()
+                {
+                    Shape = decoratorShape,
+                    Style = new ShapeStyle() { StrokeColor = "#757575", Fill = "#757575" }
+                },
+                Constraints = ConnectorConstraints.Default | ConnectorConstraints.Tooltip
+            };
+        if (index % 2 == 0)
+        {
+            connector.Tooltip = new DiagramTooltip() { Content = $"This is {id} (Connector)", Position = Position.RightCenter, ShowTipPointer = true };
+        }
+        ConnectorsPalette.Add(connector);
+    }
+
+}

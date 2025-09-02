@@ -10,14 +10,14 @@
         <VerticalRuler></VerticalRuler>
     </RulerSettings>
     <DataSourceSettings ID="Id" ParentID="ParentId" DataSource="@DataSource"></DataSourceSettings>
-    <Layout Type="LayoutType.MindMap" @bind-Orientation="selectedOrientation" GetBranch="@GetBranch" HorizontalSpacing="50">
+    <Layout Type="LayoutType.MindMap" @bind-Orientation="SelectedOrientation" GetBranch="@GetBranch" HorizontalSpacing="50">
         <LayoutMargin Top="20" Left="20"></LayoutMargin>
     </Layout>
 </SfDiagramComponent>
 <SfDropDownList TValue="LayoutOrientation"
                 TItem="string"
                 DataSource="@LayoutOrientationValues"
-                @bind-Value="selectedOrientation"
+                @bind-Value="SelectedOrientation"
                 Placeholder="Select Orientation"
                 Width="300px">
 </SfDropDownList>
@@ -27,7 +27,7 @@
     public string[] LayoutOrientationValues = Enum.GetNames(typeof(LayoutOrientation));
 
     // The selected value, bound to the enum
-    public LayoutOrientation selectedOrientation { get; set; } = LayoutOrientation.Horizontal;
+    public LayoutOrientation SelectedOrientation { get; set; } = LayoutOrientation.Horizontal;
 
     // Set the branch type on runtime
     private BranchType GetBranch(IDiagramObject obj)

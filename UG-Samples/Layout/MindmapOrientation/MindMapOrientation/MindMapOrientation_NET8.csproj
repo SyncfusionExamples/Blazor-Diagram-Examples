@@ -7,9 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Syncfusion.Blazor.Diagram" Version="30.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="30.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.Themes" Version="30.1.41" />
+    <PackageReference Include="Syncfusion.Blazor.Diagram" Version="*" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="*" />
   </ItemGroup>
 
 </Project>

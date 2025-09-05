@@ -10,27 +10,21 @@
     
     protected override void OnInitialized()
     {
-        // Create orthogonal connector with custom segments and styling
+        // Create orthogonal connector with custom segments and styling.
         Connector orthogonalConnector = new Connector()
         {
             ID = "orthogonal",
             SourcePoint = new DiagramPoint() { X = 550, Y = 200 },
             TargetPoint = new DiagramPoint() { X = 650, Y = 300 },
             Style = new ShapeStyle() { StrokeColor = "#6495ED" },
-
-            // Enable dragging segment thumbs
             Constraints = ConnectorConstraints.Default | ConnectorConstraints.DragSegmentThumb,
-
             TargetDecorator = new DecoratorSettings()
             {
                 Shape = DecoratorShape.Arrow,
                 Style = new ShapeStyle() { StrokeColor = "#6495ED", Fill = "#6495ED" }
             },
-
-            // Orthogonal connector
             Type = ConnectorSegmentType.Orthogonal,
-
-            // Define orthogonal segments (Type on each segment is redundant and omitted)
+            // Define orthogonal segments (Type on each segment is redundant and omitted).
             Segments = new DiagramObjectCollection<ConnectorSegment>()
             {
                 new OrthogonalSegment
@@ -46,10 +40,7 @@
                     Direction = Direction.Bottom
                 }
             },
-
-            // Limit the number of visible/draggable segment thumbs
             MaxSegmentThumbs = 2
-
         };
         connectors.Add(orthogonalConnector);
     }

@@ -1,7 +1,6 @@
 ﻿@page "/"
 @using Syncfusion.Blazor.Diagram
 @using Syncfusion.Blazor.DropDowns
-@using Syncfusion.Blazor.Buttons
 
 <div style="display:grid;gap:20px;">
     <SfDiagramComponent @ref="diagram" Height="600px" NodeCreating="OnNodeCreating" ConnectorCreating="OnConnectorCreating">
@@ -25,10 +24,11 @@
         </SfButton>
     </div>
 </div>
+
 @code {
     private SfDiagramComponent? diagram;
     
-    // Property bound to dropdown and diagram layout, updated at runtime by user interaction
+    // Property bound to dropdown and diagram layout, updated at runtime by user interaction.
     public LayoutOrientation SelectedOrientation { get; set; } = LayoutOrientation.Vertical;
     
     public List<OrientationItem> LayoutOrientationOptions { get; set; } = new()
@@ -54,16 +54,14 @@
     {
         if (obj is not Node node)
             return BranchType.Left;
-
         if (node.Data is not MindMapDetails mindMapData || string.IsNullOrWhiteSpace(mindMapData.Branch))
             return BranchType.Left;
-
         return Enum.TryParse(mindMapData.Branch, out BranchType branchType) 
             ? branchType 
             : BranchType.SubLeft;
     }
 
-    // Method triggered by button click at runtime to set diagram orientation to vertical
+    // Method triggered by button click at runtime to set diagram orientation to vertical.
     private void ChangeLayoutOrientation()
     {
        diagram.Layout.Orientation = LayoutOrientation.Vertical;
@@ -84,7 +82,7 @@
             StrokeColor = "white" 
         };
         node.Shape = new BasicShape { Type = NodeShapes.Basic };
-        // Add annotation with label from data
+        // Add annotation with label from data.
         if (node.Data is MindMapDetails mindMapData && !string.IsNullOrWhiteSpace(mindMapData.Label))
         {
             node.Annotations = new DiagramObjectCollection<ShapeAnnotation>
@@ -98,7 +96,6 @@
     {
         if (obj is not Connector connector) 
             return;
-
         connector.Type = ConnectorSegmentType.Bezier;
         connector.Style = new ShapeStyle 
         { 

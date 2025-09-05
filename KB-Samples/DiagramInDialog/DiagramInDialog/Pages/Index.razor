@@ -1,0 +1,132 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Popups
+@using Syncfusion.Blazor.Diagram
+@using System.Collections.ObjectModel
+@inject IJSRuntime jsRuntime;
+
+<div id="target" style="height:100%">
+    <SfButton CssClass="e-primary" @onclick="ShowDialog">Open Diagram Dialog</SfButton>
+</div>
+
+<SfDialog ShowCloseIcon="true"
+          Width="707px"
+          Height="1000px"
+          IsModal="true"
+          Target="#target"
+          AllowPrerender="true"
+          @ref="_dialog"
+          Visible="@IsDialogVisible">
+    <DialogEvents OnOpen="OpenDialog" OnClose="CloseDialog" Opened="OpenedDialog"></DialogEvents>
+    <DialogAnimationSettings Effect="@DialogEffect.Zoom"></DialogAnimationSettings>
+    <DialogTemplates>
+        <Header>
+            <div id="template" class="e-icon-settings">E-mail Diagram</div>
+        </Header>
+        <Content>
+            <SfDiagramComponent @ref="Diagram"
+                                InteractionController="DiagramInteractions.ZoomPan"
+                                NodeCreating="NodeDefaults"
+                                ConnectorCreating="ConnectorDefaults">
+                <SnapSettings Constraints="SnapConstraints.None"></SnapSettings>
+                <DataSourceSettings ID="Id"
+                                    ParentID="ParentId"
+                                    DataSource="@DataSource">
+                </DataSourceSettings>
+                <Layout Type="LayoutType.HierarchicalTree"
+                        HorizontalSpacing="@HorizontalSpacing"
+                        VerticalSpacing="@VerticalSpacing">
+                </Layout>
+            </SfDiagramComponent>
+        </Content>
+    </DialogTemplates>
+</SfDialog>
+
+@code {
+    private SfDialog _dialog;
+    private SfDiagramComponent Diagram;
+
+    private bool IsDialogVisible = false;
+
+    private int HorizontalSpacing { get; set; } = 50;
+    private int VerticalSpacing { get; set; } = 50;
+    bool open = false;
+    public ObservableCollection<DiagramData> DataSource { get; set; } = new()
+    {
+        new DiagramData { Id = "1", ParentId = "", Label = "CEO" },
+        new DiagramData { Id = "2", ParentId = "1", Label = "Manager" },
+        new DiagramData { Id = "3", ParentId = "2", Label = "Team Lead" },
+        new DiagramData { Id = "4", ParentId = "3", Label = "Senior Developer" },
+        new DiagramData { Id = "5", ParentId = "4", Label = "Developer" },
+        new DiagramData { Id = "6", ParentId = "5", Label = "Fresher" }
+    };
+
+    public class DiagramData
+    {
+        public string Id { get; set; }
+        public string ParentId { get; set; }
+        public string Label { get; set; }
+    }
+
+    private async Task ShowDialog()
+    {
+        IsDialogVisible = true;
+    }
+    private async Task OpenDialog(BeforeOpenEventArgs args)
+    {
+        await jsRuntime.InvokeAsync<object>("UpdateWindow").ConfigureAwait(true);
+        open = true;
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        if (open && Diagram != null)
+        {
+            await Task.Delay(1000);
+            Diagram.FitToPage(new FitOptions() { Mode = FitMode.Both, Region = DiagramRegion.Content });
+            open = false;
+        }
+    }
+
+
+    private void CloseDialog(BeforeCloseEventArgs args)
+    {
+        IsDialogVisible = false;
+    }
+
+    private void NodeDefaults(IDiagramObject obj)
+    {
+        if (obj is Node node)
+        {
+            node.Width = 100;
+            node.Height = 40;
+            node.Style = new ShapeStyle { Fill = "#6BA5D7", StrokeColor = "white" };
+        }
+    }
+
+    private void ConnectorDefaults(IDiagramObject obj)
+    {
+        if (obj is Connector connector)
+        {
+            connector.Type = ConnectorSegmentType.Orthogonal;
+            connector.Style = new ShapeStyle { StrokeColor = "#6BA5D7", StrokeWidth = 2 };
+        }
+    }
+
+    private void OpenedDialog()
+    {
+        FitOptions Options = new FitOptions()
+            {
+                Mode = FitMode.Both,
+                Region = DiagramRegion.Content
+            };
+        Diagram.FitToPage(Options);
+    }
+}
+
+<style>
+    #target {
+        min-height: 660px;
+    }
+</style>

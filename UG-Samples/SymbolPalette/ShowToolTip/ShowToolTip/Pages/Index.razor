@@ -93,7 +93,7 @@
 
     private void AddFlowShape(NodeFlowShapes shape, string id, int index)
     {
-        var node = new Node
+        Node node = new Node
         {
             ID = id,
             Shape = new FlowShape { Type = NodeShapes.Flow, Shape = shape },
@@ -117,7 +117,7 @@
 
     private void AddBasicShape(NodeBasicShapes shapeType, string id, int index)
     {
-        var node = new Node
+        Node node = new Node
         {
             ID = id,
             Width = 60,
@@ -146,7 +146,7 @@
 
     private void AddConnector(string id, ConnectorSegmentType type, DecoratorShape decoratorShape, int index)
     {
-        var connector = new Connector
+        Connector connector = new Connector
         {
             ID = id,
             Type = type,

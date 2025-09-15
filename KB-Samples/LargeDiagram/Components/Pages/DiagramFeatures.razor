@@ -14,9 +14,7 @@
     <div style="display: flex; flex-direction: row; width: 100%;">
         <!-- Palette Section -->
         <div id="palette-space" style="width: 250px; margin-right: 10px;">
-            <SfSymbolPaletteComponent @ref="@SymbolPalette" Height="700px" Width="100%"
-                                      Palettes="@Palettes" SymbolHeight="60" SymbolWidth="120"
-                                      SymbolMargin="@SymbolMargin" EnableChunkMessages="true">
+            <SfSymbolPaletteComponent @ref="@SymbolPalette" Height="700px" Width="100%" Palettes="@Palettes" SymbolHeight="60" SymbolWidth="120" SymbolMargin="@SymbolMargin">
             </SfSymbolPaletteComponent>
         </div>
 
@@ -35,12 +33,11 @@
         <SfUploader @ref="@uploadFiles" ID="UploadFiles" ShowFileList="false" AllowedExtensions="@ExtensionType">
             <UploaderEvents OnUploadStart="@OnUploadFileSelected"></UploaderEvents>
             <UploaderAsyncSettings SaveUrl="https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save"
-                                                                     RemoveUrl="https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove">
+                RemoveUrl="https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove">
             </UploaderAsyncSettings>
         </SfUploader>
     </div>
 </div>
-
 
 @code {
     //Reference to uploder
@@ -172,9 +169,7 @@
         Bottom = 15
     };
     SfSymbolPaletteComponent SymbolPalette;
-    //Define palettes collection.
     DiagramObjectCollection<Palette> Palettes = new DiagramObjectCollection<Palette>();
-    // Defines palette's flow-shape collection.
     DiagramObjectCollection<NodeBase> PaletteNodes = new DiagramObjectCollection<NodeBase>();
     DiagramObjectCollection<NodeBase> PalettePathNodes = new DiagramObjectCollection<NodeBase>();
 
@@ -194,8 +189,6 @@
         CreatePalettPathNode("Manual-Input");
         CreatePalettPathNode("Data");
         CreatePalettPathNode("Card");
-
-        // Add basic shapes that are visible in the left palette
         CreatePaletteNode(NodeBasicShapes.Rectangle, "Rectangle");
         CreatePaletteNode(NodeBasicShapes.Ellipse, "Ellipse");
         CreatePaletteNode(NodeBasicShapes.Diamond, "Diamond");
@@ -206,9 +199,8 @@
         {
                new Palette(){Symbols = PaletteNodes,Title = "Basic Shapes", ID = "Basic Shapes" },
                new Palette(){Symbols = PalettePathNodes,Title = "Path Shapes", ID = "Path Shapes" },
-            };
+        };
     }
-
     private void CreatePaletteNode(NodeBasicShapes basicShape, string id)
     {
         Node node = new Node()

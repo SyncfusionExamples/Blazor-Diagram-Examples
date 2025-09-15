@@ -11,7 +11,6 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddSyncfusionBlazor();
 builder.Services.AddControllers();
-            builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
 var supportedCultures = new[] { "en-US", "de", "fr", "ar", "zh" };
 builder.Services.AddServerSideBlazor().AddHubOptions(o =>
 {
@@ -23,16 +22,11 @@ var localizationOptions = new RequestLocalizationOptions()
     .AddSupportedUICultures(supportedCultures); 
 
 var app = builder.Build();
-//Register Syncfusion license https://help.syncfusion.com/common/essential-studio/licensing/how-to-generate
-//Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("YOUR LICENSE KEY");
-
-// Configure the HTTP request pipeline.
 app.UseRequestLocalization(localizationOptions);
 
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -46,4 +40,4 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
 app.MapControllers();
-            app.Run();
+app.Run();

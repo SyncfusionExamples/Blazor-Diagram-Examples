@@ -10,7 +10,6 @@
 @using LargeDiagram.Components.Pages
 @inject IJSRuntime jsRuntime
 
-
 <div class="control-section">
     <div style="display: flex; flex-direction: row; width: 100%;">
         <!-- Palette Section -->
@@ -236,26 +235,26 @@
                     X2 = 50,
                     Y2 = 50,
                     GradientStops = new DiagramObjectCollection<GradientStop>()
-            {
-                    new GradientStop(){ Color = "Black", Offset = 0},
-                    new GradientStop(){ Color = "#4b1a4d", Offset = 100}
-                },
+                    {
+                        new GradientStop(){ Color = "Black", Offset = 0},
+                        new GradientStop(){ Color = "#4b1a4d", Offset = 100}
+                    },
                 }
             },
             Annotations = new DiagramObjectCollection<ShapeAnnotation>()
-    {
-            new ShapeAnnotation()
             {
-                Style = new TextStyle()
+                new ShapeAnnotation()
                 {
-                    Color = "White",
-                    FontSize = 16,
-                    Bold = false,
-                    TextOverflow = TextOverflow.Wrap,
-                    TextWrapping = Syncfusion.Blazor.Diagram.TextWrap.WrapWithOverflow
+                    Style = new TextStyle()
+                    {
+                        Color = "White",
+                        FontSize = 16,
+                        Bold = false,
+                        TextOverflow = TextOverflow.Wrap,
+                        TextWrapping = Syncfusion.Blazor.Diagram.TextWrap.WrapWithOverflow
+                    }
                 }
             }
-        }
         };
 
         if (id == "Decision")
@@ -353,6 +352,5 @@
         }
         PalettePathNodes.Add(diagramNode);
     }
-
 }
 

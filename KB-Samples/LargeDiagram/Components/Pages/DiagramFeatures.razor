@@ -1,0 +1,350 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Diagram.SymbolPalette
+@using Syncfusion.Blazor.Buttons
+@using Microsoft.JSInterop
+@using Syncfusion.Blazor.Navigations
+@using Syncfusion.Blazor.Inputs
+@rendermode InteractiveServer
+@using LargeDiagram.Components.Pages
+@inject IJSRuntime jsRuntime
+
+<div class="control-section">
+    <div style="display: flex; flex-direction: row; width: 100%;">
+        <!-- Palette Section -->
+        <div id="palette-space" style="width: 300px; margin-right: 10px;">
+            <SfSymbolPaletteComponent @ref="@SymbolPalette" Height="700px" Width="100%" Palettes="@Palettes" SymbolHeight="60" SymbolWidth="120" SymbolMargin="@SymbolMargin">
+            </SfSymbolPaletteComponent>
+        </div>
+
+        <!-- Diagram Section -->
+        <div id="diagram-space" style="flex-grow: 1; width: 1200px;">
+            <SfDiagramComponent Height="700px" @ref="@diagram" @bind-Nodes="@Nodes" @bind-Connectors="@Connectors" Created="OnCreate" EnableChunkMessages="true" GetCustomTool="GetCustomTool">
+            </SfDiagramComponent>
+            <span id='diagramName' style="display:none">DiagramComponent</span>
+        </div>
+
+        <!-- Buttons and Uploader -->
+        <div style="flex-grow: 2; padding-left: 20px;">
+            <SfButton OnClick="@SaveDiagram">Save</SfButton>
+            <SfButton OnClick="@LoadDiagram">Load</SfButton>
+            <SfUploader @ref="@uploadFiles" ID="UploadFiles" ShowFileList="false" AllowedExtensions="@ExtensionType">
+                <UploaderEvents OnUploadStart="@OnUploadFileSelected"></UploaderEvents>
+                <UploaderAsyncSettings SaveUrl="https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save"
+                                       RemoveUrl="https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove">
+                </UploaderAsyncSettings>
+            </SfUploader>
+        </div>
+    </div>
+
+    
+</div>
+
+@code {
+    //Reference to uploder
+    SfUploader uploadFiles;
+    SfDiagramComponent diagram;
+    private string fileName;
+    // Method to customize the tool
+    public InteractionControllerBase GetCustomTool(DiagramElementAction action, string id)
+    {
+        InteractionControllerBase tool = null;
+        if (id == "Draw")
+        {
+            tool = new DrawTool(diagram);
+        }
+        else
+        {
+            tool = new AddDeleteTool(diagram);
+        }
+        return tool;
+    }
+    // Custom tool to delete the node.
+    public class AddDeleteTool : InteractionControllerBase
+    {
+        SfDiagramComponent sfDiagram;
+        Node deleteObject = null;
+        public AddDeleteTool(SfDiagramComponent Diagram) : base(Diagram)
+        {
+            sfDiagram = Diagram;
+        }
+        public override void OnMouseDown(DiagramMouseEventArgs args)
+        {
+            if (sfDiagram.SelectionSettings.Nodes.Count > 0 && ((sfDiagram.SelectionSettings.Nodes[0]) is Node))
+            {
+                deleteObject = (sfDiagram.SelectionSettings.Nodes[0]) as Node;
+            }
+            base.OnMouseDown(args);
+        }
+        public override void OnMouseUp(DiagramMouseEventArgs args)
+        {
+            if (deleteObject != null)
+            {
+                sfDiagram.StartGroupAction();
+                sfDiagram.BeginUpdate();
+                sfDiagram.Nodes.Remove(deleteObject);
+                _ = sfDiagram.EndUpdateAsync();
+                sfDiagram.EndGroupAction();
+            }
+            base.OnMouseUp(args);
+            this.InAction = true;
+        }
+    }
+    public class DrawTool : ConnectorDrawingController
+    {
+        SfDiagramComponent sfDiagram;
+        Connector newConnector = null;
+        public DrawTool(SfDiagramComponent Diagram) : base(Diagram, DiagramElementAction.ConnectorSourceEnd)
+        {
+            sfDiagram = Diagram;
+            newConnector = new Connector()
+            {
+                ID = "OrthogonalConnector",
+                SourceID = sfDiagram.SelectionSettings.Nodes[0].ID,
+                Type = ConnectorSegmentType.Orthogonal,
+            };
+            Diagram.InteractionController = DiagramInteractions.DrawOnce;
+            Diagram.DrawingObject = newConnector;
+        }
+        public override void OnMouseDown(DiagramMouseEventArgs args)
+        {
+            base.OnMouseDown(args);
+        }
+        public override void OnMouseUp(DiagramMouseEventArgs args)
+        {
+            base.OnMouseUp(args);
+        }
+    }
+    DiagramObjectCollection<Node> Nodes = new DiagramObjectCollection<Node>();
+    DiagramObjectCollection<Connector> Connectors = new DiagramObjectCollection<Connector>();
+    private string ExtensionType = ".json";
+    //Method to save the diagram
+    public async Task SaveDiagram()
+    {
+        fileName = await jsRuntime.InvokeAsync<string>("getDiagramFileName", "");
+        await DownloadDiagram(fileName);
+    }
+
+    //Method to download the diagram
+    public async Task DownloadDiagram(string fileName)
+    {
+        string data = diagram.SaveDiagram();
+        await FileUtil.SaveAs(jsRuntime, data, fileName);
+    }
+
+    //Method to load the diagram
+    public async Task LoadDiagram()
+    {
+        diagram.BeginUpdate();
+        ExtensionType = ".json";
+        await FileUtil.Click(jsRuntime);
+        await diagram.EndUpdateAsync();
+    }
+    string json;
+    public async Task OnUploadFileSelected(UploadingEventArgs args)
+    {
+        if (args.FileData.Type == "json")
+        {
+            json = await FileUtil.LoadFile(jsRuntime, args.FileData);
+            json = json.Replace(System.Environment.NewLine, string.Empty);
+            await diagram.LoadDiagramAsync(json.ToString());
+            await uploadFiles.ClearAllAsync();
+        }
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        SymbolPalette.Targets = new DiagramObjectCollection<SfDiagramComponent>() { };
+        SymbolPalette.Targets.Add(diagram);
+    }
+
+    private async void OnCreate()
+    {
+        json = File.ReadAllText("wwwroot/PathShape.json");
+        await diagram.LoadDiagramAsync(json);
+    }
+    SymbolMargin SymbolMargin = new SymbolMargin
+    {
+        Left = 15,
+        Right = 15,
+        Top = 15,
+        Bottom = 15
+    };
+    SfSymbolPaletteComponent SymbolPalette;
+    DiagramObjectCollection<Palette> Palettes = new DiagramObjectCollection<Palette>();
+    DiagramObjectCollection<NodeBase> PaletteNodes = new DiagramObjectCollection<NodeBase>();
+    DiagramObjectCollection<NodeBase> PalettePathNodes = new DiagramObjectCollection<NodeBase>();
+
+    protected override void OnInitialized()
+    {
+        InitPaletteModel();
+    }
+
+    private void InitPaletteModel()
+    {
+        CreatePalettPathNode("Decision");
+        CreatePalettPathNode("Process");
+        CreatePalettPathNode("Terminator");
+        CreatePalettPathNode("Event");
+        CreatePalettPathNode("Delay");
+        CreatePalettPathNode("Manual-Operation");
+        CreatePalettPathNode("Manual-Input");
+        CreatePalettPathNode("Data");
+        CreatePalettPathNode("Card");
+        CreatePaletteNode(NodeBasicShapes.Rectangle, "Rectangle");
+        CreatePaletteNode(NodeBasicShapes.Ellipse, "Ellipse");
+        CreatePaletteNode(NodeBasicShapes.Diamond, "Diamond");
+        CreatePaletteNode(NodeBasicShapes.Rectangle, "Rectangle");
+        CreatePaletteNode(NodeBasicShapes.Ellipse, "Ellipse");
+        CreatePaletteNode(NodeBasicShapes.Star, "Star");
+        Palettes = new DiagramObjectCollection<Palette>()
+        {
+               new Palette(){Symbols = PaletteNodes,Title = "Basic Shapes", ID = "Basic Shapes" },
+               new Palette(){Symbols = PalettePathNodes,Title = "Path Shapes", ID = "Path Shapes" },
+        };
+    }
+    private void CreatePaletteNode(NodeBasicShapes basicShape, string id)
+    {
+        Node node = new Node()
+        {
+            ID = id,
+            Shape = new BasicShape() { Type = NodeShapes.Basic, Shape = basicShape },
+            Style = new ShapeStyle() { Fill = "#6495ED", StrokeColor = "#6495ED" },
+        };
+        PaletteNodes.Add(node);
+    }
+    private void CreatePalettPathNode(string id, bool isShadow = false)
+    {
+        Node diagramNode = new Node()
+        {
+            ID = id,
+            Style = new ShapeStyle()
+            {
+                StrokeColor = "#2847e5",
+                StrokeWidth = 1,
+                Gradient = new LinearGradientBrush()
+                {
+                    X1 = 0,
+                    Y1 = 0,
+                    X2 = 50,
+                    Y2 = 50,
+                    GradientStops = new DiagramObjectCollection<GradientStop>()
+                    {
+                        new GradientStop(){ Color = "Black", Offset = 0},
+                        new GradientStop(){ Color = "#4b1a4d", Offset = 100}
+                    },
+                }
+            },
+            Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+            {
+                new ShapeAnnotation()
+                {
+                    Style = new TextStyle()
+                    {
+                        Color = "White",
+                        FontSize = 16,
+                        Bold = false,
+                        TextOverflow = TextOverflow.Wrap,
+                        TextWrapping = Syncfusion.Blazor.Diagram.TextWrap.WrapWithOverflow
+                    }
+                }
+            }
+        };
+
+        if (id == "Decision")
+        {
+            diagramNode.Shape = new PathShape() { Type = Syncfusion.Blazor.Diagram.NodeShapes.Path, Data = "M 5 45 L 45, 5 Q 50 0 55 5 L 95 45 Q 100 50 95 55 L 55 95 Q 50 100 45 95 L 5 55 Q 0 50 5 45 Z" };
+            diagramNode.Width = 100;
+            diagramNode.Height = 100;
+            diagramNode.Style.Fill = "#114e0f";
+            diagramNode.Style.Gradient!.GradientStops[0].Color = "Black";
+            diagramNode.Style.Gradient.GradientStops[1].Color = "#114e0f";
+        }
+        else if (id == "Process")
+        {
+            diagramNode.Shape = new PathShape() { Type = Syncfusion.Blazor.Diagram.NodeShapes.Path, Data = "M 5 0 L135 0 Q 140 0 140 5 L 140 65 Q 140 70 135 70 L 5 70 Q 0 70 0 65 L 0 5 Q 0 0 5 0 Z" };
+            diagramNode.Width = 140;
+            diagramNode.Height = 70;
+            diagramNode.Style.Fill = "#173987";
+            diagramNode.Style.Gradient!.GradientStops[0].Color = "Black";
+            diagramNode.Style.Gradient.GradientStops[1].Color = "#173987";
+        }
+        else if (id == "Terminator")
+        {
+            diagramNode.Shape = new PathShape() { Type = Syncfusion.Blazor.Diagram.NodeShapes.Path, Data = "M 20 0 L 120 0 Q 140 0 140 20 Q 140 40 120 40 L 20 40 Q 0 40 0 20 Q 0 0 20 0 Z" };
+            diagramNode.Width = 140;
+            diagramNode.Height = 40;
+            diagramNode.Style.Fill = "#405176";
+            diagramNode.Style.Gradient!.GradientStops[0].Color = "Black";
+            diagramNode.Style.Gradient.GradientStops[1].Color = "#405176";
+        }
+        else if (id == "Event")
+        {
+            diagramNode.Shape = new PathShape() { Type = Syncfusion.Blazor.Diagram.NodeShapes.Path, Data = "M 20 0 L 120 0 Q 140 0 140 20 L 140 50 Q 140 70 120 70 L 20 70 Q 0 70 0 50 L 0 20 Q 0 0 20 0 Z" };
+            diagramNode.Width = 140;
+            diagramNode.Height = 70;
+            diagramNode.Style.Fill = "#173987";
+            diagramNode.Style.Gradient!.GradientStops[0].Color = "Black";
+            diagramNode.Style.Gradient.GradientStops[1].Color = "#173987";
+        }
+        else if (id == "Delay")
+        {
+            diagramNode.Shape = new PathShape() { Type = Syncfusion.Blazor.Diagram.NodeShapes.Path, Data = "M 0 0 L 105 0 Q 140 0 140 35 Q 140 70 105 70 L 0 70 L 0 0 Z" };
+            diagramNode.Width = 140;
+            diagramNode.Height = 70;
+            diagramNode.Style.Fill = "#493e13";
+            diagramNode.Style.Gradient!.GradientStops[0].Color = "Black";
+            diagramNode.Style.Gradient.GradientStops[1].Color = "#493e13";
+        }
+        else if (id == "Manual-Operation")
+        {
+            diagramNode.Shape = new PathShape() { Type = Syncfusion.Blazor.Diagram.NodeShapes.Path, Data = "M 0 0 L 140 0 L 115 70 L 25 70 L 0 0 Z" };
+            diagramNode.Width = 140;
+            diagramNode.Height = 70;
+            diagramNode.Style.Fill = "#310031";
+            diagramNode.Style.Gradient!.GradientStops[0].Color = "Black";
+            diagramNode.Style.Gradient.GradientStops[1].Color = "#310031";
+        }
+        else if (id == "Manual-Input")
+        {
+            diagramNode.Shape = new PathShape() { Type = Syncfusion.Blazor.Diagram.NodeShapes.Path, Data = "M 140 0 L 140 60 Q 140 70 120 70 L 10 70 Q 0 70 0 60 L 0 35 L 140 0 Z" };
+            diagramNode.Width = 140;
+            diagramNode.Height = 70;
+            diagramNode.Style.Fill = "#4b1a4d";
+            diagramNode.Style.Gradient!.GradientStops[0].Color = "Black";
+            diagramNode.Style.Gradient.GradientStops[1].Color = "#4b1a4d";
+        }
+        else if (id == "Data")
+        {
+            diagramNode.Shape = new PathShape() { Type = Syncfusion.Blazor.Diagram.NodeShapes.Path, Data = "M 20 0 L 140 0 L 120 70 L 0 70 L 2 0 Z" };
+            diagramNode.Width = 140;
+            diagramNode.Height = 70;
+            diagramNode.Style.Fill = "#5a1414";
+            diagramNode.Style.Gradient!.GradientStops[0].Color = "Black";
+            diagramNode.Style.Gradient.GradientStops[1].Color = "#5a1414";
+        }
+        else if (id == "Card")
+        {
+            diagramNode.Shape = new PathShape() { Type = Syncfusion.Blazor.Diagram.NodeShapes.Path, Data = "M 35 0 L 130 0 Q 140 0 140 10 L 140 60 Q 140 70 130 70 L 10 70 Q 0 70 0 60 L 0 35 L 35 0 Z" };
+            diagramNode.Width = 140;
+            diagramNode.Height = 70;
+            diagramNode.Style.Fill = "#68682f";
+            diagramNode.Style.Gradient!.GradientStops[0].Color = "Black";
+            diagramNode.Style.Gradient.GradientStops[1].Color = "#68682f";
+        }
+
+        // Add shadow effect if requested
+        if (isShadow)
+        {
+            diagramNode.Shadow = new Shadow()
+            {
+                Angle = 45,
+                Color = "lightgrey",
+                Distance = 5,
+                Opacity = 0.7
+            };
+        }
+        PalettePathNodes.Add(diagramNode);
+    }
+}
+

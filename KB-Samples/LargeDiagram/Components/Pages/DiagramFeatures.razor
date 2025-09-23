@@ -20,7 +20,7 @@
 
         <!-- Diagram Section -->
         <div id="diagram-space" style="flex-grow: 1; width: 1200px;">
-            <SfDiagramComponent Height="700px" @ref="@diagram" @bind-Nodes="@nodes" @bind-Connectors="@connectors" Created="Oncreate" EnableChunkMessages="true" GetCustomTool="GetCustomTool">
+            <SfDiagramComponent Height="700px" @ref="@diagram" @bind-Nodes="@Nodes" @bind-Connectors="@Connectors" Created="OnCreate" EnableChunkMessages="true" GetCustomTool="GetCustomTool">
             </SfDiagramComponent>
             <span id='diagramName' style="display:none">DiagramComponent</span>
         </div>
@@ -116,8 +116,8 @@
             base.OnMouseUp(args);
         }
     }
-    DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
-    DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
+    DiagramObjectCollection<Node> Nodes = new DiagramObjectCollection<Node>();
+    DiagramObjectCollection<Connector> Connectors = new DiagramObjectCollection<Connector>();
     private string ExtensionType = ".json";
     //Method to save the diagram
     public async Task SaveDiagram()
@@ -158,7 +158,7 @@
         SymbolPalette.Targets.Add(diagram);
     }
 
-    private async void Oncreate()
+    private async void OnCreate()
     {
         json = File.ReadAllText("wwwroot/PathShape.json");
         await diagram.LoadDiagramAsync(json);

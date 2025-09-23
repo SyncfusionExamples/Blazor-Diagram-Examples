@@ -13,30 +13,32 @@
 <div class="control-section">
     <div style="display: flex; flex-direction: row; width: 100%;">
         <!-- Palette Section -->
-        <div id="palette-space" style="width: 250px; margin-right: 10px;">
+        <div id="palette-space" style="width: 300px; margin-right: 10px;">
             <SfSymbolPaletteComponent @ref="@SymbolPalette" Height="700px" Width="100%" Palettes="@Palettes" SymbolHeight="60" SymbolWidth="120" SymbolMargin="@SymbolMargin">
             </SfSymbolPaletteComponent>
         </div>
 
         <!-- Diagram Section -->
-        <div id="diagram-space" style="flex-grow: 1;">
+        <div id="diagram-space" style="flex-grow: 1; width: 1200px;">
             <SfDiagramComponent Height="700px" @ref="@diagram" @bind-Nodes="@nodes" @bind-Connectors="@connectors" Created="Oncreate" EnableChunkMessages="true" GetCustomTool="GetCustomTool">
             </SfDiagramComponent>
             <span id='diagramName' style="display:none">DiagramComponent</span>
         </div>
+
+        <!-- Buttons and Uploader -->
+        <div style="flex-grow: 2; padding-left: 20px;">
+            <SfButton OnClick="@SaveDiagram">Save</SfButton>
+            <SfButton OnClick="@LoadDiagram">Load</SfButton>
+            <SfUploader @ref="@uploadFiles" ID="UploadFiles" ShowFileList="false" AllowedExtensions="@ExtensionType">
+                <UploaderEvents OnUploadStart="@OnUploadFileSelected"></UploaderEvents>
+                <UploaderAsyncSettings SaveUrl="https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save"
+                                       RemoveUrl="https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove">
+                </UploaderAsyncSettings>
+            </SfUploader>
+        </div>
     </div>
 
-    <!-- Buttons and Uploader -->
-    <div style="margin-top: 100px;">
-        <SfButton OnClick="@SaveDiagram">Save</SfButton>
-        <SfButton OnClick="@LoadDiagram">Load</SfButton>
-        <SfUploader @ref="@uploadFiles" ID="UploadFiles" ShowFileList="false" AllowedExtensions="@ExtensionType">
-            <UploaderEvents OnUploadStart="@OnUploadFileSelected"></UploaderEvents>
-            <UploaderAsyncSettings SaveUrl="https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save"
-                RemoveUrl="https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove">
-            </UploaderAsyncSettings>
-        </SfUploader>
-    </div>
+    
 </div>
 
 @code {

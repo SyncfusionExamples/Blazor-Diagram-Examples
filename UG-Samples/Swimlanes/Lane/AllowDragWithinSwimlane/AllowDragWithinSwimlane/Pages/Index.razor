@@ -15,35 +15,62 @@
     {
         // A swimlane is created and stored in the swimlanes collection.
         Swimlane swimlane = new Swimlane()
+        {
+            Header = new SwimlaneHeader()
             {
-                Header = new SwimlaneHeader()
+                Annotation = new ShapeAnnotation()
                 {
-                    Annotation = new ShapeAnnotation()
-                    {
-                        Content = "SALES PROCESS FLOW CHART"
-                    },
-                    Height = 50,
+                    Content = "SALES PROCESS FLOW CHART"
                 },
-                OffsetX = 400,
-                OffsetY = 200,
-                Height = 120,
-                Width = 450,
-                Lanes = new DiagramObjectCollection<Lane>()
+                Height = 50,
+            },
+            OffsetX = 400,
+            OffsetY = 200,
+            Height = 120,
+            Width = 450,
+            Lanes = new DiagramObjectCollection<Lane>()
+            {
+                new Lane()
                 {
-                    new Lane(){Height = 100,
-                    Header = new SwimlaneHeader(){
+                    Height = 100,
+                    Header = new SwimlaneHeader()
+                    {
                         Width = 30,
                         Annotation = new ShapeAnnotation(){ Content = "Consumer" }
                     },
                     Children = new DiagramObjectCollection<Node>()
                     {
-                        new Node(){Height = 50, Width = 50, LaneOffsetX = 100, LaneOffsetY = 30, Constraints = NodeConstraints.Default | NodeConstraints.AllowDragWithinSwimlane , Annotations = new DiagramObjectCollection<ShapeAnnotation>(){ new ShapeAnnotation() { Content="AllowDrag Within Swimlane", Style= new  TextStyle(){TextOverflow = TextOverflow.Wrap, TextWrapping = TextWrap.WrapWithOverflow}
-                        } } },
-                        new Node(){Height = 50, Width = 50, LaneOffsetX = 250, LaneOffsetY = 30},
+                        new Node()
+                        {
+                            Height = 50, 
+                            Width = 100, 
+                            LaneOffsetX = 100, 
+                            LaneOffsetY = 30, 
+                            Constraints = NodeConstraints.Default | NodeConstraints.AllowDragWithinSwimlane , 
+                            Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+                            { 
+                                new ShapeAnnotation() 
+                                { 
+                                    Content="AllowDrag Within Swimlane", 
+                                    Style= new  TextStyle()
+                                    {
+                                        TextOverflow = TextOverflow.Wrap, 
+                                        TextWrapping = TextWrap.WrapWithOverflow
+                                    }
+                                }
+                            } 
+                        },
+                        new Node()
+                        {
+                            Height = 50, 
+                            Width = 100,
+                            LaneOffsetX = 250, 
+                            LaneOffsetY = 30
+                        },
                     }
-                    },
-                }
-            };
+                },
+            }
+        };
         // Add swimlane
         SwimlaneCollections.Add(swimlane);
     }

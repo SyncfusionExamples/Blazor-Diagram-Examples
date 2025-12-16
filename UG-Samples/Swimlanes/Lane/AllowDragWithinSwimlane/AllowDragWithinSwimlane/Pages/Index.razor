@@ -1,13 +1,17 @@
 ﻿@page "/"
 
 @using Syncfusion.Blazor.Diagram
+@using TextOverflow = Syncfusion.Blazor.Diagram.TextOverflow
+@using TextWrap = Syncfusion.Blazor.Diagram.TextWrap
 
-<SfDiagramComponent Height="600px" Swimlanes="@SwimlaneCollections" NodeCreating="@OnNodeCreating" >
+<button onclick="@AllowDrag">AllowDrag</button>
+<SfDiagramComponent @ref="diagramComponent" Height="600px" Swimlanes="@SwimlaneCollections" NodeCreating="@OnNodeCreating">
     <SnapSettings Constraints="SnapConstraints.None"></SnapSettings>
 </SfDiagramComponent>
 
 @code
 {
+    SfDiagramComponent diagramComponent;
     //Define diagram's swimlane collection
     DiagramObjectCollection<Swimlane> SwimlaneCollections = new DiagramObjectCollection<Swimlane>();
 
@@ -100,6 +104,21 @@
                     Fill = "#5b9bd5",
                     StrokeColor = "#5b9bd5"
                 };
+        }
+    }
+    public void AllowDrag()
+    {
+        if (diagramComponent.SelectionSettings.Nodes.Count > 0)
+        {
+            if (diagramComponent.SelectionSettings.Nodes[0].Constraints.HasFlag(NodeConstraints.AllowDragWithinSwimlane))
+            {
+                diagramComponent.SelectionSettings.Nodes[0].Constraints &= ~NodeConstraints.AllowDragWithinSwimlane;
+
+            }
+            else
+            {
+                diagramComponent.SelectionSettings.Nodes[0].Constraints |= NodeConstraints.AllowDragWithinSwimlane;
+            }
         }
     }
 }

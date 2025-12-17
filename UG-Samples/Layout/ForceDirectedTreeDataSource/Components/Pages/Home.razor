@@ -1,72 +1,61 @@
 ﻿@page "/"
 @using Syncfusion.Blazor.Diagram
 
-<SfDiagramComponent @ref="diagram" ID="diagram" Height="700px" @bind-Nodes="@Nodes" @bind-Connectors="@Connectors">
-    @* <Layout Type="LayoutType.ForceDirectedTree" ForceDirectedTreeLayoutSettings="@LayoutSettings"></Layout> *@
-    <SnapSettings Constraints="SnapConstraints.None"></SnapSettings>
+<SfDiagramComponent Height="600px" NodeCreating="@OnNodeCreating">
+    <DataSourceSettings ID="Id" ParentID="Manager" DataSource="DataSource"></DataSourceSettings>
+    <Layout Type="LayoutType.ForceDirectedTree" @bind-ForceDirectedTreeLayoutSettings="@forceDirectedSettings"></Layout>
+    <SnapSettings Constraints="@SnapConstraints.None"></SnapSettings>
 </SfDiagramComponent>
 
-@code {
-    private SfDiagramComponent diagram;
-    private DiagramObjectCollection<Node> Nodes = new();
-    private DiagramObjectCollection<Connector> Connectors = new();
-
-    // ForceDirectedTreeLayoutSettings LayoutSettings = new ForceDirectedTreeLayoutSettings
-    //     {
-    //         RepulsionStrength = 8000,
-    //         AttractionStrength = 0.7,
-    //         MaximumIteration = 500,
-    //         ConnectorLength = 150
-    //     };
-
-    protected override void OnInitialized()
+@code
+{
+    private ForceDirectedTreeLayoutSettings forceDirectedSettings = new ForceDirectedTreeLayoutSettings()
     {
-        InitializeCollection();
+        ConnectorLength = 100,
+        AttractionStrength = 0.7,
+        RepulsionStrength = 6000,
+        MaximumIteration = 350
+    };
+
+    private void OnNodeCreating(IDiagramObject obj)
+    {
+        Node node = obj as Node;
+        node.Height = 40;
+        node.Width = 40;
+        node.Shape = new BasicShape()
+        {
+            Type = NodeShapes.Basic,
+            Shape = NodeBasicShapes.Ellipse,
+        };
+        node.Style = new ShapeStyle() { Fill = "darkcyan", StrokeWidth = 3, StrokeColor = "Black" };
     }
 
-    public void InitializeCollection()
+    private class ForceDirectedDetails
     {
-        string[] departments = { "Engineering", "Sales", "Marketing", "Operations" };
-        string[] teams = { "Core", "Mobile", "Web", "Data" };
-        Node parent = CreateNode("ceo", "CEO", "#2c3e50");
-        Nodes.Add(parent);
-        for (int i = 0; i < 4; i++)
-        {
-            string deptName = departments[i];
-            Node child1 = CreateNode($"vp-{deptName.ToLower()}", $"VP of {deptName}", "#3498db");
-            Nodes.Add(child1);
-            for (int j = 0; j < 4; j++)
-            {
-                string teamName = teams[j];
-                Node child2 = CreateNode($"dir-{deptName.ToLower()}-{teamName.ToLower()}", $"{teamName} Director", "#90caf9");
-                Nodes.Add(child2);
-                for (int k = 0; k < 1; k++)
-                {
-                    Node child3 = CreateNode($"lead-{deptName.ToLower()}-{teamName.ToLower()}", $"{teamName} Lead", "#e3f2fd");
-                    Nodes.Add(child3);
-                    Connectors.Add(CreateConnector(child2.ID, child3.ID));
-                }
-                Connectors.Add(CreateConnector(child1.ID, child2.ID));
-            }
-            Connectors.Add(CreateConnector(parent.ID, child1.ID));
-        }
+        public string Id { get; set; }
+        public string Role { get; set; }
+        public string Manager { get; set; }
     }
 
-    private Node CreateNode(string id, string label, string fillColor) => new Node
-        {
-            ID = id,
-            Width = 60,
-            Height = 60,
-            Shape = new BasicShape() { Shape = NodeBasicShapes.Ellipse },
-            Annotations = new DiagramObjectCollection<ShapeAnnotation>() { new ShapeAnnotation { Content = label } },
-            Style = new ShapeStyle() { Fill = fillColor }
-        };
-
-    private Connector CreateConnector(string sourceId, string targetId) => new Connector
-        {
-            ID = $"{sourceId}-{targetId}",
-            SourceID = sourceId,
-            TargetID = targetId,
-            TargetDecorator = new DecoratorSettings { Shape = DecoratorShape.None }
-        };
+    private List<ForceDirectedDetails> DataSource = new List<ForceDirectedDetails>()
+    {
+        new ForceDirectedDetails() { Id = "parent", Role = "Board" },
+        new ForceDirectedDetails() { Id = "1", Role = "General Manager", Manager = "parent" },
+        new ForceDirectedDetails() { Id = "2", Role = "Human Resource Manager", Manager = "1" },
+        new ForceDirectedDetails() { Id = "3", Role = "Trainers", Manager = "2" },
+        new ForceDirectedDetails() { Id = "4", Role = "Recruiting Team", Manager = "2" },
+        new ForceDirectedDetails() { Id = "5", Role = "Finance Asst. Manager", Manager = "2" },
+        new ForceDirectedDetails() { Id = "6", Role = "Design Manager", Manager = "1" },
+        new ForceDirectedDetails() { Id = "7", Role = "Design Supervisor", Manager = "6" },
+        new ForceDirectedDetails() { Id = "8", Role = "Development Supervisor", Manager = "6" },
+        new ForceDirectedDetails() { Id = "9", Role = "Drafting Supervisor", Manager = "6" },
+        new ForceDirectedDetails() { Id = "10", Role = "Operation Manager", Manager = "1" },
+        new ForceDirectedDetails() { Id = "11", Role = "Statistic Department", Manager = "10" },
+        new ForceDirectedDetails() { Id = "12", Role = "Logistic Department", Manager = "10" },
+        new ForceDirectedDetails() { Id = "16", Role = "Marketing Manager", Manager = "1" },
+        new ForceDirectedDetails() { Id = "17", Role = "Oversea sales Manager", Manager = "16" },
+        new ForceDirectedDetails() { Id = "18", Role = "Petroleum Manager", Manager = "16" },
+        new ForceDirectedDetails() { Id = "20", Role = "Service Dept. Manager", Manager = "16" },
+        new ForceDirectedDetails() { Id = "21", Role = "Quality Department", Manager = "16" }
+    };
 }

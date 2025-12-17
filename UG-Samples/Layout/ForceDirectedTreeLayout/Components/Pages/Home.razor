@@ -2,7 +2,7 @@
 
 @using Syncfusion.Blazor.Diagram
 
-<SfDiagramComponent @ref="@diagramComponent" Height="690px" Width="100%" @bind-Nodes="@Nodes" @bind-Connectors="@Connectors">
+<SfDiagramComponent @ref="@diagramComponent" Height="690px" Width="100%" @bind-Nodes="@Nodes" @bind-Connectors="@Connectors" Created="@OnCreated">
     <SnapSettings Constraints="@SnapConstraints.None"></SnapSettings>
     <Layout Type="LayoutType.ForceDirectedTree" @bind-ForceDirectedTreeLayoutSettings="@layoutSettings"></Layout>
 </SfDiagramComponent>
@@ -24,7 +24,7 @@
     private int DepartmentsUnderCeo { get; set; } = 4;
     private int ManagersPerDepartment { get; set; } = 4;
     private int TeamsPerManager { get; set; } = 6;
-    
+
     protected override void OnInitialized()
     {
         InitializeDiagram();
@@ -109,7 +109,13 @@
         };
     }
 
-    private enum OrganizationLevel
+    private void OnCreated()
+    {
+        FitOptions options = new FitOptions() { Mode = FitMode.Both, Region = DiagramRegion.Content };
+        diagramComponent!.FitToPage(options);
+    }
+
+    public enum OrganizationLevel
     {
         Header,
         Department,

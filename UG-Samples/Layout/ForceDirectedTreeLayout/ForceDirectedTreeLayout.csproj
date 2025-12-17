@@ -7,11 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Syncfusion.Blazor.Diagram" Version="*" />
     <PackageReference Include="Syncfusion.Blazor.Themes" Version="*" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Source\ej2-blazor-source\Syncfusion.Blazor\Syncfusion.Blazor.csproj" />
   </ItemGroup>
 
 </Project>

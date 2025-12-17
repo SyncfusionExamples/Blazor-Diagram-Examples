@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.13.35806.99
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11310.294 d18.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForceDirectedTreeLayout", "ForceDirectedTreeLayout.csproj", "{0054050D-392B-40F4-A883-0A5B06CC91BF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Syncfusion.Blazor", "..\..\Source\ej2-blazor-source\Syncfusion.Blazor\Syncfusion.Blazor.csproj", "{86ECB321-52B4-8DDA-9F33-76F54956624C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		{0054050D-392B-40F4-A883-0A5B06CC91BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0054050D-392B-40F4-A883-0A5B06CC91BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0054050D-392B-40F4-A883-0A5B06CC91BF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{86ECB321-52B4-8DDA-9F33-76F54956624C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{86ECB321-52B4-8DDA-9F33-76F54956624C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{86ECB321-52B4-8DDA-9F33-76F54956624C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{86ECB321-52B4-8DDA-9F33-76F54956624C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

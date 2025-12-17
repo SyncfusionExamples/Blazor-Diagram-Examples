@@ -9,7 +9,7 @@
 
 @code
 {
-    private ForceDirectedTreeLayoutSettings forceDirectedSettings = new ForceDirectedTreeLayoutSettings()
+    public ForceDirectedTreeLayoutSettings forceDirectedSettings = new ForceDirectedTreeLayoutSettings()
     {
         ConnectorLength = 100,
         AttractionStrength = 0.7,
@@ -17,7 +17,7 @@
         MaximumIteration = 350
     };
 
-    private void OnNodeCreating(IDiagramObject obj)
+    public void OnNodeCreating(IDiagramObject obj)
     {
         Node node = obj as Node;
         node.Height = 40;
@@ -30,14 +30,14 @@
         node.Style = new ShapeStyle() { Fill = "darkcyan", StrokeWidth = 3, StrokeColor = "Black" };
     }
 
-    private class ForceDirectedDetails
+    public class ForceDirectedDetails
     {
         public string Id { get; set; }
         public string Role { get; set; }
         public string Manager { get; set; }
     }
 
-    private List<ForceDirectedDetails> DataSource = new List<ForceDirectedDetails>()
+    public List<ForceDirectedDetails> DataSource = new List<ForceDirectedDetails>()
     {
         new ForceDirectedDetails() { Id = "parent", Role = "Board" },
         new ForceDirectedDetails() { Id = "1", Role = "General Manager", Manager = "parent" },

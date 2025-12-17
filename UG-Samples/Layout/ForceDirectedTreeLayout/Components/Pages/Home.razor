@@ -8,11 +8,11 @@
 </SfDiagramComponent>
 
 @code {
-    private SfDiagramComponent diagramComponent;
-    private DiagramObjectCollection<Node> Nodes = new DiagramObjectCollection<Node>();
-    private DiagramObjectCollection<Connector> Connectors = new DiagramObjectCollection<Connector>();
+    public SfDiagramComponent diagramComponent;
+    public DiagramObjectCollection<Node> Nodes = new DiagramObjectCollection<Node>();
+    public DiagramObjectCollection<Connector> Connectors = new DiagramObjectCollection<Connector>();
 
-    private ForceDirectedTreeLayoutSettings layoutSettings = new ForceDirectedTreeLayoutSettings
+    public ForceDirectedTreeLayoutSettings layoutSettings = new ForceDirectedTreeLayoutSettings
     {
         ConnectorLength = 120,
         MaximumIteration = 1500,
@@ -20,23 +20,22 @@
         AttractionStrength = 0.8
     };
 
-    // Easy sizing controls
-    private int DepartmentsUnderCeo { get; set; } = 4;
-    private int ManagersPerDepartment { get; set; } = 4;
-    private int TeamsPerManager { get; set; } = 6;
-
+    public int DepartmentsUnderCeo { get; set; } = 4;
+    public int ManagersPerDepartment { get; set; } = 4;
+    public int TeamsPerManager { get; set; } = 6;
+    
     protected override void OnInitialized()
     {
         InitializeDiagram();
     }
 
-    private void InitializeDiagram()
+    public void InitializeDiagram()
     {
         List<OrganizationItem> organizationData = GetCompanyOrganizationData();
         PopulateDiagramFromOrganizationData(organizationData);
     }
 
-    private void PopulateDiagramFromOrganizationData(IEnumerable<OrganizationItem> organizationItems)
+    public void PopulateDiagramFromOrganizationData(IEnumerable<OrganizationItem> organizationItems)
     {
         Dictionary<string, OrganizationItem> itemsById = organizationItems.ToDictionary(item => item.Id);
         foreach (OrganizationItem item in organizationItems)
@@ -50,7 +49,13 @@
         }
     }
 
-    private Node CreateOrganizationNode(OrganizationItem item)
+    public void OnCreated()
+    {
+        FitOptions options = new FitOptions() { Mode = FitMode.Both, Region = DiagramRegion.Content };
+        diagramComponent.FitToPage(options);
+    }
+
+    public Node CreateOrganizationNode(OrganizationItem item)
     {
         ShapeStyle nodeStyle = new ShapeStyle { Fill = "orange", StrokeWidth = 2, StrokeColor = "#8c8c8c" };
         double nodeWidth = 35;
@@ -98,7 +103,7 @@
         };
     }
 
-    private Connector CreateNodeConnector(string sourceNodeId, string targetNodeId)
+    public Connector CreateNodeConnector(string sourceNodeId, string targetNodeId)
     {
         return new Connector
         {
@@ -107,12 +112,6 @@
             TargetID = targetNodeId,
             Type = ConnectorSegmentType.Straight
         };
-    }
-
-    private void OnCreated()
-    {
-        FitOptions options = new FitOptions() { Mode = FitMode.Both, Region = DiagramRegion.Content };
-        diagramComponent!.FitToPage(options);
     }
 
     public enum OrganizationLevel
@@ -131,8 +130,7 @@
         public OrganizationLevel Level { get; set; }
     }
 
-    // Parameterized organization data generator
-    private static List<OrganizationItem> BuildOrganizationData(int departmentCount, int managersPerDepartment, int teamsPerManager)
+    public static List<OrganizationItem> BuildOrganizationData(int departmentCount, int managersPerDepartment, int teamsPerManager)
     {
         List<OrganizationItem> organizationData = new List<OrganizationItem>
         {
@@ -164,9 +162,9 @@
         }
         return organizationData;
     }
-    
+
     // Realistic software company hierarchy: 1 CEO with 4 departments, each with managers and their respective teams
-    private static List<OrganizationItem> GetCompanyOrganizationData()
+    public static List<OrganizationItem> GetCompanyOrganizationData()
     {
         List<OrganizationItem> companyData = new List<OrganizationItem>();
         // CEO level
@@ -211,7 +209,7 @@
             foreach ((string id, string name) manager in managersByDepartment[departmentKey])
                 companyData.Add(new OrganizationItem { Id = manager.id, ParentId = departmentKey, Name = manager.name, Level = OrganizationLevel.Manager });
         }
-        // Teams per manager (Level 4) - variable count based on requirements
+        // Teams per manager (Level 4) - Variable count based on requirements
         Dictionary<string, int> teamCountByManagerId = new Dictionary<string, int>
         {
             ["mgr1"] = 3,

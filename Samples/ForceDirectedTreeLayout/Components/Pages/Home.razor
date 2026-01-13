@@ -1,0 +1,368 @@
+@page "/"
+
+@using Syncfusion.Blazor.Diagram,
+@using Syncfusion.Blazor.Inputs
+
+<div class="col-lg-12 control-section" style="width:100%;">
+    <style>
+        .texstyle {
+            display: table;
+            height: 35px;
+            padding-right: 4px;
+            padding-left: 0px;
+            width: 50%;
+            padding-top: 10px;
+            float: left;
+            position: relative;
+            min-height: 1px;
+        }
+        .textboxlablestyle {
+            padding-left: 0px;
+            padding-right: 0px;
+            float: left;
+            width: 40%;
+        }
+        .textboxstyle {
+            padding-left: 0px;
+            padding-right: 0px;
+            float: left;
+            width: 60%;
+        }
+        .row {
+            margin-left: 0px;
+            margin-right: 0px;
+            display: block;
+        }
+        .e-bigger .e-btn.e-small.e-icon-btn {
+            padding: 0px;
+        }
+        /* Keep toolbar 'selected' look (used by tb-item-selected classes) */
+        .e-toolbar .e-toolbar-items .e-toolbar-item.tb-item-selected .e-tbar-btn.e-btn,
+        .e-toolbar .e-toolbar-items .e-toolbar-item .e-dropdown-btn.tb-item-selected {
+            background: #7d7d7d;
+        }
+        .e-toolbar .e-toolbar-items .e-toolbar-item.tb-item-selected .e-tbar-btn .e-icons.e-btn-icon,
+        .e-toolbar .e-toolbar-items .e-toolbar-item .e-dropdown-btn.tb-item-selected .e-btn-icon {
+            color: #ffffff;
+        }
+        .sb-mobile-diagram {
+            border: 1px solid #d9dedd;
+        }
+    </style>
+    @*End:Hidden*@
+    
+    <div class="col-lg-9 control-section" style="border-right: 1px solid #D7D7D7">
+        <SfDiagramComponent @ref="@diagramComponent" Height="850px" Width="100%" @bind-Nodes="@Nodes" @bind-Connectors="@Connectors" Created="OnCreated" >
+            <SnapSettings Constraints="@SnapConstraints.None"></SnapSettings>
+            <Layout Type="LayoutType.ForceDirectedTree" ForceDirectedTreeLayoutSettings="@layoutSettings">
+            </Layout>
+        </SfDiagramComponent>
+    </div>
+    <div class="col-lg-3 property-section" style = width:25% >
+        <div class="property-panel-header">
+            Properties
+        </div>
+        <div id="propertypanel" class="e-remove-selection">
+            <div class="property-section-content property-panel-content">
+                <div class="row" style="padding-top: 8px">
+                    <div style="display: table;height: 30px;" class="textboxlablestyle">
+                        <div style="display: table-cell; vertical-align: middle">Connector Length</div>
+                    </div>
+                    <div class="textboxstyle" style="padding-left:10px">
+                        <SfNumericTextBox TValue="double" Width="100%" @bind-Value="@ConnectorLength" Min="100" Max="200" Step="5" Format="###.##">
+                            <NumericTextBoxEvents TValue="double" ValueChange="OnConnectorLengthChange"></NumericTextBoxEvents>
+                        </SfNumericTextBox>
+                    </div>
+                </div>
+                <div class="row" style="padding-top: 8px">
+                    <div style="display: table;height: 30px;" class="textboxlablestyle">
+                        <div style="display: table-cell; vertical-align: middle">Maximum Iteration</div>
+                    </div>
+                    <div class="textboxstyle" style="padding-left:10px">
+                        <SfNumericTextBox TValue="int" Width="100%" @bind-Value="@maxIteration" Min="500" Max="1500" Step="50" Format="###.##">
+                            <NumericTextBoxEvents TValue="int" ValueChange="OnIterationChange"></NumericTextBoxEvents>
+                        </SfNumericTextBox>
+                    </div>
+                </div>
+                <div class="row" style="padding-top: 8px">
+                    <div style="display: table;height: 30px;" class="textboxlablestyle">
+                        <div style="display: table-cell; vertical-align: middle">Repulsion Strength</div>
+                    </div>
+                    <div class="textboxstyle" style="padding-left:10px">
+                        <SfNumericTextBox TValue="int" Width="100%" @bind-Value="@repulsionStrength" Min="15000" Max="30000" Step="200" Format="###.##">
+                            <NumericTextBoxEvents TValue="int" ValueChange="OnRepulsionStrengthChange"></NumericTextBoxEvents>
+                        </SfNumericTextBox>
+                    </div>
+                </div>
+                <div class="row" style="padding-top: 8px">
+                    <div style="display: table;height: 30px;" class="textboxlablestyle">
+                        <div style="display: table-cell; vertical-align: middle">Attraction Strength</div>
+                    </div>
+                    <div class="textboxstyle" style="padding-left:10px">
+                        <SfNumericTextBox TValue="double" Width="100%" @bind-Value="@attractionStrength" Min="0.1" Max="1" Step=".1" Format="#.#">
+                            <NumericTextBoxEvents TValue="double" ValueChange="OnAttractionStrengthChange"></NumericTextBoxEvents>
+                        </SfNumericTextBox>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </div>
+</div>
+
+@code {
+    public SfDiagramComponent? diagramComponent;
+    public DiagramObjectCollection<Node> Nodes = new DiagramObjectCollection<Node>();
+    public DiagramObjectCollection<Connector> Connectors = new DiagramObjectCollection<Connector>();
+    public double ConnectorLength = 120;
+    public double attractionStrength = 0.8;
+    public int repulsionStrength = 20000;
+    public int maxIteration = 1500;
+
+
+    public ForceDirectedTreeLayoutSettings layoutSettings = new ForceDirectedTreeLayoutSettings
+    {
+        ConnectorLength = 120,
+        MaximumIteration = 1500,
+        RepulsionStrength = 20000,
+        AttractionStrength = 0.8
+    };
+
+    public int DepartmentsUnderCeo { get; set; } = 4;
+    public int ManagersPerDepartment { get; set; } = 4;
+    public int TeamsPerManager { get; set; } = 6;
+    
+    protected override void OnInitialized()
+    {
+        InitializeDiagram();
+    }
+
+    public void InitializeDiagram()
+    {
+        List<OrganizationItem> organizationData = GetCompanyOrganizationData();
+        PopulateDiagramFromOrganizationData(organizationData);
+    }
+
+    public void PopulateDiagramFromOrganizationData(IEnumerable<OrganizationItem> organizationItems)
+    {
+        Dictionary<string, OrganizationItem> itemsById = organizationItems.ToDictionary(item => item.Id);
+        foreach (OrganizationItem item in organizationItems)
+        {
+            Node node = CreateOrganizationNode(item);
+            Nodes!.Add(node);
+            if (!string.IsNullOrEmpty(item.ParentId) && itemsById.ContainsKey(item.ParentId))
+            {
+                Connectors!.Add(CreateNodeConnector(item.ParentId, item.Id));
+            }
+        }
+    }
+
+    public void OnCreated()
+    {
+        FitOptions options = new FitOptions() { Mode = FitMode.Both, Region = DiagramRegion.Content };
+        diagramComponent?.FitToPage(options);
+    }
+
+    public Node CreateOrganizationNode(OrganizationItem item)
+    {
+        ShapeStyle nodeStyle = new ShapeStyle { Fill = "orange", StrokeWidth = 2, StrokeColor = "#8c8c8c" };
+        double nodeWidth = 35;
+        double nodeHeight = 35;
+        Shape nodeShape = new BasicShape() { Shape = NodeBasicShapes.Ellipse };
+        switch (item.Level)
+        {
+            case OrganizationLevel.Header:
+                nodeStyle.Fill = "#f39c12";
+                nodeWidth = nodeHeight = 140;
+                nodeShape = new BasicShape { Shape = NodeBasicShapes.Ellipse };
+                break;
+            case OrganizationLevel.Department:
+                nodeStyle.Fill = "#27ae60";
+                nodeWidth = nodeHeight = 120;
+                nodeShape = new BasicShape { Shape = NodeBasicShapes.Ellipse };
+                break;
+            case OrganizationLevel.Manager:
+                nodeStyle.Fill = "#2980b9";
+                nodeShape = new BasicShape { Shape = NodeBasicShapes.Ellipse };
+                nodeWidth = nodeHeight = 100;
+                break;
+            case OrganizationLevel.Team:
+                nodeStyle.Fill = "#f39c12";
+                nodeShape = new BasicShape { Shape = NodeBasicShapes.Ellipse };
+                nodeWidth = nodeHeight = 80;
+                break;
+        }
+        return new Node
+        {
+            ID = item.Id,
+            Width = nodeWidth,
+            Height = nodeHeight,
+            Shape = nodeShape,
+            Annotations = new DiagramObjectCollection<ShapeAnnotation>
+            {
+                new ShapeAnnotation
+                {
+                    ID = $"{item.Id}_label",
+                    Content = item.Name,
+                    Style = new TextStyle() { FontSize = 18, Bold = true, Color = "white" }
+                }
+            },
+            Style = nodeStyle
+        };
+    }
+
+    public Connector CreateNodeConnector(string sourceNodeId, string targetNodeId)
+    {
+        return new Connector
+        {
+            ID = $"{sourceNodeId}_{targetNodeId}",
+            SourceID = sourceNodeId,
+            TargetID = targetNodeId,
+            Type = ConnectorSegmentType.Straight
+        };
+    }
+
+    public enum OrganizationLevel
+    {
+        Header,
+        Department,
+        Manager,
+        Team
+    }
+
+    public class OrganizationItem
+    {
+        public string Id { get; set; } = "";
+        public string? ParentId { get; set; }
+        public string Name { get; set; } = "";
+        public OrganizationLevel Level { get; set; }
+    }
+
+    public static List<OrganizationItem> BuildOrganizationData(int departmentCount, int managersPerDepartment, int teamsPerManager)
+    {
+        List<OrganizationItem> organizationData = new List<OrganizationItem>
+        {
+            new OrganizationItem { Id = "departments", ParentId = null, Name = "Departments", Level = OrganizationLevel.Header }
+        };
+        // Create departments
+        for (int departmentIndex = 1; departmentIndex <= departmentCount; departmentIndex++)
+        {
+            string departmentId = $"dept_{departmentIndex}";
+            organizationData.Add(new OrganizationItem { Id = departmentId, ParentId = "departments", Name = $"Department {departmentIndex}", Level = OrganizationLevel.Department });
+            // Create managers for each department
+            for (int managerIndex = 1; managerIndex <= managersPerDepartment; managerIndex++)
+            {
+                string managerId = $"{departmentId}_mgr_{managerIndex}";
+                organizationData.Add(new OrganizationItem { Id = managerId, ParentId = departmentId, Name = $"Manager {departmentIndex}.{managerIndex}", Level = OrganizationLevel.Manager });
+                // Create teams for each manager
+                for (int teamIndex = 1; teamIndex <= teamsPerManager; teamIndex++)
+                {
+                    string teamId = $"{managerId}_team_{teamIndex}";
+                    organizationData.Add(new OrganizationItem
+                    {
+                        Id = teamId,
+                        ParentId = managerId,
+                        Name = $"Team {departmentIndex}.{managerIndex}.{teamIndex}",
+                        Level = OrganizationLevel.Team
+                    });
+                }
+            }
+        }
+        return organizationData;
+    }
+
+    // Realistic software company hierarchy: 1 CEO with 4 departments, each with managers and their respective teams
+    public static List<OrganizationItem> GetCompanyOrganizationData()
+    {
+        List<OrganizationItem> companyData = new List<OrganizationItem>();
+        // CEO level
+        companyData.Add(new OrganizationItem { Id = "departments", ParentId = null, Name = "Departments", Level = OrganizationLevel.Header });
+        // Department level (Level 2)
+        List<OrganizationItem> departmentList = new List<OrganizationItem>
+        {
+            new OrganizationItem { Id = "uxTeam", ParentId = "departments", Name = "UX Team", Level = OrganizationLevel.Department },
+            new OrganizationItem { Id = "devTeam", ParentId = "departments", Name = "Development Team", Level = OrganizationLevel.Department },
+            new OrganizationItem { Id = "salesTeam", ParentId = "departments", Name = "Sales Team", Level = OrganizationLevel.Department },
+            new OrganizationItem { Id = "hrTeam", ParentId = "departments", Name = "HR Team", Level = OrganizationLevel.Department }
+        };
+        foreach (OrganizationItem department in departmentList)
+            companyData.Add(department);
+        // Managers per department (Level 3) - 4 managers per department
+        Dictionary<string, (string id, string name)[]> managersByDepartment = new Dictionary<string, (string id, string name)[]>
+        {
+            ["uxTeam"] = new[]
+            {
+                ("mgr1", "Manager-1"),
+                ("mgr2", "Manager-2"),
+            },
+            ["devTeam"] = new[]
+            {
+                ("po1", "PO-1"),
+                ("po2", "PO-2"),
+                ("po3", "PO-3"),
+                ("po4", "PO-4"),
+            },
+            ["salesTeam"] = new[]
+            {
+                ("agm1", "AGM-1"),
+                ("agm2", "AGM-2"),
+            },
+            ["hrTeam"] = new[]
+            {
+                ("hr_mgr", "Manager"),
+            },
+        };
+        foreach (string departmentKey in managersByDepartment.Keys)
+        {
+            foreach ((string id, string name) manager in managersByDepartment[departmentKey])
+                companyData.Add(new OrganizationItem { Id = manager.id, ParentId = departmentKey, Name = manager.name, Level = OrganizationLevel.Manager });
+        }
+        // Teams per manager (Level 4) - Variable count based on requirements
+        Dictionary<string, int> teamCountByManagerId = new Dictionary<string, int>
+        {
+            ["mgr1"] = 3,
+            ["mgr2"] = 3,
+            ["po1"] = 4,
+            ["po2"] = 4,
+            ["po3"] = 4,
+            ["po4"] = 4,
+            ["agm1"] = 3,
+            ["agm2"] = 3,
+            ["hr_mgr"] = 2,
+        };
+        foreach (string departmentKey in managersByDepartment.Keys)
+        {
+            foreach ((string managerId, string managerName) manager in managersByDepartment[departmentKey])
+            {
+                int teamCount = teamCountByManagerId.ContainsKey(manager.managerId) ? teamCountByManagerId[manager.managerId] : 0;
+                for (int teamIndex = 1; teamIndex <= teamCount; teamIndex++)
+                {
+                    string teamId = $"{manager.managerId}_t{teamIndex}";
+                    companyData.Add(new OrganizationItem
+                    {
+                        Id = teamId,
+                        ParentId = manager.managerId,
+                        Name = $"Team-{teamIndex}",
+                        Level = OrganizationLevel.Team
+                    });
+                }
+            }
+        }
+        return companyData;
+    }
+       public void OnConnectorLengthChange(Syncfusion.Blazor.Inputs.ChangeEventArgs<double> args)
+    {
+        layoutSettings.ConnectorLength = ConnectorLength = args.Value;
+    }
+    public void OnIterationChange(Syncfusion.Blazor.Inputs.ChangeEventArgs<int> args)
+    {
+        layoutSettings.MaximumIteration = maxIteration = args.Value;
+    }
+    public void OnRepulsionStrengthChange(Syncfusion.Blazor.Inputs.ChangeEventArgs<int> args)
+    {
+        layoutSettings.RepulsionStrength = repulsionStrength = args.Value;
+    }
+    public void OnAttractionStrengthChange(Syncfusion.Blazor.Inputs.ChangeEventArgs<double> args)
+    {
+        layoutSettings.AttractionStrength = attractionStrength = args.Value;
+    }
+}

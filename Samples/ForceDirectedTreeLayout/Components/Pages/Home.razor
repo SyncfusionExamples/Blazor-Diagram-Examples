@@ -3,7 +3,7 @@
 @using Syncfusion.Blazor.Diagram,
 @using Syncfusion.Blazor.Inputs
 
-<div class="col-lg-12 control-section" style="width:100%;">
+<div class="col-lg-12 control-section" style="width:100%; display:flex; gap:0;">
     <style>
         .texstyle {
             display: table;
@@ -28,10 +28,13 @@
             float: left;
             width: 60%;
         }
-        .row {
+        .prop-row 
+        {
             margin-left: 0px;
             margin-right: 0px;
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         .e-bigger .e-btn.e-small.e-icon-btn {
             padding: 0px;
@@ -51,20 +54,20 @@
     </style>
     @*End:Hidden*@
     
-    <div class="col-lg-9 control-section" style="border-right: 1px solid #D7D7D7">
+    <div class="col-lg-9 control-section" style="flex: 1 1 75%; border-right: 1px solid #D7D7D7; min-width:0;">
         <SfDiagramComponent @ref="@diagramComponent" Height="850px" Width="100%" @bind-Nodes="@Nodes" @bind-Connectors="@Connectors" Created="OnCreated" >
             <SnapSettings Constraints="@SnapConstraints.None"></SnapSettings>
             <Layout Type="LayoutType.ForceDirectedTree" ForceDirectedTreeLayoutSettings="@layoutSettings">
             </Layout>
         </SfDiagramComponent>
     </div>
-    <div class="col-lg-3 property-section" style = width:25% >
+    <div class="col-lg-3 property-section" style = width:25% min-width:260px;>
         <div class="property-panel-header">
             Properties
         </div>
         <div id="propertypanel" class="e-remove-selection">
             <div class="property-section-content property-panel-content">
-                <div class="row" style="padding-top: 8px">
+                <div class="prop-row" style="padding-top: 8px">
                     <div style="display: table;height: 30px;" class="textboxlablestyle">
                         <div style="display: table-cell; vertical-align: middle">Connector Length</div>
                     </div>
@@ -74,7 +77,7 @@
                         </SfNumericTextBox>
                     </div>
                 </div>
-                <div class="row" style="padding-top: 8px">
+                <div class="prop-row" style="padding-top: 8px">
                     <div style="display: table;height: 30px;" class="textboxlablestyle">
                         <div style="display: table-cell; vertical-align: middle">Maximum Iteration</div>
                     </div>
@@ -84,7 +87,7 @@
                         </SfNumericTextBox>
                     </div>
                 </div>
-                <div class="row" style="padding-top: 8px">
+                <div class="prop-row" style="padding-top: 8px">
                     <div style="display: table;height: 30px;" class="textboxlablestyle">
                         <div style="display: table-cell; vertical-align: middle">Repulsion Strength</div>
                     </div>
@@ -94,7 +97,7 @@
                         </SfNumericTextBox>
                     </div>
                 </div>
-                <div class="row" style="padding-top: 8px">
+                <div class="prop-row" style="padding-top: 8px">
                     <div style="display: table;height: 30px;" class="textboxlablestyle">
                         <div style="display: table-cell; vertical-align: middle">Attraction Strength</div>
                     </div>

@@ -1,7 +1,0 @@
-<Solution>
-  <Folder Name="/src/">
-    <Project Path="src/Api/Api.csproj" />
-    <Project Path="src/BlazorServerStyle/BlazorServerStyle.csproj" />
-    <Project Path="src/Shared/Shared.csproj" />
-  </Folder>
-</Solution>

@@ -13,7 +13,7 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<LayoutNode>()
-            .ToTable("orgchart_layout")
+            .ToTable("org_chart_layout")
             .HasKey(n => n.Id);
 
         modelBuilder.Entity<LayoutNode>()

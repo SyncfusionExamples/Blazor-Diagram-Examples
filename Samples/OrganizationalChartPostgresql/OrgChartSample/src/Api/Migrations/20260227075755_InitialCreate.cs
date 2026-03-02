@@ -13,7 +13,7 @@ namespace Api.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "orgchart_layout",
+                name: "org_chart_layout",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
@@ -22,11 +22,11 @@ namespace Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_orgchart_layout", x => x.Id);
+                    table.PrimaryKey("PK_org_chart_layout", x => x.Id);
                 });
 
             migrationBuilder.InsertData(
-                table: "orgchart_layout",
+                table: "org_chart_layout",
                 columns: new[] { "Id", "parent_id", "role" },
                 values: new object[,]
                 {
@@ -51,8 +51,8 @@ namespace Api.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_orgchart_layout_parent_id",
-                table: "orgchart_layout",
+                name: "IX_org_chart_layout_parent_id",
+                table: "org_chart_layout",
                 column: "parent_id");
         }
 
@@ -60,7 +60,7 @@ namespace Api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "orgchart_layout");
+                name: "org_chart_layout");
         }
     }
 }

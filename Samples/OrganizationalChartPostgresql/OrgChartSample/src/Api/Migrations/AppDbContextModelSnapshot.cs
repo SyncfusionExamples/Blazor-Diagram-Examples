@@ -39,7 +39,7 @@ namespace Api.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("orgchart_layout", (string)null);
+                    b.ToTable("org_chart_layout", (string)null);
 
                     b.HasData(
                         new

@@ -1,4 +1,5 @@
-using Shared.Models;
+using BlazorWASMStyle.Client.Models;
+using System.Net.Http;
 using System.Net.Http.Json;
 
 namespace Services;   // change namespace for WASM project
@@ -14,10 +15,25 @@ public class LayoutService
 
     public async Task<List<LayoutNode>?> GetOrgChartAsync()
     {
-        // build an absolute URI using the registered BaseAddress if present,
-        // otherwise fall back to an explicit API url
-        var apiBase = _http.BaseAddress?.ToString() ?? "http://localhost:5176/";
-        var uri = new Uri(new Uri(apiBase), "api/layout");
-        return await _http.GetFromJsonAsync<List<LayoutNode>>(uri);
+        // Use a relative path so HttpClient's BaseAddress (set in Program.cs)
+        // determines the origin. Retry once to hide transient connection-refused
+        // errors that can occur if the server isn't fully ready when the client
+        // first attempts the fetch.
+        const string relativeApi = "api/layout";
+        for (int attempt = 0; attempt < 2; attempt++)
+        {
+            try
+            {
+                return await _http.GetFromJsonAsync<List<LayoutNode>>(relativeApi);
+            }
+            catch (HttpRequestException)
+            {
+                if (attempt == 1)
+                    throw;
+                await Task.Delay(500);
+            }
+        }
+
+        return null;
     }
 }

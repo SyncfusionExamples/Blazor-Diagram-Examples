@@ -1,9 +1,9 @@
-using Api.Data;
+using BlazorWASMStyle.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Shared.Models;
+using BlazorWASMStyle.Client.Models;
 
-namespace Api.Controllers;
+namespace BlazorWASMStyle.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

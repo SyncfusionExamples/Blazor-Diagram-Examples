@@ -1,8 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Shared.Models;  // Or your namespace
-using System.Text.Json;
+using BlazorWASMStyle.Client.Models;
 
-namespace Api.Data;
+namespace BlazorWASMStyle.Data;
 
 public class AppDbContext : DbContext
 {
@@ -28,7 +27,6 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<LayoutNode>()
             .HasIndex(n => n.ParentId);
 
-        // Seed data
         modelBuilder.Entity<LayoutNode>().HasData(
             new LayoutNode { Id = "parent", ParentId = null, Role = "Board" },
             new LayoutNode { Id = "1",      ParentId = "parent", Role = "General Manager" },

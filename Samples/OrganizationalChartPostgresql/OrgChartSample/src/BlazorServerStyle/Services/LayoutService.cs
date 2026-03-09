@@ -1,4 +1,4 @@
-using Shared.Models;
+using BlazorServerStyle.Models;
 using System.Net.Http.Json;
 
 namespace Services;   // change namespace for WASM project

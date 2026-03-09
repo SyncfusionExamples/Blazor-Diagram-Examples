@@ -14,9 +14,5 @@
     <PackageReference Include="Syncfusion.Blazor.Diagram" Version="100.2.1" />
     <PackageReference Include="Syncfusion.Blazor.Themes" Version="100.2.1" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Shared\Shared.csproj" />
-  </ItemGroup>
   
 </Project>

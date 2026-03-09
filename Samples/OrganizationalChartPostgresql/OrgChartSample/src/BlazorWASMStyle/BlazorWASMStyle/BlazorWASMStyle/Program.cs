@@ -2,6 +2,8 @@ using BlazorWASMStyle.Client.Pages;
 using BlazorWASMStyle.Components;
 using Services;
 using Syncfusion.Blazor;
+using Microsoft.EntityFrameworkCore;
+using BlazorWASMStyle.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +11,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 builder.Services.AddSyncfusionBlazor();
-builder.Services.AddScoped<LayoutService>();
+// Add controllers and DbContext
+builder.Services.AddControllers();
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Register a server-side HttpClient-backed LayoutService so components can be
+// prerendered on the server. The client project also registers LayoutService
+// for the WebAssembly runtime.
+builder.Services.AddHttpClient<LayoutService>(client =>
+{
+    client.BaseAddress = new Uri("http://localhost:5252");
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,6 +41,10 @@ app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages:
 app.UseHttpsRedirection();
 
 app.UseAntiforgery();
+
+app.UseAuthorization();
+
+app.MapControllers();
 
 app.MapStaticAssets();
 app.MapRazorComponents<App>()

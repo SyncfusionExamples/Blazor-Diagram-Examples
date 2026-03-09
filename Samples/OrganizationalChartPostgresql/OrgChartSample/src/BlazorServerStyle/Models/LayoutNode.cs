@@ -1,4 +1,4 @@
-namespace Shared.Models;
+namespace BlazorServerStyle.Models;
 
 public class LayoutNode
 {

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="FlowchartSample/FlowchartSample.Client/FlowchartSample.Client.csproj" />
+  <Project Path="FlowchartSample/FlowchartSample/FlowchartSample.csproj" />
+</Solution>

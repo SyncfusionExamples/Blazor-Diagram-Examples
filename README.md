@@ -1,6 +1,6 @@
 # Blazor Diagram Examples
 
-A comprehensive collection of sample projects showcasing the features and capabilities of the Blazor Diagram component built with Syncfusion.
+A comprehensive collection of demo applications and sample projects showcasing the features and capabilities of the Blazor Diagram component built with Syncfusion.
 
 ## Project Overview
 

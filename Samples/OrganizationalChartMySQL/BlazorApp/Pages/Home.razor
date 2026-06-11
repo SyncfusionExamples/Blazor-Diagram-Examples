@@ -1,0 +1,41 @@
+﻿@page "/"
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Data
+
+<SfDiagramComponent Width="100%" Height="600px" NodeCreating="OnNodeCreating" ConnectorCreating="OnConnectorCreating">
+    <DataSourceSettings ID="Id" ParentID="ParentId">
+        <SfDataManager Url="http://localhost:5180/api/diagram/items" Adaptor="Adaptors.WebApiAdaptor"></SfDataManager>
+    </DataSourceSettings>
+
+    <SnapSettings Constraints="SnapConstraints.None"></SnapSettings>
+
+    <Layout Type="LayoutType.OrganizationalChart"></Layout>
+</SfDiagramComponent>
+
+@code {
+    private void OnNodeCreating(IDiagramObject obj)
+    {
+        var node = obj as Node;
+        node.Width = 120;
+        node.Height = 40;
+        node.Style = new ShapeStyle { Fill = "#1F3A8A", StrokeColor = "#1E40AF" };
+
+        // Node.Data will typically be a Dictionary<string, object> for remote data
+        if (node.Data is Dictionary<string, object> dict && dict.TryGetValue("Name", out var nameObj))
+        {
+            node.Annotations = new DiagramObjectCollection<ShapeAnnotation>
+            {
+                new ShapeAnnotation { Content = nameObj?.ToString(), Style = new TextStyle { Color = "white" } }
+            };
+        }
+    }
+
+    private void OnConnectorCreating(IDiagramObject obj)
+    {
+        var connector = obj as Connector;
+        connector.Type = ConnectorSegmentType.Orthogonal;
+        connector.CornerRadius = 7;
+        connector.TargetDecorator = new DecoratorSettings { Shape = DecoratorShape.None };
+        connector.Style = new ShapeStyle { StrokeColor = "#94A3B8", StrokeWidth = 1.5f };
+    }
+}

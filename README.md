@@ -1,6 +1,6 @@
 # Blazor Diagram Examples
 
-A comprehensive collection of demo applications and sample projects showcasing the features and capabilities of the Blazor Diagram component built with Syncfusion.
+A comprehensive collection of demo applications and sample projects showcasing the features and capabilities of the [Blazor Diagram](https://www.syncfusion.com/blazor-components/blazor-diagram) component built with Syncfusion.
 
 ## Project Overview
 
@@ -31,6 +31,8 @@ This repository provides a wide range of examples demonstrating how to integrate
 2. Open the solution file using Visual Studio 2022.
 3. Restore the NuGet packages by rebuilding the solution.
 4. Run the project.
+
+> Looking for the full Blazor Diagram component overview, features, pricing, and documentation? Visit the [Blazor Diagram](https://www.syncfusion.com/blazor-components/blazor-diagram) page.
 
 ## Additional Resources
 

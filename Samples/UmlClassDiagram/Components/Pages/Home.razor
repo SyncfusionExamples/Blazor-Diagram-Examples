@@ -1,0 +1,424 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+
+<SfDiagramComponent @ref="diagram"
+                    Height="800px"
+                    Width="1400px"
+                    Nodes="@NodeCollection"
+                    Connectors="@ConnectorCollection" Created="@OnCreated">
+    <SnapSettings Constraints="SnapConstraints.None"></SnapSettings>
+    <PageSettings Background="@style" Height="800" Width="1400"></PageSettings>
+</SfDiagramComponent>
+
+@code {
+    SfDiagramComponent diagram;
+
+    DiagramObjectCollection<Node> NodeCollection = new DiagramObjectCollection<Node>();
+    DiagramObjectCollection<Connector> ConnectorCollection = new DiagramObjectCollection<Connector>();
+    BackgroundStyle style = new BackgroundStyle()
+    {
+        ImageSource = "/digital_wallet_uml_background.png",
+        ImageAlign = ImageAlignment.None
+    };
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        InitializeNodes();
+        InitializeConnectors();
+    }
+    private void OnCreated()
+    {
+        diagram.FitToPage();
+    }
+
+    private void InitializeNodes()
+    {
+        // 1. USER CLASS
+        NodeCollection.Add(new Node
+        {
+            ID = "userNode",
+            OffsetX = 190,
+            OffsetY = 190,
+            Width = 230,
+            Height = 190,
+            Shape = new UmlClassifierShape()
+            {
+                Classifier = ClassifierShape.Class,
+                HeaderStyle = new TextStyle() { Fill = "#64748B", Color = "#FFFFFF", Bold = true },
+                ClassShape = new UmlClass()
+                {
+                    Name = "User",
+                    AttributeHeaderSettings = new UmlSectionHeaderSettings()
+                    {
+                        HeaderText = "Properties",
+                        Style = new TextStyle() { Fill = "#64748B", Color = "#FFFFFF", Bold = true }
+                    },
+                    MethodHeaderSettings = new UmlSectionHeaderSettings()
+                    {
+                        HeaderText = "Methods",
+                        Style = new TextStyle() { Fill = "#6d798a", Color = "#FFFFFF", Bold = true }
+                    },
+                    Attributes = new DiagramObjectCollection<UmlClassAttribute>()
+                    {
+                        new UmlClassAttribute() { Name = "userId", Type = "string", Scope = UmlScope.Private, Style = new TextStyle() { Fill = "#E2E8F0", Color = "#334155" }  },
+                        new UmlClassAttribute() { Name = "userName", Type = "string", Scope = UmlScope.Private, Style = new TextStyle() { Fill = "#E2E8F0", Color = "#334155" }  },
+                        new UmlClassAttribute() { Name = "email", Type = "string", Scope = UmlScope.Private , Style = new TextStyle() { Fill = "#E2E8F0", Color = "#334155" } },
+                        new UmlClassAttribute() { Name = "phone", Type = "string", Scope = UmlScope.Private, Style = new TextStyle() { Fill = "#E2E8F0", Color = "#334155" }  },
+                        new UmlClassAttribute() { Name = "createdDate", Type = "DateTime", Scope = UmlScope.Private , Style = new TextStyle() { Fill = "#E2E8F0", Color = "#334155" } }
+                    },
+                    Methods = new DiagramObjectCollection<UmlClassMethod>()
+                    {
+                        new UmlClassMethod() { Name = "Authenticate", Type = "bool", Scope = UmlScope.Public, Style = new TextStyle() { Fill = "#F8FAFC", Color = "#475569" }  },
+                        new UmlClassMethod() { Name = "UpdateProfile", Type = "void", Scope = UmlScope.Public, Style = new TextStyle() { Fill = "#F8FAFC", Color = "#475569" }  },
+                        new UmlClassMethod() { Name = "GetAccountBalance", Type = "decimal", Scope = UmlScope.Public , Style = new TextStyle() { Fill = "#F8FAFC", Color = "#475569" } },
+                        new UmlClassMethod() { Name = "Logout", Type = "void", Scope = UmlScope.Public , Style = new TextStyle() { Fill = "#F8FAFC", Color = "#475569" } }
+                    }
+                }
+            }
+        });
+
+        // 2. ACCOUNT CLASS
+        NodeCollection.Add(new Node
+        {
+            ID = "accountNode",
+            OffsetX = 190,
+            OffsetY = 600,
+            Width = 230,
+            Height = 220,
+            Shape = new UmlClassifierShape()
+            {
+                Classifier = ClassifierShape.Class,
+                HeaderStyle = new TextStyle() { Fill = "#49aaa4", Color = "#FFFFFF", Bold = true },
+                ClassShape = new UmlClass()
+                {
+                    Name = "Account",
+                    AttributeHeaderSettings = new UmlSectionHeaderSettings()
+                    {
+                        HeaderText = "Properties",
+                        Style = new TextStyle() { Fill = "#49aaa4", Color = "#FFFFFF", Bold = true }
+                    },
+                    MethodHeaderSettings = new UmlSectionHeaderSettings()
+                    {
+                        HeaderText = "Methods",
+                        Style = new TextStyle() { Fill = "#69aca7", Color = "#FFFFFF", Bold = true }
+                    },
+                    Attributes = new DiagramObjectCollection<UmlClassAttribute>()
+                    {
+                        new UmlClassAttribute() { Name = "accountId", Type = "string", Scope = UmlScope.Private, Style = new TextStyle() { Fill = "#F0FDFA", Color = "#134E4A" }  },
+                        new UmlClassAttribute() { Name = "accountNumber", Type = "string", Scope = UmlScope.Private , Style = new TextStyle() { Fill = "#F0FDFA", Color = "#134E4A" } },
+                        new UmlClassAttribute() { Name = "balance", Type = "decimal", Scope = UmlScope.Private, Style = new TextStyle() { Fill = "#F0FDFA", Color = "#134E4A" }  },
+                        new UmlClassAttribute() { Name = "currency", Type = "string", Scope = UmlScope.Private , Style = new TextStyle() { Fill = "#F0FDFA", Color = "#134E4A" } },
+                        new UmlClassAttribute() { Name = "accountStatus", Type = "string", Scope = UmlScope.Private, Style = new TextStyle() { Fill = "#F0FDFA", Color = "#134E4A" }  },
+                        new UmlClassAttribute() { Name = "createdDate", Type = "DateTime", Scope = UmlScope.Private, Style = new TextStyle() { Fill = "#F0FDFA", Color = "#134E4A" }  }
+                    },
+                    Methods = new DiagramObjectCollection<UmlClassMethod>()
+                    {
+                        new UmlClassMethod() { Name = "Deposit", Type = "void", Scope = UmlScope.Public, Style = new TextStyle() { Fill = "#f7fffb", Color = "#065F46" } },
+                        new UmlClassMethod() { Name = "Withdraw", Type = "bool", Scope = UmlScope.Public, Style = new TextStyle() { Fill = "#f7fffb", Color = "#065F46" } },
+                        new UmlClassMethod() { Name = "GetBalance", Type = "decimal", Scope = UmlScope.Public, Style = new TextStyle() { Fill = "#f7fffb", Color = "#065F46" } },
+                        new UmlClassMethod() { Name = "TransferFunds", Type = "bool", Scope = UmlScope.Public , Style = new TextStyle() { Fill = "#f7fffb", Color = "#065F46" }},
+                        new UmlClassMethod() { Name = "CloseAccount", Type = "void", Scope = UmlScope.Public, Style = new TextStyle() { Fill = "#f7fffb", Color = "#065F46" } }
+                    }
+                }
+            }
+        });
+
+        // 3. TRANSACTION CLASS
+        NodeCollection.Add(new Node
+        {
+            ID = "transactionNode",
+            OffsetX = 840,
+            OffsetY = 400,
+            Width = 230,
+            Height = 210,
+            Shape = new UmlClassifierShape()
+            {
+                Classifier = ClassifierShape.Class,
+                HeaderStyle = new TextStyle() { Fill = "#8d76b4", Color = "#FFFFFF", Bold = true },
+                ClassShape = new UmlClass()
+                {
+                    Name = "Transaction",
+                    AttributeHeaderSettings = new UmlSectionHeaderSettings()
+                    {
+                        HeaderText = "Properties",
+                        Style = new TextStyle() { Fill = "#8d76b4", Color = "#FFFFFF", Bold = true }
+                    },
+                    MethodHeaderSettings = new UmlSectionHeaderSettings()
+                    {
+                        HeaderText = "Methods",
+                        Style = new TextStyle() { Fill = "#8e79b3", Color = "#FFFFFF", Bold = true }
+                    },
+                    Attributes = new DiagramObjectCollection<UmlClassAttribute>()
+                    {
+                        new UmlClassAttribute() { Name = "transactionId", Type = "string", Scope = UmlScope.Private, Style = new TextStyle() { Fill = "#F3E8FF", Color = "#5B21B6" }  },
+                        new UmlClassAttribute() { Name = "timestamp", Type = "DateTime", Scope = UmlScope.Private, Style = new TextStyle() { Fill = "#F3E8FF", Color = "#5B21B6" }  },
+                        new UmlClassAttribute() { Name = "amount", Type = "decimal", Scope = UmlScope.Private, Style = new TextStyle() { Fill = "#F3E8FF", Color = "#5B21B6" }  },
+                        new UmlClassAttribute() { Name = "paymentMethod", Type = "string", Scope = UmlScope.Private, Style = new TextStyle() { Fill = "#F3E8FF", Color = "#5B21B6" }  },
+                        new UmlClassAttribute() { Name = "status", Type = "string", Scope = UmlScope.Private, Style = new TextStyle() { Fill = "#F3E8FF", Color = "#5B21B6" }  },
+                        new UmlClassAttribute() { Name = "description", Type = "string", Scope = UmlScope.Private, Style = new TextStyle() { Fill = "#F3E8FF", Color = "#5B21B6" }  }
+                    },
+                    Methods = new DiagramObjectCollection<UmlClassMethod>()
+                    {
+                        new UmlClassMethod() { Name = "RecordTransaction", Type = "void", Scope = UmlScope.Public, Style = new TextStyle() { Fill = "#faf5ff", Color = "#5B21B6" }  },
+                        new UmlClassMethod() { Name = "ReverseTransaction", Type = "bool", Scope = UmlScope.Public , Style = new TextStyle() { Fill = "#faf5ff", Color = "#5B21B6" } },
+                        new UmlClassMethod() { Name = "GetTransactionDetails", Type = "string", Scope = UmlScope.Public, Style = new TextStyle() { Fill = "#faf5ff", Color = "#5B21B6" }  },
+                        new UmlClassMethod() { Name = "GenerateReceipt", Type = "string", Scope = UmlScope.Public , Style = new TextStyle() { Fill = "#faf5ff", Color = "#5B21B6" } }
+                    }
+                }
+            }
+        });
+
+        // 4. IPAYMENTPROCESSOR INTERFACE
+        NodeCollection.Add(new Node
+        {
+            ID = "paymentProcessorNode",
+            OffsetX = 520,
+            OffsetY = 520,
+            Width = 230,
+            Height = 150,
+            Shape = new UmlClassifierShape()
+            {
+                Classifier = ClassifierShape.Interface,
+                HeaderStyle = new TextStyle() { Fill = "#f59595", Color = "#FFFFFF", Bold = true },
+                InterfaceShape = new UmlInterface()
+                {
+                    Name = "IPaymentProcessor",
+                    AttributeHeaderSettings = new UmlSectionHeaderSettings()
+                    {
+                        Style = new TextStyle() { Fill = "#f59595", Color = "#FFFFFF", Bold = true }
+                    },
+                    MethodHeaderSettings = new UmlSectionHeaderSettings()
+                    {
+                        HeaderText = "Methods",
+                        Style = new TextStyle() { Fill = "#f59595", Color = "#FFFFFF", Bold = true }
+                    },
+                    Methods = new DiagramObjectCollection<UmlClassMethod>()
+                    {
+                        new UmlClassMethod() { Name = "ProcessPayment", Type = "bool", Scope = UmlScope.Public, Style = new TextStyle() { Fill = "#FFF1F2", Color = "#5B21B6" } },
+                        new UmlClassMethod() { Name = "ValidatePaymentMethod", Type = "bool", Scope = UmlScope.Public, Style = new TextStyle() { Fill = "#FFF1F2", Color = "#5B21B6" } },
+                        new UmlClassMethod() { Name = "ReverseTransaction", Type = "bool", Scope = UmlScope.Public, Style = new TextStyle() { Fill = "#FFF1F2", Color = "#5B21B6" } }
+                    }
+                }
+            }
+        });
+
+        // 5. TRANSACTIONTYPE ENUMERATION
+        NodeCollection.Add(new Node
+        {
+            ID = "transactionTypeNode",
+            OffsetX = 1170,
+            OffsetY = 200,
+            Width = 230,
+            Height = 170,
+            Shape = new UmlClassifierShape()
+            {
+                Classifier = ClassifierShape.Enumeration,
+                HeaderStyle = new TextStyle() { Fill = "#5f6e8f", Color = "#FFFFFF", Bold = true },
+                EnumerationShape = new UmlEnumeration()
+                {
+                    Name = "TransactionType",
+                    MemberHeaderSettings = new UmlSectionHeaderSettings()
+                    {
+                        HeaderText = "Members",
+                        Style = new TextStyle() { Fill = "#5f6e8f", Color = "#FFFFFF", Bold = true }
+                    },
+                    Members = new DiagramObjectCollection<UmlEnumerationMember>()
+                    {
+                        new UmlEnumerationMember() { Name = "Transfer", Style = new TextStyle() { Fill = "#fafcff", Color = "#0F172A" } },
+                        new UmlEnumerationMember() { Name = "Payment", Style = new TextStyle() { Fill = "#fafcff", Color = "#0F172A" } },
+                        new UmlEnumerationMember() { Name = "Withdrawal" , Style = new TextStyle() { Fill = "#fafcff", Color = "#0F172A" }},
+                        new UmlEnumerationMember() { Name = "Deposit" , Style = new TextStyle() { Fill = "#fafcff", Color = "#0F172A" }},
+                        new UmlEnumerationMember() { Name = "Refund" , Style = new TextStyle() { Fill = "#fafcff", Color = "#0F172A" }},
+                        new UmlEnumerationMember() { Name = "Charge" , Style = new TextStyle() { Fill = "#fafcff", Color = "#0F172A" }}
+                    }
+                }
+            }
+        });
+
+        // 6. TRANSACTIONSTATUS ENUMERATION
+        NodeCollection.Add(new Node
+        {
+            ID = "transactionStatusNode",
+            OffsetX = 1170,
+            OffsetY = 600,
+            Width = 230,
+            Height = 170,
+            Shape = new UmlClassifierShape()
+            {
+                Classifier = ClassifierShape.Enumeration,
+                HeaderStyle = new TextStyle() { Fill = "#6e86ca", Color = "#FFFFFF", Bold = true },
+                EnumerationShape = new UmlEnumeration()
+                {
+                    Name = "TransactionStatus",
+                    MemberHeaderSettings = new UmlSectionHeaderSettings()
+                    {
+                        HeaderText = "Members",
+                        Style = new TextStyle() { Fill = "#6e86ca", Color = "#FFFFFF", Bold = true }
+                    },
+                    Members = new DiagramObjectCollection<UmlEnumerationMember>()
+                    {
+                        new UmlEnumerationMember() { Name = "Pending", Style = new TextStyle() { Fill = "#ecedf0", Color = "#1E3A8A" }  },
+                        new UmlEnumerationMember() { Name = "Processing" , Style = new TextStyle() { Fill = "#ecedf0", Color = "#1E3A8A" } },
+                        new UmlEnumerationMember() { Name = "Completed" , Style = new TextStyle() { Fill = "#ecedf0", Color = "#1E3A8A" } },
+                        new UmlEnumerationMember() { Name = "Failed", Style = new TextStyle() { Fill = "#ecedf0", Color = "#1E3A8A" }  },
+                        new UmlEnumerationMember() { Name = "Cancelled", Style = new TextStyle() { Fill = "#ecedf0", Color = "#1E3A8A" }  },
+                        new UmlEnumerationMember() { Name = "Reversed", Style = new TextStyle() { Fill = "#ecedf0", Color = "#1E3A8A" }  }
+                    }
+                }
+            }
+        });
+
+        // 7. WALLETPAYMENTPROCESSOR CLASS
+        NodeCollection.Add(new Node
+        {
+            ID = "walletPaymentProcessorNode",
+            OffsetX = 520,
+            OffsetY = 250,
+            Width = 230,
+            Height = 170,
+            Shape = new UmlClassifierShape()
+            {
+                Classifier = ClassifierShape.Class,
+                HeaderStyle = new TextStyle() { Fill = "#c58080", Color = "#FFFFFF", Bold = true },
+                ClassShape = new UmlClass()
+                {
+                    Name = "WalletPaymentProcessor",
+                    AttributeHeaderSettings = new UmlSectionHeaderSettings()
+                    {
+                        HeaderText = "Properties",
+                        Style = new TextStyle() { Fill = "#c58080", Color = "#FFFFFF", Bold = true }
+                    },
+                    MethodHeaderSettings = new UmlSectionHeaderSettings()
+                    {
+                        HeaderText = "Methods",
+                        Style = new TextStyle() { Fill = "#c58080", Color = "#FFFFFF", Bold = true }
+                    },
+                    Attributes = new DiagramObjectCollection<UmlClassAttribute>()
+                    {
+                        new UmlClassAttribute() { Name = "processingFee", Type = "decimal", Scope = UmlScope.Private, Style = new TextStyle() { Fill = "#FFF1F2", Color = "#7F1D1D" }  }
+                    },
+                    Methods = new DiagramObjectCollection<UmlClassMethod>()
+                    {
+                        new UmlClassMethod() { Name = "ProcessPayment", Type = "bool", Scope = UmlScope.Public, Style = new TextStyle() { Fill = "#FFF1F2", Color = "#9F1239" } },
+                        new UmlClassMethod() { Name = "ValidatePaymentMethod", Type = "bool", Scope = UmlScope.Public, Style = new TextStyle() { Fill = "#FFF1F2", Color = "#9F1239" } },
+                        new UmlClassMethod() { Name = "ReverseTransaction", Type = "bool", Scope = UmlScope.Public, Style = new TextStyle() { Fill = "#FFF1F2", Color = "#9F1239" } }
+                    }
+                }
+            }
+        });
+    }
+
+    private void InitializeConnectors()
+    {
+        // User owns Account - Composition
+        ConnectorCollection.Add(new Connector
+        {
+            ID = "userAccountConnector",
+            SourceID = "userNode",
+            TargetID = "accountNode",
+            Type = ConnectorSegmentType.Orthogonal,
+            CornerRadius = 10,
+            Shape = new RelationShip()
+            {
+                RelationshipShape = Relationship.Composition
+            },
+            Style = new ShapeStyle()
+            {
+                StrokeColor = "#64748B",
+            }
+        });
+
+        // Account uses IPaymentProcessor - UML Dependency
+        ConnectorCollection.Add(new Connector
+        {
+            ID = "accountPaymentProcessorConnector",
+            SourceID = "accountNode",
+            TargetID = "paymentProcessorNode",
+            Type = ConnectorSegmentType.Orthogonal,
+            CornerRadius = 10,
+            Shape = new RelationShip()
+            {
+                RelationshipShape = Relationship.Dependency
+            },
+            Style = new ShapeStyle()
+            {
+                StrokeColor = "#49aaa4",
+            }
+        });
+
+        // WalletPaymentProcessor implements IPaymentProcessor - UML Realization
+        ConnectorCollection.Add(new Connector
+        {
+            ID = "walletProcessorRealizationConnector",
+            SourceID = "walletPaymentProcessorNode",
+            TargetID = "paymentProcessorNode",
+            Type = ConnectorSegmentType.Orthogonal,
+            Shape = new RelationShip()
+            {
+                RelationshipShape = Relationship.Realization
+            },
+            CornerRadius = 10,
+            Style = new ShapeStyle()
+            {
+                StrokeColor = "#bd5c5c",
+            }
+        });
+
+        // WalletPaymentProcessor creates/records Transaction - UML Association
+        ConnectorCollection.Add(new Connector
+        {
+            ID = "walletProcessorTransactionConnector",
+            SourceID = "walletPaymentProcessorNode",
+            TargetID = "transactionNode",
+            Type = ConnectorSegmentType.Orthogonal,
+            Shape = new RelationShip()
+            {
+                RelationshipShape = Relationship.Association,
+                AssociationType = AssociationFlow.Directional
+            },
+            CornerRadius = 10,
+            Style = new ShapeStyle()
+            {
+                StrokeColor = "#bd5c5c",
+            }
+        });
+
+        // Transaction uses TransactionType - UML Dependency
+        ConnectorCollection.Add(new Connector
+        {
+            ID = "transactionTypeConnector",
+            SourceID = "transactionNode",
+            TargetID = "transactionTypeNode",
+            Type = ConnectorSegmentType.Orthogonal,
+            Shape = new RelationShip()
+            {
+                RelationshipShape = Relationship.Dependency
+            },
+            CornerRadius = 10,
+            Style = new ShapeStyle()
+            {
+                StrokeColor = "#7c5eaf",
+            }
+        });
+
+        // Transaction uses TransactionStatus - UML Dependency
+        ConnectorCollection.Add(new Connector
+        {
+            ID = "transactionStatusConnector",
+            SourceID = "transactionNode",
+            TargetID = "transactionStatusNode",
+            Type = ConnectorSegmentType.Orthogonal,
+            Shape = new RelationShip()
+            {
+                RelationshipShape = Relationship.Dependency
+            },
+            CornerRadius = 10,
+            Style = new ShapeStyle()
+            {
+                StrokeColor = "#7c5eaf"
+            }
+        });
+    }
+}

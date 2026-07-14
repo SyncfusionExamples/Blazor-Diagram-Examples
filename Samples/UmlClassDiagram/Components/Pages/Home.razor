@@ -5,26 +5,20 @@
 <SfDiagramComponent @ref="diagram"
                     Height="800px"
                     Width="1400px"
-                    Nodes="@NodeCollection"
-                    Connectors="@ConnectorCollection" Created="@OnCreated">
+                    Nodes="@nodeCollection"
+                    Connectors="@connectorCollection" Created="@OnCreated">
     <SnapSettings Constraints="SnapConstraints.None"></SnapSettings>
     <PageSettings Background="@style" Height="800" Width="1400"></PageSettings>
 </SfDiagramComponent>
 
 @code {
-    SfDiagramComponent diagram;
+    private SfDiagramComponent diagram;
 
-    DiagramObjectCollection<Node> NodeCollection = new DiagramObjectCollection<Node>();
-    DiagramObjectCollection<Connector> ConnectorCollection = new DiagramObjectCollection<Connector>();
-    BackgroundStyle style = new BackgroundStyle()
-    {
-        ImageSource = "/digital_wallet_uml_background.png",
-        ImageAlign = ImageAlignment.None
-    };
+    private DiagramObjectCollection<Node> nodeCollection = new DiagramObjectCollection<Node>();
+    private DiagramObjectCollection<Connector> connectorCollection = new DiagramObjectCollection<Connector>();
 
     protected override void OnInitialized()
     {
-        base.OnInitialized();
         InitializeNodes();
         InitializeConnectors();
     }
@@ -36,7 +30,7 @@
     private void InitializeNodes()
     {
         // 1. USER CLASS
-        NodeCollection.Add(new Node
+        nodeCollection.Add(new Node
         {
             ID = "userNode",
             OffsetX = 190,
@@ -80,7 +74,7 @@
         });
 
         // 2. ACCOUNT CLASS
-        NodeCollection.Add(new Node
+        nodeCollection.Add(new Node
         {
             ID = "accountNode",
             OffsetX = 190,
@@ -126,7 +120,7 @@
         });
 
         // 3. TRANSACTION CLASS
-        NodeCollection.Add(new Node
+        nodeCollection.Add(new Node
         {
             ID = "transactionNode",
             OffsetX = 840,
@@ -171,7 +165,7 @@
         });
 
         // 4. IPAYMENTPROCESSOR INTERFACE
-        NodeCollection.Add(new Node
+        nodeCollection.Add(new Node
         {
             ID = "paymentProcessorNode",
             OffsetX = 520,
@@ -205,7 +199,7 @@
         });
 
         // 5. TRANSACTIONTYPE ENUMERATION
-        NodeCollection.Add(new Node
+        nodeCollection.Add(new Node
         {
             ID = "transactionTypeNode",
             OffsetX = 1170,
@@ -238,7 +232,7 @@
         });
 
         // 6. TRANSACTIONSTATUS ENUMERATION
-        NodeCollection.Add(new Node
+        nodeCollection.Add(new Node
         {
             ID = "transactionStatusNode",
             OffsetX = 1170,
@@ -271,7 +265,7 @@
         });
 
         // 7. WALLETPAYMENTPROCESSOR CLASS
-        NodeCollection.Add(new Node
+        nodeCollection.Add(new Node
         {
             ID = "walletPaymentProcessorNode",
             OffsetX = 520,
@@ -313,7 +307,7 @@
     private void InitializeConnectors()
     {
         // User owns Account - Composition
-        ConnectorCollection.Add(new Connector
+        connectorCollection.Add(new Connector
         {
             ID = "userAccountConnector",
             SourceID = "userNode",
@@ -331,7 +325,7 @@
         });
 
         // Account uses IPaymentProcessor - UML Dependency
-        ConnectorCollection.Add(new Connector
+        connectorCollection.Add(new Connector
         {
             ID = "accountPaymentProcessorConnector",
             SourceID = "accountNode",
@@ -349,7 +343,7 @@
         });
 
         // WalletPaymentProcessor implements IPaymentProcessor - UML Realization
-        ConnectorCollection.Add(new Connector
+        connectorCollection.Add(new Connector
         {
             ID = "walletProcessorRealizationConnector",
             SourceID = "walletPaymentProcessorNode",
@@ -367,7 +361,7 @@
         });
 
         // WalletPaymentProcessor creates/records Transaction - UML Association
-        ConnectorCollection.Add(new Connector
+        connectorCollection.Add(new Connector
         {
             ID = "walletProcessorTransactionConnector",
             SourceID = "walletPaymentProcessorNode",
@@ -386,7 +380,7 @@
         });
 
         // Transaction uses TransactionType - UML Dependency
-        ConnectorCollection.Add(new Connector
+        connectorCollection.Add(new Connector
         {
             ID = "transactionTypeConnector",
             SourceID = "transactionNode",
@@ -404,7 +398,7 @@
         });
 
         // Transaction uses TransactionStatus - UML Dependency
-        ConnectorCollection.Add(new Connector
+        connectorCollection.Add(new Connector
         {
             ID = "transactionStatusConnector",
             SourceID = "transactionNode",

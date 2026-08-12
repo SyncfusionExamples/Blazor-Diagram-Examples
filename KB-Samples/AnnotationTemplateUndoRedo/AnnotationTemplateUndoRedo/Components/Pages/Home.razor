@@ -1,0 +1,135 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
+
+<SfButton Content="UpdateAnnotation1" OnClick="@UpdateAnnotation1" />
+<SfButton Content="UpdateAnnotation2" OnClick="@UpdateAnnotation2" />
+<SfButton Content="Undo" OnClick="@(() => diagram.Undo())" />
+<SfButton Content="Redo" OnClick="@(() => diagram.Redo())" />
+
+<SfDiagramComponent Height="600px" @ref="@diagram" Nodes="@nodes">
+    <DiagramHistoryManager HistoryAdding="@OnHistoryAdding" Undo="@onCustomUndo" Redo="@onCustomRedo" />
+    <DiagramTemplates>
+        <AnnotationTemplate>
+            <div class="annotation-content">
+                @if (!string.IsNullOrEmpty(context.Content))
+                {
+                    @((MarkupString)context.Content)
+                }
+            </div>
+        </AnnotationTemplate>
+    </DiagramTemplates>
+</SfDiagramComponent>
+
+<style>
+    .annotation-content {
+        display: block;
+        height: 100%;
+        width: 100%;
+        align-content: center;
+        padding: 20px;
+    }
+
+        .annotation-content p {
+            margin: unset !important;
+        }
+</style>
+
+@code {
+
+    private SfDiagramComponent diagram;
+    private DiagramObjectCollection<Node> nodes;
+    private bool isAnnotationTemplate = false;
+
+    // This event is triggered before a new entry is added to the history stack.
+    private void OnHistoryAdding(HistoryAddingEventArgs entry)
+    {
+        if (isAnnotationTemplate)
+        {
+            entry.Cancel = true; // To cancel diagram's undo/redo action.
+        }
+    }
+
+    // This methods enable you to implement custom logic for undo
+    private void onCustomUndo(HistoryEntryBase entry)
+    {
+        if (entry.UndoObject != null && entry.UndoObject is Node node)
+        {
+            // To prevent property change entry
+            isAnnotationTemplate = true;
+            diagram.Nodes[0].Annotations[0].Content = node.Annotations?[0].Content;
+            isAnnotationTemplate = false;
+        }
+    }
+    // This methods enable you to implement custom logic for redo
+    private void onCustomRedo(HistoryEntryBase entry)
+    {
+        if (entry.RedoObject != null && entry.RedoObject is Node node)
+        {
+            // To prevent property change entry
+            isAnnotationTemplate = true;
+            diagram.Nodes[0].Annotations[0].Content = node.Annotations?[0].Content;
+            isAnnotationTemplate = false;
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        InitializedDiagram();
+    }
+
+    private void InitializedDiagram()
+    {
+        nodes = new DiagramObjectCollection<Node>();
+        Node node = new Node()
+        {
+            ID = "node",
+            Width = 100,
+            Height = 100,
+            OffsetX = 100,
+            OffsetY = 100,
+            Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+            {
+                new ShapeAnnotation { Content = "<p>Node</p>", UseTemplate = true,  Width = 100, Height = 100 }
+            },
+            Style = new ShapeStyle()
+            {
+                Fill = "#6495ED",
+                StrokeColor = "white"
+            },
+        };
+        nodes.Add(node);
+
+    }
+    private async void UpdateAnnotation(string annotationContent)
+    {
+        diagram.BeginUpdate();
+
+        HistoryEntry entry = new HistoryEntry();
+
+        (entry.UndoObject) = diagram.Nodes?[0].Clone() as Node;
+        entry.Type = HistoryEntryType.Undo;
+
+        // To prevent property change entry
+        isAnnotationTemplate = true;
+        diagram.Nodes[0].Annotations[0].Content = annotationContent;
+        isAnnotationTemplate = false;
+
+        (entry.RedoObject) = diagram.Nodes?[0].Clone() as Node;
+
+        diagram.AddHistoryEntry(entry);
+
+        await diagram.EndUpdateAsync();
+    }
+    private void UpdateAnnotation1()
+    {
+        UpdateAnnotation("<b>Updated Annotation 1</b>");
+    }
+
+    private void UpdateAnnotation2()
+    {
+        UpdateAnnotation("<i>Updated Annotation 2</i>");
+    }
+
+}

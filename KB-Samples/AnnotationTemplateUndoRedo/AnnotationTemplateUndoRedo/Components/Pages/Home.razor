@@ -46,7 +46,9 @@
     {
         if (isAnnotationTemplate)
         {
-            entry.Cancel = true; // To cancel diagram's undo/redo action.
+            // The flag is true during a programmatic AdditionalInfo update.
+            // Cancel the diagram's automatic history entry to prevent duplicates.
+            entry.Cancel = true;
         }
     }
 

@@ -6,7 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Syncfusion.Blazor" Version="*" />
+    <PackageReference Include="Syncfusion.Blazor.Diagram" Version="*" />
+    <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="*" />
     <PackageReference Include="Syncfusion.Blazor.Themes" Version="*" />
   </ItemGroup>
 </Project>

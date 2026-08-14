@@ -12,10 +12,13 @@
     <DiagramHistoryManager HistoryAdding="@OnHistoryAdding" Undo="@onCustomUndo" Redo="@onCustomRedo" />
     <DiagramTemplates>
         <AnnotationTemplate>
-            <div class="annotation-content">
-                @if (!string.IsNullOrEmpty(context.Content))
+            <div>
+                @{
+                    string? content = context.AdditionalInfo["Content"]?.ToString();
+                }
+                @if (!string.IsNullOrEmpty(content))
                 {
-                    @((MarkupString)context.Content)
+                    <div class="node-title">@content</div>
                 }
             </div>
         </AnnotationTemplate>
@@ -23,17 +26,13 @@
 </SfDiagramComponent>
 
 <style>
-    .annotation-content {
-        display: block;
-        height: 100%;
-        width: 100%;
-        align-content: center;
-        padding: 20px;
+    
+    .node-title {
+        font-weight: bold;
+        font-size: 13px;
+        color: #1a1a2e;
     }
 
-        .annotation-content p {
-            margin: unset !important;
-        }
 </style>
 
 @code {
@@ -58,10 +57,14 @@
         {
             // To prevent property change entry
             isAnnotationTemplate = true;
-            diagram.Nodes[0].Annotations[0].Content = node.Annotations?[0].Content;
+            
+            // Restore AdditionalInfo from the undo snapshot (stored on the annotation)
+            diagram.Nodes?[0].Annotations?[0].AdditionalInfo = new Dictionary<string, object>(node.Annotations?[0].AdditionalInfo);
+            
             isAnnotationTemplate = false;
         }
     }
+
     // This methods enable you to implement custom logic for redo
     private void onCustomRedo(HistoryEntryBase entry)
     {
@@ -69,7 +72,10 @@
         {
             // To prevent property change entry
             isAnnotationTemplate = true;
-            diagram.Nodes[0].Annotations[0].Content = node.Annotations?[0].Content;
+
+            // Restore AdditionalInfo from the redo snapshot (stored on the annotation)
+            diagram.Nodes?[0].Annotations?[0].AdditionalInfo = new Dictionary<string, object>(node.Annotations?[0].AdditionalInfo);
+            
             isAnnotationTemplate = false;
         }
     }
@@ -82,16 +88,28 @@
     private void InitializedDiagram()
     {
         nodes = new DiagramObjectCollection<Node>();
+
+        Dictionary<string, object> annotationInfo = new Dictionary<string, object>
+        {
+            { "Content", "Annotation" },
+        };
+
         Node node = new Node()
         {
             ID = "node",
-            Width = 100,
-            Height = 100,
-            OffsetX = 100,
-            OffsetY = 100,
+            Width = 150,
+            Height = 120,
+            OffsetX = 200,
+            OffsetY = 200,
             Annotations = new DiagramObjectCollection<ShapeAnnotation>()
             {
-                new ShapeAnnotation { Content = "<p>Node</p>", UseTemplate = true,  Width = 100, Height = 100 }
+                new ShapeAnnotation
+                {
+                    UseTemplate = true,
+                    Width = 150,
+                    Height = 120,
+                    AdditionalInfo = annotationInfo
+                }
             },
             Style = new ShapeStyle()
             {
@@ -100,36 +118,46 @@
             },
         };
         nodes.Add(node);
-
     }
-    private async void UpdateAnnotation(string annotationContent)
+
+    private async void UpdateAnnotation(string content)
     {
         diagram.BeginUpdate();
 
         HistoryEntry entry = new HistoryEntry();
 
+        // Capture the current state (before changes) as the undo snapshot
         (entry.UndoObject) = diagram.Nodes?[0].Clone() as Node;
+
         entry.Type = HistoryEntryType.Undo;
 
         // To prevent property change entry
         isAnnotationTemplate = true;
-        diagram.Nodes[0].Annotations[0].Content = annotationContent;
+
+        // Update AdditionalInfo on the annotation so context.AdditionalInfo reflects it in the template
+        diagram.Nodes?[0].Annotations?[0].AdditionalInfo = new Dictionary<string, object>
+        {
+            { "Content", content },
+        };
+
         isAnnotationTemplate = false;
 
+        // Capture the updated state as the redo snapshot
         (entry.RedoObject) = diagram.Nodes?[0].Clone() as Node;
 
         diagram.AddHistoryEntry(entry);
 
         await diagram.EndUpdateAsync();
     }
+
     private void UpdateAnnotation1()
     {
-        UpdateAnnotation("<b>Updated Annotation 1</b>");
+        UpdateAnnotation("Updated Annotation 1");
     }
 
     private void UpdateAnnotation2()
     {
-        UpdateAnnotation("<i>Updated Annotation 2</i>");
+        UpdateAnnotation("Updated Annotation 2");
     }
 
 }

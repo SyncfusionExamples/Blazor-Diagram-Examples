@@ -1,0 +1,119 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Diagram.SymbolPalette
+@using shapes = Syncfusion.Blazor.Diagram.NodeShapes
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+
+
+<style>
+    #palette-space{
+        float:left;
+        width:30%;
+    }
+
+    #diagram-space{
+        float: left;
+        width: 70%;
+    }
+</style>
+
+<div id="diagramEventsControlSection">
+    <div id="palette-space">
+        <SfSymbolPaletteComponent @ref="@palette"
+                                  Width="100%"
+                                  Height="700px"
+                                  Palettes="@palettes"
+                                  SymbolHeight="@symbolHeight"
+                                  SymbolWidth="@symbolWidth"
+                                  SymbolDragPreviewSize="@symbolDragPreviewSize"
+                                  SelectionChanged="SelectionChanged"
+                                  AllowDrag="true">
+        </SfSymbolPaletteComponent>
+    </div>
+    <div id="diagram-space">
+        <SfDiagramComponent @ref="@Diagram" Height="700px">
+        </SfDiagramComponent>
+    </div>
+</div>
+
+@code {
+    DiagramSize symbolDragPreviewSize;
+    public SfDiagramComponent Diagram;
+    SfSymbolPaletteComponent palette;
+    public DiagramObjectCollection<Palette> palettes;
+    double symbolHeight = 65;
+    double symbolWidth = 65;
+    public DiagramObjectCollection<NodeBase> basicShapes { get; set; }
+
+    [Inject]
+    protected IJSRuntime jsRuntime { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        palette.Targets = new DiagramObjectCollection<SfDiagramComponent>
+        {
+            Diagram
+        };
+    }
+
+    private async void SelectionChanged(PaletteSelectionChangedEventArgs args)
+    {
+        // To remove the pallete symbol selection
+        await JSRuntime.InvokeVoidAsync("removeSelectedSymbolBackground");
+    }
+
+    protected override void OnInitialized()
+    {
+        symbolDragPreviewSize = new DiagramSize();
+        symbolDragPreviewSize.Width = 65;
+        symbolDragPreviewSize.Height = 65;
+        InitializePalatte();
+    }
+
+    private void InitializePalatte()
+    {
+        palettes = new DiagramObjectCollection<Palette>();
+
+        // palette which contains basic shape nodes
+        basicShapes = new DiagramObjectCollection<NodeBase>
+        {
+            CreateBasicNode("Rectangle",NodeBasicShapes.Rectangle),
+            CreateBasicNode("Ellipse",NodeBasicShapes.Ellipse),
+            CreateBasicNode("Diamond",NodeBasicShapes.Diamond),
+            CreateBasicNode("Triangle",NodeBasicShapes.Triangle),
+        };
+
+#pragma warning disable BL0005
+        palettes.Add(
+           new Palette()
+           {
+               ID = "BasicShape",
+               IsExpanded = true,
+               Symbols = basicShapes,
+               Title = "Basic Shapes",
+               IconCss = "e-ddb-icons e-basic"
+           }
+        );
+#pragma warning restore BL0005
+    }
+
+    // Method to create basic shape node
+    private Node CreateBasicNode(string id, NodeBasicShapes type)
+    {
+        Node node = new Node()
+        {
+            ID = id,
+            Shape = new BasicShape()
+            {
+                Type = shapes.Basic,
+                Shape = type
+            },
+            SearchTags = new List<string>() { "Basic" },
+            Style = new ShapeStyle() { StrokeWidth = 2, StrokeColor = "#757575" }
+        };
+        return node;
+    }
+}

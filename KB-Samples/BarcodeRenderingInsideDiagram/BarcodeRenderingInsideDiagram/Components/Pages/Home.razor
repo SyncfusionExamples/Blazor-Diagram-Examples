@@ -1,0 +1,59 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.BarcodeGenerator
+
+<div class="sf-diagram">
+    <SfDiagramComponent Height="700px" Width="100%" @ref="@diagram" Nodes="@nodes">
+        <DiagramTemplates>
+            <NodeTemplate>
+                @{
+                    Node node = context as Node;
+                    if (node != null && node.ID == "barcodeNode")
+                    {
+                        <SfBarcodeGenerator Width="200px" Height="150px" Type="@BarcodeType.Code39" Value="SYNCFUSION">
+                        </SfBarcodeGenerator>
+                    }
+                    else if (node != null && node.ID == "dataMatrix")
+                    {
+                        <SfDataMatrixGenerator Width="200" Height="150" Value="SYNCFUSION"></SfDataMatrixGenerator>
+                    }
+                }
+            </NodeTemplate>
+        </DiagramTemplates>
+    </SfDiagramComponent>
+</div>
+
+@code {
+    private SfDiagramComponent diagram;
+    private DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+
+    protected override void OnInitialized()
+    {
+        // Create a node that will use the barcode template
+        Node barcodeNode = new Node()
+        {
+            ID = "barcodeNode",
+            OffsetX = 350,
+            OffsetY = 250,
+            Width = 200,
+            Height = 150,
+            // Set the shape as HTML to use the template
+            Shape = new Shape() { Type = NodeShapes.HTML }
+        };
+        nodes.Add(barcodeNode);
+
+        // Create a node that will use the barcode template
+        Node dataMatrix = new Node()
+        {
+            ID = "dataMatrix",
+            OffsetX = 750,
+            OffsetY = 250,
+            Width = 200,
+            Height = 150,
+            // Set the shape as HTML to use the template
+            Shape = new Shape() { Type = NodeShapes.HTML }
+        };
+        nodes.Add(dataMatrix);
+    }
+}

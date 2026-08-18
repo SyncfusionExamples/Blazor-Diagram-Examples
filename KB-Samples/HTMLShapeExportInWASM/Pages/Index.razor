@@ -276,10 +276,6 @@
     public double Right = 30;
     public double Left = 30;
 
-
-    //Defines sfdiagramComponent
-    SfDiagramComponent diagram;
-
     //Defines diagram constraints
     public DiagramConstraints constraints { get; set; }
 
@@ -323,7 +319,7 @@
     }
     private async Task ExportImage()
     {
-        await JS.InvokeAsync<object>("exportToImage", "OrgChartDiagram");
+        await JS.InvokeAsync<object>("exportToImage", Diagram.ID);
     }
     private async void SVGExport()
     {
@@ -337,7 +333,7 @@
     }
       private async Task ExportDiagram()
     {
-        string image = await JS.InvokeAsync<string>("exportToPdf", "OrgChartDiagram");
+        string image = await JS.InvokeAsync<string>("exportToPdf", Diagram.ID);
         string[] images = new string[] { image };
         await ExportToPdf("diagram", PdfPageOrientation.Portrait, true, images);
     }
@@ -346,7 +342,7 @@
         PdfDocument document = new PdfDocument();
         document.PageSettings.Orientation = orientation;
         document.PageSettings.Margins = new PdfMargins() { Left = 0, Right = 0, Top = 0, Bottom = 0 };
-        DiagramRect bounds = Diagram.GetPageBounds();
+        DiagramRect bounds = await JS.InvokeAsync<DiagramRect>("getDiagramBounds", Diagram.ID);
         document.PageSettings.Height = (float)bounds.Height;
         document.PageSettings.Width = (float)bounds.Width;
 

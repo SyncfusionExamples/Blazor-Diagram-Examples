@@ -2,6 +2,7 @@
 
 @using Syncfusion.Blazor.Diagram
 @using Syncfusion.Blazor.Buttons
+@using System.Threading.Tasks
 
 <SfButton Content="UpdateAnnotation1" OnClick="@UpdateAnnotation1" />
 <SfButton Content="UpdateAnnotation2" OnClick="@UpdateAnnotation2" />
@@ -9,7 +10,7 @@
 <SfButton Content="Redo" OnClick="@(() => diagram.Redo())" />
 
 <SfDiagramComponent Height="600px" @ref="@diagram" Nodes="@nodes">
-    <DiagramHistoryManager HistoryAdding="@OnHistoryAdding" Undo="@onCustomUndo" Redo="@onCustomRedo" />
+    <DiagramHistoryManager HistoryAdding="@OnHistoryAdding" Undo="@OnCustomUndo" Redo="@OnCustomRedo" />
     <DiagramTemplates>
         <AnnotationTemplate>
             <div>
@@ -52,8 +53,8 @@
         }
     }
 
-    // This methods enable you to implement custom logic for undo
-    private void onCustomUndo(HistoryEntryBase entry)
+    // Called when the user performs an Undo action.
+    private void OnCustomUndo(HistoryEntryBase entry)
     {
         if (entry.UndoObject != null && entry.UndoObject is Node node)
         {
@@ -67,8 +68,8 @@
         }
     }
 
-    // This methods enable you to implement custom logic for redo
-    private void onCustomRedo(HistoryEntryBase entry)
+    // Called when the user performs an Redo action.
+    private void OnCustomRedo(HistoryEntryBase entry)
     {
         if (entry.RedoObject != null && entry.RedoObject is Node node)
         {
@@ -84,10 +85,10 @@
 
     protected override void OnInitialized()
     {
-        InitializedDiagram();
+        InitializeDiagram();
     }
 
-    private void InitializedDiagram()
+    private void InitializeDiagram()
     {
         nodes = new DiagramObjectCollection<Node>();
 
@@ -122,7 +123,7 @@
         nodes.Add(node);
     }
 
-    private async void UpdateAnnotation(string content)
+    private async Task UpdateAnnotationAsync(string content)
     {
         diagram.BeginUpdate();
 
@@ -154,12 +155,12 @@
 
     private void UpdateAnnotation1()
     {
-        UpdateAnnotation("Updated Annotation 1");
+        _ = UpdateAnnotationAsync("Updated Annotation 1");
     }
 
     private void UpdateAnnotation2()
     {
-        UpdateAnnotation("Updated Annotation 2");
+        _ = UpdateAnnotationAsync("Updated Annotation 2");
     }
 
 }

@@ -260,30 +260,30 @@
     @code {
     @*Hidden:Lines*@
 
-    DiagramInteractions DiagramTool = DiagramInteractions.ZoomPan;
-    ScrollLimitMode scrollLimit { get; set; } = ScrollLimitMode.Diagram;
-    public SfDiagramComponent Diagram;
-    public int? HValue { get; set; } = 60;
-    public int? VValue { get; set; } = 60;
-    public LayoutType Type = LayoutType.HierarchicalTree;
-    public LayoutOrientation OrientationType = LayoutOrientation.TopToBottom;
-    public HorizontalAlignment HorizontalAlignment = HorizontalAlignment.Auto;
-    public VerticalAlignment VerticalAlignment = VerticalAlignment.Auto;
-    public int HorizontalSpacing = 30;
-    public int VerticalSpacing = 60;
-    public double Top = 30;
-    public double Bottom = 30;
-    public double Right = 30;
-    public double Left = 30;
+    private DiagramInteractions diagramTool = DiagramInteractions.ZoomPan;
+    private ScrollLimitMode scrollLimit { get; set; } = ScrollLimitMode.Diagram;
+    private SfDiagramComponent diagram;
+    private int? hValue { get; set; } = 60;
+    private int? vValue { get; set; } = 60;
+    private LayoutType type = LayoutType.HierarchicalTree;
+    private LayoutOrientation orientationType = LayoutOrientation.TopToBottom;
+    private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Auto;
+    private VerticalAlignment verticalAlignment = VerticalAlignment.Auto;
+    private int horizontalSpacing = 30;
+    private int verticalSpacing = 60;
+    private double top = 30;
+    private double bottom = 30;
+    private double right = 30;
+    private double left = 30;
 
     //Defines diagram constraints
-    public DiagramConstraints constraints { get; set; }
+    private DiagramConstraints constraints { get; set; }
 
     //Defines diagrams's nodes collection
-    public DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+    private DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
 
     //Defines diagrams's connectors collection
-    public DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
+    private DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
 
     private void OnConnectorCreating(IDiagramObject connector)
     {
@@ -319,7 +319,7 @@
     }
     private async Task ExportImage()
     {
-        await JS.InvokeAsync<object>("exportToImage", Diagram.ID);
+        await JS.InvokeAsync<object>("exportToImage", diagram.ID);
     }
     private async void SVGExport()
     {
@@ -329,11 +329,11 @@
                 FitToPage = false,
                 Margin = new DiagramThickness() { Bottom = 0, Left = 0, Right = 0, Top = 0 },
             };
-        await Diagram.ExportAsync("Diagram", DiagramExportFormat.SVG, options);
+        await diagram.ExportAsync("Diagram", DiagramExportFormat.SVG, options);
     }
       private async Task ExportDiagram()
     {
-        string image = await JS.InvokeAsync<string>("exportToPdf", Diagram.ID);
+        string image = await JS.InvokeAsync<string>("exportToPdf", diagram.ID);
         string[] images = new string[] { image };
         await ExportToPdf("diagram", PdfPageOrientation.Portrait, true, images);
     }
@@ -342,7 +342,7 @@
         PdfDocument document = new PdfDocument();
         document.PageSettings.Orientation = orientation;
         document.PageSettings.Margins = new PdfMargins() { Left = 0, Right = 0, Top = 0, Bottom = 0 };
-        DiagramRect bounds = await JS.InvokeAsync<DiagramRect>("getDiagramBounds", Diagram.ID);
+        DiagramRect bounds = await JS.InvokeAsync<DiagramRect>("getDiagramBounds", diagram.ID);
         document.PageSettings.Height = (float)bounds.Height;
         document.PageSettings.Width = (float)bounds.Width;
 

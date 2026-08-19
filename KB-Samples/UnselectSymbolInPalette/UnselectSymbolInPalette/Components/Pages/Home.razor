@@ -39,13 +39,13 @@
 </div>
 
 @code {
-    DiagramSize symbolDragPreviewSize;
-    public SfDiagramComponent diagram;
-    SfSymbolPaletteComponent palette;
-    public DiagramObjectCollection<Palette> palettes;
-    double symbolHeight = 65;
-    double symbolWidth = 65;
-    public DiagramObjectCollection<NodeBase> basicShapes { get; set; }
+    private DiagramSize symbolDragPreviewSize;
+    private SfDiagramComponent diagram;
+    private SfSymbolPaletteComponent palette;
+    private DiagramObjectCollection<Palette> palettes;
+    private double symbolHeight = 65;
+    private double symbolWidth = 65;
+    private DiagramObjectCollection<NodeBase> basicShapes { get; set; }
 
     [Inject]
     protected IJSRuntime JsRuntime { get; set; }

@@ -1,9 +1,10 @@
 ﻿@page "/"
+
 @using Syncfusion.Blazor.DropDowns
 @using Syncfusion.Blazor.Diagram
 @using System.Text.Json
-﻿@using Microsoft.JSInterop;
-@inject IJSRuntime jsRuntime;
+@using Microsoft.JSInterop;
+@inject IJSRuntime JsRuntime;
 @using Microsoft.AspNetCore.Components;
 
 
@@ -17,10 +18,10 @@
                 <div class="source-scrollable-list">
                     <!-- Add the scrollable-list class here -->
                     <div class="list-group">
-                        <SfListBox @ref="ListBoxObj" DataSource="@filteredData" Scope="Diagram" TItem="ExtractorUI" AllowDragAndDrop="true" TValue="string[]">
+                        <SfListBox @ref="listBoxObj" DataSource="@filteredData" Scope="Diagram" TItem="ExtractorUI" AllowDragAndDrop="true" TValue="string[]">
                             <ListBoxFieldSettings Text="Extractor" Value="Extractor">
                             </ListBoxFieldSettings>
-                            <ListBoxEvents TValue="string[]" TItem="ExtractorUI" DragStart="DragSrart" OnDrop="OnDrop"></ListBoxEvents>
+                            <ListBoxEvents TValue="string[]" TItem="ExtractorUI" DragStart="DragStart" OnDrop="OnDrop"></ListBoxEvents>
                         </SfListBox>
                     </div>
                 </div>
@@ -29,7 +30,7 @@
         <div class="col-md-9" style="padding-left:1rem;">
             <div class="form-group">
                 <div>
-                    <SfDiagramComponent ID="Diagram" @ref="Diagram" Height="700px"></SfDiagramComponent>
+                    <SfDiagramComponent ID="Diagram" @ref="diagram" Height="700px" Swimlanes="@swimlaneCollections"></SfDiagramComponent>
                 </div>
             </div>
         </div>
@@ -38,15 +39,41 @@
 
 
 @code {
-    public SfDiagramComponent Diagram;
-    SfListBox<string[], ExtractorUI> ListBoxObj;
+    private SfDiagramComponent diagram;
+    private SfListBox<string[], ExtractorUI> listBoxObj;
     private List<ExtractorUI> filteredData = new List<ExtractorUI>();
     private string sampleData = "[{\"Extractor\":\"Facebook Ads\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"FileSystem\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"GitHub\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Google Analytics\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Google Sheets\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"HubSpot\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Jira\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Matomo\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"MongoDB\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"MSSQL\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Mux\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"MySQL\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Notion\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"OpenAPI\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Oracle\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Pipedrive\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"PostgreSQL\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n extractors:\"},{\"Extractor\":\"Salesforce\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Slack\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Strapi\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Stripe\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Web\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Workable\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"ZendeskChat\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"ZendeskSupport\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"ZendeskTalk\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"}]";
+    //Define diagram's swimlane collection.
+    private DiagramObjectCollection<Swimlane> swimlaneCollections = new DiagramObjectCollection<Swimlane>();
 
+    
     protected override async Task OnInitializedAsync()
     {
         // Deserialize sample data into ListBox items
         filteredData = System.Text.Json.JsonSerializer.Deserialize<List<ExtractorUI>>(sampleData);
+
+        Swimlane swimlane1 = new Swimlane()
+            {
+                ID = "Swimlane1",
+                OffsetX = 400,
+                OffsetY = 200,
+                Height = 500,
+                Width = 300,
+                Orientation = Orientation.Horizontal,
+            };
+        // Add swimlane.
+        swimlaneCollections.Add(swimlane1);
+        Swimlane swimlane2 = new Swimlane()
+            {
+                ID = "Swimlane2",
+                OffsetX = 800,
+                OffsetY = 200,
+                Height = 500,
+                Width = 300,
+                Orientation = Orientation.Vertical,
+            };
+        // Add swimlane.
+        swimlaneCollections.Add(swimlane2);
     }
 
     private readonly string scope = "combined-list";
@@ -70,49 +97,161 @@
     public class ExtractorUI
     {
         public string Extractor { get; set; }
-        public string yamlfile { get; set; }
+        public string YamlFile { get; set; }
         public bool IsEdited { get; set; }
         public bool IsCustom { get; set; }
     }
 }
 
 @code {
-    DiagramPoint currentPosition;
-    bool isDragging;
+    private DiagramPoint currentPosition;
+    private bool isDragging;
     // Sets dragging state when drag begins
-    public void DragSrart(DragEventArgs<ExtractorUI> args)
+    public void DragStart(DragEventArgs<ExtractorUI> args)
     {
         isDragging = true;
     }
-    // Handles drop event to add ListBox items as nodes in the Diagram
+
     public async void OnDrop(DropEventArgs<ExtractorUI> args)
     {
-        ExtractorUI item = args.Items.First<ExtractorUI>();
-        if (isDragging)
+        if (!isDragging)
         {
-            // Fetch ListBox width to adjust positioning
-            string listViewWith = await jsRuntime.InvokeAsync<string>("getlistViewWidth", "listbox");
-            double listViewWithDoubleValue = Double.Parse(listViewWith);
-            // Add a new node to Diagram based on ListBox item details
-            await Diagram.AddDiagramElementsAsync(new DiagramObjectCollection<NodeBase>()
-            {
-                new Node()
-                {
-                    Height = 100,
-                    Width = 100,
-                    OffsetX = args.Left-listViewWithDoubleValue,
-                    OffsetY = args.Top,
-                    Annotations = new DiagramObjectCollection<ShapeAnnotation>()
-                    {
-                        new ShapeAnnotation()
-                        {
-                            Content = (args.Items.FirstOrDefault() as ExtractorUI)?.Extractor,
-                        }
-                    }
-                }
-            });
-            isDragging = false;
+            currentPosition = null;
+            return;
         }
+
+        // Compute drop position
+        (double dropX, double dropY) = await GetDropPositionAsync(args);
+
+        // Build node
+        Node droppedNode = CreateDroppedNode(args, dropX, dropY);
+
+        // Try placing inside swimlanes
+        if (diagram?.Swimlanes != null && diagram.Swimlanes.Count > 0 &&
+            TryPlaceInSwimlanes(droppedNode, dropX, dropY))
+        {
+            isDragging = false;
+            currentPosition = null;
+            return;
+        }
+
+        // Fallback: add to root
+        await diagram.AddDiagramElementsAsync(new DiagramObjectCollection<NodeBase> { droppedNode });
+        isDragging = false;
         currentPosition = null;
+    }
+
+    private async Task<(double x, double y)> GetDropPositionAsync(DropEventArgs<ExtractorUI> args)
+    {
+        string listWidthStr = await JsRuntime.InvokeAsync<string>("getlistViewWidth", "listbox");
+        double listWidth = Double.Parse(listWidthStr);
+        return (args.Left - listWidth, args.Top);
+    }
+
+    private static Node CreateDroppedNode(DropEventArgs<ExtractorUI> args, double x, double y)
+    {
+        return new Node
+        {
+            Height = 100,
+            Width = 100,
+            OffsetX = x,
+            OffsetY = y,
+            Annotations = new DiagramObjectCollection<ShapeAnnotation>
+            {
+                new ShapeAnnotation { Content = (args.Items.FirstOrDefault() as ExtractorUI)?.Extractor }
+            }
+        };
+    }
+
+    private bool TryPlaceInSwimlanes(Node droppedNode, double x, double y)
+    {
+        foreach (Swimlane swimlane in diagram.Swimlanes)
+        {
+            if (swimlane?.Lanes == null || swimlane.Lanes.Count == 0)
+                continue;
+
+            if (swimlane.Orientation == Orientation.Horizontal)
+            {
+                if (TryPlaceInHorizontalLanes(swimlane, droppedNode, x, y))
+                    return true;
+            }
+            else
+            {
+                if (TryPlaceInVerticalLanes(swimlane, droppedNode, x, y))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    private static bool TryPlaceInHorizontalLanes(Swimlane swimlane, Node droppedNode, double x, double y)
+    {
+        double swWidth = swimlane.Width ?? 0d;
+        double swHeight = swimlane.Height ?? 0d;
+        double left = swimlane.OffsetX - swWidth / 2d;
+        double top = swimlane.OffsetY - swHeight / 2d;
+
+        double headerWidth = swimlane.Header?.Width ?? 0d;
+
+        double contentLeft = left + headerWidth;
+        double contentTop = top;
+        double contentWidth = Math.Max(0d, swWidth - headerWidth);
+
+        double laneTop = contentTop;
+
+        foreach (Lane lane in swimlane.Lanes)
+        {
+            double laneHeight = lane.Height ?? 0d;
+            if (laneHeight <= 0d) { continue; }
+
+            if (PointInRect(x, y, contentLeft, laneTop, contentWidth, laneHeight))
+            {
+                lane.Children.Add(droppedNode);
+                return true;
+            }
+
+            laneTop += laneHeight;
+        }
+
+        return false;
+    }
+
+    private static bool TryPlaceInVerticalLanes(Swimlane swimlane, Node droppedNode, double x, double y)
+    {
+        double swWidth = swimlane.Width ?? 0d;
+        double swHeight = swimlane.Height ?? 0d;
+        double left = swimlane.OffsetX - swWidth / 2d;
+        double top = swimlane.OffsetY - swHeight / 2d;
+
+        double headerHeight = swimlane.Header?.Height ?? 0d;
+
+        double contentLeft = left;
+        double contentTop = top + headerHeight;
+        double contentHeight = Math.Max(0d, swHeight - headerHeight);
+
+        double laneLeft = contentLeft;
+
+        foreach (Lane lane in swimlane.Lanes)
+        {
+            double laneWidth = lane.Width ?? 0d;
+            if (laneWidth <= 0d) { continue; }
+
+            if (PointInRect(x, y, laneLeft, contentTop, laneWidth, contentHeight))
+            {
+                lane.Children.Add(droppedNode);
+                return true;
+            }
+
+            laneLeft += laneWidth;
+        }
+
+        return false;
+    }
+
+    private static bool PointInRect(double x, double y, double left, double top, double width, double height)
+    {
+        return x >= left && x <= left + width && y >= top && y <= top + height;
+    }
+
     }
 }

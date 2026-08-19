@@ -30,7 +30,7 @@
         <div class="col-md-9" style="padding-left:1rem;">
             <div class="form-group">
                 <div>
-                    <SfDiagramComponent ID="Diagram" @ref="diagram" Height="700px" Swimlanes="@SwimlaneCollections"></SfDiagramComponent>
+                    <SfDiagramComponent ID="Diagram" @ref="diagram" Height="700px" Swimlanes="@swimlaneCollections"></SfDiagramComponent>
                 </div>
             </div>
         </div>
@@ -39,12 +39,12 @@
 
 
 @code {
-    public SfDiagramComponent diagram;
+    private SfDiagramComponent diagram;
     private SfListBox<string[], ExtractorUI> listBoxObj;
     private List<ExtractorUI> filteredData = new List<ExtractorUI>();
     private string sampleData = "[{\"Extractor\":\"Facebook Ads\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"FileSystem\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"GitHub\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Google Analytics\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Google Sheets\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"HubSpot\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Jira\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Matomo\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"MongoDB\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"MSSQL\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Mux\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"MySQL\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Notion\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"OpenAPI\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Oracle\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Pipedrive\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"PostgreSQL\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n extractors:\"},{\"Extractor\":\"Salesforce\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Slack\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Strapi\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Stripe\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Web\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"Workable\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"ZendeskChat\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"ZendeskSupport\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"},{\"Extractor\":\"ZendeskTalk\",\"yamlfile\":\"version: 1\\r\\nencrypt_credentials: false\\r\\nplugins:\\r\\n  extractors:\"}]";
     //Define diagram's swimlane collection.
-    DiagramObjectCollection<Swimlane> SwimlaneCollections = new DiagramObjectCollection<Swimlane>();
+    private DiagramObjectCollection<Swimlane> swimlaneCollections = new DiagramObjectCollection<Swimlane>();
 
     
     protected override async Task OnInitializedAsync()
@@ -62,7 +62,7 @@
                 Orientation = Orientation.Horizontal,
             };
         // Add swimlane.
-        SwimlaneCollections.Add(swimlane1);
+        swimlaneCollections.Add(swimlane1);
         Swimlane swimlane2 = new Swimlane()
             {
                 ID = "Swimlane2",
@@ -73,7 +73,7 @@
                 Orientation = Orientation.Vertical,
             };
         // Add swimlane.
-        SwimlaneCollections.Add(swimlane2);
+        swimlaneCollections.Add(swimlane2);
     }
 
     private readonly string scope = "combined-list";
@@ -104,8 +104,8 @@
 }
 
 @code {
-    DiagramPoint currentPosition;
-    bool isDragging;
+    private DiagramPoint currentPosition;
+    private bool isDragging;
     // Sets dragging state when drag begins
     public void DragStart(DragEventArgs<ExtractorUI> args)
     {

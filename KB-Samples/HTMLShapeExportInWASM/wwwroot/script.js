@@ -19,38 +19,38 @@ window.download = function download(image) {
 
 window.exportToImage = async function (elementId) {
     var image = "";
-    const original1 = document.getElementById(elementId + '_diagramLayer_div');
-    const original2 = document.getElementById(elementId + '_htmlLayer');
-    const clone1 = original1.cloneNode(true);
-    const clone2 = original2.cloneNode(true);
-    clone1.appendChild(clone2);
-    const tempContainer = document.createElement('div');
-    tempContainer.style.position = 'absolute';
-    tempContainer.style.left = '-9999px';
-    tempContainer.style.top = '-9999px';
-    tempContainer.appendChild(clone1);
-    document.body.appendChild(tempContainer);
-    await html2canvas(clone1).then(canvas => image = canvas.toDataURL("image/png"));
+    const diagramLayerElement = document.getElementById(elementId + '_diagramLayer_div');
+    const htmlLayerElement = document.getElementById(elementId + '_htmlLayer');
+    const clonedDiagramLayer = diagramLayerElement.cloneNode(true);
+    const clonedHtmlLayer = htmlLayerElement.cloneNode(true);
+    clonedDiagramLayer.appendChild(clonedHtmlLayer);
+    const exportContainer = document.createElement('div');
+    exportContainer.style.position = 'absolute';
+    exportContainer.style.left = '-9999px';
+    exportContainer.style.top = '-9999px';
+    exportContainer.appendChild(clonedDiagramLayer);
+    document.body.appendChild(exportContainer);
+    await html2canvas(clonedDiagramLayer).then(canvas => image = canvas.toDataURL("image/png"));
     var link = document.createElement("a");
     link.href = image;
     link.download = "diagram.png";
     link.click();
 }
 window.exportToPdf = async function (elementId) {
-    const original1 = document.getElementById(elementId + '_diagramLayer_div');
-    const original2 = document.getElementById(elementId + '_htmlLayer');
-    const clone1 = original1.cloneNode(true);
-    const clone2 = original2.cloneNode(true);
-    clone1.appendChild(clone2);
-    const tempContainer = document.createElement('div');
-    tempContainer.style.position = 'absolute';
-    tempContainer.style.left = '-9999px';
-    tempContainer.style.top = '-9999px';
-    tempContainer.appendChild(clone1);
-    document.body.appendChild(tempContainer);
+    const diagramLayerElement = document.getElementById(elementId + '_diagramLayer_div');
+    const htmlLayerElement = document.getElementById(elementId + '_htmlLayer');
+    const clonedDiagramLayer = diagramLayerElement.cloneNode(true);
+    const clonedHtmlLayer = htmlLayerElement.cloneNode(true);
+    clonedDiagramLayer.appendChild(clonedHtmlLayer);
+    const exportContainer = document.createElement('div');
+    exportContainer.style.position = 'absolute';
+    exportContainer.style.left = '-9999px';
+    exportContainer.style.top = '-9999px';
+    exportContainer.appendChild(clonedDiagramLayer);
+    document.body.appendChild(exportContainer);
     var image = "";
-    await html2canvas(clone1).then(canvas => image = canvas.toDataURL("image/png"));
-    document.body.removeChild(tempContainer);
+    await html2canvas(clonedDiagramLayer).then(canvas => image = canvas.toDataURL("image/png"));
+    document.body.removeChild(exportContainer);
     return image;
 }
 

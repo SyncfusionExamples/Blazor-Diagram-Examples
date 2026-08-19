@@ -43,8 +43,8 @@
         };
         nodes.Add(barcodeNode);
 
-        // Create a node that will use the barcode template
-        Node dataMatrix = new Node()
+        // Create a node that will use the data matrix template
+        Node dataMatrixNode = new Node()
         {
             ID = "dataMatrix",
             OffsetX = 750,
@@ -54,6 +54,6 @@
             // Set the shape as HTML to use the template
             Shape = new Shape() { Type = NodeShapes.HTML }
         };
-        nodes.Add(dataMatrix);
+        nodes.Add(dataMatrixNode);
     }
 }

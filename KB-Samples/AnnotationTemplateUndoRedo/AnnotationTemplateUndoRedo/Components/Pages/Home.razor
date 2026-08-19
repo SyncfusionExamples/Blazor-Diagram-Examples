@@ -1,0 +1,166 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
+@using System.Threading.Tasks
+
+<SfButton Content="UpdateAnnotation1" OnClick="@UpdateAnnotation1" />
+<SfButton Content="UpdateAnnotation2" OnClick="@UpdateAnnotation2" />
+<SfButton Content="Undo" OnClick="@(() => diagram.Undo())" />
+<SfButton Content="Redo" OnClick="@(() => diagram.Redo())" />
+
+<SfDiagramComponent Height="600px" @ref="@diagram" Nodes="@nodes">
+    <DiagramHistoryManager HistoryAdding="@OnHistoryAdding" Undo="@OnCustomUndo" Redo="@OnCustomRedo" />
+    <DiagramTemplates>
+        <AnnotationTemplate>
+            <div>
+                @{
+                    string? content = context.AdditionalInfo["Content"]?.ToString();
+                }
+                @if (!string.IsNullOrEmpty(content))
+                {
+                    <div class="node-title">@content</div>
+                }
+            </div>
+        </AnnotationTemplate>
+    </DiagramTemplates>
+</SfDiagramComponent>
+
+<style>
+    
+    .node-title {
+        font-weight: bold;
+        font-size: 13px;
+        color: #1a1a2e;
+    }
+
+</style>
+
+@code {
+
+    private SfDiagramComponent diagram;
+    private DiagramObjectCollection<Node> nodes;
+    private bool isAnnotationTemplate = false;
+
+    // This event is triggered before a new entry is added to the history stack.
+    private void OnHistoryAdding(HistoryAddingEventArgs entry)
+    {
+        if (isAnnotationTemplate)
+        {
+            // The flag is true during a programmatic AdditionalInfo update.
+            // Cancel the diagram's automatic history entry to prevent duplicates.
+            entry.Cancel = true;
+        }
+    }
+
+    // Called when the user performs an Undo action.
+    private void OnCustomUndo(HistoryEntryBase entry)
+    {
+        if (entry.UndoObject != null && entry.UndoObject is Node node)
+        {
+            // To prevent property change entry
+            isAnnotationTemplate = true;
+            
+            // Restore AdditionalInfo from the undo snapshot (stored on the annotation)
+            diagram.Nodes?[0].Annotations?[0].AdditionalInfo = new Dictionary<string, object>(node.Annotations?[0].AdditionalInfo);
+            
+            isAnnotationTemplate = false;
+        }
+    }
+
+    // Called when the user performs an Redo action.
+    private void OnCustomRedo(HistoryEntryBase entry)
+    {
+        if (entry.RedoObject != null && entry.RedoObject is Node node)
+        {
+            // To prevent property change entry
+            isAnnotationTemplate = true;
+
+            // Restore AdditionalInfo from the redo snapshot (stored on the annotation)
+            diagram.Nodes?[0].Annotations?[0].AdditionalInfo = new Dictionary<string, object>(node.Annotations?[0].AdditionalInfo);
+            
+            isAnnotationTemplate = false;
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        InitializeDiagram();
+    }
+
+    private void InitializeDiagram()
+    {
+        nodes = new DiagramObjectCollection<Node>();
+
+        Dictionary<string, object> annotationInfo = new Dictionary<string, object>
+        {
+            { "Content", "Annotation" },
+        };
+
+        Node node = new Node()
+        {
+            ID = "node",
+            Width = 150,
+            Height = 120,
+            OffsetX = 200,
+            OffsetY = 200,
+            Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+            {
+                new ShapeAnnotation
+                {
+                    UseTemplate = true,
+                    Width = 150,
+                    Height = 120,
+                    AdditionalInfo = annotationInfo
+                }
+            },
+            Style = new ShapeStyle()
+            {
+                Fill = "#6495ED",
+                StrokeColor = "white"
+            },
+        };
+        nodes.Add(node);
+    }
+
+    private async Task UpdateAnnotationAsync(string content)
+    {
+        diagram.BeginUpdate();
+
+        HistoryEntry entry = new HistoryEntry();
+
+        // Capture the current state (before changes) as the undo snapshot
+        (entry.UndoObject) = diagram.Nodes?[0].Clone() as Node;
+
+        entry.Type = HistoryEntryType.Undo;
+
+        // To prevent property change entry
+        isAnnotationTemplate = true;
+
+        // Update AdditionalInfo on the annotation so context.AdditionalInfo reflects it in the template
+        diagram.Nodes?[0].Annotations?[0].AdditionalInfo = new Dictionary<string, object>
+        {
+            { "Content", content },
+        };
+
+        isAnnotationTemplate = false;
+
+        // Capture the updated state as the redo snapshot
+        (entry.RedoObject) = diagram.Nodes?[0].Clone() as Node;
+
+        diagram.AddHistoryEntry(entry);
+
+        await diagram.EndUpdateAsync();
+    }
+
+    private void UpdateAnnotation1()
+    {
+        _ = UpdateAnnotationAsync("Updated Annotation 1");
+    }
+
+    private void UpdateAnnotation2()
+    {
+        _ = UpdateAnnotationAsync("Updated Annotation 2");
+    }
+
+}

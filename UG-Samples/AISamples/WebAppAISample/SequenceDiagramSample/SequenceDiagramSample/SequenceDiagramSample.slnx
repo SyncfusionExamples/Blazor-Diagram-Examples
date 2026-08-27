@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SequenceDiagramSample/SequenceDiagramSample.Client/SequenceDiagramSample.Client.csproj" />
+  <Project Path="SequenceDiagramSample/SequenceDiagramSample/SequenceDiagramSample.csproj" />
+</Solution>

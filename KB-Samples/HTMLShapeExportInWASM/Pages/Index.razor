@@ -14,24 +14,24 @@
 @using Syncfusion.PdfExport;
 
 <div id="OrgChartDiagram" style="width:3000px;height:1000px;">
-    <SfDiagramComponent @ref="@Diagram" ID="diagramContent" Width="100%" Height="100%" ConnectorCreating="@OnConnectorCreating" NodeCreating="@OnNodeCreating">
+    <SfDiagramComponent @ref="@diagram" ID="diagramContent" Width="100%" Height="100%" ConnectorCreating="@OnConnectorCreating" NodeCreating="@OnNodeCreating">
         <PageSettings>
             <BackgroundStyle Background="transaparent"></BackgroundStyle>
         </PageSettings>
         <DataSourceSettings ID="EmployeeID" ParentID="ParentID" DataSource="DataSource"> </DataSourceSettings>
-        <Layout @bind-Type="Type" @bind-HorizontalSpacing="@HorizontalSpacing" @bind-Orientation="@OrientationType" @bind-VerticalSpacing="@VerticalSpacing" @bind-HorizontalAlignment="@HorizontalAlignment" @bind-VerticalAlignment="@VerticalAlignment" GetLayoutInfo="GetLayoutInfo">
-            <LayoutMargin @bind-Top="@Top" @bind-Bottom="@Bottom" @bind-Right="@Right" @bind-Left="@Left"></LayoutMargin>
+        <Layout @bind-Type="type" @bind-HorizontalSpacing="@horizontalSpacing" @bind-Orientation="@orientationType" @bind-VerticalSpacing="@verticalSpacing" @bind-HorizontalAlignment="@horizontalAlignment" @bind-VerticalAlignment="@verticalAlignment" GetLayoutInfo="GetLayoutInfo">
+            <LayoutMargin @bind-Top="@top" @bind-Bottom="@bottom" @bind-Right="@right" @bind-Left="@left"></LayoutMargin>
         </Layout>
 
         <SnapSettings Constraints="@SnapConstraints.None"></SnapSettings>
         <DiagramTemplates>
             <NodeTemplate>
                 @{
-                        Node node1 = (context as Node);
-                        string Name = (node1.Data as HierarchicalDetails).Name;
-                        string Role = (node1.Data as HierarchicalDetails).Designation;
-                        string Imageurl = (node1.Data as HierarchicalDetails).BG;
-                        if (Name == "Maria Anders")
+                        Node node = context as Node;
+                        string name = (node.Data as HierarchicalDetails).Name;
+                        string role = (node.Data as HierarchicalDetails).Designation;
+                        string imageUrl = (node.Data as HierarchicalDetails).BG;
+                        if (name == "Maria Anders")
                         {
                             <div class=e-orgchart-div style=" width: 181px;
                         height: 54px;
@@ -53,7 +53,7 @@
                         right: 12px;
                         /* top: 154px; */
                         float: left;
-                        background-size: 100% 100%;background-image: url(@( @Imageurl));">
+                        background-size: 100% 100%;background-image: url(@( @imageUrl));">
                                     </div>
                                 </div><span class="e-orgchart-name-div" style="     color: rgba(64.81249898672104, 64.81249898672104, 64.81249898672104, 1);
                         width: 150px;
@@ -64,7 +64,7 @@
                         font-family: Roboto;
                         text-align: left;
                         font-size: 14px;
-                        letter-spacing: 0;margin-left:-4px">@Name</span><span style="  color: rgba(122.1874974668026, 122.1874974668026, 122.1874974668026, 1);
+                        letter-spacing: 0;margin-left:-4px">@name</span><span style="  color: rgba(122.1874974668026, 122.1874974668026, 122.1874974668026, 1);
                         width: 100px;
                         height: 14px;
                         position: absolute;
@@ -73,7 +73,7 @@
                         font-family: Roboto;
                         text-align: left;
                         font-size: 12px;
-                        letter-spacing: 0;" class="e-orgchart-role-div">@Role</span>
+                        letter-spacing: 0;" class="e-orgchart-role-div">@role</span>
                                 <div class="e-orgchart-whole-div" style=" border-radius: 500px;
 
                         width: 44px;
@@ -83,7 +83,7 @@
                         top: 5px;margin-left:-4px"></div>
                             </div>
                         }
-                        else if (Name == "Miguel Angel Paolino")
+                        else if (name == "Miguel Angel Paolino")
                         {
                             <div class=e-orgchart-div style=" width: 181px;
                         height: 54px;
@@ -105,7 +105,7 @@
                         right: 12px;
                         /* top: 154px; */
                         float: left;
-                        background-size: 100% 100%;background-image: url(@(  @Imageurl));">
+                        background-size: 100% 100%;background-image: url(@(  @imageUrl));">
                                     </div>
                                 </div><span class="e-orgchart-name-div" style="     color: rgba(64.81249898672104, 64.81249898672104, 64.81249898672104, 1);
                         width: 150px;
@@ -116,7 +116,7 @@
                         font-family: Roboto;
                         text-align: left;
                         font-size: 14px;
-                        letter-spacing: 0;margin-left:-4px">@Name</span><span style="  color: rgba(122.1874974668026, 122.1874974668026, 122.1874974668026, 1);
+                        letter-spacing: 0;margin-left:-4px">@name</span><span style="  color: rgba(122.1874974668026, 122.1874974668026, 122.1874974668026, 1);
                         width: 100px;
                         height: 14px;
                         position: absolute;
@@ -125,7 +125,7 @@
                         font-family: Roboto;
                         text-align: left;
                         font-size: 12px;
-                        letter-spacing: 0;" class="e-orgchart-role-div">@Role</span>
+                        letter-spacing: 0;" class="e-orgchart-role-div">@role</span>
                                 <div class="e-orgchart-whole-div" style=" border-radius: 500px;
 
                         width: 44px;
@@ -136,7 +136,7 @@
                             </div>
 
                         }
-                        else if (Name == "Frédérique Citeaux" || Name == "Christina Berglund" || Name == "Art Braunschweiger")
+                        else if (name == "Frédérique Citeaux" || name == "Christina Berglund" || name == "Art Braunschweiger")
                         {
                             <div class=e-orgchart-div style=" width: 181px;
                         height: 54px;
@@ -158,7 +158,7 @@
                         right: 12px;
                         /* top: 154px; */
                         float: left;
-                        background-size: 100% 100%;background-image: url(@(  @Imageurl));">
+                        background-size: 100% 100%;background-image: url(@(  @imageUrl));">
                                     </div>
                                 </div><span class="e-orgchart-name-div" style="     color: rgba(64.81249898672104, 64.81249898672104, 64.81249898672104, 1);
                         width: 150px;
@@ -169,7 +169,7 @@
                         font-family: Roboto;
                         text-align: left;
                         font-size: 14px;
-                        letter-spacing: 0;margin-left:-4px">@Name</span><span style="  color: rgba(122.1874974668026, 122.1874974668026, 122.1874974668026, 1);
+                        letter-spacing: 0;margin-left:-4px">@name</span><span style="  color: rgba(122.1874974668026, 122.1874974668026, 122.1874974668026, 1);
                         width: 100px;
                         height: 14px;
                         position: absolute;
@@ -178,7 +178,7 @@
                         font-family: Roboto;
                         text-align: left;
                         font-size: 12px;
-                        letter-spacing: 0;" class="e-orgchart-role-div">@Role</span>
+                        letter-spacing: 0;" class="e-orgchart-role-div">@role</span>
                                 <div class="e-orgchart-whole-div" style=" border-radius: 500px;
 
                         width: 44px;
@@ -213,7 +213,7 @@
                         right: 12px;
                         /* top: 154px; */
                         float: left;
-                        background-size: 100% 100%;background-image: url(@(@Imageurl));">
+                        background-size: 100% 100%;background-image: url(@(@imageUrl));">
                                     </div>
                                 </div><span class="e-orgchart-name-div" style="color: rgba(64.81249898672104, 64.81249898672104, 64.81249898672104, 1);
                         width: 150px;
@@ -224,7 +224,7 @@
                         font-family: Roboto;
                         text-align: left;
                         font-size: 14px;
-                        letter-spacing: 0;margin-left:-4px">@Name</span><span style="  color: rgba(122.1874974668026, 122.1874974668026, 122.1874974668026, 1);
+                        letter-spacing: 0;margin-left:-4px">@name</span><span style="  color: rgba(122.1874974668026, 122.1874974668026, 122.1874974668026, 1);
                         width: 100px;
                         height: 14px;
                         position: absolute;
@@ -233,7 +233,7 @@
                         font-family: Roboto;
                         text-align: left;
                         font-size: 12px;
-                        letter-spacing: 0;" class="e-orgchart-role-div">@Role</span>
+                        letter-spacing: 0;" class="e-orgchart-role-div">@role</span>
                                 <div class="e-orgchart-whole-div" style=" border-radius: 500px;
 
                         width: 44px;
@@ -260,30 +260,30 @@
     @code {
     @*Hidden:Lines*@
 
-    DiagramInteractions DiagramTool = DiagramInteractions.ZoomPan;
-    ScrollLimitMode scrollLimit { get; set; } = ScrollLimitMode.Diagram;
-    public SfDiagramComponent Diagram;
-    public int? HValue { get; set; } = 60;
-    public int? VValue { get; set; } = 60;
-    public LayoutType Type = LayoutType.HierarchicalTree;
-    public LayoutOrientation OrientationType = LayoutOrientation.TopToBottom;
-    public HorizontalAlignment HorizontalAlignment = HorizontalAlignment.Auto;
-    public VerticalAlignment VerticalAlignment = VerticalAlignment.Auto;
-    public int HorizontalSpacing = 30;
-    public int VerticalSpacing = 60;
-    public double Top = 30;
-    public double Bottom = 30;
-    public double Right = 30;
-    public double Left = 30;
+    private DiagramInteractions diagramTool = DiagramInteractions.ZoomPan;
+    private ScrollLimitMode scrollLimit { get; set; } = ScrollLimitMode.Diagram;
+    private SfDiagramComponent diagram;
+    private int? hValue { get; set; } = 60;
+    private int? vValue { get; set; } = 60;
+    private LayoutType type = LayoutType.HierarchicalTree;
+    private LayoutOrientation orientationType = LayoutOrientation.TopToBottom;
+    private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Auto;
+    private VerticalAlignment verticalAlignment = VerticalAlignment.Auto;
+    private int horizontalSpacing = 30;
+    private int verticalSpacing = 60;
+    private double top = 30;
+    private double bottom = 30;
+    private double right = 30;
+    private double left = 30;
 
     //Defines diagram constraints
-    public DiagramConstraints constraints { get; set; }
+    private DiagramConstraints constraints { get; set; }
 
     //Defines diagrams's nodes collection
-    public DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
+    private DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
 
     //Defines diagrams's connectors collection
-    public DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
+    private DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
 
     private void OnConnectorCreating(IDiagramObject connector)
     {
@@ -319,7 +319,7 @@
     }
     private async Task ExportImage()
     {
-        await JS.InvokeAsync<object>("exportToImage", Diagram.ID);
+        await JS.InvokeAsync<object>("exportToImage", diagram.ID);
     }
     private async void SVGExport()
     {
@@ -329,11 +329,11 @@
                 FitToPage = false,
                 Margin = new DiagramThickness() { Bottom = 0, Left = 0, Right = 0, Top = 0 },
             };
-        await Diagram.ExportAsync("Diagram", DiagramExportFormat.SVG, options);
+        await diagram.ExportAsync("Diagram", DiagramExportFormat.SVG, options);
     }
       private async Task ExportDiagram()
     {
-        string image = await JS.InvokeAsync<string>("exportToPdf", Diagram.ID);
+        string image = await JS.InvokeAsync<string>("exportToPdf", diagram.ID);
         string[] images = new string[] { image };
         await ExportToPdf("diagram", PdfPageOrientation.Portrait, true, images);
     }
@@ -342,7 +342,7 @@
         PdfDocument document = new PdfDocument();
         document.PageSettings.Orientation = orientation;
         document.PageSettings.Margins = new PdfMargins() { Left = 0, Right = 0, Top = 0, Bottom = 0 };
-        DiagramRect bounds = await JS.InvokeAsync<DiagramRect>("getDiagramBounds", Diagram.ID);
+        DiagramRect bounds = await JS.InvokeAsync<DiagramRect>("getDiagramBounds", diagram.ID);
         document.PageSettings.Height = (float)bounds.Height;
         document.PageSettings.Width = (float)bounds.Width;
 

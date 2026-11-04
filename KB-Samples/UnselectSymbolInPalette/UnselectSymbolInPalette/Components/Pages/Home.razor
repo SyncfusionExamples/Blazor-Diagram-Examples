@@ -33,29 +33,29 @@
         </SfSymbolPaletteComponent>
     </div>
     <div id="diagram-space">
-        <SfDiagramComponent @ref="@Diagram" Height="700px">
+        <SfDiagramComponent @ref="@diagram" Height="700px">
         </SfDiagramComponent>
     </div>
 </div>
 
 @code {
-    DiagramSize symbolDragPreviewSize;
-    public SfDiagramComponent Diagram;
-    SfSymbolPaletteComponent palette;
-    public DiagramObjectCollection<Palette> palettes;
-    double symbolHeight = 65;
-    double symbolWidth = 65;
-    public DiagramObjectCollection<NodeBase> basicShapes { get; set; }
+    private DiagramSize symbolDragPreviewSize;
+    private SfDiagramComponent diagram;
+    private SfSymbolPaletteComponent palette;
+    private DiagramObjectCollection<Palette> palettes;
+    private double symbolHeight = 65;
+    private double symbolWidth = 65;
+    private DiagramObjectCollection<NodeBase> basicShapes { get; set; }
 
     [Inject]
-    protected IJSRuntime jsRuntime { get; set; }
+    protected IJSRuntime JsRuntime { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
         palette.Targets = new DiagramObjectCollection<SfDiagramComponent>
         {
-            Diagram
+            diagram
         };
     }
 

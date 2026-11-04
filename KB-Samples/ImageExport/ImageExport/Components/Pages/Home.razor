@@ -2,7 +2,7 @@
 
 @using Syncfusion.Blazor.BarcodeGenerator
 
-<SfQRCodeGenerator @ref="@QRcode" Width="200px" Height="150px" Value="https://www.syncfusion.com/blazor-components/blazor-barcode">
+<SfQRCodeGenerator @ref="@qrCode" Width="200px" Height="150px" Value="https://www.syncfusion.com/blazor-components/blazor-barcode">
     <QRCodeGeneratorDisplayText Visibility="false"></QRCodeGeneratorDisplayText>
     <QRCodeLogo ImageSource="@base64Image"></QRCodeLogo>
 </SfQRCodeGenerator>
@@ -10,7 +10,7 @@
 <input type="button" value="Export" @onclick="@OnExport" />
 
 @code {
-    private SfQRCodeGenerator QRcode;
+    private SfQRCodeGenerator qrCode;
     private string base64Image;
     protected override void OnInitialized()
     {
@@ -23,7 +23,7 @@
     }
     private async void OnExport()
     {
-        QRcode.Export("QRCodeWithLogo", BarcodeExportType.JPG);
+        qrCode.Export("QRCodeWithLogo", BarcodeExportType.JPG);
     }
 }
 

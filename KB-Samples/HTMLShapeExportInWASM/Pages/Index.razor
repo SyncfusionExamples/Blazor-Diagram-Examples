@@ -252,9 +252,9 @@
 
 
     @*Hidden:Lines*@
-
+    <button @onclick="SVGExport"> Export as SVG</button>
     <button @onclick="ExportImage">Export as Image</button>
-     <button @onclick="ExportDiagram">Export as PDF</button>
+    <button @onclick="ExportDiagram">Export as PDF</button>
 
     @*End:Hidden*@
     @code {
@@ -316,6 +316,17 @@
         node.Height = 53;
         node.Shape = new Shape()
             { Type = shapes.HTML };
+    }
+    private async Task SVGExport()
+
+    {
+
+        await JS.InvokeAsync<object>(
+
+            "exportToSvg",
+
+            "OrgChartDiagram");
+
     }
     private async Task ExportImage()
     {

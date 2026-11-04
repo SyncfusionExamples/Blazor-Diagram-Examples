@@ -16,7 +16,31 @@ window.download = function download(image) {
     el.click();
     el.remove();
 }
+window.exportToSvg = async function (elementId) {
 
+    var element = document.querySelector("#" + elementId);
+
+    var canvas = await html2canvas(element);
+
+    var pngData = canvas.toDataURL("image/png");
+
+    var svg = `
+    <svg xmlns="http://www.w3.org/2000/svg"
+         width="${canvas.width}"
+         height="${canvas.height}">
+        <image
+            href="${pngData}"
+            width="${canvas.width}"
+            height="${canvas.height}" />
+    </svg>`;
+
+    var blob = new Blob([svg], { type: "image/svg+xml" });
+
+    var link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "diagram.svg";
+    link.click();
+}
 window.exportToImage = async function (elementId) {
     var image = "";
     const original1 = document.getElementById(elementId + '_diagramLayer_div');

@@ -317,8 +317,12 @@
         node.Shape = new Shape()
             { Type = shapes.HTML };
     }
+    
+    private async Task ExportImage()
+    {
+        await JS.InvokeAsync<object>("exportToImage", Diagram.ID);
+    }
     private async Task SVGExport()
-
     {
 
         await JS.InvokeAsync<object>(
@@ -327,20 +331,6 @@
 
             "OrgChartDiagram");
 
-    }
-    private async Task ExportImage()
-    {
-        await JS.InvokeAsync<object>("exportToImage", Diagram.ID);
-    }
-    private async void SVGExport()
-    {
-        DiagramExportSettings options = new DiagramExportSettings()
-            {
-                Region = DiagramPrintExportRegion.PageSettings,
-                FitToPage = false,
-                Margin = new DiagramThickness() { Bottom = 0, Left = 0, Right = 0, Top = 0 },
-            };
-        await Diagram.ExportAsync("Diagram", DiagramExportFormat.SVG, options);
     }
       private async Task ExportDiagram()
     {

@@ -1,65 +1,431 @@
 ﻿@page "/"
+
 @using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Diagram.SymbolPalette
 @using Syncfusion.Blazor.Buttons
 
-<SfDiagramComponent @ref="diagram"  Height="600px"
-                   Nodes="@nodes"
-                   Connectors="@connectors"
-                   ConnectionChanging="@OnConnectionChanging">
-</SfDiagramComponent>
-<SfButton Content="DrawToolConnector" OnClick="@AddConnector" />
+<div class="diagram-toolbar">
+    <SfButton Content="Draw Connector"
+              IsPrimary="true"
+              OnClick="@AddConnector">
+    </SfButton>
+</div>
+
+<div class="diagram-container">
+    <div class="palette-area">
+        <SfSymbolPaletteComponent @ref="@_symbolPalette"
+                                  Width="100%"
+                                  Height="600px"
+                                  SymbolWidth="100"
+                                  SymbolHeight="80"
+                                  Palettes="@palettes"
+                                  SymbolMargin="@symbolMargin">
+        </SfSymbolPaletteComponent>
+    </div>
+    <div class="diagram-area">
+        <SfDiagramComponent @ref="diagram"
+                            ID="diagram"
+                            Width="100%"
+                            Height="600px"
+                            Nodes="@nodes"
+                            Connectors="@connectors"
+                            ConnectionChanging="@OnConnectionChanging">
+        </SfDiagramComponent>
+    </div>
+</div>
+
+<style>
+    .diagram-toolbar {
+        margin-bottom: 10px;
+    }
+
+    .diagram-container {
+        display: flex;
+        width: 100%;
+        height: 600px;
+        overflow: hidden;
+        border: 1px solid #d5d5d5;
+    }
+
+    .diagram-area {
+        flex: 1;
+        min-width: 0;
+        height: 600px;
+    }
+
+    .palette-area {
+        width: 300px;
+        min-width: 300px;
+        height: 600px;
+        border-left: 1px solid #d5d5d5;
+    }
+
+    @@media (max-width: 768px) {
+        .diagram-container {
+            flex-direction: column;
+            height: auto;
+            overflow: visible;
+        }
+
+        .diagram-area {
+            width: 100%;
+            height: 600px;
+        }
+
+        .palette-area {
+            width: 100%;
+            min-width: 0;
+            height: 350px;
+            border-left: none;
+            border-top: 1px solid #d5d5d5;
+        }
+    }
+</style>
+
 @code {
-    SfDiagramComponent diagram;
-    DiagramObjectCollection<Node> nodes;
-    DiagramObjectCollection<Connector> connectors;
+    private SfDiagramComponent diagram;
+
+    private SfSymbolPaletteComponent _symbolPalette;
+
+    private DiagramObjectCollection<Node> nodes = new();
+
+    private DiagramObjectCollection<Connector> connectors = new();
+
+    private DiagramObjectCollection<Palette> palettes = new();
+
+    private readonly SymbolMargin symbolMargin = new()
+    {
+        Left = 10,
+        Right = 10,
+        Top = 10,
+        Bottom = 10
+    };
+
     protected override void OnInitialized()
     {
-        nodes = new DiagramObjectCollection<Node>();
-        connectors = new DiagramObjectCollection<Connector>();
-        Node node = new Node()
+        InitializeDiagramNodes();
+        InitializeDiagramConnectors();
+        InitializeSymbolPalette();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        _symbolPalette.Targets = new DiagramObjectCollection<SfDiagramComponent>() { };
+        _symbolPalette.Targets.Add(diagram);
+    }
+
+    private void InitializeDiagramNodes()
+    {
+        nodes = new DiagramObjectCollection<Node>
         {
-            OffsetX = 500,
-            OffsetY = 300,
-            Width = 200,
-            Height = 70,
-            ID = "node1",
-            Shape = new BpmnActivity()
+            CreateFlowNode(
+                id: "Start",
+                offsetX: 350,
+                offsetY: 70,
+                width: 120,
+                height: 60,
+                shape: NodeFlowShapes.Terminator,
+                content: "Start",
+                fill: "#D5E8D4",
+                strokeColor: "#82B366"),
+
+            CreateFlowNode(
+                id: "Process",
+                offsetX: 350,
+                offsetY: 200,
+                width: 140,
+                height: 70,
+                shape: NodeFlowShapes.Process,
+                content: "Process Request",
+                fill: "#DAE8FC",
+                strokeColor: "#6C8EBF"),
+
+            CreateFlowNode(
+                id: "Decision",
+                offsetX: 350,
+                offsetY: 350,
+                width: 140,
+                height: 100,
+                shape: NodeFlowShapes.Decision,
+                content: "Is Valid?",
+                fill: "#FFF2CC",
+                strokeColor: "#D6B656"),
+
+            CreateFlowNode(
+                id: "End",
+                offsetX: 350,
+                offsetY: 520,
+                width: 120,
+                height: 60,
+                shape: NodeFlowShapes.Terminator,
+                content: "End",
+                fill: "#F8CECC",
+                strokeColor: "#B85450")
+        };
+    }
+
+    private static Node CreateFlowNode(
+        string id,
+        double offsetX,
+        double offsetY,
+        double width,
+        double height,
+        NodeFlowShapes shape,
+        string content,
+        string fill,
+        string strokeColor)
+    {
+        return new Node
+        {
+            ID = id,
+            OffsetX = offsetX,
+            OffsetY = offsetY,
+            Width = width,
+            Height = height,
+
+            Shape = new FlowShape
             {
-                ActivityType = BpmnActivityType.Task,
-                TaskType = BpmnTaskType.Manual
+                Type = NodeShapes.Flow,
+                Shape = shape
             },
-            Style = new ShapeStyle()
+
+            Style = new ShapeStyle
             {
-                Fill = "#B4D8E7"
+                Fill = fill,
+                StrokeColor = strokeColor,
+                StrokeWidth = 2
             },
-            Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+
+            Annotations = new DiagramObjectCollection<ShapeAnnotation>
             {
-               new ShapeAnnotation()
-               {
-                   Content = "Procedure Text Task"
-               }
+                new ShapeAnnotation
+                {
+                    Content = content
+                }
             }
         };
-        nodes.Add(node);
-        Connector connector = new Connector()
-        {
-            ID = "con1",
-            SourcePoint = new DiagramPoint() { X = 200, Y = 300 },
-            TargetPoint = new DiagramPoint() { X = 300, Y = 400 },
-            Type = ConnectorSegmentType.Orthogonal,
-        };
-        connectors.Add(connector);
     }
+
+    private void InitializeDiagramConnectors()
+    {
+        connectors = new DiagramObjectCollection<Connector>
+        {
+            CreateDiagramConnector(
+                id: "StartToProcess",
+                sourceId: "Start",
+                targetId: "Process",
+                connectorType: ConnectorSegmentType.Orthogonal),
+
+            CreateDiagramConnector(
+                id: "ProcessToDecision",
+                sourceId: "Process",
+                targetId: "Decision",
+                connectorType: ConnectorSegmentType.Straight),
+
+            CreateDiagramConnector(
+                id: "DecisionToEnd",
+                sourceId: "Decision",
+                targetId: "End",
+                connectorType: ConnectorSegmentType.Bezier)
+        };
+    }
+
+    private static Connector CreateDiagramConnector(
+        string id,
+        string sourceId,
+        string targetId,
+        ConnectorSegmentType connectorType)
+    {
+        return new Connector
+        {
+            ID = id,
+            SourceID = sourceId,
+            TargetID = targetId,
+            Type = connectorType,
+
+            Style = new ShapeStyle
+            {
+                StrokeColor = "#4D4D4D",
+                StrokeWidth = 2
+            },
+
+            TargetDecorator = new DecoratorSettings
+            {
+                Shape = DecoratorShape.Arrow,
+
+                Style = new ShapeStyle
+                {
+                    Fill = "#4D4D4D",
+                    StrokeColor = "#4D4D4D"
+                }
+            }
+        };
+    }
+
+    private void InitializeSymbolPalette()
+    {
+        DiagramObjectCollection<NodeBase> flowchartSymbols = new()
+        {
+            CreatePaletteNode(
+                id: "PaletteTerminator",
+                shape: NodeFlowShapes.Terminator,
+                content: "Start / End"),
+
+            CreatePaletteNode(
+                id: "PaletteProcess",
+                shape: NodeFlowShapes.Process,
+                content: "Process"),
+
+            CreatePaletteNode(
+                id: "PaletteDecision",
+                shape: NodeFlowShapes.Decision,
+                content: "Decision"),
+
+            CreatePaletteNode(
+                id: "PaletteDocument",
+                shape: NodeFlowShapes.Document,
+                content: "Document"),
+
+            CreatePaletteNode(
+                id: "PaletteData",
+                shape: NodeFlowShapes.Data,
+                content: "Data")
+        };
+
+        DiagramObjectCollection<NodeBase> connectorSymbols = new()
+        {
+            CreatePaletteConnector(
+                id: "PaletteStraightConnector",
+                connectorType: ConnectorSegmentType.Straight),
+
+            CreatePaletteConnector(
+                id: "PaletteOrthogonalConnector",
+                connectorType: ConnectorSegmentType.Orthogonal),
+
+            CreatePaletteConnector(
+                id: "PaletteBezierConnector",
+                connectorType: ConnectorSegmentType.Bezier)
+        };
+
+        palettes = new DiagramObjectCollection<Palette>
+        {
+            new Palette
+            {
+                ID = "FlowchartShapes",
+                Title = "Flowchart Shapes",
+                IsExpanded = true,
+                Symbols = flowchartSymbols
+            },
+
+            new Palette
+            {
+                ID = "ConnectorShapes",
+                Title = "Connectors",
+                IsExpanded = true,
+                Symbols = connectorSymbols
+            }
+        };
+    }
+
+    private static Node CreatePaletteNode(
+        string id,
+        NodeFlowShapes shape,
+        string content)
+    {
+        return new Node
+        {
+            ID = id,
+            Width = 100,
+            Height = 60,
+
+            Shape = new FlowShape
+            {
+                Type = NodeShapes.Flow,
+                Shape = shape
+            },
+
+            Style = new ShapeStyle
+            {
+                Fill = "#E6F2FF",
+                StrokeColor = "#4A90E2",
+                StrokeWidth = 1.5
+            },
+
+            Annotations = new DiagramObjectCollection<ShapeAnnotation>
+            {
+                new ShapeAnnotation
+                {
+                    Content = content
+                }
+            }
+        };
+    }
+
+    private static Connector CreatePaletteConnector(
+        string id,
+        ConnectorSegmentType connectorType)
+    {
+        return new Connector
+        {
+            ID = id,
+            Type = connectorType,
+
+            SourcePoint = new DiagramPoint
+            {
+                X = 0,
+                Y = 0
+            },
+
+            TargetPoint = new DiagramPoint
+            {
+                X = 80,
+                Y = 40
+            },
+
+            Style = new ShapeStyle
+            {
+                StrokeColor = "#4D4D4D",
+                StrokeWidth = 2
+            },
+
+            TargetDecorator = new DecoratorSettings
+            {
+                Shape = DecoratorShape.Arrow,
+
+                Style = new ShapeStyle
+                {
+                    Fill = "#4D4D4D",
+                    StrokeColor = "#4D4D4D"
+                }
+            }
+        };
+    }
+
     private void OnConnectionChanging(ConnectionChangingEventArgs args)
     {
-        if (args.Connector == null)
+        if (args.Connector == null || args.NewValue == null)
+        {
             return;
+        }
+
         string sourceId = args.Connector.SourceID;
         string targetId = args.Connector.TargetID;
-        sourceId = args.ConnectorAction == DiagramElementAction.ConnectorSourceEnd || args.ConnectorAction == DiagramElementAction.Drag ? args.NewValue.SourceID : sourceId;
-        targetId = args.ConnectorAction == DiagramElementAction.ConnectorTargetEnd || args.ConnectorAction == DiagramElementAction.Drag ? args.NewValue.TargetID : targetId;
 
-        if (!string.IsNullOrEmpty(sourceId) && !string.IsNullOrEmpty(targetId) && sourceId == targetId)
+        if (args.ConnectorAction == DiagramElementAction.ConnectorSourceEnd ||
+            args.ConnectorAction == DiagramElementAction.Drag)
+        {
+            sourceId = args.NewValue.SourceID;
+        }
+
+        if (args.ConnectorAction == DiagramElementAction.ConnectorTargetEnd ||
+            args.ConnectorAction == DiagramElementAction.Drag)
+        {
+            targetId = args.NewValue.TargetID;
+        }
+
+        if (!string.IsNullOrEmpty(sourceId) &&
+            !string.IsNullOrEmpty(targetId) &&
+            string.Equals(sourceId, targetId, StringComparison.Ordinal))
         {
             args.Cancel = true;
         }
@@ -68,10 +434,28 @@
     private void AddConnector()
     {
         diagram.InteractionController = DiagramInteractions.DrawOnce;
-        diagram.DrawingObject = new Connector()
+
+        diagram.DrawingObject = new Connector
         {
-            ID = "connector1",
+            ID = $"Connector_{Guid.NewGuid():N}",
             Type = ConnectorSegmentType.Orthogonal,
+
+            Style = new ShapeStyle
+            {
+                StrokeColor = "#4D4D4D",
+                StrokeWidth = 2
+            },
+
+            TargetDecorator = new DecoratorSettings
+            {
+                Shape = DecoratorShape.Arrow,
+
+                Style = new ShapeStyle
+                {
+                    Fill = "#4D4D4D",
+                    StrokeColor = "#4D4D4D"
+                }
+            }
         };
     }
 }

@@ -1,0 +1,77 @@
+﻿@page "/"
+@using Syncfusion.Blazor.Diagram
+@using Syncfusion.Blazor.Buttons
+
+<SfDiagramComponent @ref="diagram"  Height="600px"
+                   Nodes="@nodes"
+                   Connectors="@connectors"
+                   ConnectionChanging="@OnConnectionChanging">
+</SfDiagramComponent>
+<SfButton Content="DrawToolConnector" OnClick="@AddConnector" />
+@code {
+    SfDiagramComponent diagram;
+    DiagramObjectCollection<Node> nodes;
+    DiagramObjectCollection<Connector> connectors;
+    protected override void OnInitialized()
+    {
+        nodes = new DiagramObjectCollection<Node>();
+        connectors = new DiagramObjectCollection<Connector>();
+        Node node = new Node()
+        {
+            OffsetX = 500,
+            OffsetY = 300,
+            Width = 200,
+            Height = 70,
+            ID = "node1",
+            Shape = new BpmnActivity()
+            {
+                ActivityType = BpmnActivityType.Task,
+                TaskType = BpmnTaskType.Manual
+            },
+            Style = new ShapeStyle()
+            {
+                Fill = "#B4D8E7"
+            },
+            Annotations = new DiagramObjectCollection<ShapeAnnotation>()
+            {
+               new ShapeAnnotation()
+               {
+                   Content = "Procedure Text Task"
+               }
+            }
+        };
+        nodes.Add(node);
+        Connector connector = new Connector()
+        {
+            ID = "con1",
+            SourcePoint = new DiagramPoint() { X = 200, Y = 300 },
+            TargetPoint = new DiagramPoint() { X = 300, Y = 400 },
+            Type = ConnectorSegmentType.Orthogonal,
+        };
+        connectors.Add(connector);
+    }
+    private void OnConnectionChanging(ConnectionChangingEventArgs args)
+    {
+        if (args.Connector == null)
+            return;
+        string sourceId = args.Connector.SourceID;
+        string targetId = args.Connector.TargetID;
+        sourceId = args.ConnectorAction == DiagramElementAction.ConnectorSourceEnd || args.ConnectorAction == DiagramElementAction.Drag ? args.NewValue.SourceID : sourceId;
+        targetId = args.ConnectorAction == DiagramElementAction.ConnectorTargetEnd || args.ConnectorAction == DiagramElementAction.Drag ? args.NewValue.TargetID : targetId;
+
+        if (!string.IsNullOrEmpty(sourceId) && !string.IsNullOrEmpty(targetId) && sourceId == targetId)
+        {
+            args.Cancel = true;
+        }
+    }
+
+    private void AddConnector()
+    {
+        diagram.InteractionController = DiagramInteractions.DrawOnce;
+        diagram.DrawingObject = new Connector()
+        {
+            ID = "connector1",
+            Type = ConnectorSegmentType.Orthogonal,
+        };
+    }
+}
